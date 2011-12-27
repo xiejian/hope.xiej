@@ -42,7 +42,7 @@ def actionsproc():
     cursor.execute("SELECT btc_action_id,action,account1,account2,address,amount from btc_action WHERE status = 'N' ORDER by btc_action_id") 
     result = cursor.fetchall()
     for act in result:        
-        if act[1] == 'updateuser':
+        if act[1] == 'createuser':
             try:
                 res = updateuser(act[2])
                 cursor.execute("UPDATE btc_action SET status ='S',process_dt=NOW(),message=%s WHERE btc_action_id = %s", [res , act[0]])

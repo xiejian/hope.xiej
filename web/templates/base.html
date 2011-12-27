@@ -14,15 +14,15 @@ Bitcoin Futures Exchange
 
 <div id="topright">
     {% if session.logged_in %}  Welcome <strong> {{session['username']}} </strong> | <a href = "/logout">Logout</a>
-    {% else %} <a href = "/login" >Login</a> | <a href = "/login">I'm New</a>
+    {% else %} <a href = "/login" >Login</a> | <a href = "/register">I'm New</a>
     {% endif %}
 </div>
 
 <ul id="navMenu">
     <li><a href="/">Home</a>       </li>
-    <li ><a href="/index/">Market</a>   </li>
-    <li ><a href="/trade/">Trade</a>    </li>
-    <li><a href="/account/">Account</a> </li>
+    <li ><a href="/index">Market</a>   </li>
+    <li ><a href="/trade">Trade</a>    </li>
+    <li><a href="/account">Account</a> </li>
 </ul>
 
 <br/>

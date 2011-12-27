@@ -2,6 +2,7 @@ import MySQLdb,user
 import hashlib, base64
 from contextlib import closing
 from flask import Flask, request, session, g, redirect, url_for, abort,render_template, flash
+from basefunc import validateEmail,sendemail
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -18,50 +19,40 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-def _createuser(email, password):
-    #check email is not registered
-    resrows = g.db.cursor().execute('SELECT password from user where email=%s', email)
-    if resrows > 0:
-        return False
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
-    resrows = g.db.cursor().execute("INSERT INTO user(email, password)VALUES (%s, %s)",[email, c_pass])
-    if resrows==1:
-        return True
-    else:
-        return False
-
-def _loginuser(email, password):
-    resrows = g.db.cursor().execute('SELECT user_id,password from user where email=%s', email)
-    if resrows != 1:
-        return False
-    result = g.db.cursor().fetchall()
-    c_pass = base64.b64encode(hashlib.sha224(mykey, email + password).digest())
-    if c_pass == result[0][1]:
-        return result[0][0]
-    else:
-        return False
-
-
 @app.before_request
 def before_request():
     """Make sure we are connected to the database each request."""
-    g.db  = __connect_db()
+    g.db  = _connect_db()
+    g.cur = g.db.cursor()
 
 @app.teardown_request
 def teardown_request(exception):
     """Closes the database again at the end of the request."""
+    if hasattr(g, 'cur'):
+        g.cur.close()
     if hasattr(g, 'db'):
         g.db.close()
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+#=================================================================
 
-@app.route('/register')
+@app.route('/register', methods=['GET','POST'])
 def register():
+    error = None
     if request.method == 'POST':
-        pass
-    return render_template('register.html')
+        if not validateEmail(request.form['username']):
+            error = 'Not validate Email'
+        elif request.form['password'] <> request.form['password2']:
+            error = 'Password not Match'
+        elif len(request.form['password']) < 6:
+            error = 'Password too Short'
+        else:
+            res = user.createuser(request.form['username'],request.form['password'])
+            if res == True:
+                flash('New Account was successfully created')
+                return redirect(url_for('home'))
+            else:
+                error = res
+    return render_template('register.html', error = error)
 
 
 @app.route('/add', methods=['POST'])
@@ -75,17 +66,30 @@ def add_entry():
     return redirect(url_for('show_entries'))
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/trade', methods=['GET','POST'])
+def trade():
+    return render_template('trade.html')
+
+
+@app.route('/', methods=['GET','POST'])
+def home():
     error = None
     if request.method == 'POST':
-        if user.check_credential(request.form['username'],request.form['password']):
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('home'))
+        if not validateEmail(request.form['username']):
+            error = 'Not validate Email'
+        elif len(request.form['password']) < 6:
+            error = 'Password too Short'
         else:
-            error = 'Login Failed.'
-    return render_template('login.html', error=error)
+            user_id = user.loginuser(request.form['username'],request.form['password'])
+            if user_id:
+                session['logged_in'] = True
+                session['username'] = request.form['username']
+                session['user_id'] = user_id
+                flash('You were logged in')
+                return redirect(url_for('trade'))
+            else:
+                error = 'Login Failed.'
+    return render_template('home.html',error = error)
 
 
 @app.route('/logout')
