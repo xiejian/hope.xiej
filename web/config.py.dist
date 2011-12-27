@@ -1,0 +1,13 @@
+__author__ = 'xiejian'
+
+# configuration
+DB = {
+    'host': "192.168.168.122",
+    'port': 3306,
+    'user': 'root',
+    'passwd': 'xj',
+    'db': 'btcfe',
+    }
+SECRET_KEY = 'dev key'
+DEBUG = True
+

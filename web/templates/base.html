@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>BTCFE.com - </title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/sunny/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="{{url_for('static',filename='base.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='base.css')}}" rel="stylesheet" />
+</head>
+<body>
+Bitcoin Futures Exchange
+<h1>BTCFE.com</h1>
+
+<div id="topright">
+    {% if session.logged_in %}  Welcome <strong> {{session['username']}} </strong> | <a href = "/logout">Logout</a>
+    {% else %} <a href = "/login" >Login</a> | <a href = "/login">I'm New</a>
+    {% endif %}
+</div>
+
+<ul id="navMenu">
+    <li><a href="/">Home</a>       </li>
+    <li ><a href="/index/">Market</a>   </li>
+    <li ><a href="/trade/">Trade</a>    </li>
+    <li><a href="/account/">Account</a> </li>
+</ul>
+
+<br/>
+<br/>
+
+<hr/>
+{% for message in get_flashed_messages() %}
+<div class=flash>{{ message }}</div>
+{% endfor %}
+{% block content %}{% endblock %}
+<p/>
+<hr/>
+<div align = "center">CopyRight 2011</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.tmenu[href="{{request.path}}"]').addClass("ui-state-highlight");
+    });
+</script>
+</body>
+</html>
+
