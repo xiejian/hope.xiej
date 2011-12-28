@@ -1,12 +1,12 @@
 import MySQLdb,user
-import hashlib, base64
 from contextlib import closing
 from flask import Flask, request, session, g, redirect, url_for, abort,render_template, flash
-from basefunc import validateEmail,sendemail
+from basefunc import validateEmail,generate_csrf_token
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 def _connect_db():
     """Returns a new connection to the database."""
@@ -21,7 +21,11 @@ def init_db():
 
 @app.before_request
 def before_request():
-    """Make sure we are connected to the database each request."""
+    if request.method == "POST":
+        token = session.pop('_csrf_token', None)
+        if not token or token != request.form.get('_csrf_token'):
+            abort(403)
+    #"""Make sure we are connected to the database each request."""
     g.db  = _connect_db()
     g.cur = g.db.cursor()
 
@@ -55,20 +59,30 @@ def register():
     return render_template('register.html', error = error)
 
 
-@app.route('/add', methods=['POST'])
-def add_entry():
-    if not session.get('logged_in'):
+@app.route('/v/<code>', methods=['GET'])
+def validate(code):
+    user_id = user.activeuser(code)
+    if user_id:
+        flash('Your account had been activated.')
+        return render_template('active.html')
+    else:
         abort(401)
-    g.db.execute('insert into entries (title, text) values (?, ?)',
-        [request.form['title'], request.form['text']])
-    g.db.commit()
-    flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
 
 
 @app.route('/trade', methods=['GET','POST'])
 def trade():
-    return render_template('trade.html')
+    if request.method == 'POST':
+        pass
+    else:
+        g.cur.execute("SELECT contract_id,NAME,btc_multi,opendate,settledate,leverage FROM contract WHERE STATUS = 'O'")
+        contracts = [dict(contract_id=row[0],name=row[1],btc_multi=row[2],opendate=row[3],settledate=row[4],leverage=row[5]) for row in g.cur.fetchall()]
+        return render_template('trade.html',contracts=contracts)
+
+@app.route('/account', methods=['GET','POST'])
+def account():
+    g.cur.execute('SELECT contract_id,contract_name,buy_sell,lots,cost,marketvalue,margin FROM v_pos WHERE user_id=%s', session['user_id'])
+    pos = [dict(contract_id=row[0],contract_name=row[1],buy_sell=row[2],lots=row[3],cost=row[4],marketvalue=row[5],margin=row[6]) for row in g.cur.fetchall()]
+    return render_template('account.html',pos = pos)
 
 
 @app.route('/', methods=['GET','POST'])
@@ -77,8 +91,8 @@ def home():
     if request.method == 'POST':
         if not validateEmail(request.form['username']):
             error = 'Not validate Email'
-        elif len(request.form['password']) < 6:
-            error = 'Password too Short'
+        #elif len(request.form['password']) < 6:
+        #    error = 'Password too Short'
         else:
             user_id = user.loginuser(request.form['username'],request.form['password'])
             if user_id:

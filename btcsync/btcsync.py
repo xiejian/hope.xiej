@@ -1,7 +1,6 @@
 from jsonrpc import ServiceProxy
 from config import database, btc_url, btc_minconf, btc_syncinterv
-import datetime, time
-import MySQLdb
+import time, MySQLdb
 import atexit
 
 ag = ServiceProxy(btc_url)
@@ -20,7 +19,7 @@ def transsync():
                 vtxfee = '0'
             else:
                 vtxfee = tx['fee']
-            resrows = cursor.execute("INSERT INTO btc_trans(type,user,amount,fee,address,confirm,txid,timestamp)VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",\
+            cursor.execute("INSERT INTO btc_trans(type,user,amount,fee,address,confirm,txid,timestamp)VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                 [tx['category'], tx['account'], tx['amount'],vtxfee, tx['address'], tx['confirmations'], tx['txid'], MySQLdb.TimestampFromTicks(tx['time'])])
             updateuser(tx['account'])
         if len(res['transactions']) > 0:
@@ -70,8 +69,8 @@ def actionsproc():
         
 def svrexit():
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','E',%s)", btc_url[btc_url.find('@')+1:-1])
-    cursor.commit()
     cursor.close()
+    db.commit()
     db.close()
     print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Stoped.'
 
@@ -80,21 +79,17 @@ if __name__ == "__main__":
     
     try:
         res = ag.getinfo()
-    except Exception as inst:    
-        cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','F',%s)", "Err:{0}{1}".format(type(inst),inst.args))
-        cursor.commit()
-        exit;
+    except Exception as inst:
+        print time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Server Connection Failed.'
+        exit()
     db=MySQLdb.connect(host=database['host'], user=database['user'], passwd=database['passwd'],db=database['db'])
     cursor = db.cursor()    
     atexit.register(svrexit)    
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','B',%s)", btc_url[btc_url.find('@')+1:-1])
-    
     print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Started.'
     while True:        
         actionsproc()
         transsync()
+        db.commit()
         time.sleep(btc_syncinterv)
 
-    
-    
-    

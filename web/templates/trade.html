@@ -2,13 +2,89 @@
 {% block content %}
 <h2>TRADE</h2>
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-<form action="{{ url_for('trade') }}" method=post>
-    <dl>
-        <dt>Username:
-        <dd><input type=text name=username>
-        <dt>Password:
-        <dd><input type=password name=password>
-        <dd><input type=submit value=Login>
-    </dl>
-</form>
+
+<label for="ContractList">Contract:　</label>
+<select id="ContractList" name="instrument" class="big">
+    {% for con in contracts %}
+        <option value="{{con.contract_id}}">{{con.name}}</option>
+    {% endfor %}
+</select>
+
+    <p/>
+
+<div class="tabs">
+    <ul>
+        <li><a href="#tabs-1">Buy</a></li>
+        <li><a href="#tabs-2">Sell</a></li>
+        <li><a href="#tabs-3">My Orders</a></li>
+    </ul>
+    <div id="tabs-1" >
+        <form action="{{ url_for('trade') }}" method="POST">
+            <p/><table>
+
+            <tr>
+                <td><label for="contract">Contract:</label><br /></td>
+                <td><input disabled type="text" class = "contract" name="contract" value="" /></td>
+            </tr><tr>
+        </tr><tr>
+            <td><label for="price">Price:</label><br /></td>
+            <td><input type="number" name="price" value="" /></td>
+        </tr><tr>
+            <td><label for="lots">Lots:</label><br /></td>
+            <td><input type="number" name="lots" value="" /></td>
+        </tr><tr>
+            <td></td>
+            <td><input class="ui-button" type="submit" value="Buy" /></td>
+        </tr>
+        </table>
+        </form>
+    </div>
+    <div id="tabs-2" >
+        <form action="{{ url_for('trade') }}" method="POST">
+            <p/><table>
+
+            <tr>
+                <td><label for="contract">Contract:</label><br /></td>
+                <td><input disabled type="text" class = "contract" name="contract" value="" /></td>
+            </tr><tr>
+        </tr><tr>
+            <td><label for="price">Price:</label><br /></td>
+            <td><input type="number" name="price" value="" /></td>
+        </tr><tr>
+            <td><label for="lots">Lots:</label><br /></td>
+            <td><input type="number" name="lots" value="" /></td>
+        </tr><tr>
+            <td></td>
+            <td><input class="ui-button" type="submit" value="Sell" /></td>
+        </tr>
+        </table>
+        </form>
+    </div>
+
+    <div id="tabs-3" >
+        <table>
+            <tr>
+                <td>Order Time</td>
+                <td>Price</td>
+                <td>Amount</td>
+                <td>Cancel</td>
+            </tr><tr>
+            <td>"2011-10-1 10:9:12"</td>
+            <td>24.2424 BTC</td>
+            <td>2 Lots</td>
+        </tr><tr>
+            <td>"2011-10-1 10:9:12"</td>
+            <td>24.2424 BTC</td>
+            <td>2 Lots</td>
+        </tr><tr>
+            <td>"2011-10-1 10:9:12"</td>
+            <td>24.2424 BTC</td>
+            <td>2 Lots</td>
+        </tr>
+        </table>
+        </form>
+    </div>
+
+</div>
+
 {% endblock %}
