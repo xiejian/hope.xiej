@@ -7,9 +7,9 @@ Position
 
 <table>
 <tr><td>Contract</td><td>B/S</td><td>Lots</td><td>Cost</td><td>MarketValue</td><td>Margin</td></tr>
-{% for p in pos %}
+{% for p in session['positions'] %}
     <tr>
-    <td>{{p.contract_name}}</td><td>{{p.buy_sell}}</td><td>{{p.lots}}</td><td>{{p.cost}}</td>
+    <td>{{p.contract_id}}</td><td>{{p.buy_sell}}</td><td>{{p.lots}}</td><td>{{p.cost}}</td>
         <td>{{p.marketvalue}}</td><td>{{p.margin}}</td>
     </tr>
 {% else %}

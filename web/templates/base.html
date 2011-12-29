@@ -10,14 +10,15 @@
 </head>
 <body>
 Bitcoin Futures Exchange
-<h1>BTCFE.com</h1>
 
 <div id="topright">
-    {% if session.logged_in %}  Welcome <strong> {{session['username']}} </strong> | <a href = "/logout">Logout</a>
-    {% else %} <a href = "/login" >Login</a> | <a href = "/register">I'm New</a>
+    {% if session.logged_in %}
+        Balance:{{session['balance']}} | Bal_Avail:{{session['bal_avail']}}
+        <p/>Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
+    {% else %} <a href = "/register">Create A New Account</a>
     {% endif %}
 </div>
-
+<h1>BTCFE.com</h1>
 <ul id="navMenu">
     <li><a href="/">Home</a>       </li>
     <li ><a href="/index">Market</a>   </li>

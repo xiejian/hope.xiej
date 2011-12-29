@@ -64,23 +64,13 @@
     <div id="tabs-3" >
         <table>
             <tr>
-                <td>Order Time</td>
-                <td>Price</td>
-                <td>Amount</td>
-                <td>Cancel</td>
-            </tr><tr>
-            <td>"2011-10-1 10:9:12"</td>
-            <td>24.2424 BTC</td>
-            <td>2 Lots</td>
-        </tr><tr>
-            <td>"2011-10-1 10:9:12"</td>
-            <td>24.2424 BTC</td>
-            <td>2 Lots</td>
-        </tr><tr>
-            <td>"2011-10-1 10:9:12"</td>
-            <td>24.2424 BTC</td>
-            <td>2 Lots</td>
-        </tr>
+                <td>Order Time</td><td>B/S</td><td>Price</td><td>Amount</td><td>Order Time</td><td>Cancel</td>
+            </tr>
+            {% for o in session['orders'] %}
+                <tr>
+                <td>{{ o['order_id'] }}</td><td>{{ o['contract_id'] }}</td><td>{{ o['buy_sell'] }}</td><td>{{ o['price'] }}</td>
+                    <td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['createtime'] }}</td><td>Cancel</td></tr>
+            {% endfor %}
         </table>
         </form>
     </div>
