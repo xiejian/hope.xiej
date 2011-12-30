@@ -11,9 +11,11 @@
 <body>
 Bitcoin Futures Exchange
 
+
 <div id="topright">
     {% if session.logged_in %}
-        Balance:{{session['balance']}} | Bal_Avail:{{session['bal_avail']}}
+        {{session['bal_avail']|float}} ({{session['bal_unconf']|float }}, {{session['bal_unact']|float }}) BTC |
+            {{session['orders']|length}} Open Orders | {{session['positions']|length}} Positions
         <p/>Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
     {% else %} <a href = "/register">Create A New Account</a>
     {% endif %}

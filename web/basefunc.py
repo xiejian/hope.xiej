@@ -24,3 +24,9 @@ def sendemail(toaddrs,type,para):
     server.login(email['sendadd'],email['passwd'])
     server.sendmail(email['sendadd'], toaddrs, msg)
     server.quit()
+
+def addordercheck(contract_id,point,lots):
+    if True:# * lots * gv_contract[contract_id]['btc_multi'] < session['btc_vail']:
+        return True
+    else:
+        return False

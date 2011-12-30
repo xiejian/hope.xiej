@@ -3,78 +3,38 @@
 <h2>TRADE</h2>
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
-<label for="ContractList">Contract:　</label>
-<select id="ContractList" name="instrument" class="big">
-    {% for con in contracts %}
-        <option value="{{con.contract_id}}">{{con.name}}</option>
+<form action="{{ url_for('trade') }}" method=post>
+    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+    <dl>
+        <dt>Buy/Sell:
+        <dd><input type="radio" name="b_s" value="B" /> BUY <input type="radio" name="b_s" value="S" /> SELL
+        <dt>Contract:
+        <dd><select name="contract_id">
+                {% for ck in contract.keys() %}
+                    <option value="{{ck}}" {% if ck == default_cid %} selected="selected" {% endif %} >{{contract[ck]['name']}}</option>
+                {% endfor %}
+            </select>
+        <dt>Point:
+        <dd><input type=text name="point" value="" />
+        <dt>Lots:
+        <dd><input type=number name="lots" value="" />
+        <dd><input type=submit value=Trade>
+    </dl>
+</form>
+<h3>Open Orders</h3>
+<table>
+    <tr><th>Order Time</th><th>Contract</th><th>B/S</th><th>Price</th><th>Lots</th><th>Remain_Lots</th><th>Cancel</th></tr>
+    {% for ok in session['orders'].keys() %}
+        <tr><<td>{{ session['orders'][ok]['createtime'] }}</td><td>{{ contract[session['orders'][ok]['contract_id']]['name'] }}</td><td>{{ session['orders'][ok]['buy_sell'] }}</td>
+            <td>{{ session['orders'][ok]['price'] }}</td><td>{{ session['orders'][ok]['lots'] }}</td><td>{{ session['orders'][ok]['rm_lots'] }}</td>
+            <td><form action="{{ url_for('trade') }}" method="POST">
+                <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+                <input type="hidden" name="orderid" value= "{{ok}}" />
+                <button type="submit" value="cancel">﻿× </button>
+            </form></td></tr>
     {% endfor %}
-</select>
+</table>
 
-    <p/>
 
-<div class="tabs">
-    <ul>
-        <li><a href="#tabs-1">Buy</a></li>
-        <li><a href="#tabs-2">Sell</a></li>
-        <li><a href="#tabs-3">My Orders</a></li>
-    </ul>
-    <div id="tabs-1" >
-        <form action="{{ url_for('trade') }}" method="POST">
-            <p/><table>
-
-            <tr>
-                <td><label for="contract">Contract:</label><br /></td>
-                <td><input disabled type="text" class = "contract" name="contract" value="" /></td>
-            </tr><tr>
-        </tr><tr>
-            <td><label for="price">Price:</label><br /></td>
-            <td><input type="number" name="price" value="" /></td>
-        </tr><tr>
-            <td><label for="lots">Lots:</label><br /></td>
-            <td><input type="number" name="lots" value="" /></td>
-        </tr><tr>
-            <td></td>
-            <td><input class="ui-button" type="submit" value="Buy" /></td>
-        </tr>
-        </table>
-        </form>
-    </div>
-    <div id="tabs-2" >
-        <form action="{{ url_for('trade') }}" method="POST">
-            <p/><table>
-
-            <tr>
-                <td><label for="contract">Contract:</label><br /></td>
-                <td><input disabled type="text" class = "contract" name="contract" value="" /></td>
-            </tr><tr>
-        </tr><tr>
-            <td><label for="price">Price:</label><br /></td>
-            <td><input type="number" name="price" value="" /></td>
-        </tr><tr>
-            <td><label for="lots">Lots:</label><br /></td>
-            <td><input type="number" name="lots" value="" /></td>
-        </tr><tr>
-            <td></td>
-            <td><input class="ui-button" type="submit" value="Sell" /></td>
-        </tr>
-        </table>
-        </form>
-    </div>
-
-    <div id="tabs-3" >
-        <table>
-            <tr>
-                <td>Order Time</td><td>B/S</td><td>Price</td><td>Amount</td><td>Order Time</td><td>Cancel</td>
-            </tr>
-            {% for o in session['orders'] %}
-                <tr>
-                <td>{{ o['order_id'] }}</td><td>{{ o['contract_id'] }}</td><td>{{ o['buy_sell'] }}</td><td>{{ o['price'] }}</td>
-                    <td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['createtime'] }}</td><td>Cancel</td></tr>
-            {% endfor %}
-        </table>
-        </form>
-    </div>
-
-</div>
 
 {% endblock %}
