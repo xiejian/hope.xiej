@@ -1,6 +1,6 @@
 import MySQLdb,user
 from contextlib import closing
-from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g
+from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 from basefunc import validateEmail,generate_csrf_token,addordercheck
 
 app = Flask(__name__)
@@ -21,26 +21,31 @@ def init_db():
 
 #================================================================
 gv_contract = {}
-gv_oqueue_b = {}
-gv_oqueue_s = {}
+gv_oqueue = {}
+gv_transhis = {}
 
-def update_gv():
+def update_gv(cid = 'contract_id'):
     global gv_contract
     with closing(_connect_db()) as db:
         cur = db.cursor()
         ocur = db.cursor()
-        cur.execute("SELECT contract_id,concat(name,DATE_FORMAT(settledate,'%y%m')),status,btc_multi,opendate,latestpoint,settledate,leverage,discription FROM contract WHERE STATUS = 'O'")
+        cur.execute("SELECT contract_id,concat(name,DATE_FORMAT(settledate,'%y%m')),status,btc_multi,DATE_FORMAT(opendate,'%Y-%m-%d'), \
+                    latestpoint,DATE_FORMAT(settledate,'%Y-%m-%d'),leverage,discription FROM contract WHERE STATUS = 'O' AND contract_id ="+str(cid))
         for row in cur.fetchall():
-            gv_contract[row[0]] = dict(contract_id=row[0],name=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],leverage=row[7],discription=row[8])
-            #update this contract 's open order queue
+            gv_contract[row[0]] = dict(name=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],leverage=row[7],discription=row[8])
+            #utemp    open order queue
+            temp = {}
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY price DESC ,createtime LIMIT 0,10",row[0])
-            gv_oqueue_b[row[0]] = [dict(order_id=orow[0],price=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
+            temp['B'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY price ,createtime LIMIT 0,10",row[0])
-            gv_oqueue_s[row[0]] = [dict(order_id=orow[0],price=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
+            temp['S'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
+            gv_oqueue[row[0]]=temp
+            ocur.execute("SELECT t.price,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
+            gv_transhis[row[0]] = [dict(price=float(orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
 
 @app.context_processor
-def inject_contract():
-    return dict(contract = gv_contract)
+def inject_cont():
+    return dict(cont = gv_contract)
 
 @app.before_request
 def before_request():
@@ -60,7 +65,29 @@ def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
 #=================================================================
+@app.route('/_contdata')
+def contdata():
+    cont = request.args.get('c', 0, type=int)
+    if cont not in gv_contract.keys():
+        abort(401)
+    return jsonify(gv_contract[cont],q = gv_oqueue[cont],t = gv_transhis[cont])
 
+
+@app.route('/_marketdata')
+def marketdata():
+    oqu = request.args.get('c', 0, type=int)
+    cont = request.args.getlist('p', type=int)
+    if (oqu > 0 and oqu not in gv_oqueue.keys()) or not reduce(lambda x, y: x and y, [c in gv_contract.keys() for c in cont]):
+        abort(401)
+    latestp,oqt = {},{}
+    for c in cont:
+        latestp[c] =  gv_contract[c]['latestpoint']
+    if oqu > 0:
+        oqt[oqu] = gv_oqueue[oqu]
+        return jsonify(oq = oqt,lp = latestp)
+    else:
+        return jsonify(lp = latestp)
+#=================================================================
 @app.route('/', methods=['GET','POST'])
 def home():
     error = None
@@ -75,7 +102,7 @@ def home():
                 session['logged_in'] = True
                 user.update_session(user_id)
                 flash('You were logged in')
-                return redirect(url_for('trade',contract_id = session['positions'][0]['contract_id']))
+                return redirect(url_for('trade',c = session['positions'][0]['contract_id']))
             else:
                 error = 'Login Failed.'
     return render_template('home.html',error = error)
@@ -116,8 +143,8 @@ def validate(code):
         abort(401)
 
 
-@app.route('/trade/<int:contract_id>', methods=['GET','POST'])
-def trade(contract_id):
+@app.route('/trade', methods=['GET','POST'])
+def trade():
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
             if addordercheck(request.form['contract_id'], request.form['point'], request.form['lots']):
@@ -135,6 +162,7 @@ def trade(contract_id):
                 flash('Cancel Order Failed.')
         return redirect(url_for('trade',contract_id = session['positions'][0]['contract_id']))
     else:
+        contract_id = request.args.get('c', 0, type=int)
         return render_template('trade.html',default_cid = contract_id )
 
 @app.route('/account', methods=['GET','POST'])

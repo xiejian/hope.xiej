@@ -4,4 +4,5 @@ body            { font-family: sans-serif; width: 1000px }
 
 div#topright    {float:right;}
 
-
+div.left    {width: 40%}
+div.right    {float:right;}
