@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
+app.jinja_env.globals['gu'] = user.get_userinfo
 
 def _connect_db():
     """Returns a new connection to the database."""
@@ -38,13 +39,14 @@ def inject_cont():
 
 @app.before_request
 def before_request():
+    g.db  = _connect_db()
+    g.cur = g.db.cursor()
     if request.method == "POST":
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
     #"""Make sure we are connected to the database each request."""
-    g.db  = _connect_db()
-    g.cur = g.db.cursor()
+
 
 @app.teardown_request
 def teardown_request(exception):
@@ -69,6 +71,7 @@ def contdata():
     cont = request.args.get('c', 0, type=int)
     if cont not in gv_contract.keys():
         abort(401)
+    session['latestcont'] = cont
     return jsonify(gv_contract[cont])
 
 @app.route('/_userdata')
@@ -144,6 +147,8 @@ def register():
 
 @app.route('/trade', methods=['GET','POST'])
 def trade():
+    if 'user_id' not in session:
+        return redirect(url_for('home'))
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
             if addordercheck(request.form['contract_id'], request.form['point'], request.form['lots']):
@@ -159,9 +164,12 @@ def trade():
                 flash('Cancel Order Successfully.','suc')
             else:
                 flash('Cancel Order Failed.','err')
-        return redirect(url_for('trade',contract_id = session['positions'][0]['contract_id']))
+        return redirect(url_for('trade'))
     else:
+        session.update(user.get_userinfo())
         contract_id = request.args.get('c', 0, type=int)
+        if contract_id == 0 and 'latestcont' in session:
+            contract_id = session['latestcont']
         return render_template('trade.html',default_cid = contract_id )
 
 @app.route('/account', methods=['GET','POST'])
@@ -174,8 +182,11 @@ def market():
 
 @app.route('/test', methods=['GET','POST'])
 def test():
-    update_gv()
-    return str('gv_xj')
+    if hasattr(g, 'u'):
+        g.u += 1
+    else:
+        g.u = 0
+    return str(g.u)
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+/*
 var gv_cont={},gv_user={};
 
 function get_userdata(){
@@ -26,11 +27,8 @@ function get_contlp(clist){
 }
 
 $(function () {
-    get_userdata();
+    //get_userdata();
 
-    $("#contract").change(function(){
-        get_contdata($(this).val());
-        get_userdata();
-        get_contlp(1);
-    });
 });
+    */
+$.ajaxSetup({ cache: false });

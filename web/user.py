@@ -17,8 +17,10 @@ def createuser(email, password):
     sendemail(email,'createuser',request.url_root + url_for('register',v = a_email+'~'+a_pass))
     return True
 
-def get_userinfo(u_id):    #get user's info
+def get_userinfo(u_id=0):    #get user's info
     temp = {}
+    if not u_id:
+        u_id = session['user_id']
     g.cur.execute("SELECT user_id,email,email_v,feerate FROM user WHERE user_id = %s",u_id)
     row = g.cur.fetchone()
     temp.update(dict(user_id=row[0],email=row[1],email_v=row[2],feerate=row[3]))
