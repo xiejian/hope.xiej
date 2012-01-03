@@ -1,53 +1,46 @@
 <!doctype html>
 <html>
 <head>
-    <title>BTCFE.com - </title>
-    <script type=text/javascript>
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    </script>
+    <title>BTCFE.com</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/sunny/jquery-ui.css" rel="stylesheet" />
     <script type="text/javascript" src="{{url_for('static',filename='base.js')}}"></script>
     <link type="text/css" href="{{url_for('static',filename='base.css')}}" rel="stylesheet" />
-</head>
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        {% if session.user_id %} $USER_ID = {{ session.user_id }} ;
+        {% else %}  $USER_ID = 0;   {% endif %}
+    </script></head>
 <body>
 Bitcoin Futures Exchange
 
-
 <div id="topright">
-    {% if session.logged_in %}
-        {{session['bal_avail']|float}} ({{session['bal_unconf']|float }}, {{session['bal_unact']|float }}) BTC |
-            {{session['orders']|length}} Open Orders | {{session['positions']|length}} Positions
-        <p/>Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
-    {% else %} <a href = "/register">Create A New Account</a>
+    {% if session.user_id %}
+        <span class="bal_avail"></span>(<span class="bal_unconf"></span>,<span class="bal_unact"></span>) Btc |
+        <span class="num_orders"></span> Open Orders | <span class="num_pos"></span> Positisons
+        <p/>Welcome <strong> <span class="email"></span> </strong> | <a href = "{{url_for('logout')}}">Logout</a>
+    {% else %} <a href = "{{url_for('register')}}">Create A New Account</a>
     {% endif %}
 </div>
 <h1>BTCFE.com</h1>
 <ul id="navMenu">
     <li><a href="/">Home</a>       </li>
-    <li ><a href="/index">Market</a>   </li>
-    <li ><a href="/trade">Trade</a>    </li>
-    <li><a href="/account">Account</a> </li>
+    <li ><a href="{{url_for('market')}}">Market</a>   </li>
+    <li ><a href="{{url_for('trade')}}">Trade</a>    </li>
+    <li><a href="{{url_for('account')}}">Account</a> </li>
 </ul>
 
 <br/>
 <br/>
 
 <hr/>
-{% for message in get_flashed_messages() %}
-<div class=flash>{{ message }}</div>
+{% for category,message in get_flashed_messages(with_categories=True) %}
+<div class="msg_{{ category }}">{{ message }}</div>
 {% endfor %}
 {% block content %}{% endblock %}
 <p/>
 <hr/>
 <div align = "center">CopyRight 2011</div>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.tmenu[href="{{request.path}}"]').addClass("ui-state-highlight");
-    });
-</script>
 </body>
 </html>
 

@@ -14,24 +14,26 @@ def createuser(email, password):
     g.db.commit()
     a_email = base64.b32encode(email)
     a_pass = base64.b32encode(hashlib.sha512(c_pass).digest())
-    sendemail(email,'createuser',request.url_root + url_for('validate',code = a_email+'~'+a_pass))
+    sendemail(email,'createuser',request.url_root + url_for('register',v = a_email+'~'+a_pass))
     return True
 
-def update_session(u_id):    #get user's info
+def get_userinfo(u_id):    #get user's info
+    temp = {}
     g.cur.execute("SELECT user_id,email,email_v,feerate FROM user WHERE user_id = %s",u_id)
     row = g.cur.fetchone()
-    session.update(dict(user_id=row[0],email=row[1],email_v=row[2],feerate=row[3]))
+    temp.update(dict(user_id=row[0],email=row[1],email_v=row[2],feerate=row[3]))
     g.cur.execute("SELECT balance,bal_unconf,bal_unact,bal_avail FROM v_btcbal WHERE user_id = %s",u_id)
     row = g.cur.fetchone()
-    session.update(dict(balance=row[0],bal_unconf=row[1],bal_unact=row[2],bal_avail=row[3]))
-    g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,createtime FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
+    temp.update(dict(balance=str(row[0]),bal_unconf=str(row[1]),bal_unact=str(row[2]),bal_avail=str(row[3])))
+    g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
     orders={}
     for row in g.cur.fetchall():
-        orders[row[0]] = dict(contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],rm_lots=row[5],createtime=row[6])
-    session.update(dict(orders = orders))
-    g.cur.execute("SELECT position_id,contract_id,buy_sell,price,lots,opentime FROM positions WHERE user_id = %s",u_id)
-    positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
-    session.update({'positions':positions})
+        orders[row[0]] = dict(contract_id=row[1],buy_sell=row[2],price=str(row[3]),lots=row[4],rm_lots=row[5],createtime=row[6])
+    temp.update(dict(orders = orders))
+    g.cur.execute("SELECT position_id,contract_id,buy_sell,price,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",u_id)
+    positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],price=str(row[3]),lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
+    temp.update({'positions':positions})
+    return temp
 
 def activeuser(code):
     str = code.split('~')

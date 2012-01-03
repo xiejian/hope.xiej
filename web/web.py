@@ -1,4 +1,4 @@
-import MySQLdb,user
+import user,MySQLdb
 from contextlib import closing
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 from basefunc import validateEmail,generate_csrf_token,addordercheck
@@ -11,21 +11,10 @@ app.jinja_env.globals['csrf_token'] = generate_csrf_token
 def _connect_db():
     """Returns a new connection to the database."""
     return MySQLdb.connect(host=app.config['DB']['host'], user=app.config['DB']['user'], passwd=app.config['DB']['passwd'],db=app.config['DB']['db'])
-
-def init_db():
-    """Creates the database tables."""
-    with closing(_connect_db()) as db:
-        with app.open_resource('schema.sql') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
-
 #================================================================
 gv_contract = {}
-gv_oqueue = {}
-gv_transhis = {}
 
-def update_gv(cid = 'contract_id'):
-    global gv_contract
+def update_gv(cid = 'contract_id',type = 'I'):
     with closing(_connect_db()) as db:
         cur = db.cursor()
         ocur = db.cursor()
@@ -33,15 +22,15 @@ def update_gv(cid = 'contract_id'):
                     latestpoint,DATE_FORMAT(settledate,'%Y-%m-%d'),leverage,discription FROM contract WHERE STATUS = 'O' AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(name=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],leverage=row[7],discription=row[8])
-            #utemp    open order queue
-            temp = {}
+            #update order queues
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY price DESC ,createtime LIMIT 0,10",row[0])
-            temp['B'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
+            gv_contract[row[0]]['B'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY price ,createtime LIMIT 0,10",row[0])
-            temp['S'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
-            gv_oqueue[row[0]]=temp
-            ocur.execute("SELECT t.price,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
-            gv_transhis[row[0]] = [dict(price=float(orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
+            gv_contract[row[0]]['S'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
+            #update transactions history
+            if type != 'C':
+                ocur.execute("SELECT t.price,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
+                gv_contract[row[0]]['T'] = [dict(price=float(orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
 
 @app.context_processor
 def inject_cont():
@@ -53,7 +42,7 @@ def before_request():
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
-        #"""Make sure we are connected to the database each request."""
+    #"""Make sure we are connected to the database each request."""
     g.db  = _connect_db()
     g.cur = g.db.cursor()
 
@@ -67,11 +56,26 @@ def teardown_request(exception):
 #=================================================================
 @app.route('/_contdata')
 def contdata():
+    cls = request.args.getlist('cl[]', type=int)
+    if cls:
+        temp = {}
+        for cl in cls:
+            if cl in gv_contract.keys():
+                temp[cl] = gv_contract[cl]
+                del temp[cl]['B']
+                del temp[cl]['S']
+                del temp[cl]['T']
+        return jsonify(temp)
     cont = request.args.get('c', 0, type=int)
     if cont not in gv_contract.keys():
         abort(401)
-    return jsonify(gv_contract[cont],q = gv_oqueue[cont],t = gv_transhis[cont])
+    return jsonify(gv_contract[cont])
 
+@app.route('/_userdata')
+def userdata():
+    if 'user_id' not in session:
+        abort(401)
+    return jsonify(user.get_userinfo(session['user_id']))
 
 @app.route('/_marketdata')
 def marketdata():
@@ -90,57 +94,52 @@ def marketdata():
 #=================================================================
 @app.route('/', methods=['GET','POST'])
 def home():
-    error = None
     if request.method == 'POST':
         if not validateEmail(request.form['username']):
-            error = 'Not validate Email'
-        #elif len(request.form['password']) < 6:
-        #    error = 'Password too Short'
+            flash('Not validate Email','err')
         else:
             user_id = user.loginuser(request.form['username'],request.form['password'])
             if user_id:
-                session['logged_in'] = True
-                user.update_session(user_id)
-                flash('You were logged in')
-                return redirect(url_for('trade',c = session['positions'][0]['contract_id']))
+                session['user_id'] = user_id
+                flash('You were logged in','suc')
+                return redirect(url_for('trade'))
             else:
-                error = 'Login Failed.'
-    return render_template('home.html',error = error)
+                flash('Login Failed.','err')
+    return render_template('home.html')
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
+    session.pop('user_id', None)
+    flash('You were logged out','suc')
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-    error = None
     if request.method == 'POST':
         if not validateEmail(request.form['username']):
-            error = 'Not validate Email'
+            flash('Not validate Email','err')
         elif request.form['password'] <> request.form['password2']:
-            error = 'Password not Match'
+            flash('Password not Match','err')
         elif len(request.form['password']) < 6:
-            error = 'Password too Short'
+            flash('Password too Short','err')
         else:
             res = user.createuser(request.form['username'],request.form['password'])
             if res == True:
-                flash('New Account was successfully created')
+                flash('New Account was successfully created','suc')
                 return redirect(url_for('home'))
             else:
-                error = res
-    return render_template('register.html', error = error)
-
-
-@app.route('/v/<code>', methods=['GET'])
-def validate(code):
-    user_id = user.activeuser(code)
-    if user_id:
-        flash('Your account had been activated.')
-        return render_template('active.html')
+                flash(res,'err')
     else:
-        abort(401)
+        vcode = request.args.get('v', False)
+        if vcode:
+            user_id = user.activeuser(vcode)
+            if user_id:
+                flash('Your account had been activated.','suc')
+                session['user_id'] = user_id
+                return render_template('active.html')
+            else:
+                abort(401)
+    return render_template('register.html')
 
 
 @app.route('/trade', methods=['GET','POST'])
@@ -149,17 +148,17 @@ def trade():
         if 'b_s' in request.form:   #---Add order---
             if addordercheck(request.form['contract_id'], request.form['point'], request.form['lots']):
                 g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'], request.form['point'], request.form['lots']))
-                user.update_session(session['user_id'])
-                flash('Order Added Succeed.')
+                update_gv(request.form['contract_id'])
+                flash('Order Added Succeed.','suc')
             else:
-                flash('Order Added Failed.')
+                flash('Order Added Failed.','err')
         else:   #---Cancel order---
             if long(request.form['orderid']) in session['orders']:
                 g.cur.callproc('exchange',(request.form['orderid'],'C'))
-                user.update_session(session['user_id'])
-                flash('Cancel Order Successfully.')
+                update_gv(request.form['contract_id'],'C')
+                flash('Cancel Order Successfully.','suc')
             else:
-                flash('Cancel Order Failed.')
+                flash('Cancel Order Failed.','err')
         return redirect(url_for('trade',contract_id = session['positions'][0]['contract_id']))
     else:
         contract_id = request.args.get('c', 0, type=int)
@@ -169,6 +168,9 @@ def trade():
 def account():
     return render_template('account.html')
 
+@app.route('/market', methods=['GET','POST'])
+def market():
+    return "Market"
 
 @app.route('/test', methods=['GET','POST'])
 def test():
