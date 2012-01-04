@@ -3,41 +3,53 @@
 <head>
     <title>BTCFE.com</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script type="text/javascript" src="{{url_for('static',filename='base.js')}}"></script>
-    <link type="text/css" href="{{url_for('static',filename='base.css')}}" rel="stylesheet" />
+    <script type="text/javascript" src="{{url_for('static',filename='js/base.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/960.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('static',filename='css/text.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('static',filename='css/reset.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('static',filename='css/base.css')}}" rel="stylesheet" />
     <script type=text/javascript>
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script></head>
 <body>
-Bitcoin Futures Exchange
-
-<div id="topright">
+<div id="header">
+<div class="container_12">
+    <div class="grid_6">
+    Bitcoin Futures Exchange
+    <h1>BTCFE.com</h1><p></p>
+    </div>
+    <div class="grid_6">
+        {% if session.user_id %}
+            {{session['bal_avail']|float}} ({{session['bal_unconf']|float }}, {{session['bal_unact']|float }}) BTC |
+            {{session['orders']|length}} Open Orders | {{session['positions']|length}} Positions
+        {% endif %}
+    </div>
+    <div class="clear"></div>
+    <div class="grid_8  topnav">
+        <h2><a href="/">Home</a>
+        <a href="{{url_for('market')}}">Market</a>
+        <a href="{{url_for('trade')}}">Trade</a>
+        <a href="{{url_for('account')}}">Account</a></h2>
+    </div>
+    <div class="grid_4  topnav">
     {% if session.user_id %}
-        {{session['bal_avail']|float}} ({{session['bal_unconf']|float }}, {{session['bal_unact']|float }}) BTC |
-        {{session['orders']|length}} Open Orders | {{session['positions']|length}} Positions
-        <p/>Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
+        Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
     {% else %} <a href = "/register">Create A New Account</a>
     {% endif %}
+    </div>
 </div>
-<h1>BTCFE.com</h1>
-<ul id="navMenu">
-    <li><a href="/">Home</a>       </li>
-    <li ><a href="{{url_for('market')}}">Market</a>   </li>
-    <li ><a href="{{url_for('trade')}}">Trade</a>    </li>
-    <li><a href="{{url_for('account')}}">Account</a> </li>
-</ul>
+</div>
+<div id="body" class="container_12">
 
-<br/>
-<br/>
+    {% for category,message in get_flashed_messages(with_categories=True) %}
+        <div class="msg_{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
 
-<hr/>
-{% for category,message in get_flashed_messages(with_categories=True) %}
-<div class="msg_{{ category }}">{{ message }}</div>
-{% endfor %}
-{% block content %}{% endblock %}
-<p/>
-<hr/>
-<div align = "center">CopyRight 2011</div>
+</div>
+<div id="footer">
+    <div class="container_12">CopyRight 2011</div>
+</div>
 
 </body>
 </html>

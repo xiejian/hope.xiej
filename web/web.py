@@ -153,15 +153,22 @@ def trade():
         if 'b_s' in request.form:   #---Add order---
             if addordercheck(request.form['contract_id'], request.form['point'], request.form['lots']):
                 g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'], request.form['point'], request.form['lots']))
-                update_gv(request.form['contract_id'])
-                flash('Order Added Succeed.','suc')
+                result = g.cur.fetchone()
+                if result[0] != 'err':
+                    if result[1] == 'Deal had been Made.':
+                        update_gv(request.form['contract_id'])
+                    else:
+                        update_gv(request.form['contract_id'],'C')
+                flash(result[1] ,result[0] )
             else:
                 flash('Order Added Failed.','err')
         else:   #---Cancel order---
             if long(request.form['orderid']) in session['orders']:
                 g.cur.callproc('exchange',(request.form['orderid'],'C'))
-                update_gv(request.form['contract_id'],'C')
-                flash('Cancel Order Successfully.','suc')
+                result = g.cur.fetchone()
+                if result[0] != 'err':
+                    update_gv(request.form['contract_id'],'C')
+                flash(result[1] ,result[0] )
             else:
                 flash('Cancel Order Failed.','err')
         return redirect(url_for('trade'))
@@ -174,6 +181,12 @@ def trade():
 
 @app.route('/account', methods=['GET','POST'])
 def account():
+    if 'user_id' not in session:
+        return redirect(url_for('home'))
+    if 'address' not in session:
+        g.cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
+        for orow in g.cur.fetchone():
+            session.update(dict(address=orow))
     return render_template('account.html')
 
 @app.route('/market', methods=['GET','POST'])

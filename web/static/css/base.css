@@ -1,0 +1,9 @@
+div.msg_err {float: right;}
+div.msg_suc {float: right;}
+
+div.login   {border: solid 10px #e5e5e6; }
+div.topnav  {background-color: #e5e5e6;}
+body        {background: #EEE;}
+div#header  {background: #BBF;}
+div#body    {background: #FFF;margin-top: 20px;margin-bottom: 20px;}
+div#footer  {text-align: center;}

@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Login</h2>
-{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+<div class="grid_12">
+    <h2>Welcome</h2>
+    <p></p>
+</div>
+<div class="clear"></div>
+<div class="grid_7">
+Trade Everything here.
+</div>
+<div class="grid_3 suffix_1 login">
 <form action="{{ url_for('home') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
@@ -12,4 +19,5 @@
         <dd><input type=submit value=Login>
     </dl>
 </form>
+</div>
 {% endblock %}

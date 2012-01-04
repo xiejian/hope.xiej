@@ -7,7 +7,7 @@ database = {
     'db': 'btcfe',
 }
 
-btc_url = "http://u:p@10.8.0.6:8332/"
+btc_url = "http://u:p@192.168.168.122:8332/"
 btc_minconf = 2
 
 btc_syncinterv = 30
