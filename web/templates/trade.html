@@ -2,10 +2,20 @@
 {% block content %}
 <script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
 <h2>TRADE</h2>
+<div class="grid_5">
+    <table id="continfo">
+    </table>
+    <h3>order queue</h3>
+    <table id="oqueue">
+    </table>
+    <h3>transactions</h3>
+    <table id="transhis">
+    </table>
+</div>
 
-
-<div class="right">
-<form action="{{ url_for('trade') }}" method=post>
+<div class="grid_7">
+<div class="grid_5 push_1 trade">
+    <form action="{{ url_for('trade') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
         <dt>Buy/Sell:
@@ -23,6 +33,7 @@
         <dd><input type=submit value=Trade>
     </dl>
 </form>
+</div>
 <hr/>
 <h3>Open Orders</h3>
 <table>
@@ -57,14 +68,7 @@
 </div>
 
 <div class="left">
-    <table id ="continfo">
-    </table>
-    <h3>order queue</h3>
-    <table id="oqueue">
-    </table>
-    <h3>transactions</h3>
-    <table id="transhis">
-    </table>
+
 </div>
 
 {% endblock %}

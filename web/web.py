@@ -191,7 +191,7 @@ def account():
 
 @app.route('/market', methods=['GET','POST'])
 def market():
-    return "Market"
+    return render_template('market.html')
 
 @app.route('/test', methods=['GET','POST'])
 def test():
@@ -204,6 +204,6 @@ def test():
 
 if __name__ == '__main__':
     update_gv()
-    app.run()
+    app.run(host='0.0.0.0')
 
 

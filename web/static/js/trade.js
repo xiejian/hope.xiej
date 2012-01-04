@@ -25,6 +25,7 @@ function updatepage_contdata(cid){
     $.each(gv_cont[cid]["S"], function(index,val) {
         htm = "<tr><td>S"+(index+1)+"</td><td>"+val["price"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
     });
+    htm = htm + '<tr><td colspan="0" ><hr/></td></tr>';
     $.each(gv_cont[cid]["B"], function(index,val) {
         htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["price"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
     });
