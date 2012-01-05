@@ -4,8 +4,7 @@
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
 <div class="grid_11 push_1 ">
-Position
-
+<h3>Position</h3>
 <table>
 <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
 {% for p in session['positions'] %}
@@ -20,9 +19,23 @@ Position
 {% endfor %}
 </table>
 <hr/>
+
+<h3>Transaction History</h3>
+<table>
+    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Price</th><th>Lots</th></tr>
+    {% for t in g.usertrans %}
+    <tr>
+        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type}}</td><td>{{t.buy_sell}}</td><td>{{t.price}}</td><td>{{t.lots}}</td>
+
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+<h3>BitCoin Transfer</h3>
 BTC IN
 your bitcoin address:
-<h3>{{ session['address'] }}</h3>
+<h2>{{ session['address'] }}</h2>
 
 </div>
 {% endblock %}

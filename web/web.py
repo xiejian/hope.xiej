@@ -161,7 +161,11 @@ def trade():
                 g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], request.form['lots']))
             result = g.cur.fetchone()
             update_gv(request.form['contract_id'])
-            flash(result[1] ,result[0] )
+            print result
+            if result[0] =='err':
+                flash(result[1] ,result[0] )
+            else:
+                flash('Order Add Failed','err')
         else:   #---Cancel order---
             if len([o for o in session['orders'] if o['order_id'] == long(request.form['orderid'])]):
                 g.cur.callproc('exchange',(request.form['orderid'],'C'))
@@ -187,6 +191,8 @@ def account():
         g.cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
         for orow in g.cur.fetchone():
             session.update(dict(address=orow))
+    g.cur.execute("SELECT contract_id,type,buy_sell, price,lots,timestamp from v_trans WHERE user_id = %s",session['user_id'])
+    g.usertrans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], price=row[3],lots=row[4],timestamp=row[5]) for row in g.cur.fetchall()]
     return render_template('account.html')
 
 @app.route('/market', methods=['GET','POST'])
