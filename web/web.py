@@ -151,19 +151,19 @@ def trade():
         return redirect(url_for('home'))
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
-            if addordercheck(request.form['contract_id'], request.form['point'], request.form['lots']):
-                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'], request.form['point'], request.form['lots']))
-                result = g.cur.fetchone()
-                if result[0] != 'err':
-                    if result[1] == 'Deal had been Made.':
-                        update_gv(request.form['contract_id'])
-                    else:
-                        update_gv(request.form['contract_id'],'C')
-                flash(result[1] ,result[0] )
-            else:
-                flash('Order Added Failed.','err')
+            uncover_poslots = user.get_uncover_pos(long(request.form['contract_id']),request.form['b_s'])
+            if uncover_poslots >= long(request.form['lots']):
+                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], request.form['lots']))
+            elif uncover_poslots > 0 and uncover_poslots < long(request.form['lots']):
+                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], uncover_poslots))
+                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], long(request.form['lots'])-uncover_poslots))
+            elif uncover_poslots == 0:
+                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], request.form['lots']))
+            result = g.cur.fetchone()
+            update_gv(request.form['contract_id'])
+            flash(result[1] ,result[0] )
         else:   #---Cancel order---
-            if long(request.form['orderid']) in session['orders']:
+            if len([o for o in session['orders'] if o['order_id'] == long(request.form['orderid'])]):
                 g.cur.callproc('exchange',(request.form['orderid'],'C'))
                 result = g.cur.fetchone()
                 if result[0] != 'err':

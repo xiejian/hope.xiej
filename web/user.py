@@ -27,15 +27,28 @@ def get_userinfo(u_id=0):    #get user's info
     g.cur.execute("SELECT balance,bal_unconf,bal_unact,bal_avail FROM v_btcbal WHERE user_id = %s",u_id)
     row = g.cur.fetchone()
     temp.update(dict(balance=str(row[0]),bal_unconf=str(row[1]),bal_unact=str(row[2]),bal_avail=str(row[3])))
-    g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
-    orders={}
-    for row in g.cur.fetchall():
-        orders[row[0]] = dict(contract_id=row[1],buy_sell=row[2],price=str(row[3]),lots=row[4],rm_lots=row[5],createtime=row[6])
+    g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
+    orders = [dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],price=str(row[3]),lots=row[4],rm_lots=row[5],type=row[6],createtime=row[7]) for row in g.cur.fetchall()]
     temp.update(dict(orders = orders))
     g.cur.execute("SELECT position_id,contract_id,buy_sell,price,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",u_id)
     positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],price=str(row[3]),lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
     temp.update({'positions':positions})
     return temp
+
+def get_uncover_pos(contract_id,b_s):
+    num = 0
+    for p in session['positions']:
+        if p['contract_id'] == contract_id and p['buy_sell'] != b_s:
+            num += p['lots']
+    for o in session['orders']:
+        if o['contract_id'] == contract_id and o['contract_id'] == b_s and o['type'] == 'C':
+            num -= o['rm_lots']
+    return num
+def check_usersorder(order_id):
+    for o in session['orders']:
+        if o['order_id'] == order_id:
+            return True
+    return False
 
 def activeuser(code):
     str = code.split('~')

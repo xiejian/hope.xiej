@@ -37,15 +37,14 @@
 <hr/>
 <h3>Open Orders</h3>
 <table>
-    <tr><th>Order Time</th><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Remain_Lots</th><th>Margin</th><th>Cancel</th></tr>
-    {% for ok in session['orders'] %}
-        <tr><<td>{{ session['orders'][ok]['createtime'] }}</td><td>{{ cont[session['orders'][ok]['contract_id']]['name'] }}</td><td>{{ session['orders'][ok]['buy_sell'] }}</td>
-            <td>{{ session['orders'][ok]['price'] }}</td><td>{{ session['orders'][ok]['lots'] }}</td><td>{{ session['orders'][ok]['rm_lots'] }}</td>
-            <td>{{ session['orders'][ok]['price']|float*session['orders'][ok]['rm_lots']*cont[session['orders'][ok]['contract_id']]['leverage']/100 }}</td>
+    <tr><th>Order Time</th><th>Contract</th><th>Open/Close</th><th>Point</th><th>Lots</th><th>Remain_Lots</th><th>Margin</th><th>Cancel</th></tr>
+    {% for o in session['orders'] %}
+        <tr><<td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type'] }}</td><td>{{ o['buy_sell'] }}</td>
+            <td>{{ o['price'] }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['price']|float*o['rm_lots']*cont[o['contract_id']]['leverage']/100 }}</td>
             <td><form action="{{ url_for('trade') }}" method="POST">
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-                <input type="hidden" name="orderid" value= "{{ok}}" />
-                <input type="hidden" name="contract_id" value= "{{session['orders'][ok]['contract_id']}}" />
+                <input type="hidden" name="orderid" value= "{{o['order_id']}}" />
+                <input type="hidden" name="contract_id" value= "{{o['contract_id']}}" />
                 <button type="submit" value="cancel"> × </button>
             </form></td></tr>
     {% endfor %}
