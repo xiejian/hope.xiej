@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Account</h2>
-{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 
 <div class="grid_11 push_1 ">
 <h3>Position</h3>
@@ -9,8 +8,8 @@
 <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
 {% for p in session['positions'] %}
     <tr>
-    <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.price}}</td><td>{{p.lots}}</td><td>{{p.price|float * p.lots/cont[p.contract_id]['btc_multi']}}</td>
-        <td>{{cont[p.contract_id]['latestpoint']*p.lots}}</td><td>{{(cont[p.contract_id]['latestpoint']-p.price|float/cont[p.contract_id]['btc_multi'])*p.lots}}</td>
+    <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point}}</td><td>{{p.lots}}</td><td>{{p.point|float * p.lots/cont[p.contract_id]['btc_multi']}}</td>
+        <td>{{cont[p.contract_id]['latestpoint']*p.lots}}</td><td>{{(cont[p.contract_id]['latestpoint']-p.point|float/cont[p.contract_id]['btc_multi'])*p.lots}}</td>
         <td>{{cont[p.contract_id]['latestpoint']*p.lots*cont[p.contract_id]['leverage']}}</td>
         <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
     </tr>
@@ -22,16 +21,30 @@
 
 <h3>Transaction History</h3>
 <table>
-    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Price</th><th>Lots</th></tr>
+    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Point</th><th>Lots</th><th>Fee</th><th>Pofit/Loss</th></tr>
     {% for t in g.usertrans %}
     <tr>
-        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type}}</td><td>{{t.buy_sell}}</td><td>{{t.price}}</td><td>{{t.lots}}</td>
-
+        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type}}</td><td>{{t.buy_sell}}</td>
+        <td>{{t.point}}</td><td>{{t.lots}}</td><td>{{t.fee}}</td><td>{{t.p_l}}</td>
     </tr>
     {% else %}
     <tr>None</tr>
     {% endfor %}
 </table>
+
+<h3>Bitcoin Flow</h3>
+<table>
+    <tr><th>input_dt</th><th>trans_id</th><th>amount</th><th>type</th></tr>
+    {% for b in g.userbtcflow %}
+    <tr>
+        <td>{{b.input_dt}}</td><td>{{b.trans_id}}</td><td>{{b.amount}}</td><td>{{b.type}}</td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+
+
 <h3>BitCoin Transfer</h3>
 BTC IN
 your bitcoin address:

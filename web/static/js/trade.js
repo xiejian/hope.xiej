@@ -23,16 +23,16 @@ function updatepage_contdata(cid){
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["S"], function(index,val) {
-        htm = "<tr><td>S"+(index+1)+"</td><td>"+val["price"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
+        htm = "<tr><td>S"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
     });
-    htm = htm + '<tr><td colspan="0" ><hr/></td></tr>';
+    htm = htm + '<tr><td colspan="3" ><hr/></td></tr>';
     $.each(gv_cont[cid]["B"], function(index,val) {
-        htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["price"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
+        htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
     });
     $("#oqueue").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["T"], function(index,val) {
-        htm += "<tr><td>"+val["time"]+"</td><td>"+val["price"]+"</td><td>"+val["lots"]+"</td><td>"+val["dir"]+"</td></tr>";
+        htm += "<tr><td>"+val["time"]+"</td><td>"+val["point"]+"</td><td>"+val["lots"]+"</td><td>"+val["dir"]+"</td></tr>";
     });
     $("#transhis").html(htm);
 }

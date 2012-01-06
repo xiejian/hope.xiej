@@ -1,20 +1,18 @@
+from basefunc import validateEmail,generate_csrf_token,point2price,price2point,gv_contract
 import user,MySQLdb
 from contextlib import closing
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-from basefunc import validateEmail,generate_csrf_token,addordercheck
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.globals['gu'] = user.get_userinfo
 
 def _connect_db():
     """Returns a new connection to the database."""
     return MySQLdb.connect(host=app.config['DB']['host'], user=app.config['DB']['user'], passwd=app.config['DB']['passwd'],db=app.config['DB']['db'])
-#================================================================
-gv_contract = {}
 
+#================================================================
 def update_gv(cid = 'contract_id',type = 'I'):
     with closing(_connect_db()) as db:
         cur = db.cursor()
@@ -25,13 +23,13 @@ def update_gv(cid = 'contract_id',type = 'I'):
             gv_contract[row[0]] = dict(name=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],leverage=row[7],discription=row[8])
             #update order queues
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY price DESC ,createtime LIMIT 0,10",row[0])
-            gv_contract[row[0]]['B'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
+            gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=price2point(row[0],orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
             ocur.execute("SELECT order_id,price,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY price ,createtime LIMIT 0,10",row[0])
-            gv_contract[row[0]]['S'] = [dict(order_id=orow[0],price=float(orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
+            gv_contract[row[0]]['S'] = [dict(order_id=orow[0],point=price2point(row[0],orow[1]),rm_lots=orow[2]) for orow in ocur.fetchall()]
             #update transactions history
             if type != 'C':
                 ocur.execute("SELECT t.price,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
-                gv_contract[row[0]]['T'] = [dict(price=float(orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
+                gv_contract[row[0]]['T'] = [dict(point=price2point(row[0],orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
 
 @app.context_processor
 def inject_cont():
@@ -144,6 +142,14 @@ def register():
                 abort(401)
     return render_template('register.html')
 
+def addorder(contract_id,user_id,b_s,c_o,point,lots):
+    g.cur.callproc('addorder',(contract_id,user_id,b_s,c_o,point2price(contract_id,point),lots))
+    result = g.cur.fetchone()
+    flash(result[1] ,result[0])
+    if result[0] == 'suc':
+        return True
+    else:
+        return False
 
 @app.route('/trade', methods=['GET','POST'])
 def trade():
@@ -152,20 +158,16 @@ def trade():
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
             uncover_poslots = user.get_uncover_pos(long(request.form['contract_id']),request.form['b_s'])
+            res = False
             if uncover_poslots >= long(request.form['lots']):
-                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], request.form['lots']))
+                res = addorder(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], request.form['lots'])
             elif uncover_poslots > 0 and uncover_poslots < long(request.form['lots']):
-                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], uncover_poslots))
-                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], long(request.form['lots'])-uncover_poslots))
+                res = addorder(request.form['contract_id'], session['user_id'], request.form['b_s'],'C', request.form['point'], uncover_poslots)
+                res = res or addorder(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], long(request.form['lots'])-uncover_poslots)
             elif uncover_poslots == 0:
-                g.cur.callproc('addorder',(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], request.form['lots']))
-            result = g.cur.fetchone()
-            update_gv(request.form['contract_id'])
-            print result
-            if result[0] =='err':
-                flash(result[1] ,result[0] )
-            else:
-                flash('Order Add Failed','err')
+                res = addorder(request.form['contract_id'], session['user_id'], request.form['b_s'],'O', request.form['point'], request.form['lots'])
+            if res:
+                update_gv(request.form['contract_id'])
         else:   #---Cancel order---
             if len([o for o in session['orders'] if o['order_id'] == long(request.form['orderid'])]):
                 g.cur.callproc('exchange',(request.form['orderid'],'C'))
@@ -191,8 +193,10 @@ def account():
         g.cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
         for orow in g.cur.fetchone():
             session.update(dict(address=orow))
-    g.cur.execute("SELECT contract_id,type,buy_sell, price,lots,timestamp from v_trans WHERE user_id = %s",session['user_id'])
-    g.usertrans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], price=row[3],lots=row[4],timestamp=row[5]) for row in g.cur.fetchall()]
+    g.cur.execute("SELECT contract_id,type,buy_sell, price,lots,fee,p_l,timestamp from v_trans WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
+    g.usertrans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=price2point(row[0],row[3]),lots=row[4],fee=row[5],p_l=row[6],timestamp=row[7]) for row in g.cur.fetchall()]
+    g.cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,10",session['email'])
+    g.userbtcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in g.cur.fetchall()]
     return render_template('account.html')
 
 @app.route('/market', methods=['GET','POST'])
@@ -201,11 +205,7 @@ def market():
 
 @app.route('/test', methods=['GET','POST'])
 def test():
-    if hasattr(g, 'u'):
-        g.u += 1
-    else:
-        g.u = 0
-    return str(g.u)
+    return jsonify(gv_contract)
 
 
 if __name__ == '__main__':

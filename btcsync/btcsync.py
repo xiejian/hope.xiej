@@ -49,7 +49,10 @@ def actionsproc():
                 cursor.execute("UPDATE btc_action SET status ='F',process_dt=NOW(),message=%s WHERE btc_action_id = %s", ["Err:{0}{1}".format(type(inst),inst.args), act[0]])
         elif act[1] == 'move':
             try:
-                res = ag.move(act[2], act[3], float(act[5]))
+                if float(act[5]) >= 0:
+                    res = ag.move(act[2], act[3], float(act[5]))
+                else:
+                    res = ag.move(act[3], act[2], -1*float(act[5]))
                 updateuser(act[2])
                 updateuser(act[3])         
                 cursor.execute("UPDATE btc_action SET status ='S',process_dt=NOW(),message=%s WHERE btc_action_id = %s", [res, act[0]])
