@@ -1,18 +1,18 @@
-from basefunc import validateEmail,generate_csrf_token,point2price,price2point,gv_contract
+from basefunc import validateEmail,generate_csrf_token,point2price,price2point,gv_contract,numformat
 import user,MySQLdb
-from contextlib import closing
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
+from contextlib import closing
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
+app.jinja_env.filters['f'] = numformat
 
 def _connect_db():
     """Returns a new connection to the database."""
     return MySQLdb.connect(host=app.config['DB']['host'], user=app.config['DB']['user'], passwd=app.config['DB']['passwd'],db=app.config['DB']['db'])
 
-#================================================================
 def update_gv(cid = 'contract_id',type = 'I'):
     with closing(_connect_db()) as db:
         cur = db.cursor()
@@ -31,20 +31,20 @@ def update_gv(cid = 'contract_id',type = 'I'):
                 ocur.execute("SELECT t.price,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
                 gv_contract[row[0]]['T'] = [dict(point=price2point(row[0],orow[0]),lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
 
+#================================================================
 @app.context_processor
 def inject_cont():
     return dict(cont = gv_contract)
 
 @app.before_request
 def before_request():
+    """Make sure we are connected to the database each request."""
     g.db  = _connect_db()
     g.cur = g.db.cursor()
     if request.method == "POST":
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
-    #"""Make sure we are connected to the database each request."""
-
 
 @app.teardown_request
 def teardown_request(exception):
@@ -205,9 +205,10 @@ def market():
 
 @app.route('/test', methods=['GET','POST'])
 def test():
+    print gv_contract
     return jsonify(gv_contract)
 
-
+#todo-xj install simplejson
 if __name__ == '__main__':
     update_gv()
     app.run(host='0.0.0.0')

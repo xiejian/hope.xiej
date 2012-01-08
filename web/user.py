@@ -30,10 +30,10 @@ def get_userinfo(u_id=0):    #get user's info
         row = [0,0,0]
     temp.update(dict(balance=str(row[0]),bal_unconf=str(row[1]),bal_unact=str(row[2])))
     g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
-    orders = [dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],point=price2point(row[1],row[3]),lots=row[4],rm_lots=row[5],type=row[6],createtime=row[7]) for row in g.cur.fetchall()]
+    orders = [dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],rm_lots=row[5],type=row[6],createtime=row[7]) for row in g.cur.fetchall()]
     temp.update(dict(orders = orders))
     g.cur.execute("SELECT position_id,contract_id,buy_sell,price,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",u_id)
-    positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],point=price2point(row[1],row[3]),lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
+    positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
     temp.update({'positions':positions})
     return temp
 

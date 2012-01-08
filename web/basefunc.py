@@ -1,19 +1,25 @@
 import re, smtplib,os,base64
 from config import email
 from flask import session
+from decimal import Decimal
 
 gv_contract = {}
 
 def point2price(contract_id,point):
-    return point * gv_contract[contract_id]['btc_multi'] / 10000
+    print point
+    print contract_id
+    print gv_contract[long(contract_id)]['btc_multi']
+    return gv_contract[long(contract_id)]['btc_multi'] * Decimal(point)
 def price2point(contract_id,price):
-    return float(price * 10000) / gv_contract[contract_id]['btc_multi']
+    return price / gv_contract[contract_id]['btc_multi']
+
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
-
+def numformat(num):
+    return '{:.8f}'.format(num).rstrip('0').rstrip('.')
 
 def validateEmail(email):
     if len(email) > 6:
