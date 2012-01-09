@@ -6,9 +6,6 @@ from decimal import Decimal
 gv_contract = {}
 
 def point2price(contract_id,point):
-    print point
-    print contract_id
-    print gv_contract[long(contract_id)]['btc_multi']
     return gv_contract[long(contract_id)]['btc_multi'] * Decimal(point)
 def price2point(contract_id,price):
     return price / gv_contract[contract_id]['btc_multi']
