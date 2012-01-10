@@ -48,7 +48,7 @@ def _update_user(g,session,content = []):    #get user's info
     # get user's positions info
     g.cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",session['user_id'])
     for row in g.cur.fetchall():
-        tt = dict(contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],opentime=row[5],value=row[3]*row[4]*gv_contract[row[1]]['btc_multi'],
+        tt = dict(contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],opentime=row[5],marketvalue=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
             margin = row[3]*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
         if row[2] == 'B':
             tt.update(dict(p_l = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
@@ -73,8 +73,8 @@ def _add_order(g,session,contract_id,b_s,c_o,point,lots):
     g.cur.callproc('addorder',(contract_id,session['user_id'],b_s,c_o,point,lots))
     result = g.cur.fetchone()
     if result is None:
-        result = {'msg':'None','category':'err'}
-    return result
+        return {'msg':'None','category':'err'}
+    return dict(msg=result[1],category=result[0])
 
 def _cancel_order(g,orderid):
     g.cur.callproc('exchange',(orderid,'C'))

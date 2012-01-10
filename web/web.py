@@ -90,6 +90,7 @@ def home():
             user_id = user.loginuser(request.form['username'],request.form['password'])
             if user_id:
                 session['user_id'] = user_id
+                session['email'] = request.form['username']
                 flash('You were logged in','suc')
                 return redirect(url_for('trade'))
             else:
@@ -150,7 +151,7 @@ def trade():
                 res = {'msg':'Cancel Order Failed.','category':'err'}
         flash(res['msg'],res['category'])
         if res['category'] == 'suc':
-            _update_contract(g,request.form['contract_id'],res['type'])
+            _update_contract(g,request.form['contract_id'],res['category'])#todo no deal made order not refresh all contract data
         return redirect(url_for('trade'))
     else:
         g.u = _update_user(g,session)

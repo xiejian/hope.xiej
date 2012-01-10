@@ -42,7 +42,7 @@
     {% for o in g.u['orders'] %}
         <tr><<td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type'] }}</td><td>{{ o['buy_sell'] }}</td>
             <td>{{ o['point']|f }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['value']|f}}</td>
-            <td>{{ (o['value']*cont[o['contract_id']]['leverage'])|f}}</td>
+            <td>{{ o.margin|f}}</td>
             <td><form action="{{ url_for('trade') }}" method="POST">
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
                 <input type="hidden" name="orderid" value= {{o['order_id']}} />
@@ -58,8 +58,7 @@
     {% for p in g.u['positions'] %}
     <tr>
         <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
-        <td>{{(cont[p.contract_id]['latestpoint']*cont[p.contract_id]['btc_multi']*p.lots)|f}}</td><td>{{((cont[p.contract_id]['latestpoint']*cont[p.contract_id]['btc_multi']-p.point)*p.lots)|f}}</td>
-        <td>{{(cont[p.contract_id]['latestpoint']*cont[p.contract_id]['btc_multi']*p.lots*cont[p.contract_id]['leverage'])|f}}</td>
+        <td>{{p.marketvalue|f}}</td><td>{{p.p_l|f}}</td><td>{{p.margin|f}}</td>
         <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
     </tr>
     {% else %}

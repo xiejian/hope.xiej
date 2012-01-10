@@ -21,8 +21,9 @@
     <div class="grid_6">
         {% if session.user_id %}
             {{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) BTC |
-            {{g.u['orders']|length}} Open Orders, Margin {{ g.u['orders']|sum(attribute = 'margin')|f }}| {{g.u['positions']|length}} Positions,
-            Margin {{ g.u['positions']|sum(attribute = 'margin')|f}}
+            {{g.u['orders']|length}} Open Orders, Margin {{ g.u['orders']|sum(attribute = 'margin')|f }} <br />
+            {{(g.u.balance|float + g.u['positions']|sum(attribute = 'p_l')|float - g.u['orders']|sum(attribute = 'margin')|float - g.u['positions']|sum(attribute = 'margin')|float)|f }} BTC Available |
+            {{g.u['positions']|length}} Positions,Profit/Loss {{ g.u['positions']|sum(attribute = 'p_l')|f}},Margin {{ g.u['positions']|sum(attribute = 'margin')|f}}
         {% endif %}
     </div>
     <div class="clear"></div>
