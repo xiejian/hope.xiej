@@ -20,8 +20,9 @@
     </div>
     <div class="grid_6">
         {% if session.user_id %}
-            {{session['balance']|float}} ({{session['bal_unconf']|float }}, {{session['bal_unact']|float }}) BTC |
-            {{session['orders']|length}} Open Orders | {{session['positions']|length}} Positions
+            {{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) BTC |
+            {{g.u['orders']|length}} Open Orders, Margin {{ g.u['orders']|sum(attribute = 'margin')|f }}| {{g.u['positions']|length}} Positions,
+            Margin {{ g.u['positions']|sum(attribute = 'margin')|f}}
         {% endif %}
     </div>
     <div class="clear"></div>

@@ -1,7 +1,7 @@
 import hashlib, base64
 from flask import g,url_for,request,session
 from config import mykey
-from basefunc import sendemail,price2point
+from basefunc import sendemail
 
 def createuser(email, password):
     #check email is not registered
@@ -17,25 +17,6 @@ def createuser(email, password):
     sendemail(email,'createuser',request.url_root + url_for('register',v = a_email+'~'+a_pass))
     return True
 
-def get_userinfo(u_id=0):    #get user's info
-    temp = {}
-    if not u_id:
-        u_id = session['user_id']
-    g.cur.execute("SELECT user_id,email,email_v,feerate FROM users WHERE user_id = %s",u_id)
-    row = g.cur.fetchone()
-    temp.update(dict(user_id=row[0],email=row[1],email_v=row[2],feerate=row[3]))
-    g.cur.execute("SELECT b.balance + IFNULL(a.amount,0),b.bal_unconf,IFNULL(a.amount,0) FROM btc_account b left JOIN v_btcunact a ON b.account = a.account WHERE b.account = %s",temp['email'])
-    row = g.cur.fetchone()
-    if row is None:
-        row = [0,0,0]
-    temp.update(dict(balance=str(row[0]),bal_unconf=str(row[1]),bal_unact=str(row[2])))
-    g.cur.execute("SELECT order_id,contract_id,buy_sell,price,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s",u_id)
-    orders = [dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],rm_lots=row[5],type=row[6],createtime=row[7]) for row in g.cur.fetchall()]
-    temp.update(dict(orders = orders))
-    g.cur.execute("SELECT position_id,contract_id,buy_sell,price,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",u_id)
-    positions = [dict(position_id=row[0],contract_id=row[1],buy_sell=row[2],price=row[3],lots=row[4],opentime=row[5]) for row in g.cur.fetchall()]
-    temp.update({'positions':positions})
-    return temp
 
 def get_uncover_pos(contract_id,b_s):
     num = 0
