@@ -22,7 +22,7 @@ def inject_cont():
 def before_first_request():
     g.db  = _connect_db()
     g.cur = g.db.cursor()
-    _update_contract(g)
+    _update_contract(g.db)
 
 @app.before_request
 def before_request():
@@ -95,7 +95,7 @@ def home():
                 return redirect(url_for('trade'))
             else:
                 flash('Login Failed.','err')
-    g.u = _update_user(g,session)
+    g.u = _update_user(g.db,session)
     return render_template('home.html')
 
 @app.route('/logout')
@@ -140,21 +140,15 @@ def trade():
         return redirect(url_for('home'))
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
-            if True:#todo add order validate func
-                res = _add_order(g,session,request.form['contract_id'],request.form['b_s'],request.form['o_c'], request.form['point'], request.form['lots'])
-            else:
-                res = {'msg':'Add Order Failed.','category':'err'}
+            res = _add_order(g.db,session,request.form['contract_id'],request.form['b_s'],request.form['o_c'], request.form['point'], request.form['lots'])
         else:   #---Cancel order---
-            if len([o for o in session['orders'] if o['order_id'] == long(request.form['orderid'])]):
-                res = _cancel_order(g,request.form['orderid'])
-            else:
-                res = {'msg':'Cancel Order Failed.','category':'err'}
+            res = _cancel_order(g.db,session,request.form['orderid'])
         flash(res['msg'],res['category'])
         if res['category'] == 'suc':
-            _update_contract(g,request.form['contract_id'],res['category'])#todo no deal made order not refresh all contract data
+            _update_contract(g.db,request.form['contract_id'],res['category'])#todo no deal made order not refresh all contract data
         return redirect(url_for('trade'))
     else:
-        g.u = _update_user(g,session)
+        g.u = _update_user(g.db,session)
         contract_id = request.args.get('c', 0, type=int)
         if contract_id == 0 and 'latestcont' in session:
             contract_id = session['latestcont']
@@ -164,7 +158,7 @@ def trade():
 def account():
     if 'user_id' not in session:
         return redirect(url_for('home'))
-    g.u=_update_user(g,session,['trans','btcflow','address'])
+    g.u=_update_user(g.db,session,['trans','btcflow','address'])
     return render_template('account.html')
 
 @app.route('/market', methods=['GET','POST'])

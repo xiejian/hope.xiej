@@ -7,7 +7,11 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 def numformat(num):
-    return '{0:.8f}'.format(num).rstrip('0').rstrip('.')
+    try:
+        res = '{0:.8f}'.format(num).rstrip('0').rstrip('.')
+        return res
+    except Exception:
+        return ''
 
 
 def validateEmail(email):
