@@ -131,7 +131,7 @@ def register():
             else:
                 abort(401)
     return render_template('register.html')
-
+    #todo register recommedation and friend trade volume contribution
 
 
 @app.route('/trade', methods=['GET','POST'])
