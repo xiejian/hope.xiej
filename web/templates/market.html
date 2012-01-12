@@ -6,7 +6,7 @@
 <tr><th>name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th><th>description</th></tr>
 {% for c in cont %}
     <tr>
-    <td>{{cont[c].name}}</td><td>{{cont[c].latestpoint}}</td><td>{{cont[c].leverage}}</td><td>{{cont[c].btc_multi}}</td>
+    <td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].description}}</td>
     </tr>
 {% else %}

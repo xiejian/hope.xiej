@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
-<h3>TRADE</h3>
+<h3>Trade</h3>
 <div class="grid_5">
     <table id="continfo">
     </table>
@@ -19,8 +19,8 @@
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
         <dt>Buy/Sell:
-        <dd><input type="radio" name="b_s" value="B" /> BUY <input type="radio" name="b_s" value="S" /> SELL
-        <dd><input type="radio" name="o_c" value="O" /> Open <input type="radio" name="o_c" value="C" /> Close
+        <dd><input type="radio" name="b_s" value="B" checked="checked"/> BUY <input type="radio" name="b_s" value="S" /> SELL
+        <dd><input type="radio" name="o_c" value="O" checked="checked" /> Open <input type="radio" name="o_c" value="C" /> Close
         <dt>Contract:
         <dd><select id="contract" name="contract_id">
                 {% for ck in cont.keys() %}

@@ -145,7 +145,10 @@ def trade():
             res = _cancel_order(g.db,session,request.form['orderid'])
         flash(res['msg'],res['category'])
         if res['category'] == 'suc':
-            _update_contract(g.db,request.form['contract_id'],res['category'])#todo no deal made order not refresh all contract data
+            if 'Deal' in res['msg']:
+                _update_contract(g.db,request.form['contract_id'],'D')
+            else:
+                _update_contract(g.db,request.form['contract_id'],'C')
         return redirect(url_for('trade'))
     else:
         g.u = _update_user(g.db,session)
@@ -158,11 +161,16 @@ def trade():
 def account():
     if 'user_id' not in session:
         return redirect(url_for('home'))
-    g.u=_update_user(g.db,session,['trans','btcflow','address'])
+
+    #todo handle bitcoin withdraw post
+    #todo set and reset capital password
+
+    g.u=_update_user(g.db,session,['trans','btcflow','address','btctrans','info'])#todo delete btcflow
     return render_template('account.html')
 
 @app.route('/market', methods=['GET','POST'])
 def market():
+    g.u=_update_user(g.db,session)
     return render_template('market.html')
 
 @app.route('/test', methods=['GET','POST'])
