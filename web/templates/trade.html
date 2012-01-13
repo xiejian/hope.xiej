@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
+<script type="text/javascript">activepage(2);</script>
 <h3>Trade</h3>
 <div class="grid_5">
     <table id="continfo">
@@ -66,5 +67,4 @@
     {% endfor %}
 </table>
 </div>
-
 {% endblock %}

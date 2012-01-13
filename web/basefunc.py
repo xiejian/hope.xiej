@@ -13,13 +13,11 @@ def numformat(num):
     except Exception:
         return ''
 
-
 def validateEmail(email):
     if len(email) > 6:
         if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) is not None:
             return True
     return False
-
 
 def sendemail(toaddrs,type,para):
     msg = 'To:' + toaddrs + '\n' + 'From: BTCFE.com\n' + 'Subject:' + email['msg'][type]['subject']

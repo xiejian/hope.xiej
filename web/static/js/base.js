@@ -31,4 +31,13 @@ $(function () {
 
 });
     */
+function activepage(page){
+    $('.topnav li').each(function(i,li){
+        if(i == page)
+            $(li).css("background-color","#EEE");
+        else
+            $(li).css("background-color","");
+    });
+}
+
 $.ajaxSetup({ cache: false });

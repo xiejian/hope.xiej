@@ -60,8 +60,9 @@ def _update_user(db,session,content = []):    #get user's info
             tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
         temp['positions'].append(tt)
     if 'trans' in content:
-        cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp from v_trans WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
-        trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],timestamp=row[7]) for row in cur.fetchall()]
+        cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp,value from v_trans WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
+        trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
+            timestamp=row[7],value = row[8]) for row in cur.fetchall()]
         temp.update({'trans':trans})
     if 'btcflow' in content:
         cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,10",session['email'])
@@ -73,14 +74,23 @@ def _update_user(db,session,content = []):    #get user's info
         temp.update({'btctrans':btctrans})
     if 'address' in content:
         cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
-        temp.update(dict(address=cur.fetchone()[0]))
+        add = cur.fetchone()
+        if add is None:
+            add = ['Please wait bitcoin address to be created']
+        temp.update(dict(address=add[0]))
     if 'info' in content:
         cur.execute("select password2 is null, email_v,feerate from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
         temp.update(dict(password2=row[0],email_v=row[1],feerate=row[2]))
+        cur.execute("select tradevol from v_tradevol WHERE user_id = %s",session['user_id'])
+        vol = cur.fetchone()
+        if vol is None:
+            vol = [0]
+        temp.update(dict(tradevol=vol[0]))
+        cur.execute("select sum(tradevol) from v_tradevol WHERE user_id in (select user_id from users where referrer = %s)",session['user_id'])
+        temp.update(dict(rtradevol=cur.fetchone()[0]))
     cur.close()
     return temp
-
 
 def _add_order(db,session,contract_id,b_s,c_o,point,lots):
     cur = db.cursor()

@@ -1,12 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>{{ session['email'] }}</h3>
+<script type="text/javascript" src="{{url_for('static',filename='js/account.js')}}"></script>
+<h4>{{ session['email'] }}</h4>
+<h5><ul class="navi" id="accountmenu">
+    <li><a href=0>Account Info</a></li>
+    <li><a href=1>My Transactions</a></li>
+    <li><a href=2>Bitcoin Transfer</a></li>
+</ul></h5>
 
-Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} | Feerate: {{ g.u['feerate'] }}
+<div class="grid_11 push_1 account_tab">
+Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} <br/>
+Your Trade Volume in 30 Days: {{ g.u['tradevol'] |f }} |
+Your friends Trade Volume in 30 Days: {{ g.u['rtradevol'] |f }} |
+Current Feerate: {{ g.u['feerate'] }}
+
+<p> Recommendate your friends to join BTCFE by fllowing URL: <a href="{{ g.u['referrurl'] }}">{{ g.u['referrurl'] }} </a></p>
 <!--todo personal info , if valid, set capital password.-->
 <!--todo divide to 4 tabs-->
+</div>
 
-<div class="grid_11 push_1 ">
+<div class="grid_11 push_1 account_tab">
 <table>
     <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
     {% for p in g.u['positions'] %}
@@ -23,11 +36,11 @@ Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} 
 
 <h3>Transaction History</h3>
 <table>
-    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Point</th><th>Lots</th><th>Fee</th><th>Pofit/Loss</th></tr>
+    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Point</th><th>Lots</th><th>Value</th><th>Fee</th><th>Pofit/Loss</th></tr>
     {% for t in g.u['trans'] %}
     <tr>
         <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type}}</td><td>{{t.buy_sell}}</td>
-        <td>{{t.point|f}}</td><td>{{t.lots}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td>
+        <td>{{t.point|f}}</td><td>{{t.lots}}</td><td>{{t.value|f}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td>
     </tr>
     {% else %}
     <tr>None</tr>
@@ -59,7 +72,8 @@ Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} 
     {% endfor %}
 </table>
 
-
+</div>
+<div class="grid_11 push_1 account_tab">
 <h3>BitCoin IN</h3>
 BTC IN
 your bitcoin address:
@@ -82,4 +96,5 @@ your bitcoin address:
 </form>
 
 </div>
+<script type="text/javascript">showtab({{ tab }});</script>
 {% endblock %}

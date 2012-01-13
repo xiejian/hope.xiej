@@ -106,6 +106,7 @@ def logout():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
+    g.u = _update_user(g.db,session)
     if request.method == 'POST':
         if not validateEmail(request.form['username']):
             flash('Not validate Email','err')
@@ -114,8 +115,8 @@ def register():
         elif len(request.form['password']) < 6:
             flash('Password too Short','err')
         else:
-            res = user.createuser(request.form['username'],request.form['password'])
-            if res == True:
+            res = user.createuser(request.form['username'],request.form['password'],request.form['referrer'])
+            if res:
                 flash('New Account was successfully created','suc')
                 return redirect(url_for('home'))
             else:
@@ -130,8 +131,11 @@ def register():
                 return render_template('active.html')
             else:
                 abort(401)
+        rcode = request.args.get('r', False)
+        session['referrer'] = user.getrefer(rcode)
+
     return render_template('register.html')
-    #todo register recommedation and friend trade volume contribution
+#todo register recommedation and friend trade volume contribution
 
 
 @app.route('/trade', methods=['GET','POST'])
@@ -164,9 +168,10 @@ def account():
 
     #todo handle bitcoin withdraw post
     #todo set and reset capital password
-
+    tab = request.args.get('t', 0,type=int)
     g.u=_update_user(g.db,session,['trans','btcflow','address','btctrans','info'])#todo delete btcflow
-    return render_template('account.html')
+    g.u['referrurl'] = user.referrurl(session['user_id'])
+    return render_template('account.html',tab=tab )
 
 @app.route('/market', methods=['GET','POST'])
 def market():
