@@ -39,7 +39,7 @@ function updatepage_contdata(cid){
 
 
 $(function () {
-    activepage(2);
+    activepage(1);
     get_contdata($("#contract").val());
     $("#contract").change(function(){
         get_contdata($(this).val());

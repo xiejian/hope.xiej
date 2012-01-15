@@ -42,6 +42,11 @@ def loginuser(email, password):
     result = g.cur.fetchone()
     return result[0]
 
+def loguser(user_id,action):
+
+    g.cur.execute("INSERT INTO userlog(user_id,action,ip) VALUES (%s,%s);",[user_id,action,request.remote_addr])
+
+
 def referrurl(user_id):
     return request.url_root + url_for('register',r = base64.b32encode(str(user_id)))
 

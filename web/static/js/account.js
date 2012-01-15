@@ -21,7 +21,7 @@ function showtab(tab){
 }
 
 $(function(){
-    activepage(3);
+    activepage(2);
     $("#accountmenu li a").click(function(e){
         e.preventDefault();
         tab = $(this).attr("href");

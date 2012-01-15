@@ -1,0 +1,17 @@
+body  {background-color: black;}
+div.contex  {background-color: #FAD3BD;}
+
+background-image: linear-gradient(right , rgb(0,0,0) 0%, rgb(0,0,0) 100%, rgb(130,94,90) 50%);
+background-image: -o-linear-gradient(right , rgb(0,0,0) 0%, rgb(0,0,0) 100%, rgb(130,94,90) 50%);
+background-image: -moz-linear-gradient(right , rgb(0,0,0) 0%, rgb(0,0,0) 100%, rgb(130,94,90) 50%);
+background-image: -webkit-linear-gradient(right , rgb(0,0,0) 0%, rgb(0,0,0) 100%, rgb(130,94,90) 50%);
+background-image: -ms-linear-gradient(right , rgb(0,0,0) 0%, rgb(0,0,0) 100%, rgb(130,94,90) 50%);
+
+background-image: -webkit-gradient(
+	linear,
+	right bottom,
+	left bottom,
+	color-stop(0, rgb(0,0,0)),
+color-stop(1, rgb(0,0,0)),
+color-stop(0.5, rgb(130,94,90))
+);

@@ -16,19 +16,25 @@
 <div class="container_12">
     <div class="grid_6">
     Bitcoin Futures Exchange
-    <h1>BTCFE.com</h1><p></p>
+    <h1><a href="/">BTCFE.com</a></h1><p></p>
     </div>
     <div class="grid_6">
         {% if session.user_id %}
-            {{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) BTC |
-            {{g.u['orders']|length}} Open Orders, Margin {{ g.u['orders']|sum(attribute = 'margin')|f }} <br />
-            {{(g.u.balance|float + g.u['positions']|sum(attribute = 'p_l')|float - g.u['orders']|sum(attribute = 'margin')|float - g.u['positions']|sum(attribute = 'margin')|float)|f }} BTC Available |
-            {{g.u['positions']|length}} Positions,Profit/Loss {{ g.u['positions']|sum(attribute = 'p_l')|f}},Margin {{ g.u['positions']|sum(attribute = 'margin')|f}}
+            <table><tr>
+                <td>{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td><td>BTC</td>
+                <td>{{(g.u.balance|float + g.u['positions']|sum(attribute = 'p_l')|float - g.u['orders']|sum(attribute = 'margin')|float - g.u['positions']|sum(attribute = 'margin')|float)|f }} </td><td>BTC Available</td>
+            </tr><tr>
+                <td>{{g.u['positions']|length}} Positions</td><td>{{ g.u['positions']|sum(attribute = 'margin')|f}}</td>
+                <td>Margin</td><td>{{ g.u['positions']|sum(attribute = 'p_l')|f}}</td><td>Profit/Loss</td>
+            </tr><tr>
+                <td>{{g.u['orders']|length}} Open Orders</td><td>{{ g.u['orders']|sum(attribute = 'margin')|f}}</td>
+                <td>Margin</td>
+            </tr></table>
         {% endif %}
     </div>
     <div class="clear"></div>
     <div class="grid_8 topnav">
-        <h3><ul class="navi"><li><a href="/">Home</a></li>
+        <h3><ul class="navi">
             <li><a href="{{url_for('market')}}">Market</a></li>
             <li><a href="{{url_for('trade')}}">Trade</a></li>
             <li><a href="{{url_for('account')}}">Account</a></li></ul></h3>

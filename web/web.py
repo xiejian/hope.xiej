@@ -21,7 +21,6 @@ def inject_cont():
 @app.before_first_request
 def before_first_request():
     g.db  = _connect_db()
-    g.cur = g.db.cursor()
     _update_contract(g.db)
 
 @app.before_request
@@ -135,7 +134,7 @@ def register():
         session['referrer'] = user.getrefer(rcode)
 
     return render_template('register.html')
-#todo register recommedation and friend trade volume contribution
+#todo register recommendation and friend trade volume contribution
 
 
 @app.route('/trade', methods=['GET','POST'])
@@ -178,10 +177,24 @@ def market():
     g.u=_update_user(g.db,session)
     return render_template('market.html')
 
+@app.route('/index', methods=['GET','POST'])
+def index():
+    return render_template('index.html')
+
+@app.route('/s', methods=['GET'])
+def server():
+    if request.remote_addr not in app.config['SERVER']:
+        abort(401)
+    print request.url_root
+    print request.url
+    print app.config['SERVER']
+    print request.user_agent
+    return request.remote_addr
+
 @app.route('/test', methods=['GET','POST'])
 def test():
-    print gv_contract
-    return jsonify(gv_contract)
+    print request.user_agent
+    return request.remote_addr
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

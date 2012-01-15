@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
+<script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
 <div class="grid_12">
     <h2>Welcome</h2>
     <p></p>
 </div>
 <div class="clear"></div>
 <div class="grid_7">
-Trade Everything here.
+
+<h5>Bitcoin is not what we trade on BTCFE.com, <br/>it is the Currency we use to Trade EVERYTHING!</h5>
+
+
+<ul>Features of BTCFE.com
+    <li>Various Contracts</li>
+    <li>Leverage Trade</li>
+    <li>Make Money in Both Side</li>
+    <li>Low Transactions Fee</li>
+</ul>
 </div>
 <div class="grid_3 suffix_1 login">
 <form action="{{ url_for('home') }}" method=post>
@@ -20,4 +30,12 @@ Trade Everything here.
     </dl>
 </form>
 </div>
+<div class="clear"></div>
+<ol>GET STARTED:
+    <li>Sign-up!</li>
+    <li>Deposit via your unique Bitcoin Address</li>
+    <li>Buy or Sell a contract</li>
+    <li>Close a contract to realize profit/loss</li>
+    <li>Withdraw anytime!</li>
+</ol>
 {% endblock %}

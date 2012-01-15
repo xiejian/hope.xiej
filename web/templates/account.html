@@ -9,17 +9,7 @@
 </ul></h5>
 
 <div class="grid_11 push_1 account_tab">
-Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} <br/>
-Your Trade Volume in 30 Days: {{ g.u['tradevol'] |f }} |
-Your friends Trade Volume in 30 Days: {{ g.u['rtradevol'] |f }} |
-Current Feerate: {{ g.u['feerate'] }}
-
-<p> Recommendate your friends to join BTCFE by fllowing URL: <a href="{{ g.u['referrurl'] }}">{{ g.u['referrurl'] }} </a></p>
-<!--todo personal info , if valid, set capital password.-->
-<!--todo divide to 4 tabs-->
-</div>
-
-<div class="grid_11 push_1 account_tab">
+<h5>Current Holding</h5>
 <table>
     <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
     {% for p in g.u['positions'] %}
@@ -33,6 +23,21 @@ Current Feerate: {{ g.u['feerate'] }}
     {% endfor %}
 </table>
 <hr/>
+<h5>Security Info</h5>
+Latest Access IP:
+Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} <br/>
+
+<h5>Referee & Volume</h5>
+Your Trade Volume in 30 Days: {{ g.u['tradevol'] |f }} |
+Your friends Trade Volume in 30 Days: {{ g.u['rtradevol'] |f }} |
+Current Feerate: {{ g.u['feerate'] }}
+
+<p> Recommendate your friends to join BTCFE by fllowing URL: <a href="{{ g.u['referrurl'] }}">{{ g.u['referrurl'] }} </a></p>
+<!--todo personal info , if valid, set capital password.-->
+<!--todo 发送邀请信，限制名额.-->
+</div>
+
+<div class="grid_11 push_1 account_tab">
 
 <h3>Transaction History</h3>
 <table>
