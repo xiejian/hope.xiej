@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="{{url_for('static',filename='js/bitcoin.js')}}"></script>
+<h5><ul class="navi" id="bitcoinmenu">
+    <li><a href=0>Transfer IN</a></li>
+    <li><a href=1>Transfer OUT</a></li>
+</ul></h5>
+
+
+<div class="grid_11 push_1 bitcoin_tab">
+<h3>BitCoin IN</h3>
+BTC IN
+your bitcoin address:
+<h2>{{ g.u['address'] }}</h2>
+</div>
+
+<div class="grid_11 push_1 bitcoin_tab">
+<h3>BitCoin OUT</h3>
+<form action="{{ url_for('account') }}" method=post>
+    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+    <dl>
+        <dt>Address:
+        <dd><input type=text name="address" value="" />
+        <dt>Amount:
+        <dd><input type=number name="amount" value="" />
+        <dt>Password:
+        <dd><input type=password name="password" value="" />
+        <dt>Capital Password:
+        <dd><input type=password name="cpassword" value="" />
+        <dd><input type=submit value=Transfer>
+    </dl>
+</form>
+
+</div>
+
+{% endblock %}

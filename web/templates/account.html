@@ -3,9 +3,8 @@
 <script type="text/javascript" src="{{url_for('static',filename='js/account.js')}}"></script>
 <h4>{{ session['email'] }}</h4>
 <h5><ul class="navi" id="accountmenu">
-    <li><a href=0>Account Info</a></li>
-    <li><a href=1>My Transactions</a></li>
-    <li><a href=2>Bitcoin Transfer</a></li>
+    <li><a href=0>General Info</a></li>
+    <li><a href=1>Account History</a></li>
 </ul></h5>
 
 <div class="grid_11 push_1 account_tab">
@@ -24,8 +23,33 @@
 </table>
 <hr/>
 <h5>Security Info</h5>
-Latest Access IP:
-Capital Password:{{ g.u['password2'] }} | Email_validated: {{ g.u['email_v'] }} <br/>
+Latest Access Log:
+<table>
+    <tr><th>Timestamp</th><th>Action</th><th>IP Address</th></tr>
+    {% for l in g.u['log'] %}
+    <tr>
+        <td>{{ l.timestamp }}</td><td>{{ l.action }}</td><td>{{ l.ip }}</td>
+    </tr>
+    {% endfor %}
+</table>
+Capital Password:{{ g.u['password2'] }}
+<div>
+    <form action="{{ url_for('account') }}" method=post>
+        <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+        <dl>
+
+            <dt>Old Password:
+            <dd><input {% if g.u['password2'] %} type=password{% else %} type="hidden" {% endif %} name="opassword" value="" />
+            <dt>Password:
+            <dd><input type=password name="password" value="" />
+            <dt>Confirmed Password:
+            <dd><input type=password name="password2" value="" />
+            <dd><input type=submit value="SET Capital Password">
+        </dl>
+    </form>
+</div>
+
+Email_validated: {{ g.u['email_v'] }} <br/>
 
 <h5>Referee & Volume</h5>
 Your Trade Volume in 30 Days: {{ g.u['tradevol'] |f }} |
@@ -35,6 +59,15 @@ Current Feerate: {{ g.u['feerate'] }}
 <p> Recommendate your friends to join BTCFE by fllowing URL: <a href="{{ g.u['referrurl'] }}">{{ g.u['referrurl'] }} </a></p>
 <!--todo personal info , if valid, set capital password.-->
 <!--todo 发送邀请信，限制名额.-->
+Your friend will get 100BTC initial trade volume and 0.1 BTC after his first trade; You will get all this trade volume in the future.
+<form action="{{ url_for('account') }}" method=post>
+    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+    <dl>
+        <dt>Invite a friend:
+        <dd><input type=text name="email" value="" />
+        <dd><input type=submit value="Send Invite"> {{ g.u['invite'] }} left
+    </dl>
+</form>
 </div>
 
 <div class="grid_11 push_1 account_tab">
@@ -78,28 +111,5 @@ Current Feerate: {{ g.u['feerate'] }}
 </table>
 
 </div>
-<div class="grid_11 push_1 account_tab">
-<h3>BitCoin IN</h3>
-BTC IN
-your bitcoin address:
-<h2>{{ g.u['address'] }}</h2>
 
-<h3>BitCoin OUT</h3>
-<form action="{{ url_for('account') }}" method=post>
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <dl>
-        <dt>Address:
-        <dd><input type=text name="address" value="" />
-        <dt>Amount:
-        <dd><input type=number name="amount" value="" />
-        <dt>Password:
-        <dd><input type=password name="password" value="" />
-        <dt>Capital Password:
-        <dd><input type=password name="cpassword" value="" />
-        <dd><input type=submit value=Transfer>
-    </dl>
-</form>
-
-</div>
-<script type="text/javascript">showtab({{ tab }});</script>
 {% endblock %}

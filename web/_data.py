@@ -72,6 +72,10 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s ORDER BY timestamp DESC LIMIT 0,10",session['email'])
         btctrans = [dict(type=row[0],amount=row[1],fee=row[2], address=row[3],txid=row[4],timestamp=row[5],confirmed=row[6]) for row in cur.fetchall()]
         temp.update({'btctrans':btctrans})
+    if 'log' in content:
+        cur.execute("SELECT action,ip,timestamp FROM userlog WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
+        log = [dict(action=row[0],ip=row[1],timestamp=row[2]) for row in cur.fetchall()]
+        temp.update({'log':log})
     if 'address' in content:
         cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
         add = cur.fetchone()
@@ -79,9 +83,9 @@ def _update_user(db,session,content = []):    #get user's info
             add = ['Please wait bitcoin address to be created']
         temp.update(dict(address=add[0]))
     if 'info' in content:
-        cur.execute("select password2 is null, email_v,feerate from users WHERE user_id = %s",session['user_id'])
+        cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
-        temp.update(dict(password2=row[0],email_v=row[1],feerate=row[2]))
+        temp.update(dict(password2=(row[0]==0),email_v=row[1],feerate=row[2],invite=row[3]))
         cur.execute("select tradevol from v_tradevol WHERE user_id = %s",session['user_id'])
         vol = cur.fetchone()
         if vol is None:

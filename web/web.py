@@ -1,17 +1,21 @@
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
-from basefunc import validateEmail,generate_csrf_token,numformat
-import user,MySQLdb
+from _user import _activeuser,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite
+from _mail import _send_mail
+from _basefunc import validateEmail,numformat,_decode,_encode
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-from contextlib import closing
+import os,base64
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
+    return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 app.jinja_env.filters['f'] = numformat
-
-
 
 #================================================================
 @app.context_processor
@@ -27,7 +31,6 @@ def before_first_request():
 def before_request():
     """Make sure we are connected to the database each request."""
     g.db  = _connect_db()
-    g.cur = g.db.cursor()
     if request.method == "POST":
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
@@ -36,8 +39,6 @@ def before_request():
 @app.teardown_request
 def teardown_request(exception):
     """Closes the database again at the end of the request."""
-    if hasattr(g, 'cur'):
-        g.cur.close()
     if hasattr(g, 'db'):
         g.db.close()
 #=================================================================
@@ -63,7 +64,7 @@ def contdata():
 def userdata():
     if 'user_id' not in session:
         abort(401)
-    return jsonify(user.get_userinfo(session['user_id']))
+    return jsonify(_update_user(session['user_id']))
 
 @app.route('/_marketdata')
 def marketdata():
@@ -86,11 +87,12 @@ def home():
         if not validateEmail(request.form['username']):
             flash('Not validate Email','err')
         else:
-            user_id = user.loginuser(request.form['username'],request.form['password'])
+            user_id = _loginuser(g.db,request.form['username'],request.form['password'])
             if user_id:
                 session['user_id'] = user_id
                 session['email'] = request.form['username']
                 flash('You were logged in','suc')
+                _loguser(g.db,user_id,'Login',request.remote_addr)
                 return redirect(url_for('trade'))
             else:
                 flash('Login Failed.','err')
@@ -114,8 +116,9 @@ def register():
         elif len(request.form['password']) < 6:
             flash('Password too Short','err')
         else:
-            res = user.createuser(request.form['username'],request.form['password'],request.form['referrer'])
-            if res:
+            res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
+            if res == True:
+                _send_mail(request.form['username'],'register',request.url_root+url_for('register'))
                 flash('New Account was successfully created','suc')
                 return redirect(url_for('home'))
             else:
@@ -123,7 +126,7 @@ def register():
     else:
         vcode = request.args.get('v', False)
         if vcode:
-            user_id = user.activeuser(vcode)
+            user_id = _activeuser(g.db,vcode)
             if user_id:
                 flash('Your account had been activated.','suc')
                 session['user_id'] = user_id
@@ -131,7 +134,7 @@ def register():
             else:
                 abort(401)
         rcode = request.args.get('r', False)
-        session['referrer'] = user.getrefer(rcode)
+        session['referrer'] = _decode(rcode)
 
     return render_template('register.html')
 #todo register recommendation and friend trade volume contribution
@@ -164,13 +167,37 @@ def trade():
 def account():
     if 'user_id' not in session:
         return redirect(url_for('home'))
+    if request.method == 'POST' and 'password' in request.form:
+        if request.form['password'] <> request.form['password2']:
+            flash('Password not Match','err')
+        elif len(request.form['password']) < 6:
+            flash('Password too Short','err')
+        elif _vali_cpass(g.db,session['email'],request.form['opassword']):
+            _update_cpass(g.db,session['email'],request.form['password'])
+            flash('Capital Password Changed Successfully.')
+        else:
+            flash('Orignal Capital Password Not Match.')
+    elif request.method == 'POST' and 'email' in request.form:
+        if not validateEmail(request.form['email']):
+            flash('Not validate Email','err')
+        else:
+            _invite(g.db,session['user_id'])
+            _send_mail(request.form['email'],'invite',request.url_root + url_for('register',r = _encode(session['user_id'])))
+            flash('Invite Email Sent.','suc')
 
-    #todo handle bitcoin withdraw post
-    #todo set and reset capital password
-    tab = request.args.get('t', 0,type=int)
-    g.u=_update_user(g.db,session,['trans','btcflow','address','btctrans','info'])#todo delete btcflow
-    g.u['referrurl'] = user.referrurl(session['user_id'])
-    return render_template('account.html',tab=tab )
+    g.u=_update_user(g.db,session,['trans','btcflow','btctrans','info','log'])#todo delete btcflow
+    return render_template('account.html')
+
+@app.route('/bitcoin', methods=['GET','POST'])
+def bitcoin():
+    if 'user_id' not in session:
+        return redirect(url_for('home'))
+    if request.method == 'POST':
+        #todo handle bitcoin withdraw post
+        pass
+    g.u=_update_user(g.db,session,['address'])
+    return render_template('bitcoin.html')
+
 
 @app.route('/market', methods=['GET','POST'])
 def market():
