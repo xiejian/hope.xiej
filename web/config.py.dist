@@ -10,6 +10,7 @@ DB = {
     }
 SECRET_KEY = 'dev key'
 DEBUG = True
+INTERNAL_IP = ['127.0.0.1']
 
 
 mykey = 'X!eH0uyu'
@@ -17,14 +18,5 @@ email={
         'smtpadd': 'smtp.gmail.com:587',
         'passwd':   'xiej2024',
         'sendadd':  'btcfe.com@gmail.com',
-        'msg':{
-                'createuser':{
-                    'subject':  'Welcome to BTCFE. Activate your account Plz.\n',
-                    'foreword':  'Welcome to BTCFE. Please click the following link to activate your BTCFE account\n\n',
-                    'afterword': '\n\nIf you have any questions or advices, Please do not hesitate to contact us. \n'+ \
-                                 'Thank you for your registration. Enjoy it.\n\n' + \
-                                 'Regards,\n' + \
-                                 'Your BTCFE Team'
-                }
-        }
+
 }

@@ -6,7 +6,7 @@
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
         <dt>E-mail:
-        <dd><input type=text name=username>
+        <dd><input type=text name=username value="{{ session['email'] }}">
         <dt>Password:
         <dd><input type=password name=password>
         <dt>Confirm Password:

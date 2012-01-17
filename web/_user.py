@@ -16,8 +16,8 @@ def _createuser(db,email,password,referrer):
 
 def _activeuser(db,code):
     cur = db.cursor()
-    str = code.split('~')
     try:
+        str = code.split('~')
         d_email = base64.urlsafe_b64decode(str[0].encode('ascii','ignore'))
         resrows = cur.execute('SELECT user_id,password from users where email=%s', d_email)
         if resrows != 1:
@@ -33,6 +33,17 @@ def _activeuser(db,code):
         return  False
     finally:
         cur.close()
+
+def _activecode(db,email):
+    cur = db.cursor()
+    resrows = cur.execute('SELECT password from users where email=%s', email)
+    if resrows != 1:
+        return False
+    c_pass = cur.fetchone()[0]
+    a_email = base64.urlsafe_b64encode(email)
+    a_pass = base64.urlsafe_b64encode(hashlib.sha512(c_pass).digest())
+    cur.close()
+    return a_email+'~'+a_pass
 
 def _loginuser(db,email, password):
     cur = db.cursor()
@@ -78,4 +89,16 @@ def _loguser(db,user_id,action,ip):
     db.commit()
     cur.close()
 
+def _dercode(code):
+    try:
+        str = code.split('~')
+        referrer = base64.urlsafe_b64decode(str[0].encode('ascii','ignore'))
+        d_email = base64.urlsafe_b64decode(str[1].encode('ascii','ignore'))
+        return dict(referrer=referrer,email=d_email)
+    except Exception:
+        return dict(referrer=0,email='')
 
+def _enrcode(user_id,email):
+    a_user = base64.urlsafe_b64encode(str(user_id))
+    a_email = base64.urlsafe_b64encode(email)
+    return a_user + '~' + a_email

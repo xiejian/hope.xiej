@@ -19,10 +19,11 @@
     <form action="{{ url_for('trade') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
-        <dt>Buy/Sell:
-        <dd><input type="radio" name="b_s" value="B" checked="checked"/> BUY <input type="radio" name="b_s" value="S" /> SELL
-        <dd><input type="radio" name="o_c" value="O" checked="checked" /> Open <input type="radio" name="o_c" value="C" /> Close
-        <dt>Contract:
+        <dd><label for="t_b">BUY</label><input type="radio" name="b_s" value="B" id="t_b" checked="checked"/>
+            <label for="t_s">SELL</label><input type="radio" name="b_s" id="t_s" value="S" />
+        <dd><label for="t_o">Open</label><input type="radio" name="o_c" value="O" id="t_o" checked="checked" />
+            <label for="t_c">Close</label><input type="radio" name="o_c" id="t_c" value="C" />
+        <dt><label for="contract">Contract</label>
         <dd><select id="contract" name="contract_id">
                 {% for ck in cont.keys() %}
                     <option value={{ck}} {% if ck == default_cid %} selected="selected" {% endif %} >{{cont[ck]['name']}}</option>

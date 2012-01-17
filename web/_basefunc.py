@@ -13,14 +13,5 @@ def validateEmail(email):
             return True
     return False
 
-def _decode(code):
-    try:
-        refer = base64.b32decode(code)
-        return refer
-    except Exception:
-        return 0
-
-def _encode(val):
-    return base64.b32encode(str(val))
 
 

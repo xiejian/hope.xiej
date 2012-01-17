@@ -1,8 +1,8 @@
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
-from _user import _activeuser,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
-from _basefunc import validateEmail,numformat,_decode,_encode
+from _basefunc import validateEmail,numformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 import os,base64
 
@@ -29,13 +29,11 @@ def before_first_request():
 
 @app.before_request
 def before_request():
-    """Make sure we are connected to the database each request."""
-    g.db  = _connect_db()
-    if request.method == "POST":
+    if request.method == "POST" and request.remote_addr not in app.config['INTERNAL_IP']:
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
-
+    g.db  = _connect_db()
 @app.teardown_request
 def teardown_request(exception):
     """Closes the database again at the end of the request."""
@@ -118,12 +116,13 @@ def register():
         else:
             res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
             if res == True:
-                _send_mail(request.form['username'],'register',request.url_root+url_for('register'))
+                _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
                 return redirect(url_for('home'))
             else:
                 flash(res,'err')
     else:
+        session.pop('user_id', None)
         vcode = request.args.get('v', False)
         if vcode:
             user_id = _activeuser(g.db,vcode)
@@ -134,8 +133,8 @@ def register():
             else:
                 abort(401)
         rcode = request.args.get('r', False)
-        session['referrer'] = _decode(rcode)
-
+        ref = _dercode(rcode)
+        session.update(ref)
     return render_template('register.html')
 #todo register recommendation and friend trade volume contribution
 
@@ -182,7 +181,8 @@ def account():
             flash('Not validate Email','err')
         else:
             _invite(g.db,session['user_id'])
-            _send_mail(request.form['email'],'invite',request.url_root + url_for('register',r = _encode(session['user_id'])))
+            _send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
+                                                       'refer':session['email']})
             flash('Invite Email Sent.','suc')
 
     g.u=_update_user(g.db,session,['trans','btcflow','btctrans','info','log'])#todo delete btcflow
@@ -208,15 +208,12 @@ def market():
 def index():
     return render_template('index.html')
 
-@app.route('/s', methods=['GET'])
+@app.route('/s', methods=['POST'])
 def server():
-    if request.remote_addr not in app.config['SERVER']:
-        abort(401)
-    print request.url_root
-    print request.url
-    print app.config['SERVER']
+    print request.form
+    print request.form['name']
     print request.user_agent
-    return request.remote_addr
+    return jsonify(request.form)
 
 @app.route('/test', methods=['GET','POST'])
 def test():

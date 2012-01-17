@@ -20,9 +20,24 @@ function showtab(tab){
     });
 }
 
+function getiploc(){
+    $('.ip').each(function(i,td){
+
+        $.get("http://api.hostip.info/get_html.php?ip="+$(td).html()+"&callback=?",function(data){
+                console.log(data);
+                $(td).next().html(data.replace(/^(.*)IP:.*$/m, '$1'));
+            });
+    });
+}
+
+function test(){
+    return 'hi'
+}
+
 $(function(){
     activepage(2);
     showtab(0);
+    getiploc();
     $("#accountmenu li a").click(function(e){
         e.preventDefault();
         tab = $(this).attr("href");
