@@ -1,14 +1,17 @@
+import os,base64
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
 from _basefunc import validateEmail,numformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-import os,base64
+#from flaskext.mail import Mail
+
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+#mail = Mail(app)
 
 def generate_csrf_token():
     if '_csrf_token' not in session:

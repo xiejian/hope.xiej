@@ -25,10 +25,10 @@
 <h5>Security Info</h5>
 Latest Access Log:
 <table>
-    <tr><th>Timestamp</th><th>Action</th><th>IP Address</th><th>Approximate location</th></tr>
+    <tr><th>Timestamp</th><th>Action</th><th>IP Address</th><th>Approximate Location</th><th>Times</th></tr>
     {% for l in g.u['log'] %}
     <tr>
-        <td>{{ l.timestamp }}</td><td>{{ l.action }}</td><td class="ip">{{ l.ip }}</td><td>...</td>
+        <td>{{ l.timestamp }}</td><td>{{ l.action }}</td><td class="ip">{{ l.ip }}</td><td>...</td><td>{{ l.times }}</td>
     </tr>
     {% endfor %}
 </table>

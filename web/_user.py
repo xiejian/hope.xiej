@@ -85,7 +85,12 @@ def _invite(db,user_id):
 
 def _loguser(db,user_id,action,ip):
     cur = db.cursor()
-    cur.execute("INSERT INTO userlog(user_id,action,ip) VALUES (%s,%s,%s);",[user_id,action,ip])
+    cur.execute("SELECT userlog_id,action,ip FROM userlog WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,1",[user_id])
+    res = cur.fetchone()
+    if res and res[1]==action and res[2] ==ip:
+        cur.execute("UPDATE userlog SET times = times +1 WHERE userlog_id = %s",[res[0]])
+    else:
+        cur.execute("INSERT INTO userlog(user_id,action,ip) VALUES (%s,%s,%s);",[user_id,action,ip])
     db.commit()
     cur.close()
 

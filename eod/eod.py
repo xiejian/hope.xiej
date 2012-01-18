@@ -41,8 +41,6 @@ def svrexit():
     db.close()
     print  time.strftime('%d_%H:%M',time.localtime(time.time())),'BTCFE EOD Service Stoped.'
 
-
-
 if __name__ == "__main__":
 
     db=MySQLdb.connect(host=database['host'], user=database['user'], passwd=database['passwd'],db=database['db'])

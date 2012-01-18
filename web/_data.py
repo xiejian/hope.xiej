@@ -73,8 +73,8 @@ def _update_user(db,session,content = []):    #get user's info
         btctrans = [dict(type=row[0],amount=row[1],fee=row[2], address=row[3],txid=row[4],timestamp=row[5],confirmed=row[6]) for row in cur.fetchall()]
         temp.update({'btctrans':btctrans})
     if 'log' in content:
-        cur.execute("SELECT action,ip,timestamp FROM userlog WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
-        log = [dict(action=row[0],ip=row[1],timestamp=row[2]) for row in cur.fetchall()]
+        cur.execute("SELECT action,ip,times,timestamp FROM userlog WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,5",session['user_id'])
+        log = [dict(action=row[0],ip=row[1],times=row[2],timestamp=row[3]) for row in cur.fetchall()]
         temp.update({'log':log})
     if 'address' in content:
         cur.execute("SELECT address FROM btc_account WHERE account = %s",session['email'])
