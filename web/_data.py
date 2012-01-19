@@ -13,8 +13,8 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         gv_contract[long(cid)]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in cur.fetchall()]
     else:   #deals had been made, update all
         ocur = db.cursor()
-        cur.execute("SELECT contract_id,concat(name,DATE_FORMAT(settledate,'%y%m')),status,btc_multi,DATE_FORMAT(opendate,'%Y-%m-%d'), \
-                    latestpoint,DATE_FORMAT(settledate,'%Y-%m-%d'),leverage,discription FROM contract WHERE STATUS = 'O' AND contract_id ="+str(cid))
+        cur.execute("SELECT c.contract_id,concat(cs.code,DATE_FORMAT(settledate,'%y%m')),c.status,c.btc_multi,DATE_FORMAT(c.opendate,'%Y-%m-%d'), \
+                    c.latestpoint,DATE_FORMAT(c.settledate,'%Y-%m-%d'),c.leverage,cs.name FROM contract c, conts cs WHERE c.conts_id = cs.conts_id and c.STATUS = 'O' AND c.contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(name=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],leverage=row[7],discription=row[8])
             #update order queues

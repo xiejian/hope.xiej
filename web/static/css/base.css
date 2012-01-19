@@ -12,3 +12,6 @@ div.trade   {border: solid 10px #e5e5e6;background: #BEF; }
 table       {width: 90%;border: solid 10px #e5e5e6;background: #BEF;text-align: center;}
 
 .navi li    {float: left;}
+
+
+span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
