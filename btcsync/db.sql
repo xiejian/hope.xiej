@@ -139,18 +139,21 @@ DROP TABLE IF EXISTS `contract`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contract` (
   `contract_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(8) NOT NULL,
+  `code` varchar(6) NOT NULL,
+  `fullname` varchar(32) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'N',
   `btc_multi` decimal(10,8) NOT NULL DEFAULT '1.00000000',
-  `opendate` date NOT NULL,
+  `opendate` datetime DEFAULT NULL,
   `latestpoint` decimal(20,8) DEFAULT NULL,
-  `settledate` date DEFAULT NULL,
+  `settledate` datetime DEFAULT NULL,
   `settlepoint` decimal(20,8) DEFAULT NULL,
-  `settleproof` varchar(64) DEFAULT NULL,
   `leverage` decimal(4,4) NOT NULL DEFAULT '0.2500',
-  `discription` varchar(64) NOT NULL,
+  `owner` int(11) DEFAULT NULL,
+  `twitter_id` varchar(16) DEFAULT NULL,
+  `region_id` smallint(6) DEFAULT NULL,
+  `sector_id` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`contract_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,8 +162,37 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
-INSERT INTO `contract` VALUES (4,'USD','O','1.00000000','2012-01-01',NULL,'2012-06-30',NULL,NULL,'0.2500','US Dollar Futures'),(5,'USD','O','1.00000000','2012-01-01',NULL,'2012-09-30',NULL,NULL,'0.2500','US Dollar Futures'),(6,'SP500','O','0.00100000','2012-01-01','100.00000000','2012-06-30',NULL,NULL,'0.2500','S&P 500 Index');
+INSERT INTO `contract` VALUES (4,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-06-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(5,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-09-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(6,'SP500','S&P 500','O','0.00100000','2012-01-01 00:00:00','100.00000000','2012-06-30 00:00:00',NULL,'0.2500',28,NULL,1,2),(7,'SP500','S&P 500','N','0.00100000',NULL,NULL,'2012-09-30 00:00:00',NULL,'0.2500',28,'BTCFE',1,2);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `conts`
+--
+
+DROP TABLE IF EXISTS `conts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conts` (
+  `conts_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(8) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `btc_multi` decimal(10,8) DEFAULT NULL,
+  `leverage` decimal(4,4) DEFAULT NULL,
+  `twitter_id` varchar(12) DEFAULT NULL,
+  `cycle` char(1) DEFAULT 'N',
+  PRIMARY KEY (`conts_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conts`
+--
+
+LOCK TABLES `conts` WRITE;
+/*!40000 ALTER TABLE `conts` DISABLE KEYS */;
+INSERT INTO `conts` VALUES (1,'USD','US Dollar',NULL,NULL,'1','Q'),(2,'SP500','S&P500 Stock Index',NULL,NULL,'2','Q');
+/*!40000 ALTER TABLE `conts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -278,6 +310,54 @@ INSERT INTO `positions` VALUES (4,28,6,'S','100.00000000',1,'2012-01-12 09:52:56
 UNLOCK TABLES;
 
 --
+-- Table structure for table `s_region`
+--
+
+DROP TABLE IF EXISTS `s_region`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `s_region` (
+  `region_id` int(11) NOT NULL AUTO_INCREMENT,
+  `region` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`region_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_region`
+--
+
+LOCK TABLES `s_region` WRITE;
+/*!40000 ALTER TABLE `s_region` DISABLE KEYS */;
+INSERT INTO `s_region` VALUES (1,'North America'),(2,'Latin America / Carib.'),(3,'Oceania / Australia'),(4,'Middle East'),(5,'Europe'),(6,'Asia'),(7,'Africa');
+/*!40000 ALTER TABLE `s_region` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `s_sector`
+--
+
+DROP TABLE IF EXISTS `s_sector`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `s_sector` (
+  `sector_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sector` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`sector_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_sector`
+--
+
+LOCK TABLES `s_sector` WRITE;
+/*!40000 ALTER TABLE `s_sector` DISABLE KEYS */;
+INSERT INTO `s_sector` VALUES (1,'Currency'),(2,'Stock Index'),(3,'Commodity'),(4,'Sports'),(5,'Politic'),(6,'Entertainment'),(7,'Others');
+/*!40000 ALTER TABLE `s_sector` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `test`
 --
 
@@ -339,9 +419,10 @@ CREATE TABLE `userlog` (
   `user_id` int(11) NOT NULL,
   `action` varchar(8) NOT NULL,
   `ip` varchar(15) DEFAULT NULL,
+  `times` smallint(6) DEFAULT '1',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userlog_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +431,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (2,28,'Login','127.0.0.1','2012-01-16 06:19:02'),(3,29,'Login','127.0.0.1','2012-01-16 08:09:32'),(4,34,'Login','127.0.0.1','2012-01-16 08:25:11'),(5,28,'Login','127.0.0.1','2012-01-16 09:36:29'),(6,28,'Login','127.0.0.1','2012-01-17 02:10:51'),(7,28,'Login','127.0.0.1','2012-01-17 03:07:49'),(8,28,'Login','127.0.0.1','2012-01-17 05:21:32'),(9,28,'Login','127.0.0.1','2012-01-17 05:27:44'),(10,28,'Login','127.0.0.1','2012-01-17 05:29:24'),(11,28,'Login','127.0.0.1','2012-01-17 07:02:31'),(12,28,'Login','127.0.0.1','2012-01-17 08:09:19'),(13,29,'Login','127.0.0.1','2012-01-17 08:12:19');
+INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',7,'2012-01-18 05:47:53');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,7 +452,7 @@ CREATE TABLE `users` (
   `referrer` int(11) DEFAULT '0',
   `invite` smallint(6) DEFAULT '3',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -380,7 +461,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.000100',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.000100',0,3);
+INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.000100',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.000100',0,2),(30,'SYS','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.000100',0,3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,7 +539,7 @@ SET character_set_client = utf8;
 /*!50001 CREATE TABLE `v_pos` (
   `user_id` int(11),
   `contract_id` int(11),
-  `contract_name` varchar(8),
+  `code` varchar(6),
   `buy_sell` char(1),
   `lots` decimal(32,0),
   `cost` decimal(62,16),
@@ -1042,7 +1123,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_pos` AS select `p`.`user_id` AS `user_id`,`p`.`contract_id` AS `contract_id`,`c`.`name` AS `contract_name`,`p`.`buy_sell` AS `buy_sell`,sum(`p`.`lots`) AS `lots`,sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`)) AS `cost`,sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`)) AS `marketvalue`,(case when (`p`.`buy_sell` = 'B') then (sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`)) - sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`))) else (sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`)) - sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`))) end) AS `p_l`,sum((((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`) * `c`.`leverage`)) AS `margin` from (`positions` `p` join `contract` `c`) where (`p`.`contract_id` = `c`.`contract_id`) group by `p`.`user_id`,`p`.`contract_id`,`p`.`buy_sell`,`c`.`name` */;
+/*!50001 VIEW `v_pos` AS select `p`.`user_id` AS `user_id`,`p`.`contract_id` AS `contract_id`,`c`.`code` AS `code`,`p`.`buy_sell` AS `buy_sell`,sum(`p`.`lots`) AS `lots`,sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`)) AS `cost`,sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`)) AS `marketvalue`,(case when (`p`.`buy_sell` = 'B') then (sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`)) - sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`))) else (sum(((`p`.`lots` * `p`.`point`) * `c`.`btc_multi`)) - sum(((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`))) end) AS `p_l`,sum((((`p`.`lots` * `c`.`latestpoint`) * `c`.`btc_multi`) * `c`.`leverage`)) AS `margin` from (`positions` `p` join `contract` `c`) where (`p`.`contract_id` = `c`.`contract_id`) group by `p`.`user_id`,`p`.`contract_id`,`p`.`buy_sell`,`c`.`code` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1094,4 +1175,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-01-17 17:09:53
+-- Dump completed on 2012-01-20 17:01:42

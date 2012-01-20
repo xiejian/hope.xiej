@@ -1,6 +1,8 @@
-import re,os, base64
+import re,os, base64,datetime
 
-def numformat(num):
+def webformat(num):
+    if isinstance(num,datetime.datetime):
+        return num.isoformat()
     try:
         res = '{0:.8f}'.format(num).rstrip('0').rstrip('.')
         return res

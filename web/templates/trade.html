@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
-<script type="text/javascript">activepage(2);</script>
 <h3>Trade</h3>
 <div class="grid_5">
     <table id="continfo">
@@ -25,7 +24,7 @@
             <label for="t_c">Close</label><input type="radio" name="o_c" id="t_c" value="C" />
         <dt><label for="contract">Contract</label>
         <dd><select id="contract" name="contract_id">
-                {% for ck in cont.keys() %}
+                {% for ck in cont.keys() if cont[ck]['status']=='O' %}
                     <option value={{ck}} {% if ck == default_cid %} selected="selected" {% endif %} >{{cont[ck]['name']}}</option>
                 {% endfor %}
             </select>

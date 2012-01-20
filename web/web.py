@@ -3,7 +3,7 @@ from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
-from _basefunc import validateEmail,numformat
+from _basefunc import validateEmail,webformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 #from flaskext.mail import Mail
 
@@ -18,7 +18,7 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.filters['f'] = numformat
+app.jinja_env.filters['f'] = webformat
 
 #================================================================
 @app.context_processor
@@ -206,6 +206,33 @@ def bitcoin():
 def market():
     g.u=_update_user(g.db,session)
     return render_template('market.html')
+
+@app.route('/contract', methods=['GET','POST'])
+def contract():
+    if 'user_id' not in session:
+        flash('Please Log in First.')
+        return redirect(url_for('home'))
+    g.u = _update_user(g.db,session)
+    if request.method == 'POST':
+        if not validateEmail(request.form['username']):
+            flash('Not validate Email','err')
+        elif request.form['password'] <> request.form['password2']:
+            flash('Password not Match','err')
+        elif len(request.form['password']) < 6:
+            flash('Password too Short','err')
+        else:
+            res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
+            if res == True:
+                _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
+                flash('New Account was successfully created','suc')
+                return redirect(url_for('home'))
+            else:
+                flash(res,'err')
+    else:
+        pass
+    return render_template('contract.html')
+#todo register recommendation and friend trade volume contribution
+
 
 @app.route('/index', methods=['GET','POST'])
 def index():

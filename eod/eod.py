@@ -13,7 +13,7 @@ req = urllib2.Request(web_url,urllib.urlencode(data))
 f = urllib2.urlopen(req)
 print f.read()
 
-#contract status: N: New, P: Approval, O: Open, C: Close, S: Settled, A:Achieved
+#contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected
 def open_cont():
     rows = cur.execute("UPDATE contracts SET status = 'O' WHERE status ='P' and opendate <= NOW() and settledate > NOW()")
     print rows,'contract opened.'
@@ -24,9 +24,12 @@ def close_cont():
     print rows,'contract closed.'
 
 def settle_cont():
+    cur.execute("SELECT contract_id FROM contracts WHERE status ='Q' and settlepoint is not null")
     pass
 
 def achieve_cont():
+    rows = cur.execute("UPDATE contracts SET status = 'A' WHERE status ='S' and settledate < NOW() + INTERVAL - 90 DAY")
+    print rows,'contract opened.'
     pass
 
 def cal_userinfo():

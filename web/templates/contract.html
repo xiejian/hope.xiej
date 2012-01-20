@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
+<h4>Create a New Contract</h4>
+
+<form action="{{ url_for('contract') }}" method=post>
+    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+    <dl>
+        <dt>Code:
+        <dd><input type=text name=code >
+        <dt>Full Name:
+        <dd><input type=text name=fullname>
+        <dt>Region:
+        <dd><input type=text name=regoin >
+        <dt>Sector:
+        <dd><input type=text name=sector>
+        <dt>Open Date:
+        <dd><input type=date name=opendate min=1 max=366>
+        <dt>Settle Date:
+        <dd><input type=date name=settledate min=7 max=400>
+        <dt>Btc Multi:
+        <dd><input type=text name=btc_multi>
+        <dt>Leverage:
+        <dd><input type=text name=leverage>
+        <dt>Twitter ID:
+        <dd><input type=text name=twitter_id>
+        <dd><input type=submit value=Create>
+    </dl>
+</form>
+{% endblock %}

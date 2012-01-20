@@ -1,21 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 <script type="text/javascript" src="{{url_for('static',filename='js/market.js')}}"></script>
-<h3>Contracts</h3>
-
+<div class="grid_12 ">
+<h4>Open Contracts</h4><a href="{{url_for('contract')}}">Create My Own Contract</a>
 <table>
-<tr><th>name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th><th>description</th></tr>
-{% for c in cont %}
+<tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+    <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Trade</th></tr>
+{% for c in cont if cont[c].status =='O'%}
     <tr>
-    <td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].description}}</td>
+        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td>
+        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td>
     </tr>
 {% else %}
     <tr>None</tr>
 {% endfor %}
 </table>
 <hr/>
+<h4>New Contracts</h4>
+<table>
+    <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
+    {% for c in cont if cont[c].status =='N'%}
+    <tr>
+        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+<hr/>
+<h4>Close Contracts</h4>
+<table>
+    <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
+    {% for c in cont if cont[c].status =='S'%}
+    <tr>
+        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+<hr/>
+
 
 <div id="tweets"></div>
-<div class="tweet2"></div>
+
+</div>
 {% endblock %}
