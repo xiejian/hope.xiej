@@ -44,4 +44,5 @@ $(function () {
     $("#contract").change(function(){
         get_contdata($(this).val());
     });
+    $("form").validator();
 });

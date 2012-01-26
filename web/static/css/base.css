@@ -1,5 +1,5 @@
-div.msg_err {float: right;}
-div.msg_suc {float: right;}
+div.msg_err, div.msg_suc,div.msg_message {float: right;border:2px solid  #F00;}
+
 
 div.login   {border: solid 10px #e5e5e6; background: #BFB;}
 

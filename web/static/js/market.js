@@ -38,7 +38,7 @@ var K = function () {
 $(function () {
     activepage(0);
 
-    $.getJSON("http://search.twitter.com/search.json?callback=?&q=BTCFE",
+    $.getJSON("http://search.twitter.com/search.json?callback=?&q=BTCFE&include_entities=true",
         function(data){
             for (i=0; i<data.results.length; i++){
                 $("#tweets").append("" +

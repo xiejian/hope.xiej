@@ -32,8 +32,8 @@ Latest Access Log:
     </tr>
     {% endfor %}
 </table>
-Capital Password:{{ g.u['password2'] }}
-<div>
+Capital Password:{{ g.u['password2'] }}<button class="modalInput" rel="#set_cpass">Set</button>
+<div class="modal" id="set_cpass">
     <form action="{{ url_for('account') }}" method=post>
         <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         <dl>

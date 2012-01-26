@@ -22,9 +22,7 @@ function showtab(tab){
 
 function getiploc(){
     $('.ip').each(function(i,td){
-
         $.get("http://api.hostip.info/get_html.php?ip="+$(td).html()+"&callback=?",function(data){
-                console.log(data);
                 $(td).next().html(data.replace(/^(.*)IP:.*$/m, '$1'));
             });
     });
@@ -42,5 +40,14 @@ $(function(){
         e.preventDefault();
         tab = $(this).attr("href");
         showtab(tab);
+    });
+    var triggers = $(".modalInput").overlay({
+        // some mask tweaks suitable for modal dialogs
+        mask: {
+            color: '#ebecff',
+            loadSpeed: 200,
+            opacity: 0.9
+        },
+        closeOnClick: false
     });
 });
