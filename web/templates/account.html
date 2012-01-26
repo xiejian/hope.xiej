@@ -40,9 +40,9 @@ Capital Password:{{ g.u['password2'] }}<button class="modalInput" rel="#set_cpas
             <dt>Old Password:
             <dd><input {% if g.u['password2'] %} type=password{% else %} type="hidden" {% endif %} name="opassword" value="" />
             <dt>Password:
-            <dd><input type=password name="password" value="" />
+            <dd><input type="password" name="password" value="" minlength="4" />
             <dt>Confirmed Password:
-            <dd><input type=password name="password2" value="" />
+            <dd><input type="password" name="password2" value="" data-equals="password"/>
             <dd><input type=submit value="SET Capital Password">
         </dl>
     </form>
@@ -63,7 +63,7 @@ Your friend will get 100BTC initial trade volume and 0.1 BTC after his first tra
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
         <dt>Invite a friend:
-        <dd><input type=text name="email" value="" />
+        <dd><input type=email name="email" value="" required="required"/>
         <dd><input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
     </dl>
 </form>

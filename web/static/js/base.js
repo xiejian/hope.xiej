@@ -25,12 +25,9 @@ function get_contlp(clist){
         });
     });
 }
+ */
 
-$(function () {
-    //get_userdata();
 
-});
-    */
 function activepage(page){
     $('.topnav li').each(function(i,li){
         if(i == page)
@@ -42,4 +39,6 @@ function activepage(page){
 
 $.ajaxSetup({ cache: false });
 
-
+$(function () {
+    $("form").validator();
+});

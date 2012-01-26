@@ -41,6 +41,7 @@ $(function(){
         tab = $(this).attr("href");
         showtab(tab);
     });
+
     var triggers = $(".modalInput").overlay({
         // some mask tweaks suitable for modal dialogs
         mask: {
