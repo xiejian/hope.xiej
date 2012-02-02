@@ -9,6 +9,8 @@ from config import database, web_url
 
 data = {'name':'xiejian','id':3}
 
+NOT = {'B':'S','S':'B'}
+
 req = urllib2.Request(web_url,urllib.urlencode(data))
 f = urllib2.urlopen(req)
 print f.read()
@@ -16,23 +18,39 @@ print f.read()
 #contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected
 def open_cont():
     rows = cur.execute("UPDATE contracts SET status = 'O' WHERE status ='P' and opendate <= NOW() and settledate > NOW()")
-    print rows,'contract opened.'
+    print rows,'contracts opened.'
 
 def close_cont():
     rows = cur.execute("UPDATE contracts SET status = 'C' WHERE status ='O' and settledate <= NOW()")
     #todo cancel all orders
-    print rows,'contract closed.'
+    print rows,'contracts closed.'
 
 def settle_cont():
-    cur.execute("SELECT contract_id FROM contracts WHERE status ='Q' and settlepoint is not null")
-    pass
+    cur.execute("SELECT contract_id,settlepoint FROM contracts WHERE status ='Q' and settlepoint is not null")
+    ccur = db.cursor()
+    ocur = db.cursor()
+    for c in cur.fetchall():
+        #cancel all open order; add close order with settlepoint and oppsite b_s in positions
+        ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
+        for o in ccur.fetchall():
+            ocur.callproc('exchange',(o[0],o[1],'C'))
+            print 'Cancel Order',ocur.fetchone()
+        ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
+        for p in ccur.fetchall():
+            ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],'C',c[1],p[2]))
+            print 'Add Order',ocur.fetchone()
+        print c[0],'Contract Settled at Point',c[1]
+    ocur.close()
+    ccur.close()
 
 def achieve_cont():
-    rows = cur.execute("UPDATE contracts SET status = 'A' WHERE status ='S' and settledate < NOW() + INTERVAL - 90 DAY")
-    print rows,'contract opened.'
     pass
 
 def cal_userinfo():
+    pass
+
+def forced_close():
+
     pass
 
 def svrstart():

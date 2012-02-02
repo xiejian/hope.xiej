@@ -159,7 +159,7 @@ def trade():
                 _update_contract(g.db,request.form['contract_id'],'C')
         return redirect(url_for('trade'))
     else:
-        g.u = _update_user(g.db,session)
+        g.u = _update_user(g.db,session,['orders','positions'])
         contract_id = request.args.get('c', 0, type=int)
         if contract_id == 0 and 'latestcont' in session:
             contract_id = session['latestcont']

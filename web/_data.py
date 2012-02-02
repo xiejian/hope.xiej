@@ -35,31 +35,35 @@ def _update_user(db,session,content = []):    #get user's info
         return dict(balance=0,bal_unconf=0,bal_unact=0,omargin=0,pmargin=0)
     temp = {}
     cur = db.cursor()
-    cur.execute("SELECT b.balance + IFNULL(a.amount,0),b.bal_unconf,IFNULL(a.amount,0) FROM btc_account b left JOIN v_btcunact a ON b.account = a.account WHERE b.account = %s",session['email'])
+    cur.execute("SELECT balance,bal_unconf,bal_unact,onum,omargin,pnum,pmargin,p_l FROM v_userbtc WHERE user_id = %s",session['user_id'])
     row = cur.fetchone()
     if row is None:
         row = [0,0,0]
-    temp.update(dict(balance=str(row[0]),bal_unconf=str(row[1]),bal_unact=str(row[2]),orders=[],positions=[]))
+    temp.update(dict(balance=row[0],bal_unconf=row[1],bal_unact=row[2],onum=row[3],omargin=row[4],pnum=row[5],pmargin=row[6],p_l=row[7]))
     # get user's orders info
-    cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
-    for row in cur.fetchall():
-        tt=dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],rm_lots=row[5],type=row[6],\
-            value=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],createtime=row[7])
-        if row[6] == 'O':
-            tt.update(dict(margin = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
-        else:
-            tt.update(dict(margin = 0))
-        temp['orders'].append(tt)
+    if 'orders' in content:
+        cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
+        temp['orders'] = []
+        for row in cur.fetchall():
+            tt=dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],rm_lots=row[5],type=row[6],\
+                value=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],createtime=row[7])
+            if row[6] == 'O':
+                tt.update(dict(margin = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
+            else:
+                tt.update(dict(margin = 0))
+            temp['orders'].append(tt)
     # get user's positions info
-    cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",session['user_id'])
-    for row in cur.fetchall():
-        tt = dict(contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],opentime=row[5],marketvalue=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
-            margin = gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
-        if row[2] == 'B':
-            tt.update(dict(p_l = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
-        else:
-            tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
-        temp['positions'].append(tt)
+    if 'positions' in content:
+        cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",session['user_id'])
+        temp['positions']=[]
+        for row in cur.fetchall():
+            tt = dict(contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],opentime=row[5],marketvalue=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
+                margin = gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
+            if row[2] == 'B':
+                tt.update(dict(p_l = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
+            else:
+                tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
+            temp['positions'].append(tt)
     if 'trans' in content:
         cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp,value from v_trans WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
         trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
