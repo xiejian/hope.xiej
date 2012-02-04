@@ -1,19 +1,9 @@
-<!doctype html>
-<html>
-<head>
-    <title>BTCFE.com</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
+{% extends "wrap.html" %}
+{% block head %}
     <script type="text/javascript" src="{{url_for('static',filename='js/base.js')}}"></script>
-    <link type="text/css" href="{{url_for('static',filename='css/reset.css')}}" rel="stylesheet" />
-    <link type="text/css" href="{{url_for('static',filename='css/text.css')}}" rel="stylesheet" />
-    <link type="text/css" href="{{url_for('static',filename='css/960.css')}}" rel="stylesheet" />
     <link type="text/css" href="{{url_for('static',filename='css/base.css')}}" rel="stylesheet" />
-    <link type="text/css" href="{{url_for('static',filename='css/skin1.css')}}" rel="stylesheet" />
-    <script type=text/javascript>
-        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    </script></head>
-<body>
+{% endblock %}
+{% block base %}
 <div id="header">
 <div class="container_12">
     <div class="grid_6">
@@ -58,10 +48,4 @@
     {% block content %}{% endblock %}
 
 </div>
-<div id="footer">
-    <div class="container_12">CopyRight 2011</div>
-</div>
-
-</body>
-</html>
-
+{% endblock %}

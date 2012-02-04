@@ -1,41 +1,70 @@
-{% extends "base.html" %}
-{% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
-<div class="grid_12">
-    <h2>Welcome</h2>
-    <p></p>
-</div>
-<div class="clear"></div>
-<div class="grid_7">
-
-<h5>Bitcoin is not what we trade on BTCFE.com, <br/>it is the Currency we use to Trade EVERYTHING!</h5>
-
-
-<ul>Features of BTCFE.com
-    <li>Various Contracts</li>
-    <li>Leverage Trade</li>
-    <li>Make Money in Both Side</li>
-    <li>Low Transactions Fee</li>
-</ul>
-</div>
-<div class="grid_3 suffix_1 login">
-<form action="{{ url_for('home') }}" method=post>
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <dl>
-        <dt>Username:
-        <dd><input type=email name=username>
-        <dt>Password:
-        <dd><input type=password name=password>
-        <dd><input type=submit value=Login>
-    </dl>
-</form>
-</div>
-<div class="clear"></div>
-<ol>GET STARTED:
-    <li>Sign-up!</li>
-    <li>Deposit via your unique Bitcoin Address</li>
-    <li>Buy or Sell a contract</li>
-    <li>Close a contract to realize profit/loss</li>
-    <li>Withdraw anytime!</li>
-</ol>
+-{% extends "wrap.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/home.css')}}" rel="stylesheet" />
 {% endblock %}
+{% block base %}
+<div id="maintop">
+    <div class="container_12">
+        <div class="grid_5">
+            <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
+            <h1>BTCFE.com</h1> Bitcoin Futures Exchange<br/>
+            <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4>
+            <p>　</p><p></p>
+        </div>
+        <div class="grid_7">
+            <p></p>
+            <form class="login" action="{{ url_for('home') }}" method=post>
+                <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+                <input type=email name=username size="14">
+                <input type=password name=password size="10">
+                <input type=submit value=Login>
+            </form>
+            <p></p><p></p>
+            <img src="{{url_for('static',filename='img/home2.gif')}}"/>
+            <a href = "/register">Create A New Account</a>
+            <p></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="container_12">
+    <div id="mainmid" class="grid_10 push_1">
+        <div class="grid_2 homestep">GET STARTED:Sign-up!</div>
+        <div class="grid_2 homestep">Deposit via your unique Bitcoin Address</div>
+        <div class="grid_2 homestep">Buy or Sell a contract</div>
+        <div class="grid_2 homestep">Close a contract to realize profit/loss</div>
+        <div class="grid_2 homestep">Withdraw anytime!</div>
+    </div>
+</div>
+    <p>　</p>
+<div id="maindown" class="container_12">
+    <div class="grid_7">
+        <h4>Features</h4>
+
+            <ul>Features of BTCFE.com
+                <li>Various Contracts</li>
+                <li>Leverage Trade</li>
+                <li>Make Money in Both Side</li>
+                <li>Low Transactions Fee</li>
+            </ul>
+
+    </div>
+    <div class="grid_5 homenews">
+        <h4>Site News</h4>
+        <p>blabal</p>
+        <p>blabal</p>
+        <p>blabal</p><p>blabal</p>
+        <p>blabal</p>
+
+        <h4>Talk About BTCFE</h4>
+        <p>blabal</p>
+        <p>blabal</p>
+        <p>blabal</p><p>blabal</p>
+        <p>blabal</p>
+    </div>
+    <div class="clear"></div>
+
+</div>
+{% endblock %}
+

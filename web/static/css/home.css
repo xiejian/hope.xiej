@@ -1,0 +1,12 @@
+div#maintop {background:#DDCCB1; padding: 5px;}
+div#mainmid  {background:#FFF;  margin-top: -30px;
+    border:1px solid #ccc;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-box-shadow: 0 0 15px #666;
+    -webkit-box-shadow: 0 0 15px #666;	}
+div#maindown {background:#FFF;  text-align:center;padding: 5px}
+div.homestep    {background:#FFF361;}
+div.homenews    {background:#EEE;}
+form.login  {text-align:right;}
+input   {font-size: 1.3em;}
