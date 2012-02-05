@@ -1,17 +1,22 @@
 div.msg_err, div.msg_suc,div.msg_message {float: right;border:2px solid  #F00;}
 
 
-div.login   {border: solid 10px #e5e5e6; background: #BFB;}
 
-body        {background: #EEE;}
-div#header  {background: #ABF;}
+div#header  {background:#DDCCB1; }
 div#body    {background: #FFF;margin-top: 20px;margin-bottom: 20px;}
-div#footer  {text-align: center;}
+
 div.trade   {border: solid 10px #e5e5e6;background: #BEF; }
+div.binfo {float:right;background-image:url(../img/b.info.gif); border:0;width: 318px;
+    height: 82px;
+    margin: 15px 14px 1px 5px;
+    padding: 14px 14px 30px 20px; }
+div.binfo>table {width: 100%;height: 100%;text-align: right;}
 
-table       {width: 90%;border: solid 10px #e5e5e6;background: #BEF;text-align: center;}
+div.topnavr    {text-align: right;}
+/*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
 
-.navi li    {float: left;}
-
+ul.topnav li    {float: left;list-style: none;text-align: center;}
+ul.topnav a     {padding: 0px 10px 0px 10px;}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
+

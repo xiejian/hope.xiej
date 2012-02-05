@@ -5,34 +5,33 @@
 {% endblock %}
 {% block base %}
 <div id="header">
-<div class="container_12">
-    <div class="grid_6">
+<div class="container_16">
+    <div class="grid_8">
     Bitcoin Futures Exchange<br/>
-    <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
+    <a href="/"><img src="{{url_for('static',filename='img/logos.gif')}}"/></a>
     </div>
-    <div class="grid_6">
+    <div class="binfo">
         {% if session.user_id %}
             <table><tr>
-                <td>{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td><td>BTC</td>
-                <td>{{(g.u.balance|float + g.u.p_l|float - g.u.omargin|float - g.u.pmargin|float)|f }} </td><td>BTC Available</td>
+                <td>Asset</td><td colspan="2">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
             </tr><tr>
-                <td>{{g.u.pnum}} Positions</td><td>{{ g.u.pmargin|f}}</td>
-                <td>Margin</td><td>{{ g.u.p_l|f}}</td><td>Profit/Loss</td>
+                <td>Avail</td><td colspan="2">{{(g.u.balance|float + g.u.p_l|float - g.u.omargin|float - g.u.pmargin|float)|f }} ({{ g.u.p_l|float}}) </td>
             </tr><tr>
-                <td>{{g.u.onum}} Open Orders</td><td>{{ g.u.omargin|f}}</td>
-                <td>Margin</td>
+                <td>Positions {{g.u.pnum}}</td><td> Margin</td><td>{{ g.u.pmargin|f}}</td>
+            </tr><tr>
+                <td>Orders {{g.u.onum}}</td><td> Margin</td><td>{{ g.u.omargin|f}} </td>
             </tr></table>
         {% endif %}
     </div>
     <div class="clear"></div>
-    <div class="grid_8 topnav">
-        <h3><ul class="navi">
+    <div class="grid_10">
+        <h3><ul class="topnav">
             <li><a href="{{url_for('market')}}">Market</a></li>
             <li><a href="{{url_for('trade')}}">Trade</a></li>
             <li><a href="{{url_for('account')}}">Account</a></li>
             <li><a href="{{url_for('bitcoin')}}">Bitcoin</a></li></ul></h3>
     </div>
-    <div class="grid_4  topnav">
+    <div class="grid_6 topnavr">
     {% if session.user_id %}
         Welcome <strong> {{ session['email'] }}  </strong> | <a href = "/logout">Logout</a>
     {% else %} <a href = "/register">Create A New Account</a>
@@ -40,7 +39,7 @@
     </div>
 </div>
 </div>
-<div id="body" class="container_12">
+<div id="body" class="container_16">
 
     {% for category,message in get_flashed_messages(with_categories=True) %}
         <div class="msg_{{ category }}">{{ message }}</div>

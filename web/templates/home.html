@@ -1,18 +1,18 @@
--{% extends "wrap.html" %}
+{% extends "wrap.html" %}
 {% block head %}
     <script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
     <link type="text/css" href="{{url_for('static',filename='css/home.css')}}" rel="stylesheet" />
 {% endblock %}
 {% block base %}
 <div id="maintop">
-    <div class="container_12">
-        <div class="grid_5">
-            <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
-            <h1>BTCFE.com</h1> Bitcoin Futures Exchange<br/>
-            <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4>
-            <p>　</p><p></p>
-        </div>
+    <div class="container_16">
         <div class="grid_7">
+            <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
+            <h1>Bitcoin Futures Exchange</h1>
+            <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4>
+            <p>　</p>
+        </div>
+        <div class="grid_9">
             <p></p>
             <form class="login" action="{{ url_for('home') }}" method=post>
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
@@ -20,37 +20,42 @@
                 <input type=password name=password size="10">
                 <input type=submit value=Login>
             </form>
-            <p></p><p></p>
-            <img src="{{url_for('static',filename='img/home2.gif')}}"/>
-            <a href = "/register">Create A New Account</a>
             <p></p>
+            <img src="{{url_for('static',filename='img/home2.gif')}}"/><p>　</p>
+            <a href = "/register">Create A New Account</a>
+
         </div>
         <div class="clear"></div>
     </div>
 </div>
-<div class="container_12">
-    <div id="mainmid" class="grid_10 push_1">
-        <div class="grid_2 homestep">GET STARTED:Sign-up!</div>
-        <div class="grid_2 homestep">Deposit via your unique Bitcoin Address</div>
-        <div class="grid_2 homestep">Buy or Sell a contract</div>
-        <div class="grid_2 homestep">Close a contract to realize profit/loss</div>
-        <div class="grid_2 homestep">Withdraw anytime!</div>
+<div class="container_16">
+    <div id="mainmid" class="grid_13 push_1 prefix_1">
+        <div class=" homestep"><span class="stepinfo">GET STARTED:</span><br/>1. Sign-up!</div>
+        <div class=" homestep">2. Deposit Bitcoin via your unique address</div>
+        <div class=" homestep"><br/>3. Buy or Sell a contract</div>
+        <div class=" homestep">4. Close a contract to realize profit/loss</div>
+        <div class=" homestep">5. Withdraw anytime!<br/><span class="stepinfo">　THAT'S IT!</span></div>
     </div>
 </div>
-    <p>　</p>
-<div id="maindown" class="container_12">
-    <div class="grid_7">
+<div id="maindown" class="container_16">
+    <div class="grid_10">
         <h4>Features</h4>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe1.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Various Contracts</h5><span class="comment">You can trade everything here.</span> </div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe2.gif')}}" alt=""></h5></div>
+        <div class="grid_4 omega"><h5>Make Money in Both Side</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="clear"></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe3.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Leverage Trade</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe4.gif')}}" alt=""></h5></div>
+        <div class="grid_4 omega"><h5>Low Transactions Fee</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="clear"></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe5.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Reliable</h5><span class="comment">You can trade everything here.</span></div>
 
-            <ul>Features of BTCFE.com
-                <li>Various Contracts</li>
-                <li>Leverage Trade</li>
-                <li>Make Money in Both Side</li>
-                <li>Low Transactions Fee</li>
-            </ul>
 
     </div>
-    <div class="grid_5 homenews">
+    <div class="grid_6 homenews">
         <h4>Site News</h4>
         <p>blabal</p>
         <p>blabal</p>

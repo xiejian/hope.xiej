@@ -1,12 +1,15 @@
 div#maintop {background:#DDCCB1; padding: 5px;}
 div#mainmid  {background:#FFF;  margin-top: -30px;
     border:1px solid #ccc;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-box-shadow: 0 0 15px #666;
-    -webkit-box-shadow: 0 0 15px #666;	}
-div#maindown {background:#FFF;  text-align:center;padding: 5px}
-div.homestep    {background:#FFF361;}
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px #666;
+    behavior: url(ie-css3.htc); 	}
+div#maindown {background:#FFF;  padding: 5px}
+div#maindown div.grid_1{text-align:center;}
+div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 15px 5px;padding: 11px 20px 16px 5px;
+        background-image:url(../img/h.stepa.gif);}
+span.stepinfo   {font-style: italic;color: #666;}
+span.comment   {color: #666;}
 div.homenews    {background:#EEE;}
 form.login  {text-align:right;}
-input   {font-size: 1.3em;}
+form.login>input   {font-size: 1.3em;}
