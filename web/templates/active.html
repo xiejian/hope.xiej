@@ -1,9 +1,16 @@
-{% extends "base.html" %}
+{% extends "_ptitle.html" %}
+{% block head %}
+    <link type="text/css" href="{{url_for('static',filename='css/active.css')}}" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
-<h2>Congratulations</h2>
-{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+<div class="grid_16">
+    <h2>Create a New Account</h2>
 
-<p>your account had been activated.</p>
-This Page will redirect to HOME
-
+    <div class="active grid_9 push_2">
+    <h1>Congratulations! Your account had been activated.</h1>
+        Next step: to <a href="{{ url_for('bitcoin') }}"> deposit bitcoin </a>
+    </div>
+</div>
+<p>　</p>
 {% endblock %}

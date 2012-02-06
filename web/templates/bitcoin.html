@@ -1,11 +1,13 @@
-{% extends "base.html" %}
+{% extends "_utitle.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/bitcoin.js')}}"></script>
+{% endblock %}
 {% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/bitcoin.js')}}"></script>
+
 <h5><ul class="navi" id="bitcoinmenu">
     <li><a href=0>Transfer IN</a></li>
     <li><a href=1>Transfer OUT</a></li>
 </ul></h5>
-
 
 <div class="grid_11 push_1 bitcoin_tab">
 <h3>BitCoin IN</h3>

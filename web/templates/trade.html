@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "_utitle.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
+{% endblock %}
 {% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/trade.js')}}"></script>
 <h3>Trade</h3>
-<div class="grid_5">
+<div class="grid_6">
     <table id="continfo">
     </table>
     <h4>order queue</h4>
@@ -13,8 +15,8 @@
     </table>
 </div>
 
-<div class="grid_7">
-<div class="grid_5 push_1 trade">
+<div class="grid_10">
+<div class="grid_7 push_1 trade">
     <form action="{{ url_for('trade') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
@@ -67,5 +69,6 @@
     {% endfor %}
 </table>
 </div>
+<div class="clear"></div>
 <!--todo add rich text editor , and picture upload,as a contract info & proof-->
 {% endblock %}

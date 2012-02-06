@@ -1,41 +1,63 @@
-{% extends "base.html" %}
-{% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
-<div class="grid_12">
-    <h2>Welcome</h2>
-    <p></p>
-</div>
-<div class="clear"></div>
-<div class="grid_7">
+{% extends "_ptitle.html" %}
 
-<h5>Bitcoin is not what we trade on BTCFE.com, <br/>it is the Currency we use to Trade EVERYTHING!</h5>
-
-
-<ul>Features of BTCFE.com
-    <li>Various Contracts</li>
-    <li>Leverage Trade</li>
-    <li>Make Money in Both Side</li>
-    <li>Low Transactions Fee</li>
-</ul>
-</div>
-<div class="grid_3 suffix_1 login">
-<form action="{{ url_for('home') }}" method=post>
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <dl>
-        <dt>Username:
-        <dd><input type=email name=username>
-        <dt>Password:
-        <dd><input type=password name=password>
-        <dd><input type=submit value=Login>
-    </dl>
-</form>
-</div>
-<div class="clear"></div>
-<ol>GET STARTED:
-    <li>Sign-up!</li>
-    <li>Deposit via your unique Bitcoin Address</li>
-    <li>Buy or Sell a contract</li>
-    <li>Close a contract to realize profit/loss</li>
-    <li>Withdraw anytime!</li>
-</ol>
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/home.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/home.css')}}" rel="stylesheet" />
 {% endblock %}
+
+{% block extitle %}
+    <div class="grid_7">
+        <h1>Bitcoin Futures Exchange</h1>
+        <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4><p>　</p>
+    </div>
+    <div class="grid_9">
+        <img name="h_img" src="{{url_for('static',filename='img/home2.gif')}}"/>
+        <a href="{{url_for('register')}}" class="push_3" name="register">Register Now!</a>
+    </div>
+    <div class="clear"></div>
+{% endblock %}
+
+{% block content %}
+    <div id="h_mid" class="grid_13 push_1 prefix_1">
+        <div class=" homestep"><span class="stepinfo">GET STARTED:</span><br/>1. Sign-up!</div>
+        <div class=" homestep">2. Deposit Bitcoin via your unique address</div>
+        <div class=" homestep"><br/>3. Buy or Sell a contract</div>
+        <div class=" homestep">4. Close a contract to realize profit/loss</div>
+        <div class=" homestep">5. Withdraw anytime!<br/><span class="stepinfo">　THAT'S IT!</span></div>
+    </div>
+    <div class="clear"></div>
+    <div class="grid_10 h_feature">
+        <h4>Features</h4>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe1.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Various Contracts</h5><span class="comment">You can trade everything here.</span> </div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe2.gif')}}" alt=""></h5></div>
+        <div class="grid_4 omega"><h5>Make Money in Both Side</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="clear"></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe3.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Leverage Trade</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe4.gif')}}" alt=""></h5></div>
+        <div class="grid_4 omega"><h5>Low Transactions Fee</h5><span class="comment">You can trade everything here.</span></div>
+        <div class="clear"></div>
+        <div class="grid_1 alpha"><h5> <img src="{{url_for('static',filename='img/h.fe5.gif')}}" alt=""></h5></div>
+        <div class="grid_4 alpha">     <h5>Reliable</h5><span class="comment">You can trade everything here.</span></div>
+
+
+    </div>
+    <div class="grid_6 h_news">
+        <h4>Site News</h4>
+        <p>blabal</p>
+        <p>blabal</p>
+        <p>blabal</p><p>blabal</p>
+        <p>blabal</p>
+
+        <h4>Talk About BTCFE</h4>
+        <p>blabal</p>
+        <p>blabal</p>
+        <p>blabal</p><p>blabal</p>
+        <p>blabal</p>
+    </div>
+    <div class="clear"></div>
+
+
+{% endblock %}
+

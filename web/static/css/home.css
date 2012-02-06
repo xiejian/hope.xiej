@@ -1,0 +1,17 @@
+div#h_mid  {background:#FFF;  margin-top: -30px;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px #666;
+    behavior: url(ie-css3.htc); 	}
+img[name=h_img]   {margin: -40px 0px -40px 0px;}
+div.h_feature {background:#FFF; }
+div.h_feature div.grid_1{text-align:center;}
+div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 15px 5px;padding: 11px 20px 16px 5px;
+        background-image:url(../img/h.stepa.gif);}
+span.stepinfo   {font-style: italic;color: #666;}
+span.comment   {color: #666;}
+div.h_news    {background:#EEE;}
+a[name=register]    {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding:5px 10px 5px 10px;color:#FCA;background:#08A;border:1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px #666;}
+a[name=register]:hover{background:#246;color:#FFF;}

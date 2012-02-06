@@ -1,0 +1,17 @@
+
+
+div.trade   {border: solid 10px #e5e5e6;background: #BEF; }
+div.binfo {float:right;background-image:url(../img/b.info.gif); border:0;width: 318px;
+    height: 82px;
+    margin: 15px 14px 1px 5px;
+    padding: 14px 14px 30px 20px; }
+div.binfo>table {width: 100%;height: 100%;text-align: right;}
+
+div.topnavr    {text-align: right;}
+/*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
+
+ul.topnav li    {float: left;list-style: none;text-align: center;}
+ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.8em;padding: 5px 10px 5px 10px;}
+
+span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
+

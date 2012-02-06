@@ -1,6 +1,8 @@
-{% extends "base.html" %}
+{% extends "_utitle.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/account.js')}}"></script>
+{% endblock %}
 {% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/account.js')}}"></script>
 <h4>{{ session['email'] }}</h4>
 <h5><ul class="navi" id="accountmenu">
     <li><a href=0>General Info</a></li>

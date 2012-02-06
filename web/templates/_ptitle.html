@@ -1,0 +1,22 @@
+{% extends "__wrap.html" %}
+{% block thead %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/_ptitle.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/_ptitle.css')}}" rel="stylesheet" />
+{% endblock %}
+{% block title %}
+
+    <div class="grid_6 ptlogo">
+        <a href="/"><img src="{{url_for('static',filename='img/logos.gif')}}"/></a>
+    </div>
+    <div class="grid_10 ptlogin">
+        <form class="login" action="{{ url_for('home') }}" method=post>
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            <input type=email name=username size="14">
+            <input type=password name=password size="10">
+            <input type=submit value=Login>
+        </form>
+    </div>
+    <div class="clear"></div>
+
+{% endblock %}
+
