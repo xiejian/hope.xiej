@@ -1,6 +1,4 @@
 
-
-div.trade   {border: solid 10px #e5e5e6;background: #BEF; }
 div.binfo {float:right;background-image:url(../img/b.info.gif); border:0;width: 318px;
     height: 82px;
     margin: 15px 14px 1px 5px;
@@ -11,7 +9,9 @@ div.topnavr    {text-align: right;}
 /*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
 
 ul.topnav li    {float: left;list-style: none;text-align: center;}
-ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.8em;padding: 5px 10px 5px 10px;}
+ul.topnav li.active {background: #FFF;}
+ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 5px 10px 5px 10px;}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 
+div#body table {width:100%;border:1px solid #ccc;border-radius: 5px;    }

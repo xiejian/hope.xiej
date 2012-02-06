@@ -31,9 +31,9 @@ function get_contlp(clist){
 function activepage(page){
     $('.topnav li').each(function(i,li){
         if(i == page)
-            $(li).css("background-color","#EEE");
+            $(li).addClass("active")
         else
-            $(li).css("background-color","");
+            $(li).removeClass("active")
     });
 }
 
