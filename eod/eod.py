@@ -37,7 +37,7 @@ def settle_cont():
             print 'Cancel Order',ocur.fetchone()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
-            ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],'C',c[1],p[2]))
+            ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print 'Add Order',ocur.fetchone()
         print c[0],'Contract Settled at Point',c[1]
     ocur.close()
@@ -50,8 +50,21 @@ def cal_userinfo():
     pass
 
 def forced_close():
+    cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin <= 0")
+    ccur = db.cursor()
+    ocur = db.cursor()
+    for u in cur.fetchall():
+        if u[2] > 0:
+            #cancel all open order;
+            ocur.execute("SELECT order_id FROM orders WHERE status ='O' and type = 'O' and user_id = %s",u[0])
+            for o in ocur.fetchall():
+                ccur.callproc('exchange',(o[0],u[0],'C'))
+                print 'Cancel Order',ccur.fetchone()
+        elif u[1] <= 0:
+            #forced close postion
+            ocur.callproc('forced_close',(u[0],-u[1]))
+            print 'Forced Close',ccur.fetchone()
 
-    pass
 
 def svrstart():
     pass

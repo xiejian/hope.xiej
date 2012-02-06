@@ -101,9 +101,9 @@ def _update_user(db,session,content = []):    #get user's info
     cur.close()
     return temp
 
-def _add_order(db,session,contract_id,b_s,c_o,point,lots):
+def _add_order(db,session,contract_id,b_s,point,lots):
     cur = db.cursor()
-    cur.callproc('addorder',(contract_id,session['user_id'],b_s,c_o,point,lots))
+    cur.callproc('addorder',(contract_id,session['user_id'],b_s,point,lots))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}

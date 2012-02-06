@@ -20,8 +20,8 @@
     <dl>
         <dd><label for="t_b">BUY</label><input type="radio" name="b_s" value="B" id="t_b" checked="checked"/>
             <label for="t_s">SELL</label><input type="radio" name="b_s" id="t_s" value="S" />
-        <dd><label for="t_o">Open</label><input type="radio" name="o_c" value="O" id="t_o" checked="checked" />
-            <label for="t_c">Close</label><input type="radio" name="o_c" id="t_c" value="C" />
+        <dd><label >Open</label>
+            <label >Close</label>
         <dt><label for="contract">Contract</label>
         <dd><select id="contract" name="contract_id">
                 {% for ck in cont.keys() if cont[ck]['status']=='O' %}

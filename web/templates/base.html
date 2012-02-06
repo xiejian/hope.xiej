@@ -24,7 +24,7 @@
         {% if session.user_id %}
             <table><tr>
                 <td>{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td><td>BTC</td>
-                <td>{{(g.u.balance|float + g.u.p_l|float - g.u.omargin|float - g.u.pmargin|float)|f }} </td><td>BTC Available</td>
+                <td>{{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} </td><td>BTC Available</td>
             </tr><tr>
                 <td>{{g.u.pnum}} Positions</td><td>{{ g.u.pmargin|f}}</td>
                 <td>Margin</td><td>{{ g.u.p_l|f}}</td><td>Profit/Loss</td>

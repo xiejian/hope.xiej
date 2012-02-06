@@ -148,7 +148,7 @@ def trade():
         return redirect(url_for('home'))
     if request.method == 'POST':
         if 'b_s' in request.form:   #---Add order---
-            res = _add_order(g.db,session,request.form['contract_id'],request.form['b_s'],request.form['o_c'], request.form['point'], request.form['lots'])
+            res = _add_order(g.db,session,request.form['contract_id'],request.form['b_s'], request.form['point'], request.form['lots'])
         else:   #---Cancel order---
             res = _cancel_order(g.db,session,request.form['orderid'])
         flash(res['msg'],res['category'])
@@ -188,7 +188,7 @@ def account():
                                                        'refer':session['email']})
             flash('Invite Email Sent.','suc')
 
-    g.u=_update_user(g.db,session,['trans','btcflow','btctrans','info','log'])#todo delete btcflow
+    g.u=_update_user(g.db,session,['positions','trans','btcflow','btctrans','info','log'])#todo delete btcflow
     return render_template('account.html')
 
 @app.route('/bitcoin', methods=['GET','POST'])
