@@ -1,11 +1,11 @@
 
 
-div.trade   {border:1px solid #ccc; font-size: 1.2em; border-radius: 10px; padding: 25px;color:#FCC;}
+div.trade   {border:1px solid #ccc; border-radius: 10px; padding: 25px 20px 10px 30px;color:#FCC;}
 div.trade.S {background:#A44;}
 div.trade.B {background:#08A;}
 div.trade input,#contract {font-size: 1.3em;margin: 0px 10px 15px 4px;padding: 5px;}
-label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -6px 20px 0px;color:#Fcc;}
-div.trade.S label#l_ts,div.trade.B label#l_tb  {background: #666}
+label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -6px 25px 0px;color:#Fcc;}
+
 div.trade.B label#l_ts  {background:#E66;}
 div.trade.S label#l_tb  {background: #2AA}
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
