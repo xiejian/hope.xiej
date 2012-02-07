@@ -6,5 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 $(function () {
+    $("form.login input[type=email]").focus();
 
 });

@@ -8,10 +8,10 @@
 <div class="grid_6">
     <table id="continfo">
     </table>
-    <h4>order queue</h4>
+    <h4>Order Queue</h4>
     <table id="oqueue">
     </table>
-    <h4>transactions</h4>
+    <h4>Transactions</h4>
     <table id="transhis">
     </table>
 </div>
@@ -36,37 +36,42 @@
 </form>
 </div>
 <div class="clear"></div>
-<h4>open orders</h4>
-    <table>
-        <tr><th>Order Time</th><th>Contract</th><th>Open Close</th><th>Buy Sell</th><th>Point</th><th>Lots</th><th>Remain Lots</th><th>Value</th><th>Margin</th><th>Cancel</th></tr>
-        {% for o in g.u['orders'] %}
-            <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type'] }}</td><td>{{ o['buy_sell'] }}</td>
-                <td>{{ o['point']|f }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['value']|f}}</td>
-                <td>{{ o.margin|f}}</td>
-                <td><form action="{{ url_for('trade') }}" method="POST">
-                    <input name=_csrf_token type=hidden value="{{ csrf_token() }}"/>
-                    <input type="hidden" name="orderid" value= {{o['order_id']}} />
-                    <input type="hidden" name="contract_id" value= {{o['contract_id']}} />
-                    <button type="submit" value="cancel"> × </button>
-                </form></td></tr>
-        {% endfor %}
-    </table>
-
-<h4>positions</h4>
-<table class="tt_pos">
-    <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
-    {% for p in g.u['positions'] %}
-    <tr>
-        <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
-        <td>{{p.marketvalue|f}}</td><td>{{p.p_l|f}}</td><td>{{p.margin|f}}</td>
-        <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
-    </tr>
+<h4>Active Orders</h4>
+<table>
+    {% for o in g.u['orders'] %}
+        {% if loop.first %}
+            <tr><th>Order Time</th><th>Contract</th><th>Open Close</th><th>Buy Sell</th><th>Point</th><th>Lots</th><th>Remain Lots</th><th>Value</th><th>Margin</th><th>Cancel</th></tr>
+        {% endif %}
+        <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type'] }}</td><td>{{ o['buy_sell'] }}</td>
+            <td>{{ o['point']|f }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['value']|f}}</td>
+            <td>{{ o.margin|f}}</td>
+            <td><form action="{{ url_for('trade') }}" method="POST">
+                <input name=_csrf_token type=hidden value="{{ csrf_token() }}"/>
+                <input type="hidden" name="orderid" value= {{o['order_id']}} />
+                <input type="hidden" name="contract_id" value= {{o['contract_id']}} />
+                <button type="submit" value="cancel"> × </button>
+            </form></td></tr>
     {% else %}
-    <tr>None</tr>
+        <tr><td>None</td></tr>
+    {% endfor %}
+</table>
+
+<h4>Current Holding</h4>
+<table class="tt_pos">
+    {% for p in g.u['positions'] %}
+        {% if loop.first %}
+            <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
+        {% endif %}
+        <tr>
+            <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
+            <td>{{p.marketvalue|f}}</td><td>{{p.p_l|f}}</td><td>{{p.margin|f}}</td>
+            <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
+        </tr>
+    {% else %}
+        <tr><td>None</td></tr>
     {% endfor %}
 </table>
 </div>
 <div class="clear"></div>
-<p>　</p>
 <!--todo add rich text editor , and picture upload,as a contract info & proof-->
 {% endblock %}

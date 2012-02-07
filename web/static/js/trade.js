@@ -54,6 +54,7 @@ function update_o_c(){
 $(function () {
     activepage(1);
     get_contdata($("#contract").val());
+    update_o_c();
     $("#contract").change(function(){
         get_contdata($(this).val());
         update_o_c();

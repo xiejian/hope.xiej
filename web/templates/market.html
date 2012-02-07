@@ -1,7 +1,11 @@
 {% extends "_utitle.html" %}
+{% block head %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/market.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/market.css')}}" rel="stylesheet" />
+{% endblock %}
 {% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/market.js')}}"></script>
-<div class="grid_12 ">
+
+<div class="grid_16 ">
 <h4>Open Contracts</h4><a href="{{url_for('contract')}}">Create My Own Contract</a>
 <table>
 <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
@@ -16,7 +20,7 @@
     <tr>None</tr>
 {% endfor %}
 </table>
-<hr/>
+
 <h4>New Contracts</h4>
 <table>
     <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
@@ -30,7 +34,7 @@
     <tr>None</tr>
     {% endfor %}
 </table>
-<hr/>
+
 <h4>Close Contracts</h4>
 <table>
     <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
@@ -44,7 +48,6 @@
     <tr>None</tr>
     {% endfor %}
 </table>
-<hr/>
 
 
 <div id="tweets"></div>

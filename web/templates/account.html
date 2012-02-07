@@ -1,26 +1,30 @@
 {% extends "_utitle.html" %}
 {% block head %}
     <script type="text/javascript" src="{{url_for('static',filename='js/account.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/account.css')}}" rel="stylesheet" />
 {% endblock %}
 {% block content %}
-<h4>{{ session['email'] }}</h4>
-<h5><ul class="navi" id="accountmenu">
+<h3>{{ session['email'] }}</h3>
+<div class="navi">
+<ul id="accountmenu">
     <li><a href=0>General Info</a></li>
     <li><a href=1>Account History</a></li>
-</ul></h5>
-
-<div class="grid_11 push_1 account_tab">
-<h5>Current Holding</h5>
-<table>
-    <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
+</ul>
+</div>
+<div class="grid_12 account_tab">
+<h4>Current Holding</h4>
+<table class="tt_pos">
     {% for p in g.u['positions'] %}
+    {% if loop.first %}
+        <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
+    {% endif %}
     <tr>
         <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
         <td>{{p.marketvalue|f}}</td><td>{{p.p_l|f}}</td><td>{{p.margin|f}}</td>
         <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
     </tr>
     {% else %}
-    <tr>None</tr>
+    <tr><td>None</td></tr>
     {% endfor %}
 </table>
 <hr/>
@@ -71,9 +75,9 @@ Your friend will get 100BTC initial trade volume and 0.1 BTC after his first tra
 </form>
 </div>
 
-<div class="grid_11 push_1 account_tab">
+<div class="grid_12 account_tab">
 
-<h3>Transaction History</h3>
+<h4>Transaction History</h4>
 <table>
     <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Point</th><th>Lots</th><th>Value</th><th>Fee</th><th>Pofit/Loss</th></tr>
     {% for t in g.u['trans'] %}
@@ -86,7 +90,7 @@ Your friend will get 100BTC initial trade volume and 0.1 BTC after his first tra
     {% endfor %}
 </table>
 
-<h3>Bitcoin Flow</h3>
+<h4>Bitcoin Flow</h4>
 <table>
     <tr><th>input_dt</th><th>trans_id</th><th>amount</th><th>type</th></tr>
     {% for b in g.u['btcflow'] %}
@@ -98,13 +102,14 @@ Your friend will get 100BTC initial trade volume and 0.1 BTC after his first tra
     {% endfor %}
 </table>
 
-<h3>Bitcoin Trans</h3>
+<h4>Bitcoin Trans</h4>
 <table>
-    <tr><th>TimeStamp</th><th>type</th><th>amount</th><th>fee</th><th>address</th><th>confirmed</th><th>txid</th></tr>
+    <tr><th>TimeStamp</th><th>type</th><th>amount</th><th>fee</th><th>address</th><th>confirmed</th></tr>
     {% for t in g.u['btctrans'] %}
     <tr>
         <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
-        <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td><td>{{t.txid}}</td>
+        <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td></tr>
+        <tr><td></td><td colspan="4">txid: {{t.txid}}</td>
     </tr>
     {% else %}
     <tr>None</tr>

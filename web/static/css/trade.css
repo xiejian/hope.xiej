@@ -9,4 +9,5 @@ div.trade.S label#l_ts,div.trade.B label#l_tb  {background: #666}
 div.trade.B label#l_ts  {background:#E66;}
 div.trade.S label#l_tb  {background: #2AA}
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
+label#l_toc {font-size: 1.2em;font-weight: bold;margin-left:10px}
 

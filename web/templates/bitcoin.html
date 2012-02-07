@@ -4,20 +4,23 @@
 {% endblock %}
 {% block content %}
 
-<h5><ul class="navi" id="bitcoinmenu">
+<h3>{{ session['email'] }}</h3>
+<div class="navi">
+    <ul  id="bitcoinmenu">
     <li><a href=0>Transfer IN</a></li>
     <li><a href=1>Transfer OUT</a></li>
-</ul></h5>
-
-<div class="grid_11 push_1 bitcoin_tab">
-<h3>BitCoin IN</h3>
-BTC IN
-your bitcoin address:
-<h2>{{ g.u['address'] }}</h2>
+    </ul>
 </div>
 
 <div class="grid_11 push_1 bitcoin_tab">
-<h3>BitCoin OUT</h3>
+<h3>Bitcoin Deposit</h3>
+Please transfer Bitcoin to your unique address as follow:
+<h2 ><span class="btcaddr"> {{ g.u['address'] }}</span></h2>
+<br/>
+</div>
+
+<div class="grid_11 push_1 bitcoin_tab">
+<h3>Bitcoin Withdraw</h3>
 <form action="{{ url_for('account') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>

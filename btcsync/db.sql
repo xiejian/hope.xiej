@@ -61,7 +61,7 @@ CREATE TABLE `btc_action` (
   `process_dt` datetime DEFAULT NULL,
   `message` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`btc_action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=216 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `btc_action` (
 
 LOCK TABLES `btc_action` WRITE;
 /*!40000 ALTER TABLE `btc_action` DISABLE KEYS */;
-INSERT INTO `btc_action` VALUES (162,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:07:56','2012-01-04 08:18:36','0.44372840'),(163,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:16:48','2012-01-04 08:18:36','0.02543640'),(164,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001100','F','N',1,'2012-01-11 15:41:52',NULL,NULL),(165,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',1,'2012-01-11 15:41:52',NULL,NULL),(166,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',2,'2012-01-12 09:52:56',NULL,NULL),(167,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',2,'2012-01-12 09:52:56',NULL,NULL),(168,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',3,'2012-01-12 10:39:41',NULL,NULL),(169,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',3,'2012-01-12 10:39:41',NULL,NULL),(170,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',3,'2012-01-12 10:39:41',NULL,NULL),(171,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',4,'2012-01-12 10:40:36',NULL,NULL),(172,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',4,'2012-01-12 10:40:36',NULL,NULL),(173,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',4,'2012-01-12 10:40:36',NULL,NULL),(174,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',5,'2012-01-12 15:52:24',NULL,NULL),(175,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',5,'2012-01-12 15:52:24',NULL,NULL),(176,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',5,'2012-01-12 15:52:24',NULL,NULL),(177,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',5,'2012-01-12 15:52:24',NULL,NULL),(178,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-13 14:42:02',NULL,NULL),(179,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:40:39',NULL,NULL),(180,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:43:09',NULL,NULL),(181,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:44:30',NULL,NULL),(182,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:46:43',NULL,NULL),(183,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:58:50',NULL,NULL),(184,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:59:48',NULL,NULL),(185,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:00:32',NULL,NULL),(186,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:13',NULL,NULL),(187,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:51',NULL,NULL),(188,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:05:33',NULL,NULL),(189,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:06:58',NULL,NULL);
+INSERT INTO `btc_action` VALUES (162,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:07:56','2012-01-04 08:18:36','0.44372840'),(163,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:16:48','2012-01-04 08:18:36','0.02543640'),(164,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001100','F','N',1,'2012-01-11 15:41:52',NULL,NULL),(165,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',1,'2012-01-11 15:41:52',NULL,NULL),(166,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',2,'2012-01-12 09:52:56',NULL,NULL),(167,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',2,'2012-01-12 09:52:56',NULL,NULL),(168,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',3,'2012-01-12 10:39:41',NULL,NULL),(169,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',3,'2012-01-12 10:39:41',NULL,NULL),(170,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',3,'2012-01-12 10:39:41',NULL,NULL),(171,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',4,'2012-01-12 10:40:36',NULL,NULL),(172,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',4,'2012-01-12 10:40:36',NULL,NULL),(173,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',4,'2012-01-12 10:40:36',NULL,NULL),(174,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',5,'2012-01-12 15:52:24',NULL,NULL),(175,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',5,'2012-01-12 15:52:24',NULL,NULL),(176,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',5,'2012-01-12 15:52:24',NULL,NULL),(177,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',5,'2012-01-12 15:52:24',NULL,NULL),(178,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-13 14:42:02',NULL,NULL),(179,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:40:39',NULL,NULL),(180,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:43:09',NULL,NULL),(181,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:44:30',NULL,NULL),(182,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:46:43',NULL,NULL),(183,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:58:50',NULL,NULL),(184,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:59:48',NULL,NULL),(185,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:00:32',NULL,NULL),(186,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:13',NULL,NULL),(187,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:51',NULL,NULL),(188,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:05:33',NULL,NULL),(189,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:06:58',NULL,NULL),(190,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',6,'2012-02-03 09:00:51',NULL,NULL),(191,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',6,'2012-02-03 09:00:51',NULL,NULL),(192,'move','jian.xie@163.com','FEE',NULL,'0.00000540','F','N',7,'2012-02-03 10:08:39',NULL,NULL),(193,'move','jian.xie@163.com','FEE',NULL,'0.00000540','G','N',7,'2012-02-03 10:08:39',NULL,NULL),(194,'move','jian.xie@163.com','P_L',NULL,'-0.04600000','P','N',7,'2012-02-03 10:08:39',NULL,NULL),(195,'move','jian.xie@163.com','P_L',NULL,'0.04600000','Q','N',7,'2012-02-03 10:08:39',NULL,NULL),(196,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',8,'2012-02-03 10:12:34',NULL,NULL),(197,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',8,'2012-02-03 10:12:34',NULL,NULL),(198,'move','jian.xie@163.com','FEE',NULL,'0.00001100','F','N',9,'2012-02-03 10:12:34',NULL,NULL),(199,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',9,'2012-02-03 10:12:34',NULL,NULL),(200,'move','jian.xie@163.com','FEE',NULL,'0.00001200','F','N',10,'2012-02-03 10:12:34',NULL,NULL),(201,'move','jian.xie@163.com','FEE',NULL,'0.00001200','G','N',10,'2012-02-03 10:12:34',NULL,NULL),(202,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-06 16:36:09',NULL,NULL),(203,'move','jian.xie@163.com','FEE',NULL,'0.00002700','F','N',11,'2012-02-07 13:07:28',NULL,NULL),(204,'move','jian.xie@163.com','FEE',NULL,'0.00002700','G','N',11,'2012-02-07 13:07:28',NULL,NULL),(205,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(206,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(207,'move','jian.xie@163.com','P_L',NULL,'-0.02000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(208,'move','jian.xie@163.com','P_L',NULL,'0.01000000','Q','N',11,'2012-02-07 13:07:28',NULL,NULL),(209,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',12,'2012-02-07 13:07:28',NULL,NULL),(210,'move','jian.xie@163.com','FEE',NULL,'0.00000900','G','N',12,'2012-02-07 13:07:28',NULL,NULL),(211,'move','jian.xie@163.com','P_L',NULL,'-0.03000000','P','N',12,'2012-02-07 13:07:28',NULL,NULL),(212,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',13,'2012-02-07 13:11:21',NULL,NULL),(213,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000900','G','N',13,'2012-02-07 13:11:21',NULL,NULL),(214,'move','jian.xie@163.com','P_L',NULL,'0.00000000','P','N',13,'2012-02-07 13:11:21',NULL,NULL),(215,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',13,'2012-02-07 13:11:21',NULL,NULL);
 /*!40000 ALTER TABLE `btc_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +162,7 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
-INSERT INTO `contract` VALUES (4,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-06-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(5,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-09-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(6,'SP500','S&P 500','O','0.00100000','2012-01-01 00:00:00','100.00000000','2012-06-30 00:00:00',NULL,'0.2500',28,NULL,1,2),(7,'SP500','S&P 500','N','0.00100000',NULL,NULL,'2012-09-30 00:00:00',NULL,'0.2500',28,'BTCFE',1,2);
+INSERT INTO `contract` VALUES (4,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-06-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(5,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-09-30 00:00:00',NULL,'0.2500',30,NULL,1,1),(6,'SP500','S&P 500','O','0.00100000','2012-01-01 00:00:00','90.00000000','2012-06-30 00:00:00',NULL,'0.2500',28,NULL,1,2),(7,'SP500','S&P 500','N','0.00100000',NULL,NULL,'2012-09-30 00:00:00',NULL,'0.2500',28,'BTCFE',1,2);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +235,7 @@ CREATE TABLE `marketinfo` (
   `close` decimal(20,8) DEFAULT NULL,
   `tradedate` date NOT NULL,
   PRIMARY KEY (`marketinfo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `marketinfo` (
 
 LOCK TABLES `marketinfo` WRITE;
 /*!40000 ALTER TABLE `marketinfo` DISABLE KEYS */;
-INSERT INTO `marketinfo` VALUES (1,6,'110.00000000','110.00000000','110.00000000','110.00000000','2012-01-11'),(2,6,'100.00000000','100.00000000','100.00000000','100.00000000','2012-01-12');
+INSERT INTO `marketinfo` VALUES (1,6,'110.00000000','110.00000000','110.00000000','110.00000000','2012-01-11'),(2,6,'100.00000000','100.00000000','100.00000000','100.00000000','2012-01-12'),(3,6,'100.00000000','120.00000000','54.00000000','120.00000000','2012-02-03'),(4,6,'90.00000000','90.00000000','90.00000000','90.00000000','2012-02-07');
 /*!40000 ALTER TABLE `marketinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,7 +267,7 @@ CREATE TABLE `orders` (
   `type` char(1) NOT NULL DEFAULT 'O',
   `status` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=latin1 COMMENT='deal order';
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=latin1 COMMENT='deal order';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,7 +276,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (140,28,6,'B','100.00000000',1,1,'2012-01-10 09:18:02','O','C'),(141,29,6,'S','110.00000000',1,1,'2012-01-11 11:00:07','O','C'),(142,29,6,'S','110.00000000',1,1,'2012-01-11 13:10:37','O','C'),(143,29,6,'S','110.00000000',1,1,'2012-01-11 13:18:46','O','C'),(144,29,6,'S','110.00000000',1,1,'2012-01-11 13:25:40','O','C'),(145,29,6,'S','110.00000000',1,1,'2012-01-11 13:40:03','O','C'),(146,29,6,'S','110.00000000',1,1,'2012-01-11 13:51:01','O','C'),(147,29,6,'B','110.00000000',1,1,'2012-01-11 15:17:22','O','C'),(148,29,6,'B','100.00000000',1,1,'2012-01-11 15:20:22','O','C'),(149,29,6,'B','110.00000000',1,1,'2012-01-11 15:21:28','O','C'),(150,29,6,'B','110.00000000',1,1,'2012-01-11 15:24:38','O','C'),(151,29,6,'B','110.00000000',1,1,'2012-01-11 15:25:46','O','C'),(152,29,6,'B','110.00000000',1,1,'2012-01-11 15:37:44','O','C'),(153,29,6,'B','110.00000000',1,1,'2012-01-11 15:41:05','O','C'),(154,29,6,'B','110.00000000',1,0,'2012-01-11 15:41:17','O','F'),(155,28,6,'S','100.00000000',1,0,'2012-01-11 15:41:52','O','F'),(156,29,6,'B','100.00000000',1,0,'2012-01-12 09:51:59','O','F'),(157,28,6,'S','110.00000000',1,1,'2012-01-12 09:52:22','O','O'),(158,28,6,'S','99.00000000',1,0,'2012-01-12 09:52:56','O','F'),(159,29,6,'B','100.00000000',4,2,'2012-01-12 09:54:59','O','C'),(160,29,6,'B','99.00000000',4,4,'2012-01-12 09:55:16','O','C'),(161,29,6,'B','98.00000000',4,4,'2012-01-12 09:55:29','O','C'),(162,29,6,'B','10.00000000',1,1,'2012-01-12 10:02:45','O','C'),(163,29,6,'B','10.00000000',1,1,'2012-01-12 10:03:27','O','C'),(164,29,6,'B','10.00000000',1,1,'2012-01-12 10:04:03','O','C'),(165,29,6,'B','10.00000000',1,1,'2012-01-12 10:30:57','O','C'),(166,29,6,'B','0.59510000',4,4,'2012-01-12 10:39:05','O','O'),(167,29,6,'S','100.00000000',1,0,'2012-01-12 10:39:41','C','F'),(168,29,6,'S','100.00000000',1,0,'2012-01-12 10:40:36','C','F'),(169,29,6,'B','100.00000000',4,4,'2012-01-12 11:04:26','O','C'),(170,29,6,'B','100.00000000',4,4,'2012-01-12 11:04:40','O','C'),(171,29,6,'B','100.00000000',4,4,'2012-01-12 11:05:46','O','C'),(172,28,6,'B','100.00000000',2,1,'2012-01-12 15:49:04','C','C'),(173,29,6,'S','100.00000000',1,0,'2012-01-12 15:52:24','C','F'),(174,28,6,'B','100.00000000',1,1,'2012-01-13 12:05:34','O','O'),(175,28,6,'B','98.00000000',1,1,'2012-01-13 12:05:43','O','C'),(176,28,6,'S','120.00000000',1,1,'2012-01-16 14:29:24','O','O');
+INSERT INTO `orders` VALUES (140,28,6,'B','100.00000000',1,1,'2012-01-10 09:18:02','O','C'),(141,29,6,'S','110.00000000',1,1,'2012-01-11 11:00:07','O','C'),(142,29,6,'S','110.00000000',1,1,'2012-01-11 13:10:37','O','C'),(143,29,6,'S','110.00000000',1,1,'2012-01-11 13:18:46','O','C'),(144,29,6,'S','110.00000000',1,1,'2012-01-11 13:25:40','O','C'),(145,29,6,'S','110.00000000',1,1,'2012-01-11 13:40:03','O','C'),(146,29,6,'S','110.00000000',1,1,'2012-01-11 13:51:01','O','C'),(147,29,6,'B','110.00000000',1,1,'2012-01-11 15:17:22','O','C'),(148,29,6,'B','100.00000000',1,1,'2012-01-11 15:20:22','O','C'),(149,29,6,'B','110.00000000',1,1,'2012-01-11 15:21:28','O','C'),(150,29,6,'B','110.00000000',1,1,'2012-01-11 15:24:38','O','C'),(151,29,6,'B','110.00000000',1,1,'2012-01-11 15:25:46','O','C'),(152,29,6,'B','110.00000000',1,1,'2012-01-11 15:37:44','O','C'),(153,29,6,'B','110.00000000',1,1,'2012-01-11 15:41:05','O','C'),(154,29,6,'B','110.00000000',1,0,'2012-01-11 15:41:17','O','F'),(155,28,6,'S','100.00000000',1,0,'2012-01-11 15:41:52','O','F'),(156,29,6,'B','100.00000000',1,0,'2012-01-12 09:51:59','O','F'),(157,28,6,'S','110.00000000',1,0,'2012-01-12 09:52:22','O','F'),(158,28,6,'S','99.00000000',1,0,'2012-01-12 09:52:56','O','F'),(159,29,6,'B','100.00000000',4,2,'2012-01-12 09:54:59','O','C'),(160,29,6,'B','99.00000000',4,4,'2012-01-12 09:55:16','O','C'),(161,29,6,'B','98.00000000',4,4,'2012-01-12 09:55:29','O','C'),(162,29,6,'B','10.00000000',1,1,'2012-01-12 10:02:45','O','C'),(163,29,6,'B','10.00000000',1,1,'2012-01-12 10:03:27','O','C'),(164,29,6,'B','10.00000000',1,1,'2012-01-12 10:04:03','O','C'),(165,29,6,'B','10.00000000',1,1,'2012-01-12 10:30:57','O','C'),(166,29,6,'B','0.59510000',4,4,'2012-01-12 10:39:05','O','C'),(167,29,6,'S','100.00000000',1,0,'2012-01-12 10:39:41','C','F'),(168,29,6,'S','100.00000000',1,0,'2012-01-12 10:40:36','C','F'),(169,29,6,'B','100.00000000',4,4,'2012-01-12 11:04:26','O','C'),(170,29,6,'B','100.00000000',4,4,'2012-01-12 11:04:40','O','C'),(171,29,6,'B','100.00000000',4,4,'2012-01-12 11:05:46','O','C'),(172,28,6,'B','100.00000000',2,1,'2012-01-12 15:49:04','C','C'),(173,29,6,'S','100.00000000',1,0,'2012-01-12 15:52:24','C','F'),(174,28,6,'B','100.00000000',1,0,'2012-01-13 12:05:34','O','F'),(175,28,6,'B','98.00000000',1,1,'2012-01-13 12:05:43','O','C'),(176,28,6,'S','120.00000000',1,0,'2012-01-16 14:29:24','O','F'),(177,28,6,'S','100.00000000',2,0,'2012-02-03 09:00:51','O','F'),(178,28,6,'B','50.00000000',1,1,'2012-02-03 09:52:34','C','C'),(179,28,6,'B','51.00000000',1,1,'2012-02-03 09:54:44','C','C'),(180,28,6,'B','52.00000000',1,1,'2012-02-03 09:54:58','C','C'),(181,28,6,'B','53.00000000',1,1,'2012-02-03 09:55:43','C','C'),(182,28,6,'B','54.00000000',1,1,'2012-02-03 09:57:00','C','C'),(183,28,6,'B','50.00000000',1,1,'2012-02-03 09:57:21','C','C'),(184,28,6,'B','52.00000000',1,1,'2012-02-03 09:57:29','C','C'),(185,28,6,'B','53.00000000',1,1,'2012-02-03 09:57:34','C','C'),(186,28,6,'B','54.00000000',1,1,'2012-02-03 09:57:40','C','C'),(187,28,6,'B','55.00000000',1,1,'2012-02-03 09:59:20','C','C'),(188,28,6,'B','56.00000000',1,1,'2012-02-03 09:59:58','C','C'),(189,28,6,'B','57.00000000',1,1,'2012-02-03 10:00:37','C','C'),(190,28,6,'B','58.00000000',0,0,'2012-02-03 10:04:13','C','C'),(191,28,6,'B','58.00000000',1,1,'2012-02-03 10:04:13','O','C'),(192,28,6,'B','51.00000000',1,1,'2012-02-03 10:04:39','C','C'),(193,28,6,'B','52.00000000',1,1,'2012-02-03 10:04:44','C','C'),(194,28,6,'B','53.00000000',0,0,'2012-02-03 10:04:51','C','C'),(195,28,6,'B','53.00000000',1,1,'2012-02-03 10:04:51','O','C'),(196,28,6,'B','53.00000000',0,0,'2012-02-03 10:05:44','C','C'),(197,28,6,'B','53.00000000',4,4,'2012-02-03 10:05:44','O','C'),(198,28,6,'B','53.00000000',3,3,'2012-02-03 10:07:58','O','C'),(199,28,6,'B','54.00000000',1,0,'2012-02-03 10:08:07','C','F'),(200,28,6,'B','54.00000000',3,3,'2012-02-03 10:08:07','O','C'),(201,28,6,'S','54.00000000',1,0,'2012-02-03 10:08:39','C','F'),(202,28,6,'B','130.00000000',5,2,'2012-02-03 10:12:34','O','C'),(203,28,6,'S','150.00000000',3,3,'2012-02-03 10:12:59','C','C'),(204,28,6,'B','55.00000000',3,3,'2012-02-03 10:13:13','C','C'),(205,28,6,'B','90.00000000',4,0,'2012-02-07 13:07:09','C','F'),(206,28,6,'S','90.00000000',3,0,'2012-02-07 13:07:28','C','F'),(207,28,6,'S','90.00000000',1,0,'2012-02-07 13:07:28','O','F'),(208,29,6,'S','90.00000000',1,0,'2012-02-07 13:10:51','C','F'),(209,28,6,'B','100.00000000',1,0,'2012-02-07 13:11:21','C','F'),(210,28,6,'B','100.00000000',1,1,'2012-02-07 13:11:21','O','O'),(211,29,6,'S','120.00000000',1,1,'2012-02-07 13:18:09','O','O');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +296,7 @@ CREATE TABLE `positions` (
   `lots` int(11) NOT NULL,
   `opentime` datetime NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +305,7 @@ CREATE TABLE `positions` (
 
 LOCK TABLES `positions` WRITE;
 /*!40000 ALTER TABLE `positions` DISABLE KEYS */;
-INSERT INTO `positions` VALUES (4,28,6,'S','100.00000000',1,'2012-01-12 09:52:56'),(6,29,6,'B','100.00000000',1,'2012-01-12 10:40:36');
+INSERT INTO `positions` VALUES (11,28,6,'B','110.00000000',1,'2012-02-03 10:12:34'),(13,28,6,'B','120.00000000',1,'2012-02-03 10:12:34');
 /*!40000 ALTER TABLE `positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,7 +394,7 @@ CREATE TABLE `trans` (
   `direct` char(1) DEFAULT 'B',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`trans_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -403,7 +403,7 @@ CREATE TABLE `trans` (
 
 LOCK TABLES `trans` WRITE;
 /*!40000 ALTER TABLE `trans` DISABLE KEYS */;
-INSERT INTO `trans` VALUES (1,154,155,'110.00000000',1,'S','2012-01-10 23:41:52'),(2,156,158,'100.00000000',1,'S','2012-01-12 01:52:56'),(3,159,167,'100.00000000',1,'S','2012-01-12 02:39:41'),(4,159,168,'100.00000000',1,'S','2012-01-12 02:40:36'),(5,172,173,'100.00000000',1,'S','2012-01-12 07:52:24');
+INSERT INTO `trans` VALUES (1,154,155,'110.00000000',1,'S','2012-01-10 23:41:52'),(2,156,158,'100.00000000',1,'S','2012-01-12 01:52:56'),(3,159,167,'100.00000000',1,'S','2012-01-12 02:39:41'),(4,159,168,'100.00000000',1,'S','2012-01-12 02:40:36'),(5,172,173,'100.00000000',1,'S','2012-01-12 07:52:24'),(6,174,177,'100.00000000',1,'S','2012-02-03 01:00:51'),(7,199,201,'54.00000000',1,'S','2012-02-03 02:08:39'),(8,202,177,'100.00000000',1,'B','2012-02-03 02:12:34'),(9,202,157,'110.00000000',1,'B','2012-02-03 02:12:34'),(10,202,176,'120.00000000',1,'B','2012-02-03 02:12:34'),(11,205,206,'90.00000000',3,'S','2012-02-07 05:07:28'),(12,205,207,'90.00000000',1,'S','2012-02-07 05:07:28'),(13,209,208,'90.00000000',1,'B','2012-02-07 05:11:21');
 /*!40000 ALTER TABLE `trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,7 +431,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',13,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',1,'2012-02-02 09:02:43');
+INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',32,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',2,'2012-02-02 09:02:43');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +452,7 @@ CREATE TABLE `users` (
   `referrer` int(11) DEFAULT '0',
   `invite` smallint(6) DEFAULT '3',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -461,7 +461,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.000100',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.000100',0,2),(30,'SYS','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.000100',0,3);
+INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.000100',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.000100',0,2),(30,'SYS','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.000100',0,3),(31,'xiejian.cn@gmail.com','OyZpDNuR3I0xCYo7S4tVy8Q2R5mHRt0PQ1yeJQ==',NULL,'A','0.000100',0,3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,9 +587,9 @@ SET character_set_client = utf8;
   `balance` decimal(44,8),
   `bal_unconf` decimal(20,8),
   `bal_unact` decimal(43,8),
-  `onum` bigint(21),
+  `onum` bigint(20),
   `omargin` decimal(65,20),
-  `pnum` bigint(21),
+  `pnum` bigint(20),
   `pmargin` decimal(65,20),
   `p_l` decimal(65,16)
 ) ENGINE=MyISAM */;
@@ -629,6 +629,31 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'btcfe'
 --
+/*!50003 DROP FUNCTION IF EXISTS `N` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `N`( b_s CHAR(1)) RETURNS char(1) CHARSET latin1
+BEGIN
+    if b_s = 'B' then
+		return 'S';
+	elseif b_s = 'S' then
+		return 'B';
+	else
+		return null;
+	end if;
+    END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `addorder` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -640,32 +665,36 @@ SET character_set_client = @saved_cs_client;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `addorder`(IN `pcontract` INTEGER,IN `puser` INTEGER,
-		IN pbs CHAR(1),in ptype CHAR(1),IN `ppoint` DECIMAL(20,8),IN plots INTEGER)
+		IN pbs CHAR(1),IN `ppoint` DECIMAL(20,8),IN plots INTEGER)
 BEGIN
-DECLARE done INT DEFAULT FALSE;
-DECLARE vmargin_req,vmargin,vbtcavail,vlock,vp_l DECIMAL(20,10) DEFAULT 0;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-if ptype = 'C' then
-	INSERT INTO orders(user_id,contract_id,buy_sell,point,lots,rm_lots,type,createtime,STATUS)
-		VALUES(puser,pcontract,pbs,ppoint,plots,plots,ptype,NOW(),'N');
+declare vplots int default 0;
+DECLARE vmargin_req,vbtcavail DECIMAL(20,10) DEFAULT 0;
+SELECT ifnull(sum(lots),0) into vplots FROM positions WHERE contract_id = pcontract AND user_id = puser AND buy_sell = N(pbs);
+SELECT GREATEST(vplots-IFNULL(sum(rm_lots),0),0)INTO vplots FROM orders WHERE contract_id = pcontract AND user_id = puser AND buy_sell = pbs and type = 'C' and status = 'O';
+if vplots >= plots then
+	#new order is a cancel order
+	INSERT INTO orders(user_id,contract_id,buy_sell,POINT,lots,rm_lots,TYPE,createtime,STATUS)
+		VALUES(puser,pcontract,pbs,ppoint,plots,plots,'C',NOW(),'N');
+	CALL exchange(LAST_INSERT_ID(),puser,'A');
+elseif vplots < plots and 0 <= plots then
+	if vplots > 0 then
+	#cancel those part
+		INSERT INTO orders(user_id,contract_id,buy_sell,POINT,lots,rm_lots,TYPE,createtime,STATUS)
+			VALUES(puser,pcontract,pbs,ppoint,vplots,vplots,'C',NOW(),'N');
 		CALL exchange(LAST_INSERT_ID(),puser,'A');
-elseif ptype = 'O' then 
-	SELECT IFNULL(SUM(margin),0) INTO vmargin FROM v_pos WHERE user_id = puser GROUP BY user_id;
-	SELECT IFNULL(SUM(p_l),0) INTO vp_l FROM v_pos WHERE user_id = puser GROUP BY user_id;
-	SELECT b.balance + IFNULL(a.amount,0) INTO vbtcavail FROM users u, btc_account b LEFT JOIN v_btcunact a 
-		ON b.account = a.account where u.email = b.account and u.user_id = puser;
-		
-	SELECT IFNULL(SUM(o.point*o.lots*c.btc_multi*c.leverage),0) INTO vlock FROM orders o, contract c 
-		WHERE o.contract_id = c.contract_id AND o.status = 'O' AND o.type = 'O' AND o.user_id = puser;
-	SET done = FALSE;
-	SELECT ppoint*plots*btc_multi*leverage INTO vmargin_req FROM contract WHERE contract_id = pcontract AND STATUS = 'O';
-	IF NOT done AND vbtcavail + vp_l - vlock - vmargin >= vmargin_req THEN
-		INSERT INTO orders(user_id,contract_id,buy_sell,point,lots,rm_lots,type,createtime,STATUS)
-			VALUES(puser,pcontract,pbs,ppoint,plots,plots,ptype,NOW(),'N');
+	end if;
+	if plots - vplots > 0 then
+	#open order
+		SELECT ppoint*plots*btc_multi*leverage INTO vmargin_req FROM contract WHERE contract_id = pcontract AND STATUS = 'O';
+		select balance - omargin - pmargin + p_l into vbtcavail from v_userbtc where user_id = puser;
+		if vbtcavail > vmargin_req then
+			INSERT INTO orders(user_id,contract_id,buy_sell,POINT,lots,rm_lots,TYPE,createtime,STATUS)
+				VALUES(puser,pcontract,pbs,ppoint,plots-vplots,plots-vplots,'O',NOW(),'N');
 			CALL exchange(LAST_INSERT_ID(),puser,'A');
-	ELSE
-	SELECT 'err',CONCAT('Margin is Not Enough.', vbtcavail,vp_l,vlock,vmargin,vmargin_req);
-	END IF;
+		else
+			SELECT 'err',CONCAT('Margin is Not Enough.', vbtcavail,' | ',vmargin_req);
+		end if;
+	end if;	
 end if;
 END */;;
 DELIMITER ;
@@ -721,118 +750,6 @@ cur_loop:LOOP
 END LOOP;
 update contract set settlepoint = pprice/btc_multi,status = 'S' where contract_id = pcontract;
 commit;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `eod` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `eod`(IN `poid` INTEGER,IN `puserid` INTEGER,IN `paction` CHAR)
-main:BEGIN
-DECLARE done,dealflag INT DEFAULT FALSE;
-DECLARE locktype CHAR(4);
-DECLARE pcontract INT;
-DECLARE vbuy_sell CHAR(1);
-DECLARE vpoint,curpr DECIMAL(20,8);
-DECLARE vuser,vrm_lots, curoid,curuser,curlt INT;
-DECLARE curs CURSOR FOR SELECT order_id,POINT,rm_lots FROM orders 
-    WHERE contract_id = pcontract AND STATUS = 'O' AND buy_sell ='S' ORDER BY POINT ,createtime;
-DECLARE curb CURSOR FOR SELECT order_id,POINT,rm_lots FROM orders 
-    WHERE contract_id = pcontract AND STATUS = 'O' AND buy_sell ='B' ORDER BY POINT DESC ,createtime;
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-  BEGIN
-    ROLLBACK;SELECT 'Err','SQLEXCEPTION';
-  END;
-DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-SELECT user_id,contract_id,buy_sell,POINT,rm_lots INTO vuser,pcontract,vbuy_sell,vpoint,vrm_lots FROM orders WHERE order_id = poid AND STATUS IN('N','O');
-IF done OR vuser <> puserid THEN
-	SELECT 'Err','Have not found your Order.';
-	LEAVE main;
-END IF;
-SELECT MAX(TYPE) INTO locktype FROM exchange_lock WHERE contract_id = pcontract;
-IF locktype IS NOT NULL THEN
-	SELECT 'Err',CONCAT('Exchange Server Locked by ',contractlock);
-	LEAVE main;
-END IF;
-INSERT INTO exchange_lock(contract_id,connect_id) VALUES(pcontract,CONNECTION_ID());
-COMMIT;
-SELECT MAX(TYPE) INTO locktype FROM exchange_lock WHERE contract_id = pcontract AND connect_id <> CONNECTION_ID();
-IF locktype IS NOT NULL THEN
-	DELETE FROM exchange_lock WHERE contract_id = pcontract AND connect_id = CONNECTION_ID();
-	COMMIT;
-	SELECT 'Err',('Exchange Server Locked Failed by',locktype);
-	LEAVE main ;
-END IF;
-START TRANSACTION;	
-IF paction = 'C' THEN
-	UPDATE orders SET STATUS = 'C' WHERE order_id = poid AND STATUS IN('N','O');
-	SELECT 'suc','Cancel Order Successfully.';
-ELSEIF paction = 'A' THEN
-	IF vbuy_sell = 'B' THEN				
-		SET done = FALSE;	
-		OPEN curs;
-		cur_loop:LOOP
-			FETCH curs INTO curoid,curpr,curlt;					
-			IF done OR curpr > vpoint THEN
-				UPDATE orders SET STATUS = 'O',rm_lots = vrm_lots WHERE order_id = poid; 
-				LEAVE cur_loop;	
-			END IF;
-			CALL makedeal(poid,curoid,curpr,LEAST(vrm_lots,curlt),'B');
-			SET dealflag = TRUE;
-			IF curlt <= vrm_lots THEN
-				UPDATE orders SET STATUS = 'F',rm_lots = 0 WHERE order_id = curoid;            
-			END IF;
-			IF curlt < vrm_lots THEN
-				SET vrm_lots = vrm_lots - curlt;					
-			ELSEIF curlt >= vrm_lots THEN
-				UPDATE orders SET STATUS = 'F',rm_lots = 0 WHERE order_id = poid;             
-				UPDATE orders SET rm_lots = curlt - vrm_lots WHERE order_id = curoid; 
-				LEAVE cur_loop;           
-			END IF;     
-		END LOOP;
-		CLOSE curs;
-	ELSEIF vbuy_sell = 'S' THEN				
-		SET done = FALSE;
-		OPEN curb;
-		cur_loop:LOOP
-			FETCH curb INTO curoid,curpr,curlt;					
-			IF done OR curpr < vpoint THEN
-				UPDATE orders SET STATUS = 'O',rm_lots = vrm_lots WHERE order_id = poid; 
-				LEAVE cur_loop;	
-			END IF;
-      		CALL makedeal(curoid,poid,curpr,LEAST(vrm_lots,curlt),'S');
-			SET dealflag = TRUE;       		
-       		IF curlt <= vrm_lots THEN
-       			UPDATE orders SET STATUS = 'F',rm_lots = 0 WHERE order_id = curoid;            
-			END IF;
-			IF curlt < vrm_lots THEN
-			    SET vrm_lots = vrm_lots - curlt;					
-			ELSEIF curlt >= vrm_lots THEN
-				UPDATE orders SET STATUS = 'F',rm_lots = 0 WHERE order_id = poid;             
-				UPDATE orders SET rm_lots = curlt - vrm_lots WHERE order_id = curoid; 
-				LEAVE cur_loop;           
-			END IF; 
-		END LOOP;
-		CLOSE curb;
-	END IF;
-	IF dealflag THEN
-		SELECT 'suc','Deal had been Maded.';
-	ELSE
-		SELECT 'suc','Order had been Added succesfully.';
-	END IF;
-END IF;
-DELETE FROM exchange_lock WHERE contract_id = pcontract;
-COMMIT;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -945,6 +862,44 @@ ELSEIF paction = 'A' THEN
 END IF;
 DELETE FROM exchange_lock where contract_id = pcontract;
 COMMIT;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `forced_close` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `forced_close`(IN `puserid` INTEGER,in prealseamt decimal(20,8))
+main:BEGIN
+DECLARE done INT DEFAULT FALSE;
+DECLARE curcid,curlt,vclots INT;
+declare curbs char(1);
+DECLARE curp CURSOR FOR SELECT contract_id,buy_sell,lots FROM v_pos WHERE user_id = puserid ORDER BY p_l Desc;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+OPEN curp;
+cur_loop:LOOP
+	FETCH curp INTO curcid,curbs,curlt;	
+	IF done OR prealseamt <= 0 THEN
+		LEAVE cur_loop;					
+	end if;
+	select CEIL(prealseamt/(latestpoint*btc_multi*leverage)) into vclots from contract where contract_id = curcid;
+	if vclots < curlt then
+		call addorder(curcid,puserid,N(curbs),latestpoint,vclots);
+		set prealseamt = 0 ;
+	else
+		call addorder(curcid,puserid,N(curbs),latestpoint,curlt);
+		SELECT prealseamt - (curlt*latestpoint*btc_multi*leverage) INTO prealseamt FROM contract WHERE contract_id = curcid;
+	end if;
+end loop;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1201,7 +1156,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_userbtc` AS select `u`.`user_id` AS `user_id`,(`b`.`balance` + ifnull(`a`.`amount`,0)) AS `balance`,`b`.`bal_unconf` AS `bal_unconf`,ifnull(`a`.`amount`,0) AS `bal_unact`,`o`.`num` AS `onum`,`o`.`margin` AS `omargin`,`p`.`num` AS `pnum`,`p`.`margin` AS `pmargin`,`p`.`p_l` AS `p_l` from ((((`users` `u` left join `v_userbtc_o` `o` on((`u`.`user_id` = `o`.`user_id`))) left join `v_userbtc_p` `p` on((`u`.`user_id` = `p`.`user_id`))) left join `btc_account` `b` on((`u`.`email` = `b`.`account`))) left join `v_btcunact` `a` on((`u`.`email` = `a`.`account`))) */;
+/*!50001 VIEW `v_userbtc` AS select `u`.`user_id` AS `user_id`,(ifnull(`b`.`balance`,0) + ifnull(`a`.`amount`,0)) AS `balance`,ifnull(`b`.`bal_unconf`,0) AS `bal_unconf`,ifnull(`a`.`amount`,0) AS `bal_unact`,ifnull(`o`.`num`,0) AS `onum`,ifnull(`o`.`margin`,0) AS `omargin`,ifnull(`p`.`num`,0) AS `pnum`,ifnull(`p`.`margin`,0) AS `pmargin`,ifnull(`p`.`p_l`,0) AS `p_l` from ((((`users` `u` left join `v_userbtc_o` `o` on((`u`.`user_id` = `o`.`user_id`))) left join `v_userbtc_p` `p` on((`u`.`user_id` = `p`.`user_id`))) left join `btc_account` `b` on((`u`.`email` = `b`.`account`))) left join `v_btcunact` `a` on((`u`.`email` = `a`.`account`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1253,4 +1208,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-02-02 17:07:49
+-- Dump completed on 2012-02-07 17:19:23

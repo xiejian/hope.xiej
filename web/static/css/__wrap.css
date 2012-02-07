@@ -1,12 +1,13 @@
 body {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;}
-h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 30px 0px 10px 0px;}
+h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 10px 0px;}
 h1 {    font-size: 25px;}
 h2 {    font-size: 23px;}
 h3 {    font-size: 21px;}
 h4 {    font-size: 19px;}
 h5 {    font-size: 16px;}
 a {text-decoration: none;}
-div#infobar {background:#BBB; color:#000; text-align:center;padding: 5px}
+div#infobar {font-size:1.2em;background:#BBB; color:#000; text-align:center;}
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px}
 div#titlebar  {background:#DDCCB1; }
+div#body    {padding-bottom: 20px;}
 div.msg_err, div.msg_suc,div.msg_message {float: right;border:2px solid  #F00;}
