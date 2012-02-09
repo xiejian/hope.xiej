@@ -15,6 +15,12 @@
             <input type=password name=password size="10">
             <input type=submit value=Login>
         </form>
+
+        {% if request.path == url_for('home') %}
+            {% for category,message in get_flashed_messages(with_categories=True) %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
     </div>
     <div class="clear"></div>
 
