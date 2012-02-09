@@ -85,25 +85,20 @@ def marketdata():
 @app.route('/', methods=['GET','POST'])
 def home():
     if request.method == 'POST':
-        if not validateEmail(request.form['username']):
-            flash('Not validate Email','err')
+        user_id = _loginuser(g.db,request.form['username'],request.form['password'])
+        if user_id:
+            session['user_id'] = user_id
+            session['email'] = request.form['username']
+            flash('You were logged in','suc')
+            _loguser(g.db,user_id,'Login',request.remote_addr)
+            return redirect(url_for('trade'))
         else:
-            user_id = _loginuser(g.db,request.form['username'],request.form['password'])
-            if user_id:
-                session['user_id'] = user_id
-                session['email'] = request.form['username']
-                flash('You were logged in','suc')
-                _loguser(g.db,user_id,'Login',request.remote_addr)
-                return redirect(url_for('trade'))
-            else:
-                flash('Login Failed.','err')
-    g.u = _update_user(g.db,session)
+            g.login_failed = True
     return render_template('home.html')
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    flash('You were logged out','suc')
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET','POST'])
