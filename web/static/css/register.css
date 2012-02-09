@@ -2,3 +2,5 @@ div.register     {padding:20px;margin: 20px;font-size: 1.3em;border:1px solid #c
     border-radius: 5px;
     }
 div.register input       {font-size: 1.3em;margin: 20px;padding: 5px;}
+
+span.menu     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 5px 10px 5px 10px;background: #88C;color: #FF8;border-top: 2px solid #AA8;}

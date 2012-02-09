@@ -1,16 +1,18 @@
 
-div.binfo {float:right;background:transparent url(../img/b.info.png); border:0;width: 318px;
+div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     height: 82px;
-    margin: 15px 14px 1px 5px;
-    padding: 14px 14px 30px 20px; }
+    margin: 4px 1px 1px 17px;
+    padding: 13px 0px 30px 15px; }
 div.binfo>table {width: 100%;height: 100%;text-align: right;}
 
-div.topnavr    {text-align: right;}
+span.topnavr    {text-align: right;margin-top:8px; }
 /*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
 
+ul.topnav   {margin-left: -15px;}
 ul.topnav li    {float: left;list-style: none;text-align: center;}
-ul.topnav li.active {background: #FFF;}
+ul.topnav li.active a {background: #88C;color: #FF8;border-top: 2px solid #AA8;}
 ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 5px 10px 5px 10px;}
+ul.topnav a:hover   {color: #F22}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 
@@ -23,3 +25,6 @@ div.navi li a   {padding: 10px; }
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center; }
 span.btcaddr  {background: #DDD;padding: 5px;}
+a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;margin-left: 5px;
+   }
+a.logout:hover  {background: #88C;color: #FF8;}

@@ -3,9 +3,16 @@
     <link type="text/css" href="{{url_for('static',filename='css/register.css')}}" rel="stylesheet" />
 {% endblock %}
 
+{% block extitle %}
+    <div class="grid_9 push_4">
+        <span class="menu"> Create A New Account</span>
+    </div>
+    <div class="clear"></div>
+{% endblock %}
+
 {% block content %}
 <div class="grid_16">
-<h2>Create a New Account</h2>
+<h3>Sign Up</h3>
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <div class="register grid_9 alpha">
 <form action="{{ url_for('register') }}" method=post>

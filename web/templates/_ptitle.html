@@ -5,22 +5,21 @@
 {% endblock %}
 {% block title %}
 
-    <div class="grid_6 ptlogo"><br/>
+    <div class="grid_9 ptlogo"><br/>
         <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
     </div>
-    <div class="grid_10 ptlogin">
+    <div class="grid_7 ptlogin">
         <form class="login" action="{{ url_for('home') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <input type=email name=username size="16">
+            <!--span class="placeholder">Email</span-->
             <input type=password name=password size="10">
+            <!--span class="placeholder">Password</span-->
             <input type=submit value=Login>
+            {% if g.login_failed %}
+                <div class="login_failed">Username or Password is Incorrect. <a href="">Lost password?</a></div>
+            {% endif %}
         </form>
-
-        {% if request.path == url_for('home') %}
-            {% for category,message in get_flashed_messages(with_categories=True) %}
-                {{ message }}
-            {% endfor %}
-        {% endif %}
     </div>
     <div class="clear"></div>
 
