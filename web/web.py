@@ -3,8 +3,9 @@ from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
-from _basefunc import validateEmail,webformat
+from _basefunc import validateEmail,numformat,dtformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
+from _twitter import _update_twt
 #from flaskext.mail import Mail
 
 
@@ -18,15 +19,20 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.filters['f'] = webformat
+app.jinja_env.filters['f'] = numformat
+app.jinja_env.filters['df'] = dtformat
 
+gv_twta = []
+gv_twtt = []
 #================================================================
 @app.context_processor
 def inject_cont():
-    return dict(cont = gv_contract)
+    return dict(cont = gv_contract,twta=gv_twta,twtt=gv_twtt )
 
 @app.before_first_request
 def before_first_request():
+    global gv_twta,gv_twtt
+    [gv_twta,gv_twtt] = _update_twt()
     g.db  = _connect_db()
     _update_contract(g.db)
 
@@ -100,6 +106,13 @@ def home():
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('home'))
+
+@app.route('/twt')
+def twt_update():
+    global gv_twta,gv_twtt
+    [gv_twta,gv_twtt] = _update_twt()
+    return  jsonify(twt = [gv_twta,gv_twtt])
+
 
 @app.route('/register', methods=['GET','POST'])
 def register():
