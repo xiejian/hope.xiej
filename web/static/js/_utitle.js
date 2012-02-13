@@ -39,6 +39,4 @@ function activepage(page){
 
 $.ajaxSetup({ cache: false });
 
-$(function () {
-    $("form").validator();
-});
+

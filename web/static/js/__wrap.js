@@ -11,6 +11,27 @@ function n(b_s){
     else{return 0;}
 }
 
+$.tools.validator.fn("[data-equals]", "Value not equal with the $1 field", function(input) {
+    var name = input.attr("data-equals"),
+        field = this.getInputs().filter("[name=" + name + "]");
+    return input.val() == field.val() ? true : [name];
+});
+$.tools.validator.fn("[minlength]", function(input, value) {
+    var min = input.attr("minlength");
+    return value.length >= min ? true : {
+        en: "Please provide at least " +min+ " character" + (min > 1 ? "s" : ""),
+        fi: "Kentän minimipituus on " +min+ " merkkiä"
+    };
+});
+
+$(function () {
+    $("form").validator({
+        position: 'bottom left',
+        offset: [8, 0],
+        message: '<div><em/></div>' // em element is the arrow
+    });
+});
+
 (function() {
     if (window.__twitterIntentHandler) return;
     var intentRegex = /twitter\.com(\:\d{2,4})?\/intent\/(\w+)/,

@@ -1,6 +1,5 @@
 from config import email
-import smtplib,hashlib,base64
-from _db import  _connect_db
+import smtplib,threading
 
 def activate(para):
     temp={}
@@ -23,6 +22,19 @@ def invite(para):
     temp['body'] = para['url']
     return temp
 
+class _mailc(threading.Thread):
+    def __init__(self,toaddrs,msg):
+        threading.Thread.__init__(self)
+        self.toaddrs = toaddrs
+        self.msg = msg
+    def run(self):
+        server = smtplib.SMTP(email['smtpadd'])
+        server.starttls()
+        server.login(email['sendadd'],email['passwd'])
+        server.sendmail(email['sendadd'], self.toaddrs, self.msg)
+        server.quit()
+
+
 def _send_mail(toaddrs,type,para):
     para.update(dict(email=toaddrs))
     text = {}
@@ -31,13 +43,8 @@ def _send_mail(toaddrs,type,para):
     elif type == 'invite':
         text = invite(para)
 
-    print text
-
     msg = 'To:' + toaddrs + '\n' + 'From: BTCFE.com\n' + 'Subject:' + text['subject'] + '\n' + text['foreword']+\
           text['body']+ text['afterword'] +'\nRegards,\nYour BTCFE Team'
 
-    server = smtplib.SMTP(email['smtpadd'])
-    server.starttls()
-    server.login(email['sendadd'],email['passwd'])
-    server.sendmail(email['sendadd'], toaddrs, msg)
-    server.quit()
+    smail = _mailc(toaddrs,msg)
+    smail.start()
