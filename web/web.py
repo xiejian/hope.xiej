@@ -6,9 +6,7 @@ from _mail import _send_mail
 from _basefunc import validateEmail,numformat,dtformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 from _twitter import gv_twt,_update_twt
-
-
-
+from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
 
 
 app = Flask(__name__)
@@ -34,6 +32,7 @@ def inject_cont():
 def before_first_request():
     g.db  = _connect_db()
     _update_contract(g.db)
+    _start_eod_sevice()
 
 @app.before_request
 def before_request():
