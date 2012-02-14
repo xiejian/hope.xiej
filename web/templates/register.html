@@ -5,7 +5,7 @@
 
 {% block extitle %}
     <div class="grid_9 push_4">
-        <span class="menu"> Create A New Account</span>
+        <span class="menu">Create A New Account</span>
     </div>
     <div class="clear"></div>
 {% endblock %}
@@ -13,7 +13,6 @@
 {% block content %}
 <div class="grid_16">
 <h3>Sign Up</h3>
-{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <div class="register grid_9 alpha">
 <form action="{{ url_for('register') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">

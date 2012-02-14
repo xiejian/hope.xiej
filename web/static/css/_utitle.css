@@ -20,7 +20,7 @@ div#body table {width:100%;border:1px solid #ccc;border-radius: 5px;    }
 
 div.navi    {width:180px;height: 400px;float: left;background-color: #EEE;margin-right: 40px;}
 
-div.navi li    {font-size:1.3em;margin:20px 0px 20px 20px;padding: 10px 0px 10px 0px; }
+div.navi li    {font-size:1.3em;margin:20px 0px 20px 35px;padding: 10px 0px 10px 0px; }
 div.navi li a   {padding: 10px; }
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center; }
