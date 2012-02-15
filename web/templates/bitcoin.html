@@ -21,7 +21,7 @@ Please transfer Bitcoin to your unique address as follow:
 
 <div class="grid_11 push_1 bitcoin_tab">
 <h3>Bitcoin Withdraw</h3>
-<form action="{{ url_for('account') }}" method=post>
+<form class="btc_out" action="{{ url_for('account') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <dl>
         <dt>Address:

@@ -3,7 +3,7 @@ from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
-from _basefunc import validateEmail,numformat,dtformat
+from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 from _twitter import gv_twt,_update_twt
 from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
@@ -19,8 +19,7 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.filters['f'] = numformat
-app.jinja_env.filters['df'] = dtformat
+app.jinja_env.filters['f'] = myformat
 
 
 #================================================================

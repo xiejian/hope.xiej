@@ -40,9 +40,9 @@
 <table>
     {% for o in g.u['orders'] %}
         {% if loop.first %}
-            <tr><th>Order Time</th><th>Contract</th><th>Open Close</th><th>Buy Sell</th><th>Point</th><th>Lots</th><th>Remain Lots</th><th>Value</th><th>Margin</th><th>Cancel</th></tr>
+            <tr><th>Add Time</th><th>Contract</th><th>O/C</th><th>B/S</th><th>Point</th><th>Lots</th><th>Remain Lots</th><th>Value</th><th>Margin</th><th>Cancel</th></tr>
         {% endif %}
-        <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type'] }}</td><td>{{ o['buy_sell'] }}</td>
+        <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type']|f("F") }}</td><td>{{ o['buy_sell']|f("F") }}</td>
             <td>{{ o['point']|f }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['value']|f}}</td>
             <td>{{ o.margin|f}}</td>
             <td><form action="{{ url_for('trade') }}" method="POST">
@@ -63,7 +63,7 @@
             <tr><th>Contract</th><th>B/S</th><th>Point</th><th>Lots</th><th>Cost</th><th>MarketValue</th><th>Profit/Loss</th><th>Margin</th><th>Close</th></tr>
         {% endif %}
         <tr>
-            <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
+            <td>{{cont[p.contract_id]['name']}}</td><td>{{p.buy_sell|f("F")}}</td><td>{{p.point|f}}</td><td>{{p.lots}}</td><td>{{(p.point * p.lots*cont[p.contract_id]['btc_multi'])|f}}</td>
             <td>{{p.marketvalue|f}}</td><td>{{p.p_l|f}}</td><td>{{p.margin|f}}</td>
             <td><a href="{{ url_for('trade',c = p.contract_id) }}"> × </a></td>
         </tr>

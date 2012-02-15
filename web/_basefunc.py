@@ -1,21 +1,26 @@
 import re,os, base64,datetime
 
-def numformat(num):
-    if isinstance(num,datetime.datetime):
-        return num.isoformat()
-    try:
-        res = '{0:.8f}'.format(num).rstrip('0').rstrip('.')
-        return res
-    except Exception:
-        return ''
 
-def dtformat(value, format='%H:%M / %d-%m-%Y'):
-    if format == 'diff':
-        dt = datetime.datetime.strptime(value,'%a, %d %b %Y %H:%M:%S +0000')
-        return convertToHumanReadable(dt)
-    else:
-        dt = datetime.datetime.strptime(value,'%a %b %d %H:%M:%S +0000 %Y')
+def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
+    if type =='D':  #for date
+        if format == 'diff':
+            dt = datetime.datetime.strptime(value,'%a, %d %b %Y %H:%M:%S +0000')
+            return convertToHumanReadable(dt)
+        else:
+            dt = datetime.datetime.strptime(value,'%a %b %d %H:%M:%S +0000 %Y')
         return dt.strftime(format)
+    elif type=='N': #for num
+        if isinstance(value,datetime.datetime):
+            return value.isoformat()
+        try:
+            res = '{0:.8f}'.format(value).rstrip('0').rstrip('.')
+            return res
+        except Exception:
+            return ''
+    elif type=='F': #for Full
+        dt = {'B':'Buy','S':'Sell','O':'Open','C':'Close'}
+        return dt[value]
+
 
 def validateEmail(email):
     if len(email) > 6:

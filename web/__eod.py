@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*
 #this server started by os every 12 hours. notify web server his start and end.
 
-
-from _db import _connect_db
 import threading,time
+from _db import _connect_db
+from _data import _update_contract
 
 #data = {'name':'xiejian','id':3}
 NOT = {'B':'S','S':'B'}
@@ -76,12 +76,12 @@ def forced_close():
         elif u[1] <= 0:
             #forced close postion
             ocur.callproc('forced_close',(u[0],-u[1]))
-            print 'Forced Close'
+            print ocur.fetchone(),'btc Forced Close remained'
         #todo send email to notify user
 
 
 def eod_process():
-    global db,cur,t
+    global db,cur,t,gv_contract
     db=_connect_db()
     cur = db.cursor()
 
@@ -90,6 +90,10 @@ def eod_process():
     settle_cont()
     achieve_cont()
     forced_close()
+    _update_contract(db)
+
+    cur.close()
+    db.close()
 
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()

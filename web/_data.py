@@ -96,7 +96,7 @@ def _update_user(db,session,content = []):    #get user's info
         if vol is None:
             vol = [0]
         temp.update(dict(tradevol=vol[0]))
-        cur.execute("select sum(tradevol) from v_tradevol WHERE user_id in (select user_id from users where referrer = %s)",session['user_id'])
+        cur.execute("select ifnull(sum(tradevol),0) from v_tradevol WHERE user_id in (select user_id from users where referrer = %s)",session['user_id'])
         temp.update(dict(rtradevol=cur.fetchone()[0]))
     cur.close()
     return temp
