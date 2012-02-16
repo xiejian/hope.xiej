@@ -1,7 +1,7 @@
 import os,base64,time,threading
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
-from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
@@ -203,8 +203,8 @@ def bitcoin():
     if 'user_id' not in session:
         return redirect(url_for('home'))
     if request.method == 'POST':
-        #todo handle bitcoin withdraw post
-        pass
+        res = _btc_withdraw(g.db,session['email'],request.form['address'],request.form['amount'],request.form['password'],request.form['cpassword'])
+        flash(res['msg'],res['category'])
     g.u=_update_user(g.db,session,['address'])
     return render_template('bitcoin.html')
 

@@ -43,12 +43,13 @@ function update_o_c(){
     var b_s = $("input[name=b_s]:checked").val();
     var findstr = ":contains('"+contname+"')";
     if ($("table.tt_pos tr").find(findstr).next().html() == n(b_s)){
-        $("label#l_toc").html("CLOSE");
+        $("span.s_toc").addClass("C");
+        $("span.s_toc").removeClass("O");
     }
     else{
-        $("label#l_toc").html("OPEN");
+        $("span.s_toc").addClass("O");
+        $("span.s_toc").removeClass("C");
     }
-
 }
 
 $(function () {

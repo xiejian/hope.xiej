@@ -20,14 +20,14 @@
     <form action="{{ url_for('trade') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         <label id="l_tb" for="t_b">BUY</label><input type="radio" name="b_s" value="B" id="t_b" checked="checked"/>
-        <label id="l_ts" for="t_s">SELL</label><input type="radio" name="b_s" id="t_s" value="S" />
+        <label id="l_ts" for="t_s">SELL</label><input type="radio" name="b_s" id="t_s" value="S" />　　　<span class="s_tbs">　</span>
         <br/>
         <label for="contract">Contract</label><br/>
         <select id="contract" name="contract_id">
                 {% for ck in cont.keys() if cont[ck]['status']=='O' %}
                     <option value={{ck}} {% if ck == default_cid %} selected="selected" {% endif %} >{{cont[ck]['name']}}</option>
                 {% endfor %}
-            </select><label id="l_toc" ></label><br/>
+            </select><span class="s_toc">　　　</span><br/>
         Point:<br/>
         <input type=number name="point" value="" min="0.01" required="required"/><br/>
         Lots:<br/>
@@ -42,14 +42,15 @@
         {% if loop.first %}
             <tr><th>Add Time</th><th>Contract</th><th>O/C</th><th>B/S</th><th>Point</th><th>Lots</th><th>Remain Lots</th><th>Value</th><th>Margin</th><th>Cancel</th></tr>
         {% endif %}
-        <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td><td>{{ o['type']|f("F") }}</td><td>{{ o['buy_sell']|f("F") }}</td>
+        <tr><td>{{ o['createtime'] }}</td><td>{{ cont[o['contract_id']]['name'] }}</td>
+            <td><img src="{{url_for('static',filename='img/_i_%s.png'|format(o['type']))}}" title="{{ o['type']|f("F") }}"/></td><td>{{ o['buy_sell']|f("F") }}</td>
             <td>{{ o['point']|f }}</td><td>{{ o['lots'] }}</td><td>{{ o['rm_lots'] }}</td><td>{{ o['value']|f}}</td>
             <td>{{ o.margin|f}}</td>
             <td><form action="{{ url_for('trade') }}" method="POST">
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}"/>
                 <input type="hidden" name="orderid" value= {{o['order_id']}} />
                 <input type="hidden" name="contract_id" value= {{o['contract_id']}} />
-                <button type="submit" value="cancel"> × </button>
+                <INPUT TYPE="image" SRC="{{url_for('static',filename='img/_icon_eject.png')}}" HEIGHT="24" WIDTH="24" BORDER="0" ALT="Submit Form" />
             </form></td></tr>
     {% else %}
         <tr><td>None</td></tr>

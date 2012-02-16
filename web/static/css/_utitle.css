@@ -16,17 +16,11 @@ ul.topnav a:hover   {color: #F22}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 
-div#body table {width:100%;border:1px solid #ccc;border-radius: 5px;    }
-div#body table td,div#body table th {padding: 4px ;text-align:right;border:1px solid #EEDDC2;}
-div#body table th {background-color: #DDCCB1; color: #148;font-style: italic;text-align:center;}
+div.body table {width:100%;border:1px solid #ccc;border-radius: 5px;    }
+div.body table td,div.body table th {padding: 4px ;text-align:right;border:1px solid #DDCCB1;}
+div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;}
 
 
-div.navi    {width:180px;height: 400px;float: left;background-color: #EEE;margin-right: 40px;}
 
-div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 0px 20px 30px;padding: 10px 0px 10px 0px; }
-div.navi li a   {padding: 10px; }
-
-div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center; }
-span.btcaddr  {background: #DDD;padding: 5px;}
 a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;margin-left: 5px;   }
 a.logout:hover  {background: #88C;color: #FF8;}

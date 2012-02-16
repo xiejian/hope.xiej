@@ -11,6 +11,7 @@
 <ul id="accountmenu">
     <li><a href=0>General Info</a></li>
     <li><a href=1>Account History</a></li>
+    <li><a href=2>Security Info</a></li>
 </ul>
 </div>
 <div class="grid_12 account_tab">
@@ -18,7 +19,7 @@
     Current Feerate: {{ (g.u['feerate']*100)|f }}%
 </h4>
 <div class="grid_6 ">
-    <table><tr><td>item</td><td>value</td></tr>
+    <table class="ginfo">
         <tr><td>My Own Trade Volume</td><td> {{ g.u['tradevol'] |f }}</td></tr>
     <tr><td>My Friends' Trade Volume</td><td> {{ g.u['rtradevol'] |f }}</td></tr>
     <tr><td>Num of My Friends</td><td> {{ g.u['rtradevol'] |f }}</td></tr>
@@ -37,20 +38,57 @@
 <div class="clear"></div>
 
 
-<h4>Referee</h4>
+<h4>Invite your friends to join BTCFE</h4>
 
-<p> Recommendate your friends to join BTCFE: </p>
+<form action="{{ url_for('account') }}" method=post class="invite grid_10">
 <!--todo personal info , if valid, set capital password.-->
 <!--todo 发送邀请信，限制名额.-->
-<h5>Your friend will get 100BTC initial trade volume and 0.1 BTC after his first trade; You will get all this trade volume in the future.</h5>
-<form action="{{ url_for('account') }}" method=post>
+<h5>As reward:</h5>
+    <p>　　Your friend will get 100BTC initial trade volume and 0.1 BTC after his first trade;<br/>
+        　　You will get all this trade volume in the future.</p>
+
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <dl>
-        <dt>Invite a friend:
-        <dd><input type=email name="email" value="" required="required"/>
-        <dd><input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
-    </dl>
+        <h5>Invite Now:</h5>
+    　　<input type=email name="email" value="" size="22" required="required"/>
+        <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
 </form>
+
+
+</div>
+
+
+<div class="grid_12 account_tab">
+
+<h4>Transaction History</h4>
+<table>
+    <tr><th>TimeStamp</th><th>Contract</th><th>O / C</th><th>B / S</th><th>Point</th><th>Lots</th><th>Value</th><th>Fee</th><th>Pofit/Loss</th></tr>
+    {% for t in g.u['trans'] %}
+    <tr>
+        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type|f("F")}}</td><td>{{t.buy_sell|f("F")}}</td>
+        <td>{{t.point|f}}</td><td>{{t.lots}}</td><td>{{t.value|f}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+
+
+<h4>Bitcoin Trans</h4>
+<table>
+    <tr><th>TimeStamp</th><th>Type</th><th>Amount</th><th>Fee</th><th>Address</th><th>Confirmed</th></tr>
+    {% for t in g.u['btctrans'] %}
+    <tr>
+        <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
+        <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td></tr>
+        <tr><td></td><td colspan="4">txid: {{t.txid}}</td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+
+</div>
+<div class="grid_12 account_tab">
     <h4>Security Info</h4>
     <table><tr><th>Password</th><th>Email Validate</th><th>Capital Password</th></tr>
         <tr><td>SET</td><td>{{ g.u['email_v'] }}</td><td>{{ g.u['password2'] }}<button class="modalInput" rel="#set_cpass">Set</button></td></tr></table>
@@ -79,48 +117,4 @@
         </form>
     </div>
 </div>
-
-<div class="grid_12 account_tab">
-
-<h4>Transaction History</h4>
-<table>
-    <tr><th>TimeStamp</th><th>Contract</th><th>Open/Close</th><th>B/S</th><th>Point</th><th>Lots</th><th>Value</th><th>Fee</th><th>Pofit/Loss</th></tr>
-    {% for t in g.u['trans'] %}
-    <tr>
-        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type}}</td><td>{{t.buy_sell}}</td>
-        <td>{{t.point|f}}</td><td>{{t.lots}}</td><td>{{t.value|f}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td>
-    </tr>
-    {% else %}
-    <tr>None</tr>
-    {% endfor %}
-</table>
-
-<h4>Bitcoin Flow</h4>
-<table>
-    <tr><th>input_dt</th><th>trans_id</th><th>amount</th><th>type</th></tr>
-    {% for b in g.u['btcflow'] %}
-    <tr>
-        <td>{{b.input_dt}}</td><td>{{b.trans_id}}</td><td>{{b.amount}}</td><td>{{b.type}}</td>
-    </tr>
-    {% else %}
-    <tr>None</tr>
-    {% endfor %}
-</table>
-
-<h4>Bitcoin Trans</h4>
-<table>
-    <tr><th>TimeStamp</th><th>type</th><th>amount</th><th>fee</th><th>address</th><th>confirmed</th></tr>
-    {% for t in g.u['btctrans'] %}
-    <tr>
-        <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
-        <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td></tr>
-        <tr><td></td><td colspan="4">txid: {{t.txid}}</td>
-    </tr>
-    {% else %}
-    <tr>None</tr>
-    {% endfor %}
-</table>
-
-</div>
-
 {% endblock %}

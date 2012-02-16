@@ -119,6 +119,7 @@ def _cancel_order(db,session,orderid):
     cur.close()
     return dict(msg=result[1],category=result[0])
 
+
 if __name__ == "__main__":
     class g:
         db = _connect_db()
