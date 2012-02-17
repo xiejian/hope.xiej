@@ -44,17 +44,28 @@
 
     </div>
     <div class="grid_6 h_news">
-        <h4>Site News</h4><a href="/"><img src="{{url_for('static',filename='img/logo.s.gif')}}"/></a>
-        <p>blabal</p>
-        <p>blabal</p>
-        <p>blabal</p><p>blabal</p>
-        <p>blabal</p>
+        <div class="twt_follow"><a href='https://twitter.com/BTCFE' target="_blank">Follow us</a></div>
+        <h4>Site News</h4>
+        <ul class="twt">
+        {% for a in twt['ann'] %}
+            <li>{{ a.created_at|df("%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
+            <span> <a href="https://twitter.com/intent/tweet?in_reply_to={{ a.id_str }}"  class="twt_reply"></a>
+                <a href="https://twitter.com/intent/retweet?tweet_id={{ a.id_str }}"  class="twt_retweet"></a>
+                <a href="https://twitter.com/intent/favorite?tweet_id={{ a.id_str }}" class="twt_favor"></a></span>
+            </li>
+        {% endfor %}
+        </ul>
 
         <h4>Talk About BTCFE</h4>
-        <p>blabal</p>
-        <p>blabal</p>
-        <p>blabal</p><p>blabal</p>
-        <p>blabal</p>
+        <ul class="twt">
+            {% for a in twt['talk'].results %}
+                <li><a href='https://twitter.com/{{ a.from_user }}'><img src='{{ a.profile_image_url }}'/></a>
+                <span class="twt_text"> {{ a.text }}</span> - {{ a.created_at|df("diff") }}
+                <span class="twt_action"> <a href="https://twitter.com/intent/tweet?in_reply_to={{ a.id_str }}"  class="twt_reply"></a>
+                <a href="https://twitter.com/intent/retweet?tweet_id={{ a.id_str }}" class="twt_retweet"></a>
+                <a href="https://twitter.com/intent/favorite?tweet_id={{ a.id_str }}" class="twt_favor"></a></span>
+            {% endfor %}
+        </ul>
     </div>
     <div class="clear"></div>
 

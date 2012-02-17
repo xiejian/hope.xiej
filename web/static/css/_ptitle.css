@@ -1,5 +1,5 @@
 div.ptlogin  {margin:20px 20px 0px 0px; }
-div.ptlogin input   {font-size: 1.4em;border: 1px solid #AAE;background: #88A;color: #FFF;margin-left: -3px;padding: 3px;}
+div.ptlogin input   {font-size: 1.3em;border: 1px solid #AAE;background: #88A;color: #FFF;margin-left: -3px;padding: 5px;}
 form.login {text-align:center;  padding: 2px; }
 div.login_failed    {color: #FFF;}
 span.placeholder    {position: absolute;

@@ -13,3 +13,31 @@ div#body    {padding-bottom: 20px;}
 div.msg_err, div.msg_suc,div.msg_message {padding:10px 10px 10px 40px;border-radius: 5px;float: right;border: 1px solid #CD0A0A;margin-top: 10px;
     background: #FEF1EC url(../img/info.png) 0 50% no-repeat; color: #CD0A0A;}
 div.msg_suc {border: 1px solid #FCEFA1;background: #FBF9EE url(../img/info.png) 0 50% no-repeat;color: #363636;}
+
+.error {
+    /* supply height to ensure consistent positioning for every browser */
+    height:15px;
+    background-color:#FFFDB6;
+    border:1px solid #FEF1EC;
+    font-size:11px;
+    color:#000;
+    padding:3px 10px;
+    margin-left:-2px;
+
+    /* CSS3 spicing for mozilla and webkit */
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+
+    -moz-box-shadow:0 0 6px #ddd;
+    -webkit-box-shadow:0 0 6px #ddd;
+}
+.error em {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 10px solid;
+    position: absolute;
+    bottom: 21px;
+    left: 60px;
+    border-color: transparent transparent #FFFDB6;
+}

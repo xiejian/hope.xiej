@@ -1,11 +1,12 @@
-import os,base64
+import os,base64,time,threading
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
 from _mail import _send_mail
-from _basefunc import validateEmail,webformat
+from _basefunc import validateEmail,numformat,dtformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-#from flaskext.mail import Mail
+from _twitter import gv_twt,_update_twt
+from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
 
 
 app = Flask(__name__)
@@ -18,17 +19,20 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.filters['f'] = webformat
+app.jinja_env.filters['f'] = numformat
+app.jinja_env.filters['df'] = dtformat
+
 
 #================================================================
 @app.context_processor
 def inject_cont():
-    return dict(cont = gv_contract)
+    return dict(cont = gv_contract,twt=gv_twt )
 
 @app.before_first_request
 def before_first_request():
     g.db  = _connect_db()
     _update_contract(g.db)
+    _start_eod_sevice()
 
 @app.before_request
 def before_request():
@@ -37,11 +41,13 @@ def before_request():
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
     g.db  = _connect_db()
+    _update_twt()
 @app.teardown_request
 def teardown_request(exception):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'db'):
         g.db.close()
+
 #=================================================================
 @app.route('/_contdata')
 def contdata():
@@ -101,6 +107,13 @@ def logout():
     session.pop('user_id', None)
     return redirect(url_for('home'))
 
+@app.route('/twt')
+def twt_update():
+    global gv_twta,gv_twtt
+    [gv_twta,gv_twtt] = _update_twt()
+    return  jsonify(twt = [gv_twta,gv_twtt])
+
+
 @app.route('/register', methods=['GET','POST'])
 def register():
     g.u = _update_user(g.db,session)
@@ -116,7 +129,7 @@ def register():
             if res == True:
                 _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
-                return redirect(url_for('home'))
+                return render_template('register.html',type='C')
             else:
                 flash(res,'err')
     else:
@@ -127,13 +140,13 @@ def register():
             if user_id:
                 flash('Your account had been activated.','suc')
                 session['user_id'] = user_id
-                return render_template('active.html')
+                return render_template('register.html',type='A')
             else:
                 abort(401)
         rcode = request.args.get('r', False)
         ref = _dercode(rcode)
         session.update(ref)
-    return render_template('register.html')
+    return render_template('register.html',type='O')
 #todo register recommendation and friend trade volume contribution
 
 

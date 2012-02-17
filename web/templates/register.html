@@ -5,7 +5,7 @@
 
 {% block extitle %}
     <div class="grid_9 push_4">
-        <span class="menu">Create A New Account</span>
+        <span class="menu"> Create A New Account</span>
     </div>
     <div class="clear"></div>
 {% endblock %}
@@ -13,24 +13,28 @@
 {% block content %}
 <div class="grid_16">
 <h3>Sign Up</h3>
+{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <div class="register grid_9 alpha">
 <form action="{{ url_for('register') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <table><tr>
-        <td>E-mail:</td>
-        <td><input type=email name=username value="{{ session['email'] }}" size="20"></td>
-    </tr><tr>
-        <td>Password:</td><td><input type=password name=password size="20"></td>
-    </tr><tr>
-        <td>Confirm Password:</td>
-        <td><input type=password name=password2 size="20"></td>
-    </tr><tr>
-        <td>{% if session['referrer'] %} √ {% endif %}<input type=hidden name=referrer value="{{ session['referrer'] }}"></td>
-        <td><input type=submit value=Register></td>
-    </tr></table>
+    E-mail:<br/>
+    <input type="email" name="username" value="{{ session['email'] }}" size="22" required="required" /><br/>
+    Password:<br/><input type="password" name="password" minlength="6" size="22" required="required" /><br/>
+    Confirm Password:<br/>
+    <input type="password" name="password2" size="22" required="required" data-equals="password" /><br/>
+    <input type="hidden" name="referrer" value="{{ session['referrer'] }}">
+    <input type="submit" value=Register>{% if session['referrer'] %} √ {% endif %}
 </form>
-    </div>
-    <div class="grid_5 omega">Help</div>
 </div>
-    <p>　</p>
+
+<div class="create grid_9 push_2" {% if type != 'C' %} style="display:none"{% endif %}>
+    <h2>Your account had been created.</h2>
+    Next step: Check your email & validate your account
+</div>
+
+<div class="activate grid_9 push_2"  {% if type != 'A' %} style="display:none"{% endif %}>
+    <h2>Your account had been activated.</h2>
+    Next step: <a href="{{ url_for('bitcoin') }}"> Deposit Bitcoin </a>
+</div>
+<p>　</p>
 {% endblock %}
