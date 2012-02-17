@@ -16,25 +16,25 @@
     <div class=" binfo">
         {% if session.user_id %}
             <table><tr>
-                <th >Asset Total</th><td colspan="3">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
+                <th >AssetTotal</th><td colspan="3">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
             </tr><tr>
                 <th >Available</th><td colspan="3">{{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} ({{ g.u.p_l|float}}) </td>
             </tr>
             {% if g.u.pnum %}
                 <tr><th>Positions</th><td> {{g.u.pnum}}</td><th>　　Margin</th><td>{{ g.u.pmargin|f}}</td></tr>
             {% endif %}{% if g.u.onum %}<tr>
-                <th>Orders</th><td> {{g.u.onum}}</td><th>　　Margin</th><td>{{ g.u.omargin|f}} </td></tr>
+                <th>　Orders</th><td> {{g.u.onum}}</td><th>　　Margin</th><td>{{ g.u.omargin|f}} </td></tr>
             {% endif %}</table>
         {% endif %}
     </div>
     <div class="clear"></div>
 <div class="grid_12">
-    <ul class="grid_7 alpha topnav">
+    <ul class="grid_6 alpha topnav">
         <li><a href="{{url_for('market')}}">Market</a></li>
         <li><a href="{{url_for('trade')}}">Trade</a></li>
         <li><a href="{{url_for('account')}}">Account</a></li>
         <li><a href="{{url_for('bitcoin')}}">Bitcoin</a></li></ul>
-    <span class="grid_5 omega topnavr">
+    <span class="grid_6 omega topnavr">
         Welcome <strong> {{ session['email'] }}  <a class="logout" href = "/logout">Logout</a> </strong>
     </span>
 </div></div>

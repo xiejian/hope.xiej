@@ -18,7 +18,7 @@
 <h4>
     Current Fee Rate: <em>{{ (g.u['feerate']*100)|f }}%</em>
 </h4>
-<div class="grid_8 ">
+<div class="grid_9 alpha ">
 <p>Your trade fee rate is set from 0.4% to 0.07% based on your trade volume in last one month. </p>
     <p>The more you trade, the lower fee rate you get.</p>
 
@@ -27,8 +27,8 @@
 
     <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table>
 </div>
-    <div class="grid_1 ">　</div>
-<div class="grid_3 ">
+
+<div class="grid_3 prefix_1 omega">
     <table><tr><th>Trade Volume</th><th>Fee Rate</th></tr>
         <tr{% if g.u['feerate']|float == 0.004 %} class="selected" {% endif %}><td>< 50</td><td>0.4%</td></tr>
         <tr{% if g.u['feerate']|float == 0.003 %} class="selected" {% endif %}><td>< 100</td><td>0.3%</td></tr>
@@ -44,7 +44,7 @@
 <h4>
     This Month Fee Coupon: <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
 </h4>
-<div class="grid_8 ">
+<div class="grid_9 alpha ">
 <p>You could use fee coupon and receive a fee discount return at the end of month.</p>
     <p>Your fee coupon of this month is set from 10% to 80% based on you and your friends' trade volume in last one month.</p>
     <p> The more friends you get, the higher fee coupon you get.</p>
@@ -54,8 +54,7 @@
         <tr><th>My Effective Trade Volume</th><td> {{ (g.u['tradevol'] + g.u['rtradevol'])|f }}</td></tr>
         <tr><th>Fee Return Rate</th><td>{{ (g.u['returnrate']*100)|f }}%</td></tr></table>
 </div>
-<div class="grid_1 ">　</div>
-<div class="grid_3 ">
+<div class="grid_3 prefix_1 omega">
     <table><tr><th>Trade Volume</th><th>Coupon Rate</th></tr>
         <tr {% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.2 %} class="selected" {% endif %}><td>< 400</td><td>20% OFF</td></tr>

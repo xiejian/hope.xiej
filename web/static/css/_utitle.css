@@ -1,9 +1,9 @@
 
 div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     height: 72px;
-    width: 247px;
+    width: 252px;
     margin: 12px 25px 1px 17px;
-    padding: 11px 21px 30px 15px; }
+    padding: 10px 16px 30px 14px; }
 div.binfo>table {width: 100%;height: 100%;}
 
 div.binfo>table td  {text-align: right;}
@@ -25,5 +25,5 @@ div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text
 
 
 
-a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;margin-left: 5px;   }
+a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;  }
 a.logout:hover  {background: #88C;color: #FF8;}

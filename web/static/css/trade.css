@@ -15,11 +15,11 @@ span.s_toc.O  { background: url("../img/_i_O.png") no-repeat right ;padding: 6px
 
 span.s_toc.C  {background: url("../img/_i_C.png") no-repeat right;padding: 6px;}
 
-span.s_toc.O::before {
+span.s_toc.O:before {
     content:"OPEN";
     padding-left: 4px;
 }
-span.s_toc.C::before {
+span.s_toc.C:before {
     content:"CLOSE";
     padding-left: 4px;
 }

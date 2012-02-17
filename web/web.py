@@ -255,7 +255,7 @@ def server():
 @app.route('/test', methods=['GET','POST'])
 def test():
     print request.user_agent
-    return request.remote_addr
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
