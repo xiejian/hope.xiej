@@ -1,9 +1,9 @@
 import os,base64,time,threading
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
-from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw
 from _mail import _send_mail
-from _basefunc import validateEmail,numformat,dtformat
+from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
 from _twitter import gv_twt,_update_twt
 from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
@@ -19,8 +19,7 @@ def generate_csrf_token():
         session['_csrf_token'] =  base64.urlsafe_b64encode(os.urandom(8))
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
-app.jinja_env.filters['f'] = numformat
-app.jinja_env.filters['df'] = dtformat
+app.jinja_env.filters['f'] = myformat
 
 
 #================================================================
@@ -196,7 +195,7 @@ def account():
                                                        'refer':session['email']})
             flash('Invite Email Sent.','suc')
 
-    g.u=_update_user(g.db,session,['positions','trans','btcflow','btctrans','info','log'])#todo delete btcflow
+    g.u=_update_user(g.db,session,['positions','trans','btcflow','info','log'])#todo delete btcflow
     return render_template('account.html')
 
 @app.route('/bitcoin', methods=['GET','POST'])
@@ -204,9 +203,9 @@ def bitcoin():
     if 'user_id' not in session:
         return redirect(url_for('home'))
     if request.method == 'POST':
-        #todo handle bitcoin withdraw post
-        pass
-    g.u=_update_user(g.db,session,['address'])
+        res = _btc_withdraw(g.db,session['email'],request.form['address'],request.form['amount'],request.form['password'],request.form['cpassword'])
+        flash(res['msg'],res['category'])
+    g.u=_update_user(g.db,session,['address','btctrans'])
     return render_template('bitcoin.html')
 
 

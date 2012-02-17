@@ -24,7 +24,7 @@
         {% block extitle %}{% endblock %}
     </div>
 </div>
-<div id="body">
+<div class="body">
     <div class="container_16">
         {% for category,message in get_flashed_messages(with_categories=True) %}
             <div class="msg_{{ category }}">{{ message }}</div>

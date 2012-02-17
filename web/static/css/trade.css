@@ -11,3 +11,18 @@ div.trade.S label#l_tb  {background: #2AA}
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 label#l_toc {font-size: 1.2em;font-weight: bold;margin-left:10px}
 
+span.s_toc.O  { background: url("../img/_i_O.png") no-repeat right ;padding: 6px;}
+
+span.s_toc.C  {background: url("../img/_i_C.png") no-repeat right;padding: 6px;}
+
+span.s_toc.O::before {
+    content:"OPEN";
+    padding-left: 4px;
+}
+span.s_toc.C::before {
+    content:"CLOSE";
+    padding-left: 4px;
+}
+
+div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 5px;}
+div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 5px;}

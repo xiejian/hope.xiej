@@ -6,12 +6,12 @@
 {% block title %}
 
     <div class="grid_9 ptlogo"><br/>
-        <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}"/></a>
+        <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}" title="Bitcoin Futures Exchange"/></a>
     </div>
     <div class="grid_7 ptlogin">
         <form class="login" action="{{ url_for('home') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            <input type=email name=username size="16" required="required">
+            <input type=email name=username size="18" required="required">
             <!--span class="placeholder">Email</span-->
             <input type=password name=password size="10" required="required">
             <!--span class="placeholder">Password</span-->

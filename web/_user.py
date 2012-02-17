@@ -1,4 +1,4 @@
-import hashlib, base64
+import hashlib, base64,decimal
 from config import mykey
 
 def _createuser(db,email,password,referrer):
@@ -93,6 +93,24 @@ def _loguser(db,user_id,action,ip):
         cur.execute("INSERT INTO userlog(user_id,action,ip) VALUES (%s,%s,%s);",[user_id,action,ip])
     db.commit()
     cur.close()
+
+def _btc_withdraw(db,email,btc_add,amount,passwd,cpass):
+    user_id = _loginuser(db,email,passwd)
+    if user_id and _vali_cpass(db,email,cpass):
+        cur = db.cursor()
+        cur.execute("SELECT balance - omargin - pmargin + p_l FROM v_userbtc WHERE user_id = %s",user_id)
+        btc_avail = cur.fetchone()
+        if btc_avail[0] < decimal.Decimal(amount):
+            cur.close()
+            return {'msg':"Available Bitcoin is not Enough.",'category':'err'}
+        else:
+            cur.execute("insert into btc_action(action,account1,address,amount,type,input_dt) values ('sendfrom',%s,%s,%s,'W',NOW());"
+            ,(email,btc_add,amount))
+            db.commit()
+            cur.close()
+            return {'msg':"Withdraw "+amount+" Btc Successfully",'category':'suc'}
+    else:
+        return {'msg':"Password is not correct.",'category':'err'}
 
 def _dercode(code):
     try:

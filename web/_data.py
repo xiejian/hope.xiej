@@ -69,8 +69,8 @@ def _update_user(db,session,content = []):    #get user's info
         trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
             timestamp=row[7],value = row[8]) for row in cur.fetchall()]
         temp.update({'trans':trans})
-    if 'btcflow' in content:
-        cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,10",session['email'])
+    if 'btcflow' in content:#todo delete btcflow
+        cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,20",session['email'])
         btcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in cur.fetchall()]
         temp.update({'btcflow':btcflow})
     if 'btctrans' in content:
@@ -91,13 +91,12 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
         temp.update(dict(password2=(row[0]==0),email_v=row[1],feerate=row[2],invite=row[3]))
-        cur.execute("select tradevol from v_tradevol WHERE user_id = %s",session['user_id'])
+        cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
+                left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
         vol = cur.fetchone()
-        if vol is None:
-            vol = [0]
-        temp.update(dict(tradevol=vol[0]))
-        cur.execute("select sum(tradevol) from v_tradevol WHERE user_id in (select user_id from users where referrer = %s)",session['user_id'])
-        temp.update(dict(rtradevol=cur.fetchone()[0]))
+
+        temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
+
     cur.close()
     return temp
 
@@ -118,6 +117,7 @@ def _cancel_order(db,session,orderid):
         return {'msg':'None','category':'err'}
     cur.close()
     return dict(msg=result[1],category=result[0])
+
 
 if __name__ == "__main__":
     class g:

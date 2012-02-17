@@ -10,9 +10,9 @@ div#infobar {font-size:1.2em;background:#BBB; color:#000; text-align:center;}
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px}
 div#titlebar  {background:#DDCCB1; border-bottom:4px solid  #88C;}
 div#body    {padding-bottom: 20px;}
-div.msg_err, div.msg_suc,div.msg_message {padding:10px 10px 10px 40px;border-radius: 5px;float: right;border: 1px solid #CD0A0A;margin-top: 10px;
-    background: #FEF1EC url(../img/info.png) 0 50% no-repeat; color: #CD0A0A;}
-div.msg_suc {border: 1px solid #FCEFA1;background: #FBF9EE url(../img/info.png) 0 50% no-repeat;color: #363636;}
+div.msg_err, div.msg_suc,div.msg_message {padding:10px 10px 10px 45px;border-radius: 5px;float: right;border: 1px solid #CD0A0A;margin-top: 10px;
+    background: #FEF1EC url(../img/_icon_error.png) 3% 50%  no-repeat; color: #CD0A0A;}
+div.msg_suc {border: 1px solid #FCEFA1;background: #FBF9EE url(../img/_icon_info.png) 3% 50% no-repeat;color: #363636;}
 
 .error {
     /* supply height to ensure consistent positioning for every browser */
