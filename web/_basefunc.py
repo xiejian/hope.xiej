@@ -18,8 +18,12 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
         except Exception:
             return ''
     elif type=='F': #for Full
-        dt = {'B':'Buy','S':'Sell','O':'Open','C':'Close'}
-        return dt[value]
+        dt = {'B':'Buy','S':'Sell','O':'Open','C':'Close',
+              'F':'FEE buy','G':'FEE sell','P':'P/L buy','Q':'P/L sell','W':'Withdraw','R':'FEE return'}
+        if value in dt.keys():
+            return dt[value]
+        else:
+            return ""
 
 
 def validateEmail(email):

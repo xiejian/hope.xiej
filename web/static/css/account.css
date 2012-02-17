@@ -1,15 +1,26 @@
-div.navi    {width:180px;height: 400px;float: left;background-color: #EEE;margin-right: 40px;}
+div.navi    {width: 164px;
+    height: 300px;
+    float: left;
+    background-color: #EEE;
+    margin-right: 16px;}
 
-div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 0px 20px 30px;padding: 10px 0px 10px 0px; }
+div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 0px 20px 25px;padding: 10px 0px 10px 0px; }
 div.navi li a   {padding: 10px; }
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;background: url("../img/logo.s.gif") no-repeat 96% 92%;   }
-span.btcaddr  {background: #DDD;padding: 5px;}
+div.account_tab em,div.bitcoin_tab em  {background: #DDD;padding: 5px;}
 
-form.invite {border:1px solid #ccc;border-radius: 5px;font-size: 1.1em;padding: 10px;}
-form.invite p {font-weight:bold;}
+form.invite {border:1px solid #ccc;border-radius: 5px;padding: 10px;}
+
+p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em; }
+
+tr::before {content: ""; }
+tr.selected::before  {content: "\00BB \0020"; color: #800;margin-left: -5px;}
+tr.selected>td      {background-color: #FEF1EC;}
+
+p::before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 form.invite input,form.btc_out input {font-size:1.2em;padding: 5px; margin: 10px; }
 table.ginfo {font-size: 1.2em;}
 
-form.btc_out    {font-size: 1.2em;margin: 40px;}
+form.btc_out    {font-size: 1.2em;margin: 20px 30px;}
 form.btc_out tr td  {text-align: left;vertical-align:middle;}

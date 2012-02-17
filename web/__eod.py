@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*
 #this server started by os every 12 hours. notify web server his start and end.
 
-import threading,time
+import threading,time,datetime
 from _db import _connect_db
 from _data import _update_contract
 
@@ -61,6 +61,23 @@ def cal_userinfo():
     #todo:u'更新用户交易量及费率等级。送币等系统活动也可放在这里实现'
     pass
 
+def update_feerate():
+    rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = FRATE(v.tradevol)")
+    db.commit()
+    print rows,'user fee rate updated.'
+
+def return_fee():
+    global rfee_lastupdate
+    if 'rfee_lastupdate' not in globals():
+        cur.execute("select ifnull(max(input_dt),NOW() + interval -1 month) from btc_action where account2 = 'FEE' and type = 'R';")
+        rfee_lastupdate = cur.fetchone()[0]
+    if datetime.datetime.now().month > rfee_lastupdate.month:
+        rows = cur.execute(" insert into btc_action(action,account1,account2,amount,type,input_dt) \
+                        select 'move',u.email,'FEE',-l.fee * RRATE(v.tradevol + ifnull(rv.rtvol,0)),'R',NOW() from users u join v_lastmonfee l on u.email = l.account1\
+                         left join v_tradevol v on u.user_id = v.user_id left join v_rtradevol rv on u.user_id = rv.user_id;")
+        db.commit()
+        print rows, 'Users Fee Monthly Returned'
+
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")
     ccur = db.cursor()
@@ -90,6 +107,8 @@ def eod_process():
     settle_cont()
     achieve_cont()
     forced_close()
+    update_feerate()
+    return_fee()
     _update_contract(db)
 
     cur.close()
@@ -110,6 +129,7 @@ def _stop_eod_sevice():
     print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
 
 if __name__ == '__main__':
-    _start_eod_sevice()
-    time.sleep(200)
-    _stop_eod_sevice()
+    #_start_eod_sevice()
+    #time.sleep(200)
+    #_stop_eod_sevice()
+    eod_process()

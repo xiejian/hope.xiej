@@ -13,17 +13,17 @@
 </div>
 <div class="grid_12">
     <div class="grid_6 alpha"></div>
-    <div class="grid_6 omega binfo">
+    <div class=" binfo">
         {% if session.user_id %}
             <table><tr>
-                <td>Asset</td><td colspan="2">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
+                <th >Asset Total</th><td colspan="3">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
             </tr><tr>
-                <td>Avail</td><td colspan="2">{{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} ({{ g.u.p_l|float}}) </td>
+                <th >Available</th><td colspan="3">{{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} ({{ g.u.p_l|float}}) </td>
             </tr>
             {% if g.u.pnum %}
-                <tr><td>Positions {{g.u.pnum}}</td><td> Margin</td><td>{{ g.u.pmargin|f}}</td></tr>
+                <tr><th>Positions</th><td> {{g.u.pnum}}</td><th>　　Margin</th><td>{{ g.u.pmargin|f}}</td></tr>
             {% endif %}{% if g.u.onum %}<tr>
-                <td>Orders {{g.u.onum}}</td><td> Margin</td><td>{{ g.u.omargin|f}} </td></tr>
+                <th>Orders</th><td> {{g.u.onum}}</td><th>　　Margin</th><td>{{ g.u.omargin|f}} </td></tr>
             {% endif %}</table>
         {% endif %}
     </div>
