@@ -24,8 +24,6 @@ div.body table td,div.body table th {padding: 4px ;text-align:right;border:1px s
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}
 
 
-div.navi li    {font-size:1.3em;margin:20px 0px 20px 20px;padding: 10px 0px 10px 0px; }
-div.navi li a   {padding: 10px; }
 
 a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;margin-left: 5px;   }
 a.logout:hover  {background: #88C;color: #FF8;}
