@@ -9,7 +9,8 @@ from _data import _update_contract
 NOT = {'B':'S','S':'B'}
 EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
-
+#todo 活动送coupon。
+#todo movement include bitcoin transfer
 
 #contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected
 def open_cont():
