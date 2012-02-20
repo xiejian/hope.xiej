@@ -65,11 +65,11 @@ def _update_user(db,session,content = []):    #get user's info
                 tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
             temp['positions'].append(tt)
     if 'trans' in content:
-        cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp,value from v_trans WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
+        cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp,value,btc from v_pl WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
         trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
-            timestamp=row[7],value = row[8]) for row in cur.fetchall()]
+            timestamp=row[7],value = row[8],btc_transfer = row[9]) for row in cur.fetchall()]
         temp.update({'trans':trans})
-    if 'btcflow' in content:#todo delete btcflow
+    if 'btcflow' in content:#todo get user's account balance and movement
         cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,20",session['email'])
         btcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in cur.fetchall()]
         temp.update({'btcflow':btcflow})
@@ -94,8 +94,13 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
                 left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
         vol = cur.fetchone()
-
         temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
+
+        cur.execute("select s_coupon,num,comment from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
+        row = cur.fetchone()
+        if row is None:
+            row = [0,0,""]
+        temp.update(dict(s_coupon=row[0],sc_num=row[1],sc_comment=row[2]))
 
     cur.close()
     return temp

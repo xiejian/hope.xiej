@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*
 #this server started by os every 12 hours. notify web server his start and end.
-#todo : contract create, open, close, settle, achieve
-#todo:u'账户为负用户的强平,发送E-mail'
-#todo:u'更新用户交易量及费率等级。送币等系统活动也可放在这里实现'
 
 import urllib,urllib2,MySQLdb,atexit,time
 from config import database, web_url
@@ -22,7 +19,6 @@ def open_cont():
 
 def close_cont():
     rows = cur.execute("UPDATE contracts SET status = 'C' WHERE status ='O' and settledate <= NOW()")
-    #todo cancel all orders
     print rows,'contracts closed.'
 
 def settle_cont():

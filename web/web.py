@@ -146,7 +146,6 @@ def register():
         ref = _dercode(rcode)
         session.update(ref)
     return render_template('register.html',type='O')
-#todo register recommendation and friend trade volume contribution
 
 
 @app.route('/trade', methods=['GET','POST'])
@@ -238,7 +237,6 @@ def contract():
     else:
         pass
     return render_template('contract.html')
-#todo register recommendation and friend trade volume contribution
 
 
 @app.route('/index', methods=['GET','POST'])

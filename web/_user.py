@@ -9,6 +9,8 @@ def _createuser(db,email,password,referrer):
         return 'Email is existed.'
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
+    if referrer:
+        cur.execute("INSERT INTO userattr(type,user_id,s_coupon,num,comment,create_dt)VALUES ('C',LAST_INSERT_ID(),0.1,6,'Invited Registration',NOW());")
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()

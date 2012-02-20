@@ -8,7 +8,7 @@ div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20p
 div.navi li a   {padding: 8px; }
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;background: url("../img/logo.s.gif") no-repeat 96% 92%;   }
-div.account_tab em,div.bitcoin_tab em  {background: #DDD;padding: 5px;}
+h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 
 form.invite {border:1px solid #ccc;border-radius: 5px;padding: 10px;}
 

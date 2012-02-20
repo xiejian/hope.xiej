@@ -6,7 +6,10 @@
 
 
 {% block content %}
-<h3>{{ session['email'] }}</h3>
+<h3>Effect Fee Rate: <em>{{ (g.u['feerate']*100)|f }}%</em> × <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
+    {% if g.u['s_coupon'] %} ×  <em> {{ (g.u['s_coupon']*100)|f }}% OFF</em> {% endif %}
+     =  <em> {{ (g.u['feerate']*(1-g.u['returnrate'])*(1-g.u['s_coupon'])*100)|f }}% </em></h3>
+
 <div class="navi">
 <ul id="accountmenu">
     <li><a href=0>General Info</a></li>
@@ -66,7 +69,15 @@
         <tr{% if g.u['returnrate'] |float== 0.8 %} class="selected" {% endif %}><td>>= 2m</td><td>80% OFF</td></tr></table>
 </div>
 <div class="clear"></div>
+{% if g.u['s_coupon']%}
+    <h4>Special Coupon: <em> {{ (g.u['s_coupon']*100)|f }}% OFF </em></h4>
+    <p>You could apply both of regular fee coupon and special coupon same time.</p>
+    <table class="ginfo grid_5 push_1">
+        <tr><th>Remains</th><td> {{ g.u['sc_num'] }} months</td></tr>
+        <tr><th>Comment</th><td>{{ g.u['sc_comment'] }}</td></tr></table>
 
+<div class="clear"></div>
+{% endif %}
 
 <h4>Invite your friends to join BTCFE</h4>
 
@@ -74,7 +85,7 @@
 <!--todo personal info , if valid, set capital password.-->
 <!--todo 发送邀请信，限制名额.-->
 <h5>As reward:</h5>
-    <p>Your friend will get 100BTC initial trade volume and 0.1 BTC after his first trade;</p>
+    <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
      <p>You will get all this trade volume in the future.</p>
 
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
@@ -82,7 +93,6 @@
     　　<input type=email name="email" value="" size="22" required="required"/>
         <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
 </form>
-
 
 </div>
 

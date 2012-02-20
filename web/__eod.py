@@ -9,7 +9,7 @@ from _data import _update_contract
 NOT = {'B':'S','S':'B'}
 EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
-#todo 活动送coupon。
+#todo add the number of users' invite
 #todo movement include bitcoin transfer
 
 #contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected
@@ -59,7 +59,6 @@ def achieve_cont():
     pass
 
 def cal_userinfo():
-    #todo:u'更新用户交易量及费率等级。送币等系统活动也可放在这里实现'
     pass
 
 def update_feerate():
@@ -73,11 +72,37 @@ def return_fee():
         cur.execute("select ifnull(max(input_dt),NOW() + interval -1 month) from btc_action where account2 = 'FEE' and type = 'R';")
         rfee_lastupdate = cur.fetchone()[0]
     if datetime.datetime.now().month > rfee_lastupdate.month:
-        rows = cur.execute(" insert into btc_action(action,account1,account2,amount,type,input_dt) \
-                        select 'move',u.email,'FEE',-l.fee * RRATE(v.tradevol + ifnull(rv.rtvol,0)),'R',NOW() from users u join v_lastmonfee l on u.email = l.account1\
-                         left join v_tradevol v on u.user_id = v.user_id left join v_rtradevol rv on u.user_id = rv.user_id;")
+
+        rows = cur.execute(" insert into btc_action(action,account1,account2,address,amount,type,input_dt) \
+                        select 'move',u.email,'FEE',concat(EXTRACT(YEAR_MONTH FROM(NOW() + INTERVAL - 1 MONTH)),' ', \
+                            convert(100 - 100*(1 - RRATE(v.tradevol + ifnull(rv.rtvol,0)))*(1-ifnull(s_coupon,0)),char),'%'), \
+                            -l.fee *(1 - (1 - RRATE(v.tradevol + ifnull(rv.rtvol,0)))*(1-ifnull(s_coupon,0))),'R',NOW() \
+                        from users u join v_lastmonfee l on u.email = l.account1 left join v_tradevol v on u.user_id = v.user_id \
+                        left join v_rtradevol rv on u.user_id = rv.user_id left join userattr ua on u.user_id = ua.user_id and ua.type = 'C';")
+        cur.execute(" update userattr set num = num -1 ")
+        cur.execute(" delete from userattr where num <= 0 ")
         db.commit()
+        rfee_lastupdate = datetime.datetime.now()
         print rows, 'Users Fee Monthly Returned'
+
+def balance2date(balance2dt):
+    cur.execute("select max(balance_dt) from userbalance;")
+    res = cur.fetchone()
+    if res[0] is None:
+        balance_dt = datetime.date(2012,1,1)
+    else:
+        balance_dt = res[0]
+    if balance2dt > balance_dt:
+
+        rows = cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc) \
+                            select g.user_id,sum(g.fee)+sum(g.p_l)+sum(g.btc)+ifnull(b.balance,0),sum(g.fee)+ifnull(b.bal_fee,0), \
+                                sum(g.p_l)+ifnull(b.bal_pl,0),sum(g.btc)+ifnull(b.bal_btc,0) from v_gl g left join userbalance b \
+                                on g.user_id = b.user_id and b.balance_dt = %s and g.timestamp >= %s  +1 and g.timestamp < %s  + 1 \
+                                group by g.user_id;",[balance_dt,balance_dt,balance2dt])
+#todo error
+        db.commit()
+
+        print rows, 'Users Balance Updated'
 
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")
@@ -109,6 +134,7 @@ def eod_process():
     achieve_cont()
     forced_close()
     update_feerate()
+    balance2date(datetime.date.today()-datetime.timedelta(1))
     return_fee()
     _update_contract(db)
 

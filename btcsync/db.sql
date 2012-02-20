@@ -61,7 +61,7 @@ CREATE TABLE `btc_action` (
   `process_dt` datetime DEFAULT NULL,
   `message` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`btc_action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `btc_action` (
 
 LOCK TABLES `btc_action` WRITE;
 /*!40000 ALTER TABLE `btc_action` DISABLE KEYS */;
-INSERT INTO `btc_action` VALUES (162,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:07:56','2012-01-04 08:18:36','0.44372840'),(163,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:16:48','2012-01-04 08:18:36','0.02543640'),(164,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001100','F','N',1,'2012-01-11 15:41:52',NULL,NULL),(165,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',1,'2012-01-11 15:41:52',NULL,NULL),(166,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',2,'2012-01-12 09:52:56',NULL,NULL),(167,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',2,'2012-01-12 09:52:56',NULL,NULL),(168,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',3,'2012-01-12 10:39:41',NULL,NULL),(169,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',3,'2012-01-12 10:39:41',NULL,NULL),(170,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',3,'2012-01-12 10:39:41',NULL,NULL),(171,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',4,'2012-01-12 10:40:36',NULL,NULL),(172,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',4,'2012-01-12 10:40:36',NULL,NULL),(173,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',4,'2012-01-12 10:40:36',NULL,NULL),(174,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',5,'2012-01-12 15:52:24',NULL,NULL),(175,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',5,'2012-01-12 15:52:24',NULL,NULL),(176,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',5,'2012-01-12 15:52:24',NULL,NULL),(177,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',5,'2012-01-12 15:52:24',NULL,NULL),(178,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-13 14:42:02',NULL,NULL),(179,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:40:39',NULL,NULL),(180,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:43:09',NULL,NULL),(181,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:44:30',NULL,NULL),(182,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:46:43',NULL,NULL),(183,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:58:50',NULL,NULL),(184,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:59:48',NULL,NULL),(185,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:00:32',NULL,NULL),(186,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:13',NULL,NULL),(187,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:51',NULL,NULL),(188,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:05:33',NULL,NULL),(189,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:06:58',NULL,NULL),(190,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',6,'2012-02-03 09:00:51',NULL,NULL),(191,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',6,'2012-02-03 09:00:51',NULL,NULL),(192,'move','jian.xie@163.com','FEE',NULL,'0.00000540','F','N',7,'2012-02-03 10:08:39',NULL,NULL),(193,'move','jian.xie@163.com','FEE',NULL,'0.00000540','G','N',7,'2012-02-03 10:08:39',NULL,NULL),(194,'move','jian.xie@163.com','P_L',NULL,'-0.04600000','P','N',7,'2012-02-03 10:08:39',NULL,NULL),(195,'move','jian.xie@163.com','P_L',NULL,'0.04600000','Q','N',7,'2012-02-03 10:08:39',NULL,NULL),(196,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',8,'2012-02-03 10:12:34',NULL,NULL),(197,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',8,'2012-02-03 10:12:34',NULL,NULL),(198,'move','jian.xie@163.com','FEE',NULL,'0.00001100','F','N',9,'2012-02-03 10:12:34',NULL,NULL),(199,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',9,'2012-02-03 10:12:34',NULL,NULL),(200,'move','jian.xie@163.com','FEE',NULL,'0.00001200','F','N',10,'2012-02-03 10:12:34',NULL,NULL),(201,'move','jian.xie@163.com','FEE',NULL,'0.00001200','G','N',10,'2012-02-03 10:12:34',NULL,NULL),(202,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-06 16:36:09',NULL,NULL),(203,'move','jian.xie@163.com','FEE',NULL,'0.00002700','F','N',11,'2012-02-07 13:07:28',NULL,NULL),(204,'move','jian.xie@163.com','FEE',NULL,'0.00002700','G','N',11,'2012-02-07 13:07:28',NULL,NULL),(205,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(206,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(207,'move','jian.xie@163.com','P_L',NULL,'-0.02000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(208,'move','jian.xie@163.com','P_L',NULL,'0.01000000','Q','N',11,'2012-02-07 13:07:28',NULL,NULL),(209,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',12,'2012-02-07 13:07:28',NULL,NULL),(210,'move','jian.xie@163.com','FEE',NULL,'0.00000900','G','N',12,'2012-02-07 13:07:28',NULL,NULL),(211,'move','jian.xie@163.com','P_L',NULL,'-0.03000000','P','N',12,'2012-02-07 13:07:28',NULL,NULL),(212,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',13,'2012-02-07 13:11:21',NULL,NULL),(213,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000900','G','N',13,'2012-02-07 13:11:21',NULL,NULL),(214,'move','jian.xie@163.com','P_L',NULL,'0.00000000','P','N',13,'2012-02-07 13:11:21',NULL,NULL),(215,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',13,'2012-02-07 13:11:21',NULL,NULL),(216,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:16:22',NULL,NULL),(217,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:18:00',NULL,NULL),(218,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:38:11',NULL,NULL),(219,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:42:05',NULL,NULL),(220,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:49:15',NULL,NULL),(221,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:13:34',NULL,NULL),(222,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:17:30',NULL,NULL),(223,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:27:08',NULL,NULL),(224,'createuser','jian.xie@2263.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-14 11:04:33',NULL,NULL),(225,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',14,'2012-02-14 15:18:25',NULL,NULL),(226,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',14,'2012-02-14 15:18:25',NULL,NULL),(227,'move','jian.xie@163.com','P_L',NULL,'0.01000000','Q','N',14,'2012-02-14 15:18:25',NULL,NULL),(228,'move','jian.xie@163.com','FEE',NULL,'0.00008000','F','N',15,'2012-02-14 15:20:36',NULL,NULL),(229,'move','jian.xie@hotmail.com','FEE',NULL,'0.00008000','G','N',15,'2012-02-14 15:20:36',NULL,NULL),(230,'move','jian.xie@163.com','FEE',NULL,'0.00000990','F','N',16,'2012-02-14 15:21:05',NULL,NULL),(231,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000990','G','N',16,'2012-02-14 15:21:05',NULL,NULL),(232,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000990','F','N',17,'2012-02-14 15:29:30',NULL,NULL),(233,'move','jian.xie@163.com','FEE',NULL,'0.00000990','G','N',17,'2012-02-14 15:29:30',NULL,NULL),(234,'move','jian.xie@hotmail.com','P_L',NULL,'-0.30100000','P','N',17,'2012-02-14 15:29:30',NULL,NULL),(235,'move','jian.xie@163.com','P_L',NULL,'0.02100000','Q','N',17,'2012-02-14 15:29:30',NULL,NULL),(244,'sendfrom','jian.xie@hotmail.com',NULL,'17qLfgv2L7uu6VnX8KuzWYvTQaweYmXDgm','0.10000000','W','N',NULL,'2012-02-16 15:40:13',NULL,NULL),(245,'sendfrom','jian.xie@hotmail.com',NULL,'17qLfgv2L7uu6VnX8KuzWYvTQaweYmXDgm','0.20000000','W','N',NULL,'2012-02-17 09:09:59',NULL,NULL),(252,'move','jian.xie@163.com','FEE',NULL,'-0.00000310','R','N',NULL,'2012-02-17 14:27:32',NULL,NULL),(253,'move','jian.xie@hotmail.com','FEE',NULL,'-0.00000710','R','N',NULL,'2012-02-17 14:27:32',NULL,NULL);
+INSERT INTO `btc_action` VALUES (162,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:07:56','2012-01-04 08:18:36','0.44372840'),(163,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-01-04 08:16:48','2012-01-04 08:18:36','0.02543640'),(164,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001100','F','N',1,'2012-01-11 15:41:52',NULL,NULL),(165,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',1,'2012-01-11 15:41:52',NULL,NULL),(166,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',2,'2012-01-12 09:52:56',NULL,NULL),(167,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',2,'2012-01-12 09:52:56',NULL,NULL),(168,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',3,'2012-01-12 10:39:41',NULL,NULL),(169,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',3,'2012-01-12 10:39:41',NULL,NULL),(170,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',3,'2012-01-12 10:39:41',NULL,NULL),(171,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','F','N',4,'2012-01-12 10:40:36',NULL,NULL),(172,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',4,'2012-01-12 10:40:36',NULL,NULL),(173,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',4,'2012-01-12 10:40:36',NULL,NULL),(174,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',5,'2012-01-12 15:52:24',NULL,NULL),(175,'move','jian.xie@hotmail.com','FEE',NULL,'0.00001000','G','N',5,'2012-01-12 15:52:24',NULL,NULL),(176,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',5,'2012-01-12 15:52:24',NULL,NULL),(177,'move','jian.xie@hotmail.com','P_L',NULL,'0.00000000','Q','N',5,'2012-01-12 15:52:24',NULL,NULL),(178,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-13 14:42:02',NULL,NULL),(179,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:40:39',NULL,NULL),(180,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:43:09',NULL,NULL),(181,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:44:30',NULL,NULL),(182,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-16 13:46:43',NULL,NULL),(183,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:58:50',NULL,NULL),(184,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 10:59:48',NULL,NULL),(185,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:00:32',NULL,NULL),(186,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:13',NULL,NULL),(187,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:02:51',NULL,NULL),(188,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:05:33',NULL,NULL),(189,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-01-17 11:06:58',NULL,NULL),(190,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',6,'2012-02-03 09:00:51',NULL,NULL),(191,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',6,'2012-02-03 09:00:51',NULL,NULL),(192,'move','jian.xie@163.com','FEE',NULL,'0.00000540','F','N',7,'2012-02-03 10:08:39',NULL,NULL),(193,'move','jian.xie@163.com','FEE',NULL,'0.00000540','G','N',7,'2012-02-03 10:08:39',NULL,NULL),(194,'move','jian.xie@163.com','P_L',NULL,'-0.04600000','P','N',7,'2012-02-03 10:08:39',NULL,NULL),(195,'move','jian.xie@163.com','P_L',NULL,'0.04600000','Q','N',7,'2012-02-03 10:08:39',NULL,NULL),(196,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',8,'2012-02-03 10:12:34',NULL,NULL),(197,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',8,'2012-02-03 10:12:34',NULL,NULL),(198,'move','jian.xie@163.com','FEE',NULL,'0.00001100','F','N',9,'2012-02-03 10:12:34',NULL,NULL),(199,'move','jian.xie@163.com','FEE',NULL,'0.00001100','G','N',9,'2012-02-03 10:12:34',NULL,NULL),(200,'move','jian.xie@163.com','FEE',NULL,'0.00001200','F','N',10,'2012-02-03 10:12:34',NULL,NULL),(201,'move','jian.xie@163.com','FEE',NULL,'0.00001200','G','N',10,'2012-02-03 10:12:34',NULL,NULL),(202,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-06 16:36:09',NULL,NULL),(203,'move','jian.xie@163.com','FEE',NULL,'0.00002700','F','N',11,'2012-02-07 13:07:28',NULL,NULL),(204,'move','jian.xie@163.com','FEE',NULL,'0.00002700','G','N',11,'2012-02-07 13:07:28',NULL,NULL),(205,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(206,'move','jian.xie@163.com','P_L',NULL,'-0.01000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(207,'move','jian.xie@163.com','P_L',NULL,'-0.02000000','P','N',11,'2012-02-07 13:07:28',NULL,NULL),(208,'move','jian.xie@163.com','P_L',NULL,'0.01000000','Q','N',11,'2012-02-07 13:07:28',NULL,NULL),(209,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',12,'2012-02-07 13:07:28',NULL,NULL),(210,'move','jian.xie@163.com','FEE',NULL,'0.00000900','G','N',12,'2012-02-07 13:07:28',NULL,NULL),(211,'move','jian.xie@163.com','P_L',NULL,'-0.03000000','P','N',12,'2012-02-07 13:07:28',NULL,NULL),(212,'move','jian.xie@163.com','FEE',NULL,'0.00000900','F','N',13,'2012-02-07 13:11:21',NULL,NULL),(213,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000900','G','N',13,'2012-02-07 13:11:21',NULL,NULL),(214,'move','jian.xie@163.com','P_L',NULL,'0.00000000','P','N',13,'2012-02-07 13:11:21',NULL,NULL),(215,'move','jian.xie@hotmail.com','P_L',NULL,'0.01000000','Q','N',13,'2012-02-07 13:11:21',NULL,NULL),(216,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:16:22',NULL,NULL),(217,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:18:00',NULL,NULL),(218,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:38:11',NULL,NULL),(219,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:42:05',NULL,NULL),(220,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 14:49:15',NULL,NULL),(221,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:13:34',NULL,NULL),(222,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:17:30',NULL,NULL),(223,'createuser','xiejian.cn@gmail.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-13 15:27:08',NULL,NULL),(224,'createuser','jian.xie@2263.com',NULL,NULL,'0.00000000',NULL,'N',NULL,'2012-02-14 11:04:33',NULL,NULL),(225,'move','jian.xie@163.com','FEE',NULL,'0.00001000','F','N',14,'2012-02-14 15:18:25',NULL,NULL),(226,'move','jian.xie@163.com','FEE',NULL,'0.00001000','G','N',14,'2012-02-14 15:18:25',NULL,NULL),(227,'move','jian.xie@163.com','P_L',NULL,'0.01000000','Q','N',14,'2012-02-14 15:18:25',NULL,NULL),(228,'move','jian.xie@163.com','FEE',NULL,'0.00008000','F','N',15,'2012-02-14 15:20:36',NULL,NULL),(229,'move','jian.xie@hotmail.com','FEE',NULL,'0.00008000','G','N',15,'2012-02-14 15:20:36',NULL,NULL),(230,'move','jian.xie@163.com','FEE',NULL,'0.00000990','F','N',16,'2012-02-14 15:21:05',NULL,NULL),(231,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000990','G','N',16,'2012-02-14 15:21:05',NULL,NULL),(232,'move','jian.xie@hotmail.com','FEE',NULL,'0.00000990','F','N',17,'2012-02-14 15:29:30',NULL,NULL),(233,'move','jian.xie@163.com','FEE',NULL,'0.00000990','G','N',17,'2012-02-14 15:29:30',NULL,NULL),(234,'move','jian.xie@hotmail.com','P_L',NULL,'-0.30100000','P','N',17,'2012-02-14 15:29:30',NULL,NULL),(235,'move','jian.xie@163.com','P_L',NULL,'0.02100000','Q','N',17,'2012-02-14 15:29:30',NULL,NULL),(244,'sendfrom','jian.xie@hotmail.com',NULL,'17qLfgv2L7uu6VnX8KuzWYvTQaweYmXDgm','0.10000000','W','N',NULL,'2012-02-16 15:40:13',NULL,NULL),(257,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 14:57:15',NULL,NULL),(258,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 14:57:15',NULL,NULL),(260,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 14:58:15',NULL,NULL),(261,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 14:58:15',NULL,NULL),(263,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 14:59:15',NULL,NULL),(264,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 14:59:15',NULL,NULL),(266,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:00:15',NULL,NULL),(267,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:00:15',NULL,NULL),(269,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:01:15',NULL,NULL),(270,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:01:15',NULL,NULL),(272,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:02:15',NULL,NULL),(273,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:02:15',NULL,NULL),(275,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:03:15',NULL,NULL),(276,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:03:15',NULL,NULL),(278,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:04:15',NULL,NULL),(279,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:04:15',NULL,NULL),(281,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:05:16',NULL,NULL),(282,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:05:16',NULL,NULL),(284,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:06:16',NULL,NULL),(285,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:06:16',NULL,NULL),(287,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:07:16',NULL,NULL),(288,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:07:16',NULL,NULL),(290,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:08:16',NULL,NULL),(291,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:08:16',NULL,NULL),(293,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:09:16',NULL,NULL),(294,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:09:16',NULL,NULL),(296,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:10:16',NULL,NULL),(297,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:10:16',NULL,NULL),(299,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:11:16',NULL,NULL),(300,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:11:16',NULL,NULL),(302,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:12:16',NULL,NULL),(303,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:12:16',NULL,NULL),(305,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:13:17',NULL,NULL),(306,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:13:17',NULL,NULL),(308,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:14:17',NULL,NULL),(309,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:14:17',NULL,NULL),(311,'move','jian.xie@163.com','FEE','201201 10.00000000%','-0.00000310','R','N',NULL,'2012-02-20 15:15:17',NULL,NULL),(312,'move','jian.xie@hotmail.com','FEE','201201 10.00000000%','-0.00000710','R','N',NULL,'2012-02-20 15:15:17',NULL,NULL);
 /*!40000 ALTER TABLE `btc_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,6 +408,62 @@ INSERT INTO `trans` VALUES (1,154,155,'110.00000000',1,'S','2012-01-10 23:41:52'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `userattr`
+--
+
+DROP TABLE IF EXISTS `userattr`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userattr` (
+  `userattr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `type` char(1) DEFAULT 'C',
+  `s_coupon` decimal(2,2) DEFAULT NULL,
+  `num` smallint(6) DEFAULT NULL,
+  `comment` varchar(16) DEFAULT NULL,
+  `create_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`userattr_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userattr`
+--
+
+LOCK TABLES `userattr` WRITE;
+/*!40000 ALTER TABLE `userattr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userattr` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userbalance`
+--
+
+DROP TABLE IF EXISTS `userbalance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `userbalance` (
+  `userbalance_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `balance_dt` date DEFAULT NULL,
+  `balance` decimal(20,8) DEFAULT '0.00000000',
+  `bal_fee` decimal(20,8) DEFAULT '0.00000000',
+  `bal_pl` decimal(20,8) DEFAULT '0.00000000',
+  `bal_btc` decimal(20,8) DEFAULT '0.00000000',
+  PRIMARY KEY (`userbalance_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userbalance`
+--
+
+LOCK TABLES `userbalance` WRITE;
+/*!40000 ALTER TABLE `userbalance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `userbalance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `userlog`
 --
 
@@ -422,7 +478,7 @@ CREATE TABLE `userlog` (
   `times` smallint(6) DEFAULT '1',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userlog_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,7 +487,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',100,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',11,'2012-02-02 09:02:43');
+INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',111,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',12,'2012-02-02 09:02:43'),(17,43,'Login','127.0.0.1',3,'2012-02-20 01:16:53');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +508,7 @@ CREATE TABLE `users` (
   `referrer` int(11) DEFAULT '0',
   `invite` smallint(6) DEFAULT '3',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COMMENT='latin1_swedish_ci';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -461,7 +517,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.004000',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.004000',0,2),(30,'SYS','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.004000',0,3),(39,'xiejian.cn@gmail.com','OyZpDNuR3I0xCYo7S4tVy8Q2R5mHRt0PQ1yeJQ==',NULL,'A','0.004000',0,3),(40,'jian.xie@2263.com','NG/XCWqrDncUO6DErYL8aOlhe9sXtlJose/+pg==',NULL,'N','0.004000',0,3);
+INSERT INTO `users` VALUES (28,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==','N','0.004000',0,0),(29,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==','N','0.004000',0,2),(30,'SYS','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.004000',0,3),(43,'xiejian.cn@gmail.com','OyZpDNuR3I0xCYo7S4tVy8Q2R5mHRt0PQ1yeJQ==',NULL,'A','0.004000',0,3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,6 +532,31 @@ SET character_set_client = utf8;
 /*!50001 CREATE TABLE `v_btcunact` (
   `account` varchar(40),
   `amount` decimal(43,8)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary table structure for view `v_gl`
+--
+
+DROP TABLE IF EXISTS `v_gl`;
+/*!50001 DROP VIEW IF EXISTS `v_gl`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `v_gl` (
+  `sector` varchar(1),
+  `trans_id` int(11),
+  `contract_id` int(11),
+  `type` char(34),
+  `user_id` int(11),
+  `buy_sell` char(1),
+  `point` decimal(20,8),
+  `lots` int(11),
+  `value` decimal(40,16),
+  `timestamp` datetime,
+  `fee` decimal(21,8),
+  `p_l` decimal(21,8),
+  `btc` decimal(21,8)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1159,6 +1240,25 @@ DELIMITER ;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `v_gl`
+--
+
+/*!50001 DROP TABLE IF EXISTS `v_gl`*/;
+/*!50001 DROP VIEW IF EXISTS `v_gl`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_gl` AS select 'T' AS `sector`,`t`.`trans_id` AS `trans_id`,`t`.`contract_id` AS `contract_id`,`t`.`type` AS `type`,`t`.`user_id` AS `user_id`,`t`.`buy_sell` AS `buy_sell`,`t`.`point` AS `point`,`t`.`lots` AS `lots`,`t`.`value` AS `value`,`t`.`timestamp` AS `timestamp`,`t`.`fee` AS `fee`,`t`.`p_l` AS `p_l`,NULL AS `btc` from `v_trans` `t` union all select 'R' AS `R`,NULL AS `NULL`,NULL AS `NULL`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` = 'R') and (`a`.`account1` = `u`.`email`)) union all select 'B' AS `B`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`b`.`timestamp` AS `timestamp`,NULL AS `NULL`,NULL AS `NULL`,(`b`.`amount` + `b`.`fee`) AS `b.amount+b.fee` from (`btc_trans` `b` join `users` `u`) where (`b`.`user` = `u`.`email`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `v_lastmonfee`
 --
 
@@ -1357,4 +1457,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-02-17 17:17:48
+-- Dump completed on 2012-02-20 17:16:38
