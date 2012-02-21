@@ -79,7 +79,7 @@ def _update_user(db,session,content = []):    #get user's info
             temp['positions'].append(tt)
     if 'trans' in content:
         temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
-    if 'btcflow' in content:#todo get user's account balance and movement
+    if 'btcflow' in content:#todo delete btcflow
         cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,20",session['email'])
         btcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in cur.fetchall()]
         temp.update({'btcflow':btcflow})

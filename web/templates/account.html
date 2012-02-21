@@ -134,7 +134,8 @@
 <div class="grid_13 account_tab">
     <h4>Account Status</h4>
     <table class="ginfo grid_6 push_1 alpha"><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
-        <tr><th>Email Validate</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['email_v'] +'.png')}}"></td><td><button class="modalInput" rel="#valid_mail">Validate</button></td></tr>
+        <tr><th>Email Validate</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['email_v'] +'.png')}}"></td>
+            <td>{% if g.u['email_v'] == 'N' %}<button class="modalInput" rel="#valid_mail">Validate</button>{% endif %}</td></tr>
         <tr><th>Capital Password</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['password2'] +'.png')}}"></td><td><button class="modalInput" rel="#set_cpass">Reset</button></td></tr></table>
     <div class="grid_6 prefix_1 omega">
         <p>Trade Password: for login and trade</p>
