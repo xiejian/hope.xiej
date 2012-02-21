@@ -47,8 +47,9 @@ $(function(){
         mask: {
             color: '#ebecff',
             loadSpeed: 200,
-            opacity: 0.9
+            opacity: 0.1
         },
+        effect: 'apple',
         closeOnClick: false
     });
 });

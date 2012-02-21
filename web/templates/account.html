@@ -101,49 +101,48 @@
 
 <h4>Transaction History</h4>
 <table>
-    <tr><th>TimeStamp</th><th>Contract</th><th>O / C</th><th>B / S</th><th>Point</th><th>Lots</th><th>Value</th><th>Fee</th><th>Pofit/Loss</th></tr>
     {% for t in g.u['trans'] %}
-    <tr>
-        <td>{{t.timestamp}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.type|f("F")}}</td><td>{{t.buy_sell|f("F")}}</td>
-        <td>{{t.point|f}}</td><td>{{t.lots}}</td><td>{{t.value|f}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td>
-    </tr>
+        {% if loop.first %}
+    <tr><th>TimeStamp</th><th colspan="2">Action</th><th>Point</th><th>Lots</th><th>Fee</th><th>Pofit/Loss</th><th>BTC I/O</th><th>Comment</th></tr>
+    <tr><th>{{ g.u['openbal']['balance_dt'] }}</th><th colspan="2">Opening Balance</th><th></th><th></th><th>{{ g.u['openbal']['bal_fee']|f }}</th><th>{{ g.u['openbal']['bal_pl']|f }}</th>
+        <th>{{ g.u['openbal']['bal_btc']|f }}</th><th>SUM: {{ g.u['openbal']['balance']|f }}</th></tr>
+        {% endif %}
+
+    {% if t.sector == 'T' %}
+        <tr><td>{{t.timestamp}}</td><td>{{t.buy_sell|f("F")}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.point|f}}</td>
+            <td>{{t.lots}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
+    {% elif t.sector == 'R'  %}
+        <tr><td>{{t.timestamp}}</td><td colspan="2">Apply Fee Coupon</td><td></td>
+            <td></td><td>{{t.fee|f}}</td><td></td><td></td><td>{{t.type|f("F")}}</td></tr>
+    {% elif t.sector == 'B' %}
+        <tr><td>{{t.timestamp}}</td><td colspan="2">Bitcoin Transfer</td><td></td>
+            <td></td><td></td><td></td><td>{{ t.btc_transfer|f }}</td><td>{{t.type|f("F")}}</td></tr>
+    {% endif %}
     {% else %}
-    <tr>None</tr>
+    <tr><th>None</th></tr>
     {% endfor %}
+    {% if g.u['trans'] %}
+    <tr><th>{{ g.u['trans'][-1]['timestamp'] }}</th><th colspan="2">Closing Balance</th><th></th><th></th><th>{{ (g.u['trans']|sum(attribute='fee') + g.u['openbal']['bal_fee'])|f }}</th>
+        <th>{{ (g.u['trans']|sum(attribute='p_l')+g.u['openbal']['bal_pl'])|f }}</th><th>{{ (g.u['trans']|sum(attribute='btc_transfer')+g.u['openbal']['bal_btc'])|f }}</th>
+        <th>SUM: {{ (g.u['openbal']['balance']+g.u['trans']|sum(attribute='fee')+g.u['trans']|sum(attribute='p_l')+g.u['trans']|sum(attribute='btc_transfer'))|f }}</th></tr>
+    {% endif %}
 </table>
 
-<h4>Account Movement</h4>
-<div class="grid_6 alpha">
-    <table>
-        {% for b in g.u['btcflow'] %}
-        {% if loop.first %}<tr><th>TimeStamp</th><th>TransID</th><th>Amount</th><th>Comment</th></tr>{% endif %}
-        {% if loop.index <= loop.length/2 %}
-            <tr><td>{{b.input_dt}}</td><td>{{b.trans_id|f}}</td><td>{{(-1*b.amount)|f}}</td><td>{{b.type|f("F")}}</td></tr>
-        {% endif %}
-        {% else %}
-        <tr>None</tr>
-        {% endfor %}
-    </table></div>
-<div class="grid_1 alpha">　</div>
-<div class="grid_6 omega">
-    <table>
-        {% for b in g.u['btcflow'] %}
-        {% if loop.first and loop.length >=2 %}<tr><th>TimeStamp</th><th>TransID</th><th>Amount</th><th>Comment</th></tr>{% endif %}
-        {% if loop.index > loop.length/2 %}
-            <tr><td>{{b.input_dt}}</td><td>{{b.trans_id|f}}</td><td>{{(-1*b.amount)|f}}</td><td>{{b.type|f("F")}}</td></tr>
-        {% endif %}
-        {% else %}
-        <tr>None</tr>
-        {% endfor %}
-    </table></div>
-    <div class="clear"></div>
+  <div class="clear"></div>
 
 </div>
 <div class="grid_13 account_tab">
-    <h4>Security Info</h4>
-    <table><tr><th>Password</th><th>Email Validate</th><th>Capital Password</th></tr>
-        <tr><td>SET</td><td>{{ g.u['email_v'] }}</td><td>{{ g.u['password2'] }}<button class="modalInput" rel="#set_cpass">Set</button></td></tr></table>
-    Latest Access Log:
+    <h4>Account Status</h4>
+    <table class="ginfo grid_6 push_1 alpha"><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
+        <tr><th>Email Validate</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['email_v'] +'.png')}}"></td><td><button class="modalInput" rel="#valid_mail">Validate</button></td></tr>
+        <tr><th>Capital Password</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['password2'] +'.png')}}"></td><td><button class="modalInput" rel="#set_cpass">Reset</button></td></tr></table>
+    <div class="grid_6 prefix_1 omega">
+        <p>Trade Password: for login and trade</p>
+        <p>Validate Email: for reset password if lost password</p>
+        <p>Capital Password: for Bitcoin Withdraw</p>
+    </div>
+    <div class="clear"></div>
+    <h4>Access Log</h4>
     <table>
         <tr><th>Timestamp</th><th>Action</th><th>IP Address</th><th>Approximate Location</th><th>Times</th></tr>
         {% for l in g.u['log'] %}
@@ -153,7 +152,40 @@
         {% endfor %}
     </table>
 
+    <div class="modal" id="set_pass">
+    <h3>Reset Password</h3><br/>
+        <form action="{{ url_for('account') }}" method=post>
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            <table>
+                <tr><th>Old Password</th>
+                <td><input type="password" name="opassword" value="" /></td></tr>
+                <tr><th>Password</th>
+                <td><input type="password" name="password" value="" minlength="4" /></td></tr>
+                <tr><th>Confirmed Password</th>
+                <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
+
+            </table><br/><input type=submit value="SET Capital Password">
+        </form>
+    </div>
+
+    <div class="modal" id="valid_mail">
+    <h4>Send Validate Email Again</h4>
+        <form action="{{ url_for('account') }}" method=post>
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            <dl>
+                <dt>Old Password:
+                <dd><input {% if g.u['password2'] %} type=password{% else %} type="hidden" {% endif %} name="opassword" value="" />
+                <dt>Password:
+                <dd><input type="password" name="password" value="" minlength="4" />
+                <dt>Confirmed Password:
+                <dd><input type="password" name="password2" value="" data-equals="password"/>
+                <dd><input type=submit value="SET Capital Password">
+            </dl>
+        </form>
+    </div>
+
     <div class="modal" id="set_cpass">
+    <h4>Reset Capital Password</h4>
         <form action="{{ url_for('account') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <dl>

@@ -26,7 +26,7 @@ def _activeuser(db,code):
             return False
         result = cur.fetchone()
         if str[1] == base64.urlsafe_b64encode(hashlib.sha512(result[1]).digest()):
-            cur.execute("UPDATE users SET email_v = 'A' WHERE user_id = %s",result[0])
+            cur.execute("UPDATE users SET email_v = 'Y' WHERE user_id = %s",result[0])
             db.commit()
             return result[0]
         else:

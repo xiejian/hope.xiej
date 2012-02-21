@@ -1,4 +1,5 @@
 from _db import  _connect_db
+import datetime
 
 gv_contract = {}    #global vars of contract info
 
@@ -28,6 +29,18 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
         ocur.close()
     cur.close()
+
+def _update_usergl(cur,user_id,openbal_dt):
+    cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
+    row = cur.fetchone()
+    if row is None:
+        row = [datetime.date(2011,12,31),0,0,0,0]
+    openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4])
+    cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),timestamp,value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and timestamp > convert(%s,date)+1 ORDER BY timestamp",[user_id,openbal['balance_dt']])
+    trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
+        timestamp=row[7],value = row[8],btc_transfer = row[9],sector = row[10]) for row in cur.fetchall()]
+
+    return {'openbal':openbal,'trans':trans}
 
 
 def _update_user(db,session,content = []):    #get user's info
@@ -65,10 +78,7 @@ def _update_user(db,session,content = []):    #get user's info
                 tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
             temp['positions'].append(tt)
     if 'trans' in content:
-        cur.execute("SELECT contract_id,type,buy_sell, point,lots,fee,p_l,timestamp,value,btc from v_pl WHERE user_id = %s ORDER BY timestamp DESC LIMIT 0,10",session['user_id'])
-        trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
-            timestamp=row[7],value = row[8],btc_transfer = row[9]) for row in cur.fetchall()]
-        temp.update({'trans':trans})
+        temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
     if 'btcflow' in content:#todo get user's account balance and movement
         cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,20",session['email'])
         btcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in cur.fetchall()]
@@ -90,7 +100,7 @@ def _update_user(db,session,content = []):    #get user's info
     if 'info' in content:
         cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
-        temp.update(dict(password2=(row[0]==0),email_v=row[1],feerate=row[2],invite=row[3]))
+        temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
         cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
                 left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
         vol = cur.fetchone()

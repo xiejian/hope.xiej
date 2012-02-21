@@ -75,7 +75,7 @@ def return_fee():
 
         rows = cur.execute(" insert into btc_action(action,account1,account2,address,amount,type,input_dt) \
                         select 'move',u.email,'FEE',concat(EXTRACT(YEAR_MONTH FROM(NOW() + INTERVAL - 1 MONTH)),' ', \
-                            convert(100 - 100*(1 - RRATE(v.tradevol + ifnull(rv.rtvol,0)))*(1-ifnull(s_coupon,0)),char),'%'), \
+                            convert(convert(100 - 100*(1 - RRATE(v.tradevol + ifnull(rv.rtvol,0)))*(1-ifnull(s_coupon,0)),decimal),char),'%'), \
                             -l.fee *(1 - (1 - RRATE(v.tradevol + ifnull(rv.rtvol,0)))*(1-ifnull(s_coupon,0))),'R',NOW() \
                         from users u join v_lastmonfee l on u.email = l.account1 left join v_tradevol v on u.user_id = v.user_id \
                         left join v_rtradevol rv on u.user_id = rv.user_id left join userattr ua on u.user_id = ua.user_id and ua.type = 'C';")
@@ -89,20 +89,24 @@ def balance2date(balance2dt):
     cur.execute("select max(balance_dt) from userbalance;")
     res = cur.fetchone()
     if res[0] is None:
-        balance_dt = datetime.date(2012,1,1)
+        balance_dt = datetime.date(2011,12,31)
     else:
         balance_dt = res[0]
     if balance2dt > balance_dt:
 
+        rown = cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc) \
+                            select g.user_id,convert('2011-12-31',date),0,0,0,0 from v_gl g where g.timestamp >= convert(%s,date) +1 \
+                             and g.timestamp < convert(%s,date) + 1 group by g.user_id having g.user_id not in \
+                            (select b.user_id from userbalance b);",[balance_dt,balance2dt])
+
         rows = cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc) \
-                            select g.user_id,sum(g.fee)+sum(g.p_l)+sum(g.btc)+ifnull(b.balance,0),sum(g.fee)+ifnull(b.bal_fee,0), \
+                            select g.user_id,convert(%s,date),sum(g.fee)+sum(g.p_l)+sum(g.btc)+ifnull(b.balance,0),sum(g.fee)+ifnull(b.bal_fee,0), \
                                 sum(g.p_l)+ifnull(b.bal_pl,0),sum(g.btc)+ifnull(b.bal_btc,0) from v_gl g left join userbalance b \
-                                on g.user_id = b.user_id and b.balance_dt = %s and g.timestamp >= %s  +1 and g.timestamp < %s  + 1 \
-                                group by g.user_id;",[balance_dt,balance_dt,balance2dt])
-#todo error
+                                on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and g.timestamp >= convert(%s,date)  +1 and g.timestamp < convert(%s,date)  + 1 \
+                                group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
 
-        print rows, 'Users Balance Updated'
+        print rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")

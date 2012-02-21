@@ -23,7 +23,7 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
         if value in dt.keys():
             return dt[value]
         else:
-            return ""
+            return value
 
 
 def validateEmail(email):
