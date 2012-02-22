@@ -1,7 +1,7 @@
-import os,base64,time,threading
+import os,base64
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
-from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
@@ -90,20 +90,26 @@ def marketdata():
 @app.route('/', methods=['GET','POST'])
 def home():
     if request.method == 'POST':
-        user_id = _loginuser(g.db,request.form['username'],request.form['password'])
-        if user_id:
-            session['user_id'] = user_id
-            session['email'] = request.form['username']
-            flash('You were logged in','suc')
-            _loguser(g.db,user_id,'Login',request.remote_addr)
-            return redirect(url_for('trade'))
-        else:
-            g.login_failed = True
+        type = request.args.get('t', 'L')
+        if type == 'R':         #recover password
+            _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
+            flash('Validate Email sent successfully','suc')
+        elif type == 'L':       #user login
+            user_id = _loginuser(g.db,request.form['username'],request.form['password'])
+            if user_id:
+                session['user_id'] = user_id
+                session['email'] = request.form['username']
+                flash('You were logged in','suc')
+                _loguser(g.db,user_id,'Login',request.remote_addr)
+                return redirect(url_for('trade'))
+            else:
+                g.login_failed = request.form['username']
     return render_template('home.html')
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    #flash('You were logged out','suc')
     return redirect(url_for('home'))
 
 @app.route('/twt')
@@ -175,24 +181,39 @@ def trade():
 def account():
     if 'user_id' not in session:
         return redirect(url_for('home'))
-    if request.method == 'POST' and 'password' in request.form:
-        if request.form['password'] <> request.form['password2']:
-            flash('Password not Match','err')
-        elif len(request.form['password']) < 6:
-            flash('Password too Short','err')
-        elif _vali_cpass(g.db,session['email'],request.form['opassword']):
-            _update_cpass(g.db,session['email'],request.form['password'])
-            flash('Capital Password Changed Successfully.')
-        else:
-            flash('Orignal Capital Password Not Match.')
-    elif request.method == 'POST' and 'email' in request.form:
-        if not validateEmail(request.form['email']):
-            flash('Not validate Email','err')
-        else:
-            _invite(g.db,session['user_id'])
-            _send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
-                                                       'refer':session['email']})
-            flash('Invite Email Sent.','suc')
+    if request.method == 'POST':
+        type = request.args.get('t', 0)
+        if type == 'P':         #reset password
+            if request.form['password'] <> request.form['password2']:
+                flash('Password not Match','err')
+            elif len(request.form['password']) < 6:
+                flash('Password too Short','err')
+            elif _loginuser(g.db,session['email'],request.form['opassword']):
+                _update_pass(g.db,session['email'],request.form['password'])
+                flash('Password Changed Successfully.','suc')
+            else:
+                flash('Orignal Capital Password Not Match.')
+        elif type == 'C':       #reset capital password
+            if request.form['password'] <> request.form['password2']:
+                flash('Password not Match','err')
+            elif len(request.form['password']) < 6:
+                flash('Password too Short','err')
+            elif _vali_cpass(g.db,session['email'],request.form['opassword']):
+                _update_cpass(g.db,session['email'],request.form['password'])
+                flash('Capital Password Changed Successfully.','suc')
+            else:
+                flash('Orignal Capital Password Not Match.')
+        elif type == 'E':       #resend email
+            _send_mail(session['email'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,session['email']))})
+            flash('Validate Email sent successfully','suc')
+        elif type == 'I':       #invite email
+            if not validateEmail(request.form['email']):
+                flash('Not validate Email','err')
+            else:
+                _invite(g.db,session['user_id'])
+                _send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
+                                                           'refer':session['email']})
+                flash('Invite Email Sent.','suc')
 
     g.u=_update_user(g.db,session,['positions','trans','btcflow','info','log'])#todo delete btcflow
     return render_template('account.html')

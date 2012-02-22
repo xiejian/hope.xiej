@@ -57,6 +57,13 @@ def _loginuser(db,email, password):
     cur.close()
     return result[0]
 
+def _update_pass(db,email,password):
+    cur = db.cursor()
+    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    cur.execute("UPDATE users SET password=%s WHERE email = %s;",[c_pass,email])
+    db.commit()
+    cur.close()
+
 def _vali_cpass(db,email, password):
     cur = db.cursor()
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())

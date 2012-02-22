@@ -81,8 +81,7 @@
 
 <h4>Invite your friends to join BTCFE</h4>
 
-<form action="{{ url_for('account') }}" method=post class="invite grid_10">
-<!--todo personal info , if valid, set capital password.-->
+<form action="{{ url_for('account',t='I') }}" method=post class="invite grid_10">
 <!--todo 发送邀请信，限制名额.-->
 <h5>As reward:</h5>
     <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
@@ -93,9 +92,7 @@
     　　<input type=email name="email" value="" size="22" required="required"/>
         <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
 </form>
-
 </div>
-
 
 <div class="grid_13 account_tab">
 
@@ -154,50 +151,42 @@
     </table>
 
     <div class="modal" id="set_pass">
-    <h3>Reset Password</h3><br/>
-        <form action="{{ url_for('account') }}" method=post>
+    <h2>Reset Password</h2><br/>
+        <form action="{{ url_for('account',t='P') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>
-                <tr><th>Old Password</th>
-                <td><input type="password" name="opassword" value="" /></td></tr>
-                <tr><th>Password</th>
-                <td><input type="password" name="password" value="" minlength="4" /></td></tr>
-                <tr><th>Confirmed Password</th>
+                <tr><th>Current password</th>
+                <td><input type="password" name="opassword" value="" minlength="6"/></td></tr>
+                <tr><th>New password</th>
+                <td><input type="password" name="password" value="" minlength="6" /></td></tr>
+                <tr><th>Confirm new Password</th>
                 <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
-
-            </table><br/><input type=submit value="SET Capital Password">
+            </table><br/><input type=submit value=" RESET ">
         </form>
     </div>
 
     <div class="modal" id="valid_mail">
-    <h4>Send Validate Email Again</h4>
-        <form action="{{ url_for('account') }}" method=post>
+    <h2>Send Validate Email Again</h2><br/><br/><table><tr><th>
+        <h3><em>{{ session['email'] }}</em></h3><br/>
+        <form action="{{ url_for('account',t='E') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            <dl>
-                <dt>Old Password:
-                <dd><input {% if g.u['password2'] %} type=password{% else %} type="hidden" {% endif %} name="opassword" value="" />
-                <dt>Password:
-                <dd><input type="password" name="password" value="" minlength="4" />
-                <dt>Confirmed Password:
-                <dd><input type="password" name="password2" value="" data-equals="password"/>
-                <dd><input type=submit value="SET Capital Password">
-            </dl>
-        </form>
+            <input type=submit value="Send me">
+        </form></th></tr></table>
     </div>
 
     <div class="modal" id="set_cpass">
-    <h4>Reset Capital Password</h4>
-        <form action="{{ url_for('account') }}" method=post>
+        <h2>Reset Capital Password</h2><br/>
+        <form action="{{ url_for('account',t='C') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            <dl>
-                <dt>Old Password:
-                <dd><input {% if g.u['password2'] %} type=password{% else %} type="hidden" {% endif %} name="opassword" value="" />
-                <dt>Password:
-                <dd><input type="password" name="password" value="" minlength="4" />
-                <dt>Confirmed Password:
-                <dd><input type="password" name="password2" value="" data-equals="password"/>
-                <dd><input type=submit value="SET Capital Password">
-            </dl>
+            <table>
+                <tr><th>Current password</th>
+                    <td><input {% if g.u['password2']=='N' %}type="text" value="not set yet" disabled=disabled
+                               {% else %} type=password name="opassword" value="" minlength="6"{% endif %}/></td></tr>
+                <tr><th>New capital password</th>
+                    <td><input type="password" name="password" value="" minlength="6" /></td></tr>
+                <tr><th>Confirm new password</th>
+                    <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
+            </table><br/><input type=submit value=" RESET ">
         </form>
     </div>
 </div>

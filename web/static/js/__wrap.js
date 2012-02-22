@@ -30,6 +30,9 @@ $(function () {
         offset: [8, 0],
         message: '<div><em/></div>' // em element is the arrow
     });
+    $("div.msg_err,div.msg_suc,div.msg_message").fadeIn('slow', function() {
+        // Animation complete
+    });
 });
 
 (function() {
