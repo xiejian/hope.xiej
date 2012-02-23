@@ -30,9 +30,41 @@ $(function () {
         offset: [8, 0],
         message: '<div><em/></div>' // em element is the arrow
     });
+    var triggers = $(".modalInput").overlay({
+        // some mask tweaks suitable for modal dialogs
+        mask: {
+            color: '#331',
+            loadSpeed: 200,
+            opacity: 0.8
+        },
+        effect: 'apple',
+        closeOnClick: false
+    });
     $("div.msg_err,div.msg_suc,div.msg_message").fadeIn('slow', function() {
         // Animation complete
     });
+
+
+    $("div.modal form").submit(function(e) {
+
+        var form = $(this);
+
+        // client-side validation OK.
+        if (!e.isDefaultPrevented()) {
+
+            $.post( form.attr('action'), form.serialize(),function( response ) {
+                    $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
+                }
+            );
+
+            form.hide();
+            $('div.modal').find('.form_result').fadeIn('slow');
+            e.preventDefault();
+        }
+
+    });
+
+
 });
 
 (function() {

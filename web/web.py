@@ -1,4 +1,4 @@
-import os,base64
+import os,base64,time
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw,_update_pass
@@ -93,7 +93,7 @@ def home():
         type = request.args.get('t', 'L')
         if type == 'R':         #recover password
             _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
-            flash('Validate Email sent successfully','suc')
+            return jsonify(dict(msg='Validate Email sent successfully',type = 'suc'))
         elif type == 'L':       #user login
             user_id = _loginuser(g.db,request.form['username'],request.form['password'])
             if user_id:
@@ -184,15 +184,12 @@ def account():
     if request.method == 'POST':
         type = request.args.get('t', 0)
         if type == 'P':         #reset password
-            if request.form['password'] <> request.form['password2']:
-                flash('Password not Match','err')
-            elif len(request.form['password']) < 6:
-                flash('Password too Short','err')
-            elif _loginuser(g.db,session['email'],request.form['opassword']):
+            if _loginuser(g.db,session['email'],request.form['opassword']):
                 _update_pass(g.db,session['email'],request.form['password'])
-                flash('Password Changed Successfully.','suc')
+                msg = dict(msg = 'Password Changed Successfully.',type ='suc')
             else:
-                flash('Orignal Capital Password Not Match.')
+                msg = dict(msg='Orignal Capital Password Not Match.',type = 'err')
+            return jsonify(msg)
         elif type == 'C':       #reset capital password
             if request.form['password'] <> request.form['password2']:
                 flash('Password not Match','err')

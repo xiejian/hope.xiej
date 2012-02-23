@@ -17,19 +17,21 @@
             <!--span class="placeholder">Password</span-->
             <input type=submit value=Login>
             {% if g.login_failed %}
-                <div class="login_failed">Username or Password is Incorrect. <a class="modalInput" rel="#recover_pass" href="">Lost password?</a></div><!--todo password recovery -->
+                <div class="login_failed">Username or Password is Incorrect. <a class="modalInput" rel="#recover_pass" href="#recover_pass">Lost password?</a></div><!--todo password recovery -->
             {% endif %}
         </form>
     </div>
     <div class="clear"></div>
     <div class="modal" id="recover_pass">
         <h2>Recovering your password</h2><br/><br/><table><tr><th>
-        <p>Receive a password-reset link at following email address:</p>
-        <form action="{{ url_for('home',t='E') }}" method=post>
+        <form action="{{ url_for('home',t='R') }}" method=post>
+            <p>Receive a password-reset link at following email address:</p>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <h3><input type=email name=username value="{{ g.login_failed }}" size="18" required="required"></h3><br/>
         <input type=submit value="SEND">
-        </form></th></tr></table>
+        </form>
+        <h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
+        </th></tr></table>
     </div>
 {% endblock %}
 

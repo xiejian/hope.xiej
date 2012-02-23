@@ -162,7 +162,7 @@
                 <tr><th>Confirm new Password</th>
                 <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
             </table><br/><input type=submit value=" RESET ">
-        </form>
+        </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
 
     <div class="modal" id="valid_mail">
@@ -171,7 +171,7 @@
         <form action="{{ url_for('account',t='E') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <input type=submit value="Send me">
-        </form></th></tr></table>
+        </form></th></tr></table><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
 
     <div class="modal" id="set_cpass">
@@ -187,7 +187,7 @@
                 <tr><th>Confirm new password</th>
                     <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
             </table><br/><input type=submit value=" RESET ">
-        </form>
+        </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
 </div>
 {% endblock %}
