@@ -1,0 +1,14 @@
+{% extends "email/_wrap.html" %}
+
+{% block title %}{{ para['user'] }},Welcome to BTCFE. Activate your account Plz.{% endblock %}
+
+{% block content %}
+
+    <h3>Dear {{ para['user'] }}:</h3>
+    <h4>Welcome to BTCFE.</h4>
+
+    <a href="{{ para['urlroot'] }}{{ para['url'] }}">Please click here to activate your BTCFE account</a>
+    <p>
+
+    Thank you for your registration. Enjoy it. </p>
+{% endblock %}

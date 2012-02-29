@@ -7,7 +7,7 @@ from _data import _update_contract
 
 #data = {'name':'xiejian','id':3}
 NOT = {'B':'S','S':'B'}
-EOD_INTERVAL = 60#*60*12
+EOD_INTERVAL = 60*60#*12
 gv_eod_status = 'A'
 #todo add the number of users' invite
 

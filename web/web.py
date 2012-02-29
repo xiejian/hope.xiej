@@ -12,7 +12,7 @@ from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
-#mail = Mail(app)
+
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -26,6 +26,7 @@ app.jinja_env.filters['f'] = myformat
 @app.context_processor
 def inject_cont():
     return dict(cont = gv_contract,twt=gv_twt )
+
 
 @app.before_first_request
 def before_first_request():
@@ -132,7 +133,9 @@ def register():
         else:
             res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
             if res == True:
-                _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
+                _send_mail(request.form['username'],render_template("email/activate.html",para={'user': request.form['username'].split('@')[0].upper(),
+                    'urlroot':request.url_root,'url':url_for('register',v=_activecode(g.db,request.form['username']))}))
+                    #'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
                 return render_template('register.html',type='C')
             else:

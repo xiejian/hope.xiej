@@ -14,9 +14,9 @@ function showtab(tab){
     });
     $('#accountmenu li').each(function(i,li){
         if(i == tab)
-            $(li).css("background-color","#ABF");
+            $(li).addClass("active");
         else
-            $(li).css("background-color","");
+            $(li).removeClass("active");
     });
 }
 

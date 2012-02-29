@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div style="background:#DDCCB1; border-bottom:4px solid  #88C; padding: 10px;">
+    <a href="{{ para['urlroot'] }}"><img width="180px" height="" src="{{ para['urlroot'] }}{{url_for('static',filename='img/logo.gif')}}" title="Bitcoin Futures Exchange"/></a>
+
+</div>
+<div style="padding: 5px;">{% block content %}{% endblock %}
+<p>If you have any questions or advices, Please do not hesitate to contact us.</p></div>
+<div style="background:#222; color:#FFF; text-align:center;padding: 5px; margin-top:20px;">
+    CopyRight 2012 BTCFE.com
+</div>
+</body>
+</html>
