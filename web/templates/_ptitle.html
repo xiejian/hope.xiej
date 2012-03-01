@@ -23,7 +23,10 @@
     </div>
     <div class="clear"></div>
     <div class="modal" id="recover_pass">
-        <h2>Recovering your password</h2><br/><br/><table><tr><th>
+        <h2>Recovering your password</h2><br/><br/>
+        <table><tr><th><h3>Please contact following Email to reclaim your email. </h3>
+        <h4>BTCFE.com@gmail.com</h4></th></tr></table>
+        <!--table><tr><th>
         <form action="{{ url_for('home',t='R') }}" method=post>
             <p>Receive a password-reset link at following email address:</p>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
@@ -31,7 +34,7 @@
         <input type=submit value="SEND">
         </form>
         <h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
-        </th></tr></table>
+        </th></tr></table-->
     </div>
 {% endblock %}
 

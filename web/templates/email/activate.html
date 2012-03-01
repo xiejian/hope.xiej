@@ -4,10 +4,11 @@
 
 {% block content %}
 
-    <h3>Dear {{ para['user'] }}:</h3>
-    <h4>Welcome to BTCFE.</h4>
+    <h4 style="color: #000000;">Dear {{ para['user'] }}:</h4>
+    <p>Welcome to BTCFE.com.</p>
 
-    <a href="{{ para['urlroot'] }}{{ para['url'] }}">Please click here to activate your BTCFE account</a>
+    <div style="text-align:center;"><h4><a style="color: #000000;background-color: #DDF;padding: 5px;" href="{{ request.url_root }}{{ para['url'] }}">
+        Click here to activate your BTCFE account</a></h4></div>
     <p>
 
     Thank you for your registration. Enjoy it. </p>

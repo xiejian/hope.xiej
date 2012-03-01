@@ -134,7 +134,7 @@ def register():
             res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
             if res == True:
                 _send_mail(request.form['username'],render_template("email/activate.html",para={'user': request.form['username'].split('@')[0].upper(),
-                    'urlroot':request.url_root,'url':url_for('register',v=_activecode(g.db,request.form['username']))}))
+                        'url':url_for('register',v=_activecode(g.db,request.form['username']))}))
                     #'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
                 return render_template('register.html',type='C')
@@ -191,28 +191,30 @@ def account():
                 _update_pass(g.db,session['email'],request.form['password'])
                 msg = dict(msg = 'Password Changed Successfully.',type ='suc')
             else:
-                msg = dict(msg='Orignal Capital Password Not Match.',type = 'err')
+                msg = dict(msg='Orignal Password Not Match.',type = 'err')
             return jsonify(msg)
         elif type == 'C':       #reset capital password
-            if request.form['password'] <> request.form['password2']:
-                flash('Password not Match','err')
-            elif len(request.form['password']) < 6:
-                flash('Password too Short','err')
-            elif _vali_cpass(g.db,session['email'],request.form['opassword']):
+            if _vali_cpass(g.db,session['email'],request.form['opassword']):
                 _update_cpass(g.db,session['email'],request.form['password'])
-                flash('Capital Password Changed Successfully.','suc')
+                msg = dict(msg = 'Capital Password Changed Successfully.',type ='suc')
             else:
-                flash('Orignal Capital Password Not Match.')
+                msg = dict(msg='Orignal Capital Password Not Match.',type = 'err')
+            return jsonify(msg)
         elif type == 'E':       #resend email
-            _send_mail(session['email'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,session['email']))})
-            flash('Validate Email sent successfully','suc')
+            _send_mail(session['email'],render_template("email/activate.html",para={'user': session['email'].split('@')[0].upper(),
+                            'url':url_for('register',v=_activecode(g.db,session['email']))}))
+            #_send_mail(session['email'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,session['email']))})
+            msg = dict(msg='Validate Email sent successfully',type = 'suc')
+            return jsonify(msg)
         elif type == 'I':       #invite email
             if not validateEmail(request.form['email']):
                 flash('Not validate Email','err')
             else:
                 _invite(g.db,session['user_id'])
-                _send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
-                                                           'refer':session['email']})
+                _send_mail(request.form['email'],render_template("email/invite.html",para={'user': request.form['email'].split('@')[0].upper(),
+                                        'url':url_for('register',r = _enrcode(session['user_id'],request.form['email'])),'refer':session['email'].split('@')[0].upper()}))
+                #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
+                #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
 
     g.u=_update_user(g.db,session,['positions','trans','btcflow','info','log'])#todo delete btcflow
@@ -274,7 +276,7 @@ def server():
 @app.route('/test', methods=['GET','POST'])
 def test():
     print request.user_agent
-    return render_template('test.html')
+    return render_template('email/activate.html',para={})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

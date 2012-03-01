@@ -1,3 +1,4 @@
+install MySQLdb
 install simplejson
 
 modify helpers.py:

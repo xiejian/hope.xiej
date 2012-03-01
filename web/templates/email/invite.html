@@ -1,0 +1,15 @@
+{% extends "email/_wrap.html" %}
+
+{% block title %}{{ para['user'] }},{{ para['refer']  }} invite you to join BTCFE.com{% endblock %}
+
+{% block content %}
+
+    <h4 style="color: #000000;">Dear {{ para['user'] }}:</h4>
+    <p>Your friend <strong>{{ para['refer']  }}</strong> invite you to join BTCFE.com</p>
+
+    <div style="text-align:center;"><h4><a style="color: #000000;background-color: #DDF;padding: 5px;" href="{{ request.url_root }}{{ para['url'] }}">
+        Click here to create your BTCFE account</a></h4></div>
+    <p>
+        You will got <strong>6 months 10% OFF special coupon</strong>, and <strong>0.1 BTC</strong> in cash after your first trade.</p>
+    <p>Thank you for your registration. Enjoy it. </p>
+{% endblock %}
