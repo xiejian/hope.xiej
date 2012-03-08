@@ -14,7 +14,8 @@
 <ul id="accountmenu">
     <li><a href=0>General Info</a></li>
     <li><a href=1>Account History</a></li>
-    <li><a href=2>Security Info</a></li>
+    <li><a href=2>My Contracts</a></li>
+    <li><a href=3>Security Info</a></li>
 </ul>
 </div>
 <div class="grid_13 account_tab">
@@ -51,15 +52,30 @@
 <p>You could use fee coupon and receive a fee discount return at the end of month.</p>
     <p>Your fee coupon of this month is set from 10% to 80% based on you and your friends' trade volume in last one month.</p>
     <p> The more friends you get, the higher fee coupon you get.</p>
-    <table class="ginfo grid_5 push_1">
-        <tr><th>My Friends' Trade Volume</th><td> {{ g.u['rtradevol'] |f }}</td></tr>
+    <table class="ginfo grid_5 prefix_1">
         <tr><th>Num of My Friends</th><td> {{ g.u['rnum'] |f }}</td></tr>
+        <tr><th>My Friends' Trade Volume</th><td> {{ g.u['rtradevol'] |f }}</td></tr>
         <tr><th>My Effective Trade Volume</th><td> {{ (g.u['tradevol'] + g.u['rtradevol'])|f }}</td></tr>
         <tr><th>Fee Return Rate</th><td>{{ (g.u['returnrate']*100)|f }}%</td></tr></table>
+    <br/><a class="modalInput" rel="#invite_friend" href="#invite_friend">Invite more friends</a>
+
+    <div class="modal" id="invite_friend">
+        <h3>Invite your friends to join BTCFE</h3>
+            <!--todo 发送邀请信，限制名额.-->
+            <h4>As reward:</h4>
+            <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
+            <p>You will get all this trade volume in the future.</p>
+        <form action="{{ url_for('account',t='I') }}" method=post class="invite">
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            <input type=email name="email" value="" size="22" required="required"/>
+            <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
+        </form>
+    </div>
 </div>
+
 <div class="grid_3 prefix_1 omega">
     <table><tr><th>Trade Volume</th><th>Coupon Rate</th></tr>
-        <tr {% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
+        <tr{% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.2 %} class="selected" {% endif %}><td>< 400</td><td>20% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.3 %} class="selected" {% endif %}><td>< 1.5k</td><td>30% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.4 %} class="selected" {% endif %}><td>< 5k</td><td>40% OFF</td></tr>
@@ -79,19 +95,6 @@
 <div class="clear"></div>
 {% endif %}
 
-<h4>Invite your friends to join BTCFE</h4>
-
-<form action="{{ url_for('account',t='I') }}" method=post class="invite grid_10">
-<!--todo 发送邀请信，限制名额.-->
-<h5>As reward:</h5>
-    <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
-     <p>You will get all this trade volume in the future.</p>
-
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-        <h5>Invite Now:</h5>
-    　　<input type=email name="email" value="" size="22" required="required"/>
-        <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
-</form>
 </div>
 
 <div class="grid_13 account_tab">
@@ -126,8 +129,67 @@
 </table>
 
   <div class="clear"></div>
-
 </div>
+
+<div class="grid_13 account_tab">
+    <h4>My Contracts</h4>
+    <a class="modalInput" rel="#edit_cont" href="#Edit">Create My Own Contract</a><br/>
+    <table>
+        <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+            <th>Full Name</th><th>Region</th><th>Sector</th><th>Status</th><th>Action</th></tr>
+        {% for c in cont if cont[c].owner == session['email']%}
+        <tr>
+            <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+            <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
+            <td>{{cont[c].sector}}</td><td>{{cont[c].status|f("C")}}</td>
+            <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>{% elif cont[c].status == 'C' %}
+                <a class="modalInput" href="#Settle"> Settle </a>{% elif cont[c].status == 'N' %}<a class="modalInput" rel="#edit_cont" href="#Edit"> Edit </a>{% endif %}</td>
+        </tr>
+        {% else %}
+        <tr>None</tr>
+        {% endfor %}
+    </table>
+    <div class="modal" id="edit_cont">
+        <h3>Create a New Contract</h3>
+        <div class="modal_wrap">        <br/>
+    <form action="{{ url_for('contract') }}" method=post>
+        <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+        <table>
+            <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td>
+                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 ></td>
+            <tr><th>Full Name</th><td><input type=text name=fullname></td>
+            <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 ></td></tr>
+            <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>
+                <th>Region</th><td><select name="region">
+                    <option value="W" >World Wide</option>
+                    <option value="N" >North America</option>
+                    <option value="L" >Latin America / Carib.</option>
+                    <option value="O" >Oceania / Australia</option>
+                    <option value="M" >Middle East</option>
+                    <option value="E" >Europe</option>
+                    <option value="A" >Asia</option>
+                    <option value="F" >Africa</option>
+                </select></td>
+            <tr><th>Leverage</th><td><input type=number name=leverage min=0.1 max=1 required="required"></td>
+            <th>Sector</th><td><select name="sector">
+                <option value="C" >Currency</option>
+                <option value="I" >Stock Index</option>
+                <option value="M" >Commodity</option>
+                <option value="S" >Sports</option>
+                <option value="P" >Politic</option>
+                <option value="E" >Entertainment</option>
+                <option value="O" >Others</option>
+            </select></td></tr>
+            <tr><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
+            <tr><th>Description</th><td colspan="3">
+                <textarea name="description" rows="10" cols="60"></textarea></td></tr>
+        </table>
+        <input type=submit value=Save>
+    </form>
+    </div>
+    </div>
+</div>
+
 <div class="grid_13 account_tab">
     <h4>Account Status</h4>
     <table class="ginfo grid_6 push_1 alpha"><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
@@ -180,7 +242,7 @@
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>
                 <tr><th>Current password</th>
-                    <td><input {% if g.u['password2']=='N' %}type="text" value="not set yet" disabled=disabled
+                    <td><input {% if g.u['password2']=='N' %}type="text" name="opassword" value="not set yet" readonly=readonly
                                {% else %} type=password name="opassword" value="" minlength="6"{% endif %}/></td></tr>
                 <tr><th>New capital password</th>
                     <td><input type="password" name="password" value="" minlength="6" /></td></tr>
@@ -190,4 +252,5 @@
         </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
 </div>
+<script type="text/javascript">showtab({{ tab }})</script>
 {% endblock %}

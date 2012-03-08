@@ -34,7 +34,7 @@ function test(){
 
 $(function(){
     activepage(2);
-    showtab(0);
+    //showtab(0);
     getiploc();
     $("#accountmenu li a").click(function(e){
         e.preventDefault();

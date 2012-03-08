@@ -217,8 +217,9 @@ def account():
                 #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
 
-    g.u=_update_user(g.db,session,['positions','trans','btcflow','info','log'])#todo delete btcflow
-    return render_template('account.html')
+    g.u=_update_user(g.db,session,['positions','trans','btcflow','info','rtvol','log'])#todo delete btcflow
+    tab = request.args.get('tab', 0)
+    return render_template('account.html',tab=tab)
 
 @app.route('/bitcoin', methods=['GET','POST'])
 def bitcoin():
@@ -227,7 +228,7 @@ def bitcoin():
     if request.method == 'POST':
         res = _btc_withdraw(g.db,session['email'],request.form['address'],request.form['amount'],request.form['password'],request.form['cpassword'])
         flash(res['msg'],res['category'])
-    g.u=_update_user(g.db,session,['address','btctrans'])
+    g.u=_update_user(g.db,session,['address','btctrans','info'])
     return render_template('bitcoin.html')
 
 

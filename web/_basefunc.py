@@ -24,7 +24,24 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
             return dt[value]
         else:
             return value
-
+    elif type=='C': #for Contract Status
+        dt = {'N':'New', 'P':'Open Approval', 'O':'Open', 'C':'Close', 'Q':'Settle Approval', 'S':'Settled', 'A':'Achieved', 'R':'Rejected'}
+        if value in dt.keys():
+            return dt[value]
+        else:
+            return value
+    elif type=='R': #for Region
+        dt = {"W":"World Wide","N":"North America","L":"Latin America / Carib.","O":"Oceania / Australia","M":"Middle East","E":"Europe","A":"Asia","F":"Africa"}
+        if value in dt.keys():
+            return dt[value]
+        else:
+            return value
+    elif type=='S': #for Sector
+        dt = {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","O":"Others"}
+        if value in dt.keys():
+            return dt[value]
+        else:
+            return value
 
 def validateEmail(email):
     if len(email) > 6:

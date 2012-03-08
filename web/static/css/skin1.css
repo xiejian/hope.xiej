@@ -164,9 +164,13 @@ a.caldisabled {
     padding:45px 75px;
     /* a little styling */
     font-size:1.2em;
-    text-align: center;
+    /*text-align: center;*/
 
 }
+.modal#edit_cont    {width:700px;font-size:1.1em;height: 441px;  }
+.modal#edit_cont .modal_wrap    { height: 520px; overflow-y: auto;}
+
+.modal form {text-align: center;}
 .modal .close {
     background-image:url(../img/close.png);
     position:absolute; right:5px; top:5px;

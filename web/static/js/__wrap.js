@@ -32,6 +32,9 @@ $(function () {
     });
     var triggers = $(".modalInput").overlay({
         // some mask tweaks suitable for modal dialogs
+
+        onClose: function(event, tabIndex) { $("div.error").remove();  },
+
         mask: {
             color: '#331',
             loadSpeed: 200,
@@ -64,7 +67,7 @@ $(function () {
 
     });
 
-
+    $(":date").dateinput();
 });
 
 (function() {

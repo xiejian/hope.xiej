@@ -11,17 +11,19 @@ div.navi li a   {padding: 8px; }
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;background: url("../img/logo.s.gif") no-repeat 96% 92%;   }
 h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 
-form.invite {border:1px solid #ccc;border-radius: 5px;padding: 10px;}
 
 div.account_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em; }
 div.account_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
 tr.selected  {border-left: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
-
+div.account_tab a.modalInput     {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 0px;font-size: 1.3em; border:1px solid #88C;border-radius: 5px;  }
+div.account_tab a.modalInput:hover  {background: #88C;color: #FF8;}
+div.account_tab a.modalInput:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
+div.account_tab div.modal input {margin: 5px;}
+div.account_tab div.modal select {font-size: 1.2em; padding: 5px;margin: 5px;}
 
 input {font-size:1.2em;padding: 5px; margin: 10px; }
-form.invite     {background: url("../img/logo.s.gif") no-repeat 96% 92%; }
 table.ginfo {font-size: 1.2em;}
 
 form.btc_out    {font-size: 1.2em;margin: 20px 30px;}

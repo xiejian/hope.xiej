@@ -14,8 +14,8 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         gv_contract[long(cid)]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in cur.fetchall()]
     else:   #deals had been made, update all
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,r.region,s.sector "\
-            "FROM contract c, users u,s_region r, s_sector s WHERE c.region_id = r.region_id and c.sector_id = s.sector_id and c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector "\
+            "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],
                 name=row[1]+row[6].strftime("%y%m"),leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12])
@@ -101,6 +101,11 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
         temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
+    #if 'mycont' in content:#todo my contract maybe is not nessec
+    #    cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
+    #    row = cur.fetchone()
+    #    temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
+    if 'rtvol' in content:
         cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
                 left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
         vol = cur.fetchone()
