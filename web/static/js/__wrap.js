@@ -67,7 +67,7 @@ $(function () {
 
     });
 
-    $(":date").dateinput();
+    $(":date").dateinput({format: "yyyy-mm-dd"});
 });
 
 (function() {

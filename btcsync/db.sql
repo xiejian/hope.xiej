@@ -147,7 +147,7 @@ CREATE TABLE `contract` (
   `latestpoint` decimal(20,8) DEFAULT NULL,
   `settledate` datetime DEFAULT NULL,
   `settlepoint` decimal(20,8) DEFAULT NULL,
-  `leverage` decimal(4,4) NOT NULL DEFAULT '0.2500',
+  `leverage` decimal(4,3) NOT NULL DEFAULT '0.250',
   `owner` int(11) DEFAULT NULL,
   `twitter_id` varchar(16) DEFAULT NULL,
   `region` char(1) DEFAULT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE `contract` (
   `description` varchar(512) DEFAULT NULL,
   `settleproof` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`contract_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +164,7 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
-INSERT INTO `contract` VALUES (4,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-06-30 00:00:00',NULL,'0.2500',30,NULL,'1','1',NULL,NULL),(5,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-09-30 00:00:00',NULL,'0.2500',30,NULL,'1','1',NULL,NULL),(6,'SP500','S&P 500','O','0.00100000','2012-01-01 00:00:00','99.00000000','2012-06-30 00:00:00',NULL,'0.2500',28,NULL,'1','2',NULL,NULL),(7,'SP500','S&P 500','N','0.00100000',NULL,NULL,'2012-09-30 00:00:00',NULL,'0.2500',28,'BTCFE','1','2',NULL,NULL);
+INSERT INTO `contract` VALUES (4,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-06-30 00:00:00',NULL,'0.250',30,NULL,'N','C',NULL,NULL),(5,'USD','US Dollar','O','1.00000000','2012-01-01 00:00:00',NULL,'2012-09-30 00:00:00',NULL,'0.250',30,NULL,'N','C',NULL,NULL),(6,'SP500','S&P 500','O','0.00100000','2012-01-01 00:00:00','99.00000000','2012-06-30 00:00:00',NULL,'0.250',28,NULL,'N','C',NULL,NULL);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,7 +406,7 @@ CREATE TABLE `userbalance` (
   `bal_pl` decimal(20,8) DEFAULT '0.00000000',
   `bal_btc` decimal(20,8) DEFAULT '0.00000000',
   PRIMARY KEY (`userbalance_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +415,7 @@ CREATE TABLE `userbalance` (
 
 LOCK TABLES `userbalance` WRITE;
 /*!40000 ALTER TABLE `userbalance` DISABLE KEYS */;
-INSERT INTO `userbalance` VALUES (15,28,'2011-12-31','0.00000000','0.00000000','0.00000000','0.00000000'),(16,29,'2011-12-31','0.00000000','0.00000000','0.00000000','0.00000000'),(17,28,'2012-02-20','0.13812050','-0.00037950','0.03900000','0.09950000'),(18,29,'2012-02-20','0.78082730','-0.00017270','0.28100000','0.50000000'),(19,28,'2012-02-21','0.13812050','-0.00037950','0.03900000','0.09950000'),(20,29,'2012-02-21','0.78082730','-0.00017270','0.28100000','0.50000000'),(21,28,'2012-02-22','0.13812050','-0.00037950','0.03900000','0.09950000'),(22,29,'2012-02-22','0.78082730','-0.00017270','0.28100000','0.50000000'),(23,28,'2012-02-26','0.13812050','-0.00037950','0.03900000','0.09950000'),(24,29,'2012-02-26','0.78082730','-0.00017270','0.28100000','0.50000000'),(25,28,'2012-02-27','0.13812050','-0.00037950','0.03900000','0.09950000'),(26,29,'2012-02-27','0.78082730','-0.00017270','0.28100000','0.50000000'),(27,28,'2012-02-28','0.13812050','-0.00037950','0.03900000','0.09950000'),(28,29,'2012-02-28','0.78082730','-0.00017270','0.28100000','0.50000000'),(29,28,'2012-02-29','0.13812050','-0.00037950','0.03900000','0.09950000'),(30,29,'2012-02-29','0.78082730','-0.00017270','0.28100000','0.50000000'),(31,28,'2012-03-07','0.13814995','-0.00035005','0.03900000','0.09950000'),(32,29,'2012-03-07','0.78083747','-0.00016253','0.28100000','0.50000000');
+INSERT INTO `userbalance` VALUES (15,28,'2011-12-31','0.00000000','0.00000000','0.00000000','0.00000000'),(16,29,'2011-12-31','0.00000000','0.00000000','0.00000000','0.00000000'),(17,28,'2012-02-20','0.13812050','-0.00037950','0.03900000','0.09950000'),(18,29,'2012-02-20','0.78082730','-0.00017270','0.28100000','0.50000000'),(19,28,'2012-02-21','0.13812050','-0.00037950','0.03900000','0.09950000'),(20,29,'2012-02-21','0.78082730','-0.00017270','0.28100000','0.50000000'),(21,28,'2012-02-22','0.13812050','-0.00037950','0.03900000','0.09950000'),(22,29,'2012-02-22','0.78082730','-0.00017270','0.28100000','0.50000000'),(23,28,'2012-02-26','0.13812050','-0.00037950','0.03900000','0.09950000'),(24,29,'2012-02-26','0.78082730','-0.00017270','0.28100000','0.50000000'),(25,28,'2012-02-27','0.13812050','-0.00037950','0.03900000','0.09950000'),(26,29,'2012-02-27','0.78082730','-0.00017270','0.28100000','0.50000000'),(27,28,'2012-02-28','0.13812050','-0.00037950','0.03900000','0.09950000'),(28,29,'2012-02-28','0.78082730','-0.00017270','0.28100000','0.50000000'),(29,28,'2012-02-29','0.13812050','-0.00037950','0.03900000','0.09950000'),(30,29,'2012-02-29','0.78082730','-0.00017270','0.28100000','0.50000000'),(31,28,'2012-03-07','0.13814995','-0.00035005','0.03900000','0.09950000'),(32,29,'2012-03-07','0.78083747','-0.00016253','0.28100000','0.50000000'),(33,28,'2012-03-08','0.13814995','-0.00035005','0.03900000','0.09950000'),(34,29,'2012-03-08','0.78083747','-0.00016253','0.28100000','0.50000000');
 /*!40000 ALTER TABLE `userbalance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +443,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',151,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',21,'2012-02-02 09:02:43'),(17,43,'Login','127.0.0.1',4,'2012-02-20 01:16:53'),(18,44,'Login','127.0.0.1',3,'2012-02-21 06:22:11'),(19,65,'Login','127.0.0.1',1,'2012-03-08 01:53:02');
+INSERT INTO `userlog` VALUES (15,28,'Login','127.0.0.1',155,'2012-01-18 05:47:53'),(16,29,'Login','127.0.0.1',21,'2012-02-02 09:02:43'),(17,43,'Login','127.0.0.1',4,'2012-02-20 01:16:53'),(18,44,'Login','127.0.0.1',3,'2012-02-21 06:22:11'),(19,65,'Login','127.0.0.1',1,'2012-03-08 01:53:02');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -540,7 +540,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `v_omargin` (
   `user_id` int(11),
-  `margin` decimal(65,20)
+  `margin` decimal(65,19)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -563,7 +563,7 @@ SET character_set_client = utf8;
   `createtime` datetime,
   `type` char(1),
   `status` char(1),
-  `margin` decimal(44,20)
+  `margin` decimal(44,19)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -584,7 +584,7 @@ SET character_set_client = utf8;
   `cost` decimal(62,16),
   `marketvalue` decimal(62,16),
   `p_l` decimal(63,16),
-  `margin` decimal(65,20)
+  `margin` decimal(65,19)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -654,9 +654,9 @@ SET character_set_client = utf8;
   `bal_unconf` decimal(20,8),
   `bal_unact` decimal(43,8),
   `onum` bigint(20),
-  `omargin` decimal(65,20),
+  `omargin` decimal(65,19),
   `pnum` bigint(20),
-  `pmargin` decimal(65,20),
+  `pmargin` decimal(65,19),
   `p_l` decimal(65,16)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
@@ -672,7 +672,7 @@ SET character_set_client = utf8;
 /*!50001 CREATE TABLE `v_userbtc_o` (
   `user_id` int(11),
   `num` bigint(21),
-  `margin` decimal(65,20)
+  `margin` decimal(65,19)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -687,7 +687,7 @@ SET character_set_client = utf8;
 /*!50001 CREATE TABLE `v_userbtc_p` (
   `user_id` int(11),
   `num` bigint(21),
-  `margin` decimal(65,20),
+  `margin` decimal(65,19),
   `p_l` decimal(65,16)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
@@ -1413,4 +1413,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-03-08 17:14:20
+-- Dump completed on 2012-03-09 17:24:15

@@ -1,6 +1,6 @@
 import os,base64,time
 from _db import _connect_db
-from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order
+from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
@@ -193,7 +193,7 @@ def account():
             else:
                 msg = dict(msg='Orignal Password Not Match.',type = 'err')
             return jsonify(msg)
-        elif type == 'C':       #reset capital password
+        elif type == 'Q':       #reset capital password
             if _vali_cpass(g.db,session['email'],request.form['opassword']):
                 _update_cpass(g.db,session['email'],request.form['password'])
                 msg = dict(msg = 'Capital Password Changed Successfully.',type ='suc')
@@ -216,6 +216,20 @@ def account():
                 #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
                 #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
+        elif type in ['C','D']:       #new of modify contract#todo delete & save contract
+            cid = long(request.form['id'])
+            if cid == 0 or gv_contract[cid]['owner'] == session['email']:
+                if type == 'C':
+                    msg,cid = _modify_cont(g.db,cid,request.form['code'],request.form['btc_multi'],request.form['opendate'],request.form['settledate'],\
+                        request.form['leverage'],request.form['fullname'],session['user_id'],request.form['twitter_id'],request.form['region'],request.form['sector'],request.form['description'])
+                else:
+                    msg = _delete_cont(g.db,cid)
+                flash(msg['msg'],msg['type'])
+                _update_contract(g.db,cid,'D')
+                redirect(url_for("account",tab=2))
+            else:
+                msg = dict(msg='Contract Owner Not Match.',type = 'err')
+            return jsonify(msg)
 
     g.u=_update_user(g.db,session,['positions','trans','btcflow','info','rtvol','log'])#todo delete btcflow
     tab = request.args.get('tab', 0)

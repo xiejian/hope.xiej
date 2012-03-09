@@ -13,12 +13,14 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         cur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY point ,createtime LIMIT 0,10",cid)
         gv_contract[long(cid)]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in cur.fetchall()]
     else:   #deals had been made, update all
+        if cid in gv_contract:
+            gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],
-                name=row[1]+row[6].strftime("%y%m"),leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12])
+                name=row[1]+row[6].strftime("%y%m"),leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
@@ -138,6 +140,26 @@ def _cancel_order(db,session,orderid):
     cur.close()
     return dict(msg=result[1],category=result[0])
 
+def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description):
+    cur = db.cursor()
+    if id > 0:
+        cur.execute("UPDATE contract SET code=%s,btc_multi=%s,opendate=%s,settledate=%s,leverage=%s,fullname=%s,twitter_id=%s,region=%s,sector=%s, \
+            description=%s WHERE contract_id = %s;",(code,btc_multi,opendate,settledate,leverage,fullname,twitter_id,region,sector,description,id))
+    else:
+        cur.execute("INSERT INTO contract(code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description) VALUES \
+            (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description))
+        cur.execute("SELECT LAST_INSERT_ID();")
+        id = cur.fetchone()[0]
+    db.commit()
+    cur.close()
+    return dict(msg = 'Contract Saved Successfully.',type ='suc'),id
+
+def _delete_cont(db,id):
+    cur = db.cursor()
+    cur.execute("DELETE FROM contract WHERE contract_id=%s",id)
+    db.commit()
+    cur.close()
+    return dict(msg = 'Contract Deleted Successfully.',type ='suc')
 
 if __name__ == "__main__":
     class g:
