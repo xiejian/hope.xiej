@@ -14,13 +14,13 @@
             <div class="modal edit_cont" id="edit_cont{{c}}">
                 <h3>Edit Contract</h3>
                 <div class="modal_wrap">        <br/>
-                    <form id="edit_cont_form" method=post>
+                    <form class="edit_cont_form" method=post>
                         <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
                         <table>
                             <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ cont[c].code }}"></td>
-                                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ cont[c].opendate }}"></td>
+                                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ cont[c].opendate }}" ></td>
                             <tr><th>Full Name</th><td><input type=text name=fullname value="{{cont[c].fullname}}"></td>
-                                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{cont[c].settledate}}"></td></tr>
+                                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{cont[c].settledate}}" ></td></tr>
                             <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{cont[c].btc_multi}}"></td>
                                 <th>Region</th><td><select name="region" >
                                     <option value="W" {% if cont[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
@@ -65,9 +65,9 @@
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="0">
                 <table>
                     <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td>
-                        <th>Open Date</th><td><input type=date name=opendate min=1 max=366 ></td>
+                        <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ></td>
                     <tr><th>Full Name</th><td><input type=text name=fullname></td>
-                        <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 ></td></tr>
+                        <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ></td></tr>
                     <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>
                         <th>Region</th><td><select name="region">
                             <option value="W" >World Wide</option>

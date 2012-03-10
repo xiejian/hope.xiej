@@ -42,10 +42,9 @@ $(function(){
         showtab(tab);
     });
 
-    $("#edit_cont_form input[type='button']").click(function(){
-
-        $('#edit_cont_form').attr({action: this.name});
-        $('#edit_cont_form').submit();
+    $(".edit_cont_form input[type='button']").click(function(){
+        $(this).parent(".edit_cont_form").attr({action: this.name});
+        $(this).parent(".edit_cont_form").submit();
     });
 
 
