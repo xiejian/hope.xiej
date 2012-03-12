@@ -7,7 +7,7 @@ from _data import _update_contract
 
 #data = {'name':'xiejian','id':3}
 NOT = {'B':'S','S':'B'}
-EOD_INTERVAL = 60*60#*12
+EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
 #todo add the number of users' invite
 
@@ -49,6 +49,7 @@ def settle_cont():
         for p in ccur.fetchall():
             ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print 'Add Order',ocur.fetchone()
+        ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
         print c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()

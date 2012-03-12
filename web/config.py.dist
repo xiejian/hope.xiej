@@ -11,7 +11,7 @@ DB = {
 SECRET_KEY = 'dev key'
 DEBUG = True
 INTERNAL_IP = ['127.0.0.1']
-
+ADMIN = ['jian.xie@163.com']
 
 mykey = 'X!eH0uyu'
 email={
@@ -20,3 +20,8 @@ email={
         'sendadd':  'btcfe.com@gmail.com',
 
 }
+http_proxy={'http': '192.168.168.122:8087'}
+
+smtp = dict(host='smtp.gmail.com',port=587,mode='normal',login='btcfe.com@gmail.com',passwd='xiej2024',
+        sender=(u'BTCFE','btcfe.com@gmail.com'),prefered_encoding='iso-8859-1',text_encoding='iso-8859-1')
+

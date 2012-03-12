@@ -29,3 +29,8 @@ table.ginfo {font-size: 1.2em;}
 
 form.btc_out    {font-size: 1.2em;margin: 20px 30px;}
 form.btc_out tr td  {text-align: left;vertical-align:middle;}
+
+
+div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 30px 5px;padding: 11px 20px 16px 5px;
+    background-image:url(../img/h.stepa.gif);}
+span.stepinfo   {font-style: italic;color: #666;}

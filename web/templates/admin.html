@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        table {border-spacing: 0;}
+        td  {padding: 6px; text-align: right; border: 1px solid #DDCCB1;}
+    </style>
+</head>
+<body>
+{% for category,message in get_flashed_messages(with_categories=True) %}
+    <div class="msg_{{ category }}">{{ message }}</div>
+{% endfor %}
+<h3>Contracts</h3>
+<table>
+    <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+        <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Settle Point</th></tr>
+    <tr><th colspan="3"><th colspan="4">Description</th><th colspan="4">Settle Proof</th><th>Action</th></tr>
+    {% for c in cont %}
+    <tr>
+        <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
+        <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].settlepoint}}</td></tr>
+    <tr><th colspan="3"></th><th colspan="4"><textarea rows="3">{{cont[c].description}}</textarea></th><th colspan="4"><textarea rows="3">{{cont[c].settleproof}}</textarea></th>
+        <td colspan="2"><form action="{{ url_for('admin') }}" method=post>
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value={{c}}>
+            {% if cont[c].status in ['N','C'] %}
+                <textarea name="apinstruction" >{{cont[c].apinstruction}}</textarea><br/>
+                <input type="radio" name="a_r" value="A" />Approve
+                <input type="radio" name="a_r" value="M" checked="checked"/>Modify
+                <input type="radio" name="a_r" value="R" />Reject
+                <input type=submit value=Submit>
+            {% endif %}
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr>None</tr>
+    {% endfor %}
+</table>
+</body>
+</html>

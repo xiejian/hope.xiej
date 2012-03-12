@@ -1,4 +1,13 @@
 <div class="grid_13 account_tab">
+    <h4>Contracts' Life</h4>
+    <div class="grid_12 alpha omega prefix_1">
+        <div class=" homestep">1. Create a new contract</div>
+        <div class=" homestep">2. Get approval & auto open at its open date</div>
+        <div class=" homestep">3. Trade till settle date</div>
+        <div class=" homestep">4. Closed, Submit settle point and proof</div>
+        <div class=" homestep">5. Get settle approval & and settle all holding</div>
+    </div>
+
     <a class="modalInput" rel="#edit_cont" href="#Edit">Create My Own Contract</a>
     <h4>My Contracts</h4>
     <table>
@@ -9,8 +18,22 @@
         <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
         <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].status|f("C")}}</td>
-        <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>{% elif cont[c].status == 'C' %}
-            <a class="modalInput" href="#Settle"> Settle </a>{% elif cont[c].status == 'N' %}<a class="modalInput" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
+        <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>
+        {% elif cont[c].status == 'C' %}<a class="modalInput" rel="#settle_cont{{c}}" href="#Settle"> Settle </a>
+            <div class="modal settle_cont" id="settle_cont{{c}}">
+                <h3>Settle Contract</h3>
+                <form action="{{ url_for('account',t='S') }}" method=post>
+                    <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
+                    <table>
+                    <tr><th>Settle Point</th><td><input type=number name=settlepoint min=0 max=99999 required="required" value="{{ cont[c].settlepoint }}"></td></tr>
+                    <tr><th>Settle Proof</th><td><textarea name="settleproof" rows="10" cols="40">{{cont[c].settleproof}}</textarea></td></tr>
+                        <tr><th>Approval Instruction</th><td >{{cont[c].apinstruction}}</td></tr>
+                        </table>
+                        <input type="submit" value="SAVE" />
+                </form>
+            </div>
+
+            {% elif cont[c].status == 'N' %}<a class="modalInput" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
             <div class="modal edit_cont" id="edit_cont{{c}}">
                 <h3>Edit Contract</h3>
                 <div class="modal_wrap">        <br/>
@@ -45,13 +68,14 @@
                             <tr><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
                             <tr><th>Description</th><td colspan="3">
                                 <textarea name="description" rows="10" cols="60">{{cont[c].description}}</textarea></td></tr>
+                            <tr><th>Approval Instruction</th><td colspan="3">
+                                {{cont[c].apinstruction}}</td></tr>
                         </table>
                         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
                         <input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />
                     </form>
                 </div>
             </div>
-
             {% endif %}</td>
     </tr>
     {% else %}
@@ -93,7 +117,7 @@
                     <tr><th>Description</th><td colspan="3">
                         <textarea name="description" rows="10" cols="60"></textarea></td></tr>
                 </table>
-                <input type=submit value=Save>
+                <input type=submit value=SAVE>
             </form>
         </div>
     </div>

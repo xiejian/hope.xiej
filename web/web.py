@@ -1,6 +1,6 @@
 import os,base64,time
 from _db import _connect_db
-from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont
+from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
@@ -216,14 +216,17 @@ def account():
                 #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
                 #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
-        elif type in ['C','D']:       #new of modify contract#todo delete & save contract
+        elif type in ['C','D','S']:       #new ,modify and settle contract
+        #todo validate new contract
             cid = long(request.form['id'])
             if cid == 0 or gv_contract[cid]['owner'] == session['email']:
                 if type == 'C':
                     msg,cid = _modify_cont(g.db,cid,request.form['code'],request.form['btc_multi'],request.form['opendate'],request.form['settledate'],\
                         request.form['leverage'],request.form['fullname'],session['user_id'],request.form['twitter_id'],request.form['region'],request.form['sector'],request.form['description'])
-                else:
+                elif type == 'D':   #delete
                     msg = _delete_cont(g.db,cid)
+                elif type == 'S':   #settle
+                    msg = _settle_cont(g.db,cid,request.form['settlepoint'],request.form['settleproof'])
                 flash(msg['msg'],msg['type'])
                 _update_contract(g.db,cid,'D')
                 redirect(url_for("account",tab=2))
@@ -231,7 +234,7 @@ def account():
                 msg = dict(msg='Contract Owner Not Match.',type = 'err')
             return jsonify(msg)
 
-    g.u=_update_user(g.db,session,['positions','trans','btcflow','info','rtvol','log'])#todo delete btcflow
+    g.u=_update_user(g.db,session,['positions','trans','info','rtvol','log'])
     tab = request.args.get('tab', 0)
     return render_template('account.html',tab=tab)
 
@@ -281,12 +284,32 @@ def contract():
 def index():
     return render_template('index.html')
 
-@app.route('/s', methods=['POST'])
-def server():
-    print request.form
-    print request.form['name']
-    print request.user_agent
-    return jsonify(request.form)
+@app.route('/liyutao', methods=['GET','POST'])
+def admin():
+    if 'email' not in session or session['email'] <> app.config['ADMIN']:
+        abort(404)
+    if request.method == 'POST':
+        if request.form['a_r'] == 'R':
+            cur = g.db.cursor()
+            cur.execute("UPDATE contract SET status='R' WHERE contract_id=%s",request.form['id'])
+            g.db.commit()
+            cur.close()
+            flash("Reject Contract "+request.form['id']+" Successfully")
+        if request.form['a_r'] == 'M':
+            cur = g.db.cursor()
+            cur.execute("UPDATE contract SET apinstruction=%s WHERE contract_id=%s",(request.form['apinstruction'],request.form['id']))
+            g.db.commit()
+            cur.close()
+            flash("Update Contract "+request.form['id']+" Approval Instruction Successfully")
+        elif request.form['a_r'] == 'A':
+            cur = g.db.cursor()
+            cur.execute("UPDATE contract SET status='P' WHERE contract_id=%s and status='N'",request.form['id'])
+            cur.execute("UPDATE contract SET status='Q' WHERE contract_id=%s and status='C'",request.form['id'])
+            g.db.commit()
+            cur.close()
+            flash("Approval Contract "+request.form['id']+" Successfully")
+        _update_contract(g.db,request.form['id'],'D')
+    return render_template('admin.html')
 
 @app.route('/test', methods=['GET','POST'])
 def test():

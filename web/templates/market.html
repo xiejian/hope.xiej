@@ -23,11 +23,11 @@
 
 <h4>New Contracts</h4>
 <table>
-    <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+    <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
         <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
-    {% for c in cont if cont[c].status =='N'%}
+    {% for c in cont if cont[c].status in ['N','P']%}
     <tr>
-        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
     </tr>
     {% else %}
@@ -37,11 +37,11 @@
 
 <h4>Close Contracts</h4>
 <table>
-    <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+    <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
         <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
-    {% for c in cont if cont[c].status =='S'%}
+    {% for c in cont if cont[c].status in ['C','Q','S']%}
     <tr>
-        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
     </tr>
     {% else %}

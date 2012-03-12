@@ -16,11 +16,11 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         if cid in gv_contract:
             gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
-            gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],
-                name=row[1]+row[6].strftime("%y%m"),leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13])
+            gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],name=row[1]+row[6].strftime("%y%m"),
+                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
@@ -81,10 +81,7 @@ def _update_user(db,session,content = []):    #get user's info
             temp['positions'].append(tt)
     if 'trans' in content:
         temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
-    if 'btcflow' in content:#todo delete btcflow
-        cur.execute("SELECT account1,input_dt,type,trans_id,amount FROM btc_action WHERE account1 = %s ORDER BY input_dt DESC LIMIT 0,20",session['email'])
-        btcflow = [dict(account=row[0],input_dt=row[1],type=row[2], trans_id=row[3],amount=row[4]) for row in cur.fetchall()]
-        temp.update({'btcflow':btcflow})
+
     if 'btctrans' in content:
         cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s ORDER BY timestamp DESC LIMIT 0,10",session['email'])
         btctrans = [dict(type=row[0],amount=row[1],fee=row[2], address=row[3],txid=row[4],timestamp=row[5],confirmed=row[6]) for row in cur.fetchall()]
@@ -103,10 +100,7 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
         temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
-    #if 'mycont' in content:#todo my contract maybe is not nessec
-    #    cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
-    #    row = cur.fetchone()
-    #    temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
+
     if 'rtvol' in content:
         cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
                 left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
@@ -160,6 +154,13 @@ def _delete_cont(db,id):
     db.commit()
     cur.close()
     return dict(msg = 'Contract Deleted Successfully.',type ='suc')
+
+def _settle_cont(db,id,point,proof):
+    cur = db.cursor()
+    cur.execute("UPDATE contract SET settlepoint=%s, settleproof=%s WHERE contract_id=%s",(point,proof,id))
+    db.commit()
+    cur.close()
+    return dict(msg = 'Contract Settle Info Updated Successfully.',type ='suc')
 
 if __name__ == "__main__":
     class g:
