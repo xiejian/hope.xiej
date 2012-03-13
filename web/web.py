@@ -197,6 +197,7 @@ def account():
             if _vali_cpass(g.db,session['email'],request.form['opassword']):
                 _update_cpass(g.db,session['email'],request.form['password'])
                 msg = dict(msg = 'Capital Password Changed Successfully.',type ='suc')
+
             else:
                 msg = dict(msg='Orignal Capital Password Not Match.',type = 'err')
             return jsonify(msg)
@@ -216,8 +217,9 @@ def account():
                 #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
                 #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
+                return jsonify({'goto':url_for("account",tab=0)})
         elif type in ['C','D','S']:       #new ,modify and settle contract
-        #todo validate new contract
+
             cid = long(request.form['id'])
             if cid == 0 or gv_contract[cid]['owner'] == session['email']:
                 if type == 'C':
@@ -227,12 +229,15 @@ def account():
                     msg = _delete_cont(g.db,cid)
                 elif type == 'S':   #settle
                     msg = _settle_cont(g.db,cid,request.form['settlepoint'],request.form['settleproof'])
-                flash(msg['msg'],msg['type'])
-                _update_contract(g.db,cid,'D')
-                redirect(url_for("account",tab=2))
+
             else:
                 msg = dict(msg='Contract Owner Not Match.',type = 'err')
-            return jsonify(msg)
+            if msg['type'] == 'suc':
+                flash(msg['msg'],msg['type'])
+                _update_contract(g.db,cid,'D')
+                return jsonify({'goto':url_for("account",tab=2)})
+            else:
+                return jsonify(msg)
 
     g.u=_update_user(g.db,session,['positions','trans','info','rtvol','log'])
     tab = request.args.get('tab', 0)

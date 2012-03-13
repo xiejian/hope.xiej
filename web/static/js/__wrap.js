@@ -33,7 +33,11 @@ $(function () {
     var triggers = $(".modalInput").overlay({
         // some mask tweaks suitable for modal dialogs
 
-        onClose: function(event, tabIndex) { $("div.error").remove();  },
+        onClose: function(event, tabIndex) {
+            $("div.error").remove();
+            $("div.modal form").show();
+            $('div.modal').find('.form_result').hide();
+        },
 
         mask: {
             color: '#331',
@@ -56,15 +60,14 @@ $(function () {
         if (!e.isDefaultPrevented()) {
 
             $.post( form.attr('action'), form.serialize(),function( response ) {
+                    if ('goto' in response) {window.location = response.goto;}
                     $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
                 }
             );
-
             form.hide();
             $('div.modal').find('.form_result').fadeIn('slow');
             e.preventDefault();
         }
-
     });
 
     $(":date").dateinput({format: "yyyy-mm-dd"});

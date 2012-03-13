@@ -10,6 +10,7 @@
     <ul  id="bitcoinmenu">
     <li><a href=0>Transfer IN</a></li>
     <li><a href=1>Transfer OUT</a></li>
+    <li><a href=2>Trans Record</a></li>
     </ul>
 </div>
 
@@ -40,22 +41,25 @@ Please transfer Bitcoin to your unique address as follow:
     </table><br/><input type=submit {% if g.u['password2'] == 'N' or (g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin <= 0) %} disabled="disabled" {% endif %} value="Transfer">
 </form>
 </div>
-<div class="clear"></div>
-<div class="grid_13 push_3">
-<h4>Bitcoin Trans</h4>
 
-<table >
-    {% for t in g.u['btctrans'] %}
+<div class="grid_13 alpha omega bitcoin_tab ">
+    <h3>Bitcoin Transfer History</h3>
+    <table >
+        {% for t in g.u['btctrans'] %}
         {% if loop.first %}<tr><th>TimeStamp</th><th>Type</th><th>Amount</th><th>Fee</th><th>Address</th><th>Confirmed</th></tr>
         {% endif %}
-    <tr>
-        <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
-        <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td></tr>
-    <tr><td></td><td colspan="4">txid: {{t.txid}}</td>
-    </tr>
-    {% else %}
-    <tr><th>None</th></tr>
-    {% endfor %}
-</table></div>
+        <tr>
+            <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
+            <td>{{t.confirmed|replace(1,"√")|replace(0,"")}}</td></tr>
+        <tr><td></td><td colspan="4"><span class="comment">txid: {{t.txid}}</span></td>
+        </tr>
+        {% else %}
+        <tr><th>None</th></tr>
+        {% endfor %}
+    </table>
+    <br/> <br/>
+</div>
+
+<div class="clear"></div>
 
 {% endblock %}

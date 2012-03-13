@@ -25,7 +25,7 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
         else:
             return value
     elif type=='C': #for Contract Status
-        dt = {'N':'New', 'P':'Open Approved', 'O':'Open', 'C':'Close', 'Q':'Settle Approved', 'S':'Settled', 'A':'Achieved', 'R':'Rejected'}
+        dt = {'N':'New', 'P':'Open Approved', 'O':'Trading', 'C':'Closed', 'Q':'Settle Approved', 'S':'Settled', 'A':'Achieved', 'R':'Rejected'}
         if value in dt.keys():
             return dt[value]
         else:

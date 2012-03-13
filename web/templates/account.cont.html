@@ -11,10 +11,13 @@
     <a class="modalInput" rel="#edit_cont" href="#Edit">Create My Own Contract</a>
     <h4>My Contracts</h4>
     <table>
-    <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-        <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Status</th><th>Action</th></tr>
+
     {% for c in cont if cont[c].owner == session['email']%}
-    <tr>
+        {% if loop.first %}
+        <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+            <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Status</th><th>Action</th></tr>
+        {% endif %}
+        <tr>
         <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
         <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].status|f("C")}}</td>
@@ -73,13 +76,13 @@
                         </table>
                         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
                         <input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />
-                    </form>
+                    </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
                 </div>
             </div>
             {% endif %}</td>
     </tr>
     {% else %}
-    <tr>None</tr>
+        <tr><th>None</th></tr>
     {% endfor %}
     </table>
     <div class="modal edit_cont" id="edit_cont">
@@ -118,7 +121,7 @@
                         <textarea name="description" rows="10" cols="60"></textarea></td></tr>
                 </table>
                 <input type=submit value=SAVE>
-            </form>
+            </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
         </div>
     </div>
 </div>

@@ -50,6 +50,7 @@ def settle_cont():
             ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print 'Add Order',ocur.fetchone()
         ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
+        #todo reward contract author
         print c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()

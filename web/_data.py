@@ -33,6 +33,8 @@ def _update_contract(db,cid = 'contract_id',type='D'):
     cur.close()
 
 def _update_usergl(cur,user_id,openbal_dt):
+    #todo add contract fee
+
     cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
     row = cur.fetchone()
     if row is None:
@@ -136,17 +138,12 @@ def _cancel_order(db,session,orderid):
 
 def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description):
     cur = db.cursor()
-    if id > 0:
-        cur.execute("UPDATE contract SET code=%s,btc_multi=%s,opendate=%s,settledate=%s,leverage=%s,fullname=%s,twitter_id=%s,region=%s,sector=%s, \
-            description=%s WHERE contract_id = %s;",(code,btc_multi,opendate,settledate,leverage,fullname,twitter_id,region,sector,description,id))
-    else:
-        cur.execute("INSERT INTO contract(code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description) VALUES \
-            (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description))
-        cur.execute("SELECT LAST_INSERT_ID();")
-        id = cur.fetchone()[0]
-    db.commit()
+    cur.callproc('update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description))
+    result = cur.fetchone()
+    if result is None:
+        return {'msg':'None','type':'err'},id
     cur.close()
-    return dict(msg = 'Contract Saved Successfully.',type ='suc'),id
+    return dict(msg=result[1],type=result[0]),result[2]
 
 def _delete_cont(db,id):
     cur = db.cursor()
