@@ -57,6 +57,7 @@ def settle_cont():
     print len(dbres),"contracts settled."
 
 def achieve_cont():
+    #todo achieve old contracts
     pass
 
 def cal_userinfo():

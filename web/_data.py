@@ -33,7 +33,6 @@ def _update_contract(db,cid = 'contract_id',type='D'):
     cur.close()
 
 def _update_usergl(cur,user_id,openbal_dt):
-    #todo add contract fee
 
     cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
     row = cur.fetchone()
@@ -147,7 +146,9 @@ def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owne
 
 def _delete_cont(db,id):
     cur = db.cursor()
-    cur.execute("DELETE FROM contract WHERE contract_id=%s",id)
+    cur.execute("INSERT INTO btc_action(ACTION,account1,account2,address,amount,trans_id,input_dt,TYPE) \
+        select 'move',email,'FEE','delete',-CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
+    cur.execute("UPDATE contract SET status = 'D' WHERE contract_id=%s",id)
     db.commit()
     cur.close()
     return dict(msg = 'Contract Deleted Successfully.',type ='suc')
