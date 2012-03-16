@@ -1,4 +1,7 @@
-install MySQLdb
+sudo apt-get install python-setuptools
+sudo apt-get install mysql-server mysql-client
+
+install python-mysqldb
 install simplejson
 
 modify helpers.py:

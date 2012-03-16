@@ -15,7 +15,7 @@ gv_eod_status = 'A'
 def open_cont():
     rows = cur.execute("UPDATE contract SET status = 'O' WHERE status ='P' and opendate <= NOW() and settledate > NOW()")
     db.commit()
-    print rows,'contracts opened.'
+    #print rows,'contracts opened.'
 
 def close_cont():
     cur.execute("SELECT contract_id FROM contract WHERE status ='O' and settledate <= NOW()")
@@ -28,11 +28,11 @@ def close_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('exchange',(o[0],o[1],'C'))
-            print 'Cancel Order',ocur.fetchone()
+            #print 'Cancel Order',ocur.fetchone()
 
     ocur.close()
     ccur.close()
-    print rows,'contracts closed.'
+    #print rows,'contracts closed.'
 
 def settle_cont():
     cur.execute("SELECT contract_id,settlepoint FROM contract WHERE status ='Q' and settlepoint is not null")
@@ -44,17 +44,17 @@ def settle_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('exchange',(o[0],o[1],'C'))
-            print 'Cancel Order',ocur.fetchone()
+            #print 'Cancel Order',ocur.fetchone()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
             ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
-            print 'Add Order',ocur.fetchone()
+            #print 'Add Order',ocur.fetchone()
         ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
         #todo reward contract author
-        print c[0],'Contract Settled at Point',c[1]
+        #print c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()
-    print len(dbres),"contracts settled."
+    #print len(dbres),"contracts settled."
 
 def achieve_cont():
     #todo achieve old contracts
@@ -66,7 +66,7 @@ def cal_userinfo():
 def update_feerate():
     rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = FRATE(v.tradevol)")
     db.commit()
-    print rows,'user fee rate updated.'
+    #print rows,'user fee rate updated.'
 
 def return_fee():
     global rfee_lastupdate
@@ -85,7 +85,7 @@ def return_fee():
         cur.execute(" delete from userattr where num <= 0 ")
         db.commit()
         rfee_lastupdate = datetime.datetime.now()
-        print rows, 'Users Fee Monthly Returned'
+        ##print rows, 'Users Fee Monthly Returned'
 
 def balance2date(balance2dt):
     cur.execute("select max(balance_dt) from userbalance;")
@@ -108,7 +108,7 @@ def balance2date(balance2dt):
                                 group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
 
-        print rows,'/',rown, 'Users Balance Updated'
+        #print rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")
@@ -121,11 +121,11 @@ def forced_close():
             for o in ocur.fetchall():
                 ccur.callproc('exchange',(o[0],u[0],'C'))
                 res = ccur.fetchone()
-                print res
+                #print res
         elif u[1] <= 0:
             #forced close postion
             ocur.callproc('forced_close',(u[0],-u[1]))
-            print ocur.fetchone(),'btc Forced Close remained'
+            #print ocur.fetchone(),'btc Forced Close remained'
         #todo send email to notify user
 
 
@@ -149,17 +149,17 @@ def eod_process():
 
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
+    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
 
 def _start_eod_sevice():
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
+    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
 
 def _stop_eod_sevice():
     global t
     t.cancel()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
+    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
 
 if __name__ == '__main__':
     #_start_eod_sevice()
