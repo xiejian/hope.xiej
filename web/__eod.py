@@ -107,7 +107,7 @@ def balance2date(balance2dt):
                                 on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and g.timestamp >= convert(%s,date)  +1 and g.timestamp < convert(%s,date)  + 1 \
                                 group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
-
+    #todo table btc_action to view , v_gl to table
         #print rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
