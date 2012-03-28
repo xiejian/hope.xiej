@@ -33,7 +33,7 @@ def settle_cont():
             print 'Cancel Order',ocur.fetchone()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
-            ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
+            ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print 'Add Order',ocur.fetchone()
         print c[0],'Contract Settled at Point',c[1]
     ocur.close()

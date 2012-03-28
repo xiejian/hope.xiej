@@ -43,6 +43,7 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
         else:
             return value
 
+
 def validateEmail(email):
     if len(email) > 6:
         if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) is not None:

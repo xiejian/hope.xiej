@@ -26,7 +26,7 @@ def _update_twt():
         twt = _updatec()
         twt.start()
         twt_lastupdate = datetime.datetime.now()
-        print twt_lastupdate
+        print twt_lastupdate,'update_twt'
 
 if __name__ == '__main__':
     global twta,twtt

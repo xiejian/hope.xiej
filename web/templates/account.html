@@ -7,8 +7,8 @@
 
 {% block content %}
 <h3>Effect Fee Rate: <em>{{ (g.u['feerate']*100)|f }}%</em> × <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
-    {% if g.u['s_coupon'] %} ×  <em> {{ (g.u['s_coupon']*100)|f }}% OFF</em> {% endif %}
-     =  <em> {{ (g.u['feerate']*(1-g.u['returnrate'])*(1-g.u['s_coupon'])*100)|f }}% </em></h3>
+    {% if g.u['s_coupon'] %} ×  <em> {{ (g.u['s_coupona']*100)|f }}% OFF</em> {% endif %}
+     =  <em> {{ (g.u['feerate']*(1-g.u['returnrate'])*(1-g.u['s_coupona'])*100)|f }}% </em></h3>
 
 <div class="navi">
 <ul id="accountmenu">
@@ -86,11 +86,14 @@
 </div>
 <div class="clear"></div>
 {% if g.u['s_coupon']%}
-    <h4>Special Coupon: <em> {{ (g.u['s_coupon']*100)|f }}% OFF </em></h4>
+    <h4>Special Coupon: <em> {{ (g.u['s_coupona']*100)|f }}% OFF </em></h4>
     <p>You could apply both of regular fee coupon and special coupon same time.</p>
-    <table class="ginfo grid_5 push_1">
-        <tr><th>Remains</th><td> {{ g.u['sc_num'] }} months</td></tr>
-        <tr><th>Comment</th><td>{{ g.u['sc_comment'] }}</td></tr></table>
+    <table class="ginfo grid_7 push_1">
+        <tr><th>Coupon</th><th>Month</th><th>Comment</th>
+        {% for sc in g.u['s_coupon']%}
+            <tr>    <td> {{ sc['coupon'] }}</td><td> {{  sc['month'] }} </td> <td>{{ sc['comment'] }}</td></tr>
+        {% endfor %}
+    </table>
 
 <div class="clear"></div>
 {% endif %}

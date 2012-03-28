@@ -15,7 +15,7 @@ gv_eod_status = 'A'
 def open_cont():
     rows = cur.execute("UPDATE contract SET status = 'O' WHERE status ='P' and opendate <= NOW() and settledate > NOW()")
     db.commit()
-    #print rows,'contracts opened.'
+    print rows,'contracts opened.'
 
 def close_cont():
     cur.execute("SELECT contract_id FROM contract WHERE status ='O' and settledate <= NOW()")
@@ -28,14 +28,14 @@ def close_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('exchange',(o[0],o[1],'C'))
-            #print 'Cancel Order',ocur.fetchone()
+            print 'Cancel Order',ocur.fetchone()
 
     ocur.close()
     ccur.close()
-    #print rows,'contracts closed.'
+    print rows,'contracts closed.'
 
 def settle_cont():
-    cur.execute("SELECT contract_id,settlepoint FROM contract WHERE status ='Q' and settlepoint is not null")
+    cur.execute("SELECT contract_id,settlepoint,settlemargin,owner FROM contract WHERE status ='Q' and settlepoint is not null")
     ccur = db.cursor()
     ocur = db.cursor()
     dbres = cur.fetchall()
@@ -44,21 +44,21 @@ def settle_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('exchange',(o[0],o[1],'C'))
-            #print 'Cancel Order',ocur.fetchone()
+            print 'Cancel Order',ocur.fetchone()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
-            ocur.callproc('addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
-            #print 'Add Order',ocur.fetchone()
+            ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
+            print 'Add Order',ocur.fetchone()
         ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
 
-        ccur.execute(" insert into btc_action(action,account1,account2,address,amount,type,input_dt) \
-            select 'move',owner,'FEE', -sum(amount) from v_gl where sector in ('I','J','S') and contract_id = %s")
+        ccur.execute(" insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) \
+            select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",c[2],c[0],c[3])
         #todo problem found here.
         #todo reward contract author
-        #print c[0],'Contract Settled at Point',c[1]
+        print c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()
-    #print len(dbres),"contracts settled."
+    print len(dbres),"contracts settled."
 
 def achieve_cont():
     #todo achieve old contracts
@@ -68,36 +68,39 @@ def cal_userinfo():
     pass
 
 def update_feerate():
-    rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = FRATE(v.tradevol)")
+    rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = f_FRATE(v.tradevol)")
     db.commit()
-    #print rows,'user fee rate updated.'
+    print rows,'user fee rate updated.'
 
 def return_fee():
-    cur.callproc('p_returnfee',())
-    #print rows, 'Users Fee Monthly Returned'
+    cur.callproc('p_eod')
+    cur.callproc('p_eom')
+    print 'EOD','EOM'
+
 
 def balance2date(balance2dt):
     cur.execute("select max(balance_dt) from userbalance;")
     res = cur.fetchone()
     if res[0] is None:
-        balance_dt = datetime.date(2011,12,31)
+        balance_dt = datetime.date(2011,10,31)
     else:
         balance_dt = res[0]
     if balance2dt > balance_dt:
 
-        cur.execute("insert into userbalance(user_id,balance_dt) \
-                    select g.user_id,convert('2011-12-31',date) from v_gl g where g.timestamp >= convert(%s,date) +1 \
-                     and g.timestamp < convert(%s,date) + 1 group by g.user_id having g.user_id not in \
-                    (select b.user_id from userbalance b);",[balance_dt,balance2dt])
+        rows=cur.execute("insert into userbalance(user_id,balance_dt) \
+                    select g.user_id,convert(%s,date) from v_gl g where DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
+                     and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') <= convert(%s,date) group by g.user_id having g.user_id not in \
+                    (select b.user_id from userbalance b);",[balance_dt,balance_dt,balance2dt])
 
-        cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc) \
+        rown=cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc,trade_vol) \
                     select g.user_id,convert(%s,date),sum(g.fee)+sum(g.p_l)+sum(g.btc)+ifnull(b.balance,0),sum(g.fee)+ifnull(b.bal_fee,0), \
                         sum(g.p_l)+ifnull(b.bal_pl,0),sum(g.btc)+ifnull(b.bal_btc,0),sum(g.value) from v_gl g left join userbalance b \
-                        on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and g.timestamp >= convert(%s,date)  +1 and g.timestamp < convert(%s,date)  + 1 \
+                        on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
+                        and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') <= convert(%s,date) \
                         group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
-    #todo table btc_action to view , v_gl to table
-        #print rows,'/',rown, 'Users Balance Updated'
+        #todo table btc_action to view , v_gl to table
+        print rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")
@@ -110,12 +113,13 @@ def forced_close():
             for o in ocur.fetchall():
                 ccur.callproc('exchange',(o[0],u[0],'C'))
                 res = ccur.fetchone()
-                #print res
+                print res
         elif u[1] <= 0:
             #forced close postion
-            ocur.callproc('forced_close',(u[0],-u[1]))
-            #print ocur.fetchone(),'btc Forced Close remained'
+            ocur.callproc('p_forced_close',(u[0],-u[1]))
+            print ocur.fetchone(),'btc Forced Close remained'
         #todo send email to notify user
+    db.commit()
 
 
 def eod_process():
@@ -138,17 +142,17 @@ def eod_process():
 
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
+    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
 
 def _start_eod_sevice():
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
+    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
 
 def _stop_eod_sevice():
     global t
     t.cancel()
-    #print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
+    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
 
 if __name__ == '__main__':
     #_start_eod_sevice()

@@ -23,6 +23,7 @@ def transsync():
                 [tx['category'], tx['account'], tx['amount'],vtxfee, tx['address'], tx['confirmations'], tx['txid'], MySQLdb.TimestampFromTicks(tx['time'])])
             updateuser(tx['account'])
         if len(res['transactions']) > 0:
+            cursor.execute("DELETE FROM btc_synclog WHERE lastblock = %s",res['lastblock'])
             cursor.execute("INSERT INTO btc_synclog(type,lastblock,status,message)VALUES ('trans',%s,'S',%s)", [res['lastblock'], len(res['transactions'])])
             print time.strftime('%d_%H:%M',time.localtime(time.time())),len(res['transactions']), 'transactions synced.'
     except Exception as inst:
@@ -90,6 +91,8 @@ if __name__ == "__main__":
     atexit.register(svrexit)    
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','B',%s)", btc_url[btc_url.find('@')+1:-1])
     print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Started.'
+    updateuser('FEE')
+    updateuser('P_L')
     while True:        
         actionsproc()
         transsync()

@@ -40,9 +40,10 @@ def _update_usergl(cur,user_id,openbal_dt):
     cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
     row = cur.fetchone()
     if row is None:
-        row = [datetime.date(2011,12,31),0,0,0,0]
+        row = [datetime.date(2011,10,31),0,0,0,0]
     openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4])
-    cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),timestamp,value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and timestamp > convert(%s,date)+1 ORDER BY timestamp",[user_id,openbal['balance_dt']])
+    cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),timestamp,value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and DATE_FORMAT(timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
+                ORDER BY timestamp",[user_id,openbal['balance_dt']])
     trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
         timestamp=row[7],value = row[8],btc_transfer = row[9],sector = row[10]) for row in cur.fetchall()]
 
@@ -111,18 +112,21 @@ def _update_user(db,session,content = []):    #get user's info
         vol = cur.fetchone()
         temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
 
-        cur.execute("select s_coupon,num,comment from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
-        row = cur.fetchone()
-        if row is None:
-            row = [0,0,""]
-        temp.update(dict(s_coupon=row[0],sc_num=row[1],sc_comment=row[2]))
+        cur.execute("select coupon,month,comment from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
 
+        s_coupon = [dict(coupon=row[0],month=row[1],comment=row[2]) for row in cur.fetchall()]
+        temp.update({'s_coupon':s_coupon})
+        s_coupona = 0
+        for row in s_coupon:
+            if row['month'] == datetime.date.today().strftime("%Y-%m"):
+                s_coupona = row['coupon']
+        temp.update({'s_coupona':s_coupona})
     cur.close()
     return temp
 
 def _add_order(db,session,contract_id,b_s,point,lots):
     cur = db.cursor()
-    cur.callproc('addorder',(contract_id,session['user_id'],b_s,point,lots))
+    cur.callproc('p_addorder',(contract_id,session['user_id'],b_s,point,lots))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}
@@ -140,7 +144,7 @@ def _cancel_order(db,session,orderid):
 
 def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description):
     cur = db.cursor()
-    cur.callproc('update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
+    cur.callproc('p_update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','type':'err'},id
@@ -150,7 +154,7 @@ def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owne
 def _delete_cont(db,id):
     cur = db.cursor()
     cur.execute("INSERT INTO btc_action(ACTION,account1,account2,address,amount,trans_id,input_dt,TYPE) \
-        select 'move',email,'FEE','delete',-f_CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
+        select 'move',email,'FEE','delete',0.1-f_CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
     cur.execute("UPDATE contract SET status = 'D' WHERE contract_id=%s",id)
     db.commit()
     cur.close()
