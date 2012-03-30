@@ -91,9 +91,9 @@ def _update_cpass(db,email,password):
     cur.close()
     return True
 
-def _invite(db,user_id):
+def _change_invitenum(db,user_id,num):
     cur = db.cursor()
-    cur.execute("UPDATE users SET invite = invite - 1 WHERE user_id =%s",[user_id])
+    cur.execute("UPDATE users SET invite = invite + %s WHERE user_id =%s",[num,user_id])
     db.commit()
     cur.close()
     return True

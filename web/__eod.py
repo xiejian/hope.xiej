@@ -9,7 +9,8 @@ from _data import _update_contract
 NOT = {'B':'S','S':'B'}
 EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
-#todo add the number of users' invite
+#todo add the number of users' invite based usr's activity,or balance movement. when invite num = 0, +1;  3 + .5 5 + .3 10. + .1
+
 
 #contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected
 def open_cont():
@@ -51,12 +52,11 @@ def settle_cont():
             ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print 'Add Order',ocur.fetchall()
             ocur.nextset()
-        ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
 
         ccur.execute(" insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) \
             select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",(-1*c[2],c[0],c[3]))
-        #todo problem found here.
-        #todo reward contract author
+        ccur.execute("UPDATE contract SET status = 'S',settlemargin = 0 WHERE status ='Q' and contract_id = %s",c[0])
+
         print c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()
@@ -96,13 +96,13 @@ def balance2date(balance2dt):
 
         rown=cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc,trade_vol) \
                     select g.user_id,convert(%s,date),ifnull(sum(g.fee),0)+ifnull(sum(g.p_l),0)+ifnull(sum(g.btc),0)+ifnull(b.balance,0),\
-                    ifnull(sum(g.fee),0)+ifnull(b.bal_fee,0),ifnull(sum(g.p_l),0)+ifnull(b.bal_pl,0), \
-                        ifnull(sum(g.btc),0)+ifnull(b.bal_btc,0),ifnull(sum(g.value),0) from v_gl g left join userbalance b \
-                        on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
+                    ifnull(sum(g.fee),0)+ifnull(b.bal_fee,0),ifnull(sum(g.p_l),0)+ifnull(b.bal_pl,0),ifnull(sum(g.btc),0)+ifnull(b.bal_btc,0), \
+                        ifnull(sum(g.value),0) from v_gl g left join userbalance b on g.user_id = b.user_id \
+                        WHERE b.balance_dt = convert(%s,date) and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
                         and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') <= convert(%s,date) \
                         group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
-        #todo table btc_action to view , v_gl to table
+
         print rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
@@ -130,14 +130,16 @@ def eod_process():
     db=_connect_db()
     cur = db.cursor()
 
+    forced_close()
     open_cont()
     close_cont()
+    return_fee()
     settle_cont()
     achieve_cont()
-    forced_close()
+
     update_feerate()
     balance2date(datetime.date.today()-datetime.timedelta(1))
-    return_fee()
+
     _update_contract(db)
 
     cur.close()

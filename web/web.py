@@ -1,7 +1,7 @@
 import os,base64,time
 from _db import _connect_db
 from _data import gv_contract,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont
-from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_invite,_dercode,_enrcode,_btc_withdraw,_update_pass
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
@@ -211,7 +211,7 @@ def account():
             if not validateEmail(request.form['email']):
                 flash('Not validate Email','err')
             else:
-                _invite(g.db,session['user_id'])
+                _change_invitenum(g.db,session['user_id'],-1)
                 _send_mail(request.form['email'],render_template("email/invite.html",para={'user': request.form['email'].split('@')[0].upper(),
                                         'url':url_for('register',r = _enrcode(session['user_id'],request.form['email'])),'refer':session['email'].split('@')[0].upper()}))
                 #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
@@ -310,6 +310,7 @@ def admin():
             cur = g.db.cursor()
             cur.execute("UPDATE contract SET status='P' WHERE contract_id=%s and status='N'",request.form['id'])
             cur.execute("UPDATE contract SET status='Q' WHERE contract_id=%s and status='C'",request.form['id'])
+            cur.execute("UPDATE contract c join users u on c.owner = u.user_id SET u.invite = u.invite + 5 WHERE c.contract_id=%s",request.form['id'])
             g.db.commit()
             cur.close()
             flash("Approval Contract "+request.form['id']+" Successfully")
