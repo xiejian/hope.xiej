@@ -107,7 +107,7 @@
     {% for t in g.u['trans'] %}
         {% if loop.first %}
     <tr><th>TimeStamp</th><th colspan="2">Action</th><th>Point</th><th>Lots</th><th>Fee</th><th>Pofit/Loss</th><th>BTC I/O</th><th>Comment</th></tr>
-    <tr><th>{{ g.u['openbal']['balance_dt'] }}</th><th colspan="2">Opening Balance</th><th></th><th></th><th>{{ g.u['openbal']['bal_fee']|f }}</th><th>{{ g.u['openbal']['bal_pl']|f }}</th>
+    <tr  class="selected" ><th>{{ g.u['openbal']['balance_dt'] }}</th><th colspan="2">Opening Balance</th><th></th><th></th><th>{{ g.u['openbal']['bal_fee']|f }}</th><th>{{ g.u['openbal']['bal_pl']|f }}</th>
         <th>{{ g.u['openbal']['bal_btc']|f }}</th><th>SUM: {{ g.u['openbal']['balance']|f }}</th></tr>
         {% endif %}
 
@@ -131,7 +131,7 @@
     <tr><th>None</th></tr>
     {% endfor %}
     {% if g.u['trans'] %}
-    <tr><th>{{ g.u['trans'][-1]['timestamp'] }}</th><th colspan="2">Closing Balance</th><th></th><th></th><th>{{ (g.u['trans']|sum(attribute='fee') + g.u['openbal']['bal_fee'])|f }}</th>
+    <tr  class="selected" ><th>{{ g.u['trans'][-1]['timestamp'] }}</th><th colspan="2">Closing Balance</th><th></th><th></th><th>{{ (g.u['trans']|sum(attribute='fee') + g.u['openbal']['bal_fee'])|f }}</th>
         <th>{{ (g.u['trans']|sum(attribute='p_l')+g.u['openbal']['bal_pl'])|f }}</th><th>{{ (g.u['trans']|sum(attribute='btc_transfer')+g.u['openbal']['bal_btc'])|f }}</th>
         <th>SUM: {{ (g.u['openbal']['balance']+g.u['trans']|sum(attribute='fee')+g.u['trans']|sum(attribute='p_l')+g.u['trans']|sum(attribute='btc_transfer'))|f }}</th></tr>
     {% endif %}
@@ -170,11 +170,11 @@
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>
                 <tr><th>Current password</th>
-                <td><input type="password" name="opassword" value="" minlength="6"/></td></tr>
+                <td><input type="password" name="opassword" pattern="[\u0020-\u007e]+" value="" minlength="6"/></td></tr>
                 <tr><th>New password</th>
-                <td><input type="password" name="password" value="" minlength="6" /></td></tr>
+                <td><input type="password" name="password" pattern="[\u0020-\u007e]+" value="" minlength="6" /></td></tr>
                 <tr><th>Confirm new Password</th>
-                <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
+                <td><input type="password" name="password2" pattern="[\u0020-\u007e]+" value="" data-equals="password"/></td></tr>
             </table><br/><input type=submit value=" RESET ">
         </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
@@ -195,11 +195,11 @@
             <table>
                 <tr><th>Current password</th>
                     <td><input {% if g.u['password2']=='N' %}type="text" name="opassword" value="not set yet" readonly=readonly
-                               {% else %} type=password name="opassword" value="" minlength="6"{% endif %}/></td></tr>
+                               {% else %} type=password name="opassword" pattern="[\u0020-\u007e]+" value="" minlength="6"{% endif %}/></td></tr>
                 <tr><th>New capital password</th>
-                    <td><input type="password" name="password" value="" minlength="6" /></td></tr>
+                    <td><input type="password" name="password" pattern="[\u0020-\u007e]+" value="" minlength="6" /></td></tr>
                 <tr><th>Confirm new password</th>
-                    <td><input type="password" name="password2" value="" data-equals="password"/></td></tr>
+                    <td><input type="password" name="password2" pattern="[\u0020-\u007e]+" value="" data-equals="password"/></td></tr>
             </table><br/><input type=submit value=" RESET ">
         </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>

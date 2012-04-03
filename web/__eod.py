@@ -71,6 +71,7 @@ def cal_userinfo():
 
 def update_feerate():
     rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = f_FRATE(v.tradevol)")
+
     db.commit()
     print rows,'user fee rate updated.'
 
@@ -114,13 +115,14 @@ def forced_close():
             #cancel all open order;
             ocur.execute("SELECT order_id FROM orders WHERE status ='O' and type = 'O' and user_id = %s",u[0])
             for o in ocur.fetchall():
-                ccur.callproc('exchange',(o[0],u[0],'C'))
-                res = ccur.fetchone()
-                print res
+                ccur.callproc('p_exchange',(o[0],u[0],'C'))
+                print ccur.fetchone()
+                ocur.nextset()
         elif u[1] <= 0:
             #forced close postion
             ocur.callproc('p_forced_close',(u[0],-u[1]))
             print ocur.fetchone(),'btc Forced Close remained'
+            ocur.nextset()
         #todo send email to notify user
     db.commit()
 
@@ -136,9 +138,8 @@ def eod_process():
     return_fee()
     settle_cont()
     achieve_cont()
-
-    update_feerate()
     balance2date(datetime.date.today()-datetime.timedelta(1))
+    update_feerate()
 
     _update_contract(db)
 

@@ -196,8 +196,10 @@ def account():
         elif type == 'Q':       #reset capital password
             if _vali_cpass(g.db,session['email'],request.form['opassword']):
                 _update_cpass(g.db,session['email'],request.form['password'])
+                if request.form['opassword'] == "not set yet":
+                    flash('Capital Password Set Successfully.','suc')
+                    return jsonify({'goto':url_for("account",tab=3)})
                 msg = dict(msg = 'Capital Password Changed Successfully.',type ='suc')
-
             else:
                 msg = dict(msg='Orignal Capital Password Not Match.',type = 'err')
             return jsonify(msg)
@@ -210,14 +212,18 @@ def account():
         elif type == 'I':       #invite email
             if not validateEmail(request.form['email']):
                 flash('Not validate Email','err')
-            else:
-                _change_invitenum(g.db,session['user_id'],-1)
+            elif _change_invitenum(g.db,session['user_id'],-1):
+
                 _send_mail(request.form['email'],render_template("email/invite.html",para={'user': request.form['email'].split('@')[0].upper(),
                                         'url':url_for('register',r = _enrcode(session['user_id'],request.form['email'])),'refer':session['email'].split('@')[0].upper()}))
                 #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
                 #                                           'refer':session['email']})
                 flash('Invite Email Sent.','suc')
                 return jsonify({'goto':url_for("account",tab=0)})
+            else:
+                msg = dict(msg='Not Enough Email Invite.',type = 'err')
+                return jsonify(msg)
+
         elif type in ['C','D','S']:       #new ,modify and settle contract
 
             cid = long(request.form['id'])

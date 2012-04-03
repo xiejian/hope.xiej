@@ -13,7 +13,7 @@
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <input type=email name=username value="{{ g.login_failed }}" size="18" required="required">
             <!--span class="placeholder">Email</span-->
-            <input type=password name=password size="10" required="required">
+            <input type=password name=password pattern="[\u0020-\u007e]+" size="10" required="required">
             <!--span class="placeholder">Password</span-->
             <input type=submit value=Login>
             {% if g.login_failed %}

@@ -31,10 +31,10 @@ Please transfer Bitcoin to your unique address as follow:
         <tr><th>Amount:</th>
         <td><input type=number name="amount" value=""  min=0.1 max={{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} required="required"/></td></tr>
         <tr><th>Password:</th>
-        <td><input type=password name="password" value="" size="24" required="required"/></td></tr>
+        <td><input type=password name="password" value="" pattern="[\u0020-\u007e]+" size="24" required="required"/></td></tr>
         <tr><th>Capital Password:</th>
             <td>{% if g.u['password2'] == 'Y' %}
-        <input type=password name="cpassword" value="" size="24" required="required"/>
+        <input type=password name="cpassword" value="" pattern="[\u0020-\u007e]+" size="24" required="required"/>
         {% else %}<input value="not set yet" disabled="disabled"/>  <a href="{{ url_for('account',tab=3) }}">Set it before withdraw</a>
         {% endif %}
         </td></tr>

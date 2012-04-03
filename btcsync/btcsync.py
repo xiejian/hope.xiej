@@ -35,7 +35,7 @@ def updateuser(account):
     vbal = ag.getbalance(account, btc_minconf)
     vunbal = ag.getbalance(account, 0) - vbal
     cursor.execute("DELETE FROM btc_account where account=%s", account)
-    cursor.execute("INSERT INTO btc_account(account,address,balance,bal_unconf) VALUES(%s,%s,%s,%s)",[account, vadd, vbal, vunbal])
+    cursor.execute("INSERT INTO btc_account(account,address,balance,bal_unconf) VALUES(%s,%s,%s,%s)",[account, vadd, vbal+max(0,vunbal), vunbal])
     return vbal
 
 def actionsproc(): 

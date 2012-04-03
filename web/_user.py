@@ -20,6 +20,7 @@ def _createuser(db,email,password,referrer):
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()
+    _change_invitenum(db,referrer,1)
     return True
 
 def _activeuser(db,code):
@@ -93,10 +94,13 @@ def _update_cpass(db,email,password):
 
 def _change_invitenum(db,user_id,num):
     cur = db.cursor()
-    cur.execute("UPDATE users SET invite = invite + %s WHERE user_id =%s",[num,user_id])
+    rows = cur.execute("UPDATE users SET invite = invite + %s WHERE invite + %s >=0 and user_id =%s",[num,num,user_id])
     db.commit()
     cur.close()
-    return True
+    if rows >= 1:
+        return True
+    else:
+        return False
 
 def _loguser(db,user_id,action,ip):
     cur = db.cursor()
@@ -113,11 +117,14 @@ def _btc_withdraw(db,email,btc_add,amount,passwd,cpass):
     user_id = _loginuser(db,email,passwd)
     if user_id and _vali_cpass(db,email,cpass):
         cur = db.cursor()
-        cur.execute("SELECT balance - omargin - pmargin + p_l FROM v_userbtc WHERE user_id = %s",user_id)
+        cur.execute("SELECT balance - omargin - pmargin + p_l,balance - omargin - pmargin FROM v_userbtc WHERE user_id = %s",user_id)
         btc_avail = cur.fetchone()
         if btc_avail[0] < decimal.Decimal(amount):
             cur.close()
-            return {'msg':"Available Bitcoin is not Enough.",'category':'err'}
+            return {'msg':"Available Bitcoin is not enough.",'category':'err'}
+        elif btc_avail[1] < decimal.Decimal(amount):
+            cur.close()
+            return {'msg':"Realize your holding's P/L before withdraw.",'category':'err'}
         else:
             cur.execute("insert into btc_action(action,account1,address,amount,type,input_dt) values ('sendfrom',%s,%s,%s,'W',NOW());"
             ,(email,btc_add,amount))

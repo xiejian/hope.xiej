@@ -102,7 +102,7 @@ def _update_user(db,session,content = []):    #get user's info
             add = ['Please wait bitcoin address to be created']
         temp.update(dict(address=add[0]))
     if 'info' in content:
-        cur.execute("select password2 is null, email_v,feerate,invite from users WHERE user_id = %s",session['user_id'])
+        cur.execute("select password2 is null, email_v,feerate,floor(invite) from users WHERE user_id = %s",session['user_id'])
         row = cur.fetchone()
         temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
 

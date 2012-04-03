@@ -15,7 +15,7 @@ h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 div.account_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em; }
 div.account_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
-tr.selected  {border-left: 4px solid #F22;background-color: #FEF1EC;}
+tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
 div.account_tab a.modalInput     {font-family:"Trebuchet MS",sans-serif;padding:5px;font-size: 1.3em; border:1px solid #88C;border-radius: 5px;
                                 float:right;margin: 5px;  }

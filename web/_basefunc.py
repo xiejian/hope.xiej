@@ -9,6 +9,8 @@ def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
         else:
             dt = datetime.datetime.strptime(value,'%a %b %d %H:%M:%S +0000 %Y')
         return dt.strftime(format)
+    elif type=='cd':  #for contract date
+        return value.strftime("%Y-%m-%d %H:%M")
     elif type=='hr':  #for hour
         return value.hour
     elif type=='N': #for num
