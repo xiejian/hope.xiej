@@ -10,7 +10,13 @@ def _createuser(db,email,password,referrer):
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
     if referrer:
-        cur.execute("INSERT INTO userattr(type,user_id,s_coupon,num,comment,create_dt)VALUES ('C',LAST_INSERT_ID(),0.1,6,'Invited Registration',NOW());")
+        cur.execute("INSERT INTO userattr(type,user_id,coupon,month,comment,create_dt) VALUES \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(now(),'%Y-%m'),'Invited Sign Up',NOW()), \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 1 month,'%Y-%m'),'Invited Sign Up',NOW()), \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 2 month,'%Y-%m'),'Invited Sign Up',NOW()), \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 3 month,'%Y-%m'),'Invited Sign Up',NOW()), \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 4 month,'%Y-%m'),'Invited Sign Up',NOW()), \
+                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 5 month,'%Y-%m'),'Invited Sign Up',NOW());")
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()

@@ -14,13 +14,13 @@
 
     {% for c in cont if cont[c].owner == session['email']%}
         {% if loop.first %}
-        <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-            <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Status</th><th>Action</th></tr>
+        <tr><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+            <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Action</th></tr>
         {% endif %}
         <tr>
-        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
-        <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].status|f("C")}}</td>
+        <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].write_fee}}</td><td>{{cont[c].vol|f}}</td>
         <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>
         {% elif cont[c].status == 'C' %}<a class="modalInput" rel="#settle_cont{{c}}" href="#Settle"> Settle </a>
             <div class="modal settle_cont" id="settle_cont{{c}}">
@@ -68,7 +68,7 @@
                                     <option value="E" {% if cont[c].sector == "E" %} selected="selected" {% endif %}>Entertainment</option>
                                     <option value="O" {% if cont[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                                 </select></td></tr>
-                            <tr><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
+                            <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="{{cont[c].write_fee}}"></td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
                             <tr><th>Description</th><td colspan="3">
                                 <textarea name="description" rows="10" cols="60">{{cont[c].description}}</textarea></td></tr>
                             <tr><th>Approval Instruction</th><td colspan="3">
@@ -116,7 +116,7 @@
                             <option value="E" >Entertainment</option>
                             <option value="O" >Others</option>
                         </select></td></tr>
-                    <tr><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
+                    <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="0"></td><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
                     <tr><th>Description</th><td colspan="3">
                         <textarea name="description" rows="10" cols="60"></textarea></td></tr>
                 </table>

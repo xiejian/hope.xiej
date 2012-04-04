@@ -167,8 +167,7 @@ a.caldisabled {
     /*text-align: center;*/
 
 }
-.modal.edit_cont    {width:680px;font-size:1.1em;height: 441px;  }
-.modal.edit_cont .modal_wrap    { height: 520px; overflow-y: auto;}
+
 
 .modal form {text-align: center;}
 .modal .close {

@@ -20,8 +20,12 @@ tr.selected  {border-left: 4px solid #F22;background-color: #FEF1EC;}
 div.account_tab a.modalInput     {font-family:"Trebuchet MS",sans-serif;padding:5px;font-size: 1.3em; border:1px solid #88C;border-radius: 5px;
                                 float:right;margin: 5px;  }
 div.account_tab a.modalInput:hover  {background: #88C;color: #FF8;}
-div.account_tab div.modal input {margin: 5px;}
+div.account_tab div.modal input {margin: 3px;}
 div.account_tab div.modal select {font-size: 1.2em; padding: 5px;margin: 5px;}
+
+.modal.edit_cont    {width:680px;font-size:1.0em;height: 441px;  }
+.modal.edit_cont .modal_wrap    { height: 520px; overflow-y: auto;}
+
 
 input {font-size:1.2em;padding: 5px; margin: 10px; }
 table.ginfo {font-size: 1.2em;}

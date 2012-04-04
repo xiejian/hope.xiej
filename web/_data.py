@@ -16,11 +16,11 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         if cid in gv_contract:
             gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],name=row[1]+row[6].strftime("%y%m"),
-                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16])
+                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
@@ -29,6 +29,9 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             #update transactions history
             ocur.execute("SELECT t.point,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
+            #update contract trade vol
+            ocur.execute("SELECT ifnull(sum(value),0) FROM v_gl WHERE contract_id = %s",row[0])
+            gv_contract[row[0]]['vol'] = ocur.fetchone()[0]
         ocur.close()
     cur.close()
 
@@ -103,7 +106,7 @@ def _update_user(db,session,content = []):    #get user's info
         temp.update(dict(password2=['Y','N'][row[0]],email_v=row[1],feerate=row[2],invite=row[3]))
 
     if 'rtvol' in content:
-        cur.execute("select ifnull(v.tradevol,0),FRATE(v.tradevol) ,ifnull(rv.rtvol,0), RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
+        cur.execute("select ifnull(v.tradevol,0),f_FRATE(v.tradevol) ,ifnull(rv.rtvol,0), f_RRATE(v.tradevol + ifnull(rv.rtvol,0)),ifnull(rv.num,0) from users u left join v_tradevol v on u.user_id = v.user_id \
                 left join v_rtradevol rv on u.user_id = rv.user_id WHERE u.user_id = %s",session['user_id'])
         vol = cur.fetchone()
         temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
@@ -135,9 +138,9 @@ def _cancel_order(db,session,orderid):
     cur.close()
     return dict(msg=result[1],category=result[0])
 
-def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description):
+def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description):
     cur = db.cursor()
-    cur.callproc('update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,region,sector,description))
+    cur.callproc('update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','type':'err'},id
@@ -147,7 +150,7 @@ def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owne
 def _delete_cont(db,id):
     cur = db.cursor()
     cur.execute("INSERT INTO btc_action(ACTION,account1,account2,address,amount,trans_id,input_dt,TYPE) \
-        select 'move',email,'FEE','delete',-CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
+        select 'move',email,'FEE','delete',-f_CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
     cur.execute("UPDATE contract SET status = 'D' WHERE contract_id=%s",id)
     db.commit()
     cur.close()
