@@ -38,7 +38,6 @@ $(function () {
             $("div.modal form").show();
             $('div.modal').find('.form_result').hide();
         },
-
         mask: {
             color: '#331',
             loadSpeed: 200,
@@ -47,6 +46,31 @@ $(function () {
         effect: 'apple',
         closeOnClick: false
     });
+    var triggersF = $(".modalInputF").overlay({
+        // some mask tweaks suitable for modal dialogs
+
+        onClose: function(event, tabIndex) {
+            $("div.error").remove();
+            $("div.modal form").show();
+            $('div.modal').find('.form_result').hide();
+        },
+        onBeforeLoad: function() {
+            // grab wrapper element inside content
+            var wrap = this.getOverlay().find(".contentWrap");
+            // load the page specified in the trigger
+            wrap.load(this.getTrigger().attr("href"));
+        },
+        mask: {
+            color: '#331',
+            loadSpeed: 200,
+            opacity: 0.8
+        },
+        top:5,
+        effect: 'apple',
+        closeOnClick: false
+    });
+
+
     $("div.msg_err,div.msg_suc,div.msg_message").fadeIn('slow', function() {
         // Animation complete
     });

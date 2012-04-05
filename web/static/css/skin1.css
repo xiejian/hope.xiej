@@ -172,8 +172,10 @@ a.caldisabled {
 .modal form {text-align: center;}
 .modal .close {
     background-image:url(../img/close.png);
-    position:absolute; right:5px; top:5px;
+    position:absolute; right:-6px; top:-4px;
     cursor:pointer;
     height:35px;
     width:35px;
 }
+.modal.F    {width:830px;font-size:1.0em;height: 441px; padding: 25px 40px;  }
+.modal.F .modal_wrap    { height: 640px; overflow-y: auto;}

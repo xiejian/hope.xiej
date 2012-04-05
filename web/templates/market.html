@@ -9,12 +9,14 @@
 <h4>Open Contracts</h4><a href="{{url_for('contract')}}">Create My Own Contract</a>
 <table>
 <tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-    <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Trade</th></tr>
+    <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Trade</th><th>Detail</th></tr>
 {% for c in cont if cont[c].status =='O'%}
     <tr>
         <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td>
-        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td>
+        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button">Detail</button>
+    </a></td>
     </tr>
 {% else %}
     <tr>None</tr>
@@ -24,12 +26,13 @@
 <h4>New Contracts</h4>
 <table>
     <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
+        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Detail</th></tr>
     {% for c in cont if cont[c].status in ['N','P']%}
     <tr>
         <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
-    </tr>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button">Detail</button>
+    </a></td>    </tr>
     {% else %}
     <tr>None</tr>
     {% endfor %}
@@ -38,12 +41,13 @@
 <h4>Close Contracts</h4>
 <table>
     <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th></tr>
+        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Detail</th></tr>
     {% for c in cont if cont[c].status in ['C','Q','S']%}
     <tr>
         <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td>
-    </tr>
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button">Detail</button>
+    </a></td> </tr>
     {% else %}
     <tr>None</tr>
     {% endfor %}
@@ -52,5 +56,13 @@
 <!--todo get contract's owner's twitter post-->
 <div id="tweets"></div>
 
+</div>
+
+
+
+<!-- overlayed element -->
+<div class="modal F" id="cont_overlay">
+    <!-- the external content is loaded inside this tag -->
+    <div class="contentWrap"></div>
 </div>
 {% endblock %}

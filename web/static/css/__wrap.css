@@ -48,3 +48,19 @@ span.comment   {color: #666;}
     left: 60px;
     border-color: transparent transparent #FFFDB6;
 }
+ul.twt li  {color: #666;margin-top: 5px;padding:5px;background:#EEE;}
+span.twt_text   {color: #000;font-size:1.2em; }
+/*ul.twt li::before {
+    content: "♯";
+    padding-left: 4px;
+}*/
+div.twt_follow a  {color:#F40;font-style: italic;float: right;margin-top:20px;padding-top: 15px;background-image:url(../img/bird_48_gray.png);
+    background-repeat:no-repeat;background-position: center center;}
+div.twt_follow a:hover    {background-image:url(../img/bird_48_blue.png)}
+a.twt_reply,a.twt_retweet,a.twt_favor {margin-left:10px;padding: 8px;background-repeat:no-repeat;background-position: left center;}
+a.twt_reply:hover,a.twt_retweet:hover,a.twt_favor:hover {background-position: right center;}
+a.twt_reply     {background-image:url(../img/reply-sprite.png);}
+a.twt_retweet   {background-image:url(../img/retweet-sprite.png);}
+a.twt_favor     {background-image:url(../img/favorite-sprite.png);}
+div#cont_overlay table th {border:0px;text-align: right;color: gray;background-color: transparent;}
+div#cont_overlay table td {border:0px;text-align: left;}

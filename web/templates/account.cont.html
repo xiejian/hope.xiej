@@ -8,7 +8,7 @@
         <div class=" homestep">5. Get settle approval & and settle all holding</div>
     </div>
 
-    <a class="modalInput" rel="#edit_cont" href="#Edit">Create My Own Contract</a>
+    <a class="modalInputF" rel="#edit_cont" href="#Edit">Create My Own Contract</a>
     <h4>My Contracts</h4>
     <table>
 
@@ -35,8 +35,8 @@
                         <input type="submit" value="SAVE" />
                 </form>
             </div>
-            {% elif cont[c].status == 'N' %}<a class="modalInput" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
-            <div class="modal edit_cont" id="edit_cont{{c}}">
+            {% elif cont[c].status == 'N' %}<a class="modalInputF" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
+            <div class="modal F" id="edit_cont{{c}}">
                 <h3>Edit Contract</h3>
                 <div class="modal_wrap">        <br/>
                     <form class="edit_cont_form" method=post>
@@ -86,7 +86,7 @@
         <tr><th>None</th></tr>
     {% endfor %}
     </table>
-    <div class="modal edit_cont" id="edit_cont">
+    <div class="modal F" id="edit_cont">
         <h3>Create a New Contract</h3>
         <div class="modal_wrap">        <br/>
             <form action="{{ url_for('account',t='C') }}" method=post>

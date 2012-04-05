@@ -265,31 +265,11 @@ def market():
     g.u=_update_user(g.db,session)
     return render_template('market.html')
 
-@app.route('/contract', methods=['GET','POST'])
+@app.route('/contract', methods=['GET'])
 def contract():
-    if 'user_id' not in session:
-        flash('Please Log in First.')
-        return redirect(url_for('home'))
-    g.u = _update_user(g.db,session)
-    if request.method == 'POST':
-        if not validateEmail(request.form['username']):
-            flash('Not validate Email','err')
-        elif request.form['password'] <> request.form['password2']:
-            flash('Password not Match','err')
-        elif len(request.form['password']) < 6:
-            flash('Password too Short','err')
-        else:
-            res = _createuser(g.db,request.form['username'],request.form['password'],request.form['referrer'])
-            if res == True:
-                _send_mail(request.form['username'],'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
-                flash('New Account was successfully created','suc')
-                return redirect(url_for('home'))
-            else:
-                flash(res,'err')
-    else:
-        pass
-    return render_template('contract.html')
-
+    cont = request.args.get('c', 0,type=int)
+    print cont
+    return render_template('contract.html',c=cont)
 
 @app.route('/index', methods=['GET','POST'])
 def index():

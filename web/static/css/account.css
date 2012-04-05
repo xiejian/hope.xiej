@@ -24,9 +24,6 @@ div.account_tab div.modal td {font-size: 1.2em;}
 /**/div.account_tab div.modal input {margin: 2px;}
 div.account_tab div.modal select {font-size: 1.1em; padding: 5px;margin: 5px;}
 
-.modal.edit_cont    {width:700px;font-size:1.0em;height: 441px;  }
-.modal.edit_cont .modal_wrap    { height: 520px; overflow-y: auto;}
-
 
 input {font-size:1.1em;padding: 5px; margin: 10px; }
 table.ginfo {font-size: 1.2em;}

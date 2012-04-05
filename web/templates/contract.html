@@ -1,30 +1,26 @@
-{% extends "_utitle.html" %}
-{% block content %}
-<script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
-<h4>Create a New Contract</h4>
 
-<form action="{{ url_for('contract') }}" method=post>
-    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <dl>
-        <dt>Code:
-        <dd><input type=text name=code >
-        <dt>Full Name:
-        <dd><input type=text name=fullname>
-        <dt>Region:
-        <dd><input type=text name=regoin >
-        <dt>Sector:
-        <dd><input type=text name=sector>
-        <dt>Open Date:
-        <dd><input type=date name=opendate min=1 max=366>
-        <dt>Settle Date:
-        <dd><input type=date name=settledate min=7 max=400>
-        <dt>Btc Multi:
-        <dd><input type=text name=btc_multi>
-        <dt>Leverage:
-        <dd><input type=text name=leverage>
-        <dt>Twitter ID:
-        <dd><input type=text name=twitter_id>
-        <dd><input type=submit value=Create>
-    </dl>
-</form>
-{% endblock %}
+<h4>{{cont[c].name}}</h4>
+
+
+<div class="grid_8 alpha">
+    <table>
+        <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><h5> + 1.00 ( 2.30% )</h5>{{cont[c].fullname}}</td><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
+        <tr><th>leverage</th><td>{{(cont[c].leverage*100)|f}}%</td><th>Settle Date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
+        <tr><th>Write Fee</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>Region</th><td>{{cont[c].region|f("R")}}</td></tr>
+        <tr><th></th><td></td><th>Sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
+
+</table>
+</div>
+<div class="grid_6 omega">
+    <h5>{{cont[c].owner}}'s Twitter {{cont[c].twitter_id}}</h5>
+    <ul class="twt">
+        {% for a in twt[c] %}
+            <li>{{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
+            <span> <a href="https://twitter.com/intent/tweet?in_reply_to={{ a.id_str }}"  class="twt_reply"></a>
+                <a href="https://twitter.com/intent/retweet?tweet_id={{ a.id_str }}"  class="twt_retweet"></a>
+                <a href="https://twitter.com/intent/favorite?tweet_id={{ a.id_str }}" class="twt_favor"></a></span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
