@@ -338,7 +338,7 @@ def contract():
         [1333497600000,624.35,625.86,617.00,624.31,20463585],
         [1333584000000,626.98,634.66,623.40,633.68,22902694]
         ]
-        return jsonify({'data':d})
+        return jsonify({'data':d,'name':gv_contract[cont]['name']})
     else:
         return render_template('contract.html',c=cont)
 

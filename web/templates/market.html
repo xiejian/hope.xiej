@@ -14,7 +14,7 @@
     <tr>
         <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td>
-        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
         <button type="button">Detail</button>
     </a></td>
     </tr>
@@ -30,7 +30,7 @@
     {% for c in cont if cont[c].status in ['N','P']%}
     <tr>
         <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
         <button type="button">Detail</button>
     </a></td>    </tr>
     {% else %}
@@ -45,7 +45,7 @@
     {% for c in cont if cont[c].status in ['C','Q','S']%}
     <tr>
         <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
         <button type="button">Detail</button>
     </a></td> </tr>
     {% else %}
@@ -63,6 +63,6 @@
 <!-- overlayed element -->
 <div class="modal F" id="cont_overlay">
     <!-- the external content is loaded inside this tag -->
-    <div class="contentWrap"></div>
+    <div class="cont_wrap"></div>
 </div>
 {% endblock %}

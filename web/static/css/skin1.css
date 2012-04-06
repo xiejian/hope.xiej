@@ -177,5 +177,5 @@ a.caldisabled {
     height:35px;
     width:35px;
 }
-.modal.F    {width:830px;font-size:1.0em;height: 441px; padding: 25px 40px;  }
-.modal.F .modal_wrap    { height: 640px; overflow-y: auto;}
+.modal.F    {width:900px;font-size:1.0em; padding: 25px 30px;  }
+.modal.F .modal_wrap,.cont_warp    { height: 670px; overflow-y: auto;}

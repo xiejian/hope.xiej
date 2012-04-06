@@ -38,21 +38,5 @@ var K = function () {
 $(function () {
     activepage(0);
 
-    $.getJSON("http://search.twitter.com/search.json?callback=?&q=BTCFE&include_entities=true",
-        function(data){
-            for (i=0; i<data.results.length; i++){
-                $("#tweets").append("" +
-                    "<a href='https://twitter.com/"+data.results[i].from_user +"'><img src='"+ data.results[i].profile_image_url+"'/></a>" +
-                    "<span class='twt_text'>" + data.results[i].text + " </span><span class='twt_time'>" +
-                    parseTwitterDate(data.results[i].created_at) +"</span>" +
-                '<span class="twt_action"> <a href="https://twitter.com/intent/tweet?in_reply_to='+data.results[i].in_reply_to_status_id_str+
-                    '">Reply</a>'+
-                ' <a href="https://twitter.com/intent/retweet?tweet_id='+data.results[i].id_str+'">Retweet</a>'+
-                ' <a href="https://twitter.com/intent/favorite?tweet_id='+data.results[i].id_str+'">Favorite</a></span>'+
-                "<br />");
-            }
-        });
-
-
 });
 

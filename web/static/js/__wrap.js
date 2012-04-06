@@ -11,6 +11,114 @@ function n(b_s){
     else{return 0;}
 }
 
+var chart;
+
+function loadcontchart(cid) {
+    $.getJSON('http://127.0.0.1:5000/contract?c='+cid+'&d=1', function(odata) {
+        data = odata['data'];
+        // split the data set into ohlc and volume
+
+        var ohlc = [],
+            volume = [],
+            dataLength = data.length;
+
+        for (i = 0; i < dataLength; i++) {
+            ohlc.push([
+                data[i][0], // the date
+                data[i][1], // open
+                data[i][2], // high
+                data[i][3], // low
+                data[i][4] // close
+            ]);
+
+            volume.push([
+                data[i][0], // the date
+                data[i][5] // the volume
+            ])
+        }
+        // set the allowed units for data grouping
+        var groupingUnits = [[
+            'week',                         // unit name
+            [1]                             // allowed multiples
+        ], [
+            'month',
+            [1, 2, 3]
+        ]];
+
+        // create the chart
+        chart = new Highcharts.StockChart({
+            chart: {
+                renderTo: 'contchart',
+                alignTicks: false
+            },
+
+            rangeSelector: {
+                buttons : [ {
+                    type : 'day',
+                    count : 1,
+                    text : '1d'
+                },  {
+                    type : 'week',
+                    count : 1,
+                    text : '1w'
+                }, {
+                    type : 'month',
+                    count : 1,
+                    text : '1m'
+                }, {
+                    type : 'all',
+                    count : 1,
+                    text : 'All'
+                }],
+                selected: 1,
+                inputBoxStyle: {
+                    right: '65px'
+                },
+                labelStyle: {
+                    display:'none'
+                }
+            },
+
+            title: {
+                text: odata['name'],
+                floating: true,
+                align: 'left',
+                x:150
+
+            },
+
+            yAxis: [{
+
+                height: 250,
+                lineWidth: 1
+            }, {
+
+                top: 288,
+                height: 90,
+                offset: 0,
+                lineWidth: 1
+            }],
+
+            series: [{
+                type: 'candlestick',
+                name: 'AAPL',
+                data: ohlc,
+                dataGrouping: {
+                    units: groupingUnits
+                }
+            }, {
+                type: 'column',
+                name: 'Volume',
+                data: volume,
+                yAxis: 1,
+                dataGrouping: {
+                    units: groupingUnits
+                }
+            }]
+        });
+    });
+}
+
 $.tools.validator.fn("[data-equals]", "Value not equal with the $1 field", function(input) {
     var name = input.attr("data-equals"),
         field = this.getInputs().filter("[name=" + name + "]");
@@ -56,9 +164,27 @@ $(function () {
         },
         onBeforeLoad: function() {
             // grab wrapper element inside content
-            var wrap = this.getOverlay().find(".contentWrap");
+            var wrap = this.getOverlay().find(".cont_wrap");
             // load the page specified in the trigger
             wrap.load(this.getTrigger().attr("href"));
+
+
+        },
+        onLoad: function(){
+            loadcontchart(this.getTrigger().attr("name"));
+            $("div#contchart").dblclick(function(){
+                if($(this).width() == 530){
+                    $(this).width(900);
+                    //$(this).height(600);
+                }else{
+                    $(this).width(530);
+                    //$(this).height(400);
+                }
+                chart.setSize(
+                    this.offsetWidth ,
+                    this.offsetHeight
+                );
+            });
         },
         mask: {
             color: '#331',

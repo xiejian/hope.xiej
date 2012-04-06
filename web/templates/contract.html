@@ -1,20 +1,22 @@
-<script src="http://code.highcharts.com/stock/highstock.js"></script>
-<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+
 
 <h4>{{cont[c].name}}</h4>
 
 
-<div class="grid_8 alpha">
+<div class="grid_9 alpha">
     <table>
-        <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><h5> + 1.00 ( 2.30% )</h5>{{cont[c].fullname}}</td><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
+        <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><br/> + 1.00 ( 2.30% ){{cont[c].fullname}}</td><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
         <tr><th>leverage</th><td>{{(cont[c].leverage*100)|f}}%</td><th>Settle Date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
         <tr><th>Write Fee</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>Region</th><td>{{cont[c].region|f("R")}}</td></tr>
         <tr><th></th><td></td><th>Sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
 
 </table>
 
-    <div id="container" style="height: 470px; min-width: 500px"></div>​
+    <div id="contchart" style="height: 480px; min-width: 530px"></div>​
     <script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
+
+
+
 </div>
 <div class="grid_6 omega">
     <h5>{{cont[c].owner}}'s Twitter {{cont[c].twitter_id}}</h5>

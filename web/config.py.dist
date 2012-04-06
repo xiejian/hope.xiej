@@ -11,7 +11,7 @@ DB = {
 SECRET_KEY = 'dev key'
 DEBUG = True
 INTERNAL_IP = ['127.0.0.1']
-ADMIN = ['jian.xie@163.com']
+ADMIN = 'jian.xie@163.com'
 
 mykey = 'X!eH0uyu'
 email={

@@ -5,11 +5,14 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
     <script type="text/javascript" src="{{url_for('static',filename='js/__wrap.js')}}"></script>
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
+    <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
        <link type="text/css" href="{{url_for('static',filename='css/reset.css')}}" rel="stylesheet" />
     <!-- <link type="text/css" href="{{url_for('static',filename='css/text.css')}}" rel="stylesheet" />-->
     <link type="text/css" href="{{url_for('static',filename='css/960.css')}}" rel="stylesheet" />
     <link type="text/css" href="{{url_for('static',filename='css/skin1.css')}}" rel="stylesheet" />
     <link type="text/css" href="{{url_for('static',filename='css/__wrap.css')}}" rel="stylesheet" />
+
     {% block thead %}{% endblock %}{% block head %}{% endblock %}
 </head>
 <body>
