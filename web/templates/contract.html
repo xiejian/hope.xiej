@@ -5,17 +5,24 @@
 
 <div class="grid_9 alpha">
     <table>
-        <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><br/> + 1.00 ( 2.30% ){{cont[c].fullname}}</td><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
-        <tr><th>leverage</th><td>{{(cont[c].leverage*100)|f}}%</td><th>Settle Date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
-        <tr><th>Write Fee</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>Region</th><td>{{cont[c].region|f("R")}}</td></tr>
-        <tr><th></th><td></td><th>Sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
+        <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><br/> + 1.00 ( 2.30% ){{cont[c].fullname}}</td><th>status</th><td>{{cont[c].status|f("C")}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
+        <tr><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Settle Date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
+        <tr><th>leverage</th><td>{{(cont[c].leverage*100)|f}}%</td><th>Region</th><td>{{cont[c].region|f("R")}}</td></tr>
+        <tr><th>Write Fee</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>Sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
 
 </table>
 
     <div id="contchart" style="height: 480px; min-width: 530px"></div>​
     <script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
 
-
+    <table><tr><th>Description</th><td>
+        <textarea name="description" rows="5" cols="60">{{cont[c].description}}</textarea>
+    </td><tr><th>SettlePoint</th><td>{{ cont[c].settlepoint }}</td></tr>
+        <tr><th>SettleProof</th>
+            <td colspan="2">
+                <textarea rows="5" cols="60">{{cont[c].settleproof}}</textarea></td>
+        </tr>
+    </table>
 
 </div>
 <div class="grid_6 omega">
@@ -30,4 +37,7 @@
         {% endfor %}
     </ul>
 </div>
+<div class="clear"></div>
+<div class="grid_15">
 
+</div>

@@ -174,7 +174,7 @@ $(function () {
             loadcontchart(this.getTrigger().attr("name"));
             $("div#contchart").dblclick(function(){
                 if($(this).width() == 530){
-                    $(this).width(900);
+                    $(this).width(890);
                     //$(this).height(600);
                 }else{
                     $(this).width(530);
