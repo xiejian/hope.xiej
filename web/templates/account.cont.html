@@ -18,7 +18,8 @@
             <th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Settle Margin</th><th>Action</th></tr>
         {% endif %}
         <tr>
-        <td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{(cont[c].leverage*100)|f}}%</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+            <button type="button">{{cont[c].name}}</button></a></td><td>{{(cont[c].leverage*100)|f}}%</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate|f("cd")}}</td><td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td>
         <td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].twitter_id}}</td><td>{{(cont[c].write_fee*2000)|f}}‰</td><td>{{cont[c].vol|f}}</td><td>{{ cont[c].settlemargin|f }}</td>
         <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>

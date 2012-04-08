@@ -5,18 +5,17 @@
 {% endblock %}
 {% block content %}
 
-<div class="grid_16 ">
+<div class="grid_13 ">
 <h4>Open Contracts</h4><a href="{{url_for('contract')}}">Create My Own Contract</a>
 <table>
-<tr><th>ID</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-    <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Trade</th><th>Detail</th></tr>
+<tr><th>Name</th><th>Full Name</th><th>Settle Date</th>
+    <th>Region</th><th>Sector</th><th>latestpoint</th><th>Change</th><th>Volume</th><th>Trade</th></tr>
 {% for c in cont if cont[c].status =='O'%}
     <tr>
-        <td>{{c}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td>
-        <td>{{cont[c].sector}}</td><td><a href="{{ url_for('trade',c=c) }}"> T </a></td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button">Detail</button>
-    </a></td>
+        <td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button">{{cont[c].name}}</button></a></td><td>{{cont[c].fullname}}</td>
+        <td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td><td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].latestpoint|f}}</td><td>+ 10.5%</td><td>123.99</td>
+        <td><a href="{{ url_for('trade',c=c) }}"> TRADE </a></td>
     </tr>
 {% else %}
     <tr>None</tr>
@@ -25,40 +24,42 @@
 
 <h4>New Contracts</h4>
 <table>
-    <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Detail</th></tr>
+    <tr><th>Status</th><th>Name</th><th>Full Name</th><th>Open Date</th><th>Settle Date</th>
+        <th>Region</th><th>Sector</th><th>Author</th></tr>
     {% for c in cont if cont[c].status in ['N','P']%}
     <tr>
-        <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button">Detail</button>
-    </a></td>    </tr>
+        <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button">{{cont[c].name}}</button></a></td><td>{{cont[c].fullname}}</td>
+        <td>{{cont[c].opendate|f("cd")}}</td><td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td><td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].owner}}</td>  </tr>
     {% else %}
     <tr>None</tr>
     {% endfor %}
 </table>
 
-<h4>Close Contracts</h4>
+<h4>Closed Contracts</h4>
 <table>
-    <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-        <th>Full Name</th><th>Author</th><th>Region</th><th>Sector</th><th>Detail</th></tr>
+    <tr><th>Status</th><th>Name</th><th>Full Name</th><th>Settle Date</th>
+        <th>Region</th><th>Sector</th><th>Settle Point</th><th>Author</th></tr>
     {% for c in cont if cont[c].status in ['C','Q','S']%}
     <tr>
-        <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
-        <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].owner}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button">Detail</button>
-    </a></td> </tr>
+        <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
+        <button type="button"> {{cont[c].fullname}} </button></a>{{cont[c].name}}</td><td></td>
+        <td>{{cont[c].settledate}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td>{{cont[c].settlepoint}}</td><td>{{cont[c].owner}}</td></tr>
     {% else %}
     <tr>None</tr>
     {% endfor %}
 </table>
+</div>
+<div class="grid_3">
+    <h5>Top Volume</h5>
+    <table><tr><th>1</th><td></td></tr></table>
+    <h5>Top Change</h5>
+    <table><tr><th>1</th><td></td></tr></table>
+    <h5>Top Change</h5>
+    <table><tr><th>1</th><td></td></tr></table>
 
-<!--todo get contract's owner's twitter post-->
-<div id="tweets"></div>
 
 </div>
-
-
 
 <!-- overlayed element -->
 <div class="modal F" id="cont_overlay">

@@ -112,7 +112,8 @@
         {% endif %}
 
     {% if t.sector == 'T' %}
-        <tr><td>{{t.timestamp}}</td><td>{{t.buy_sell|f("F")}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.point|f}}</td>
+        <tr><td>{{t.timestamp}}</td><td>{{t.buy_sell|f("F")}}</td><td><a name="{{t.contract_id}}" href="{{ url_for('contract',c=t.contract_id) }}" class="modalInputF" rel="#cont_overlay" >
+            <button type="button">{{cont[t.contract_id].name}}</button></a></td><td>{{t.point|f}}</td>
             <td>{{t.lots}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
     {% elif t.sector == 'R'  %}
         <tr><td>{{t.timestamp}}</td><td colspan="2">Apply Fee Coupon</td><td></td><td></td>
@@ -204,5 +205,11 @@
         </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
     </div>
 </div>
+<!-- overlayed element -->
+<div class="modal F" id="cont_overlay">
+    <!-- the external content is loaded inside this tag -->
+    <div class="cont_wrap"></div>
+</div>
 <script type="text/javascript">showtab({{ tab }})</script>
+
 {% endblock %}
