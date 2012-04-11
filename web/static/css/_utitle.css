@@ -23,7 +23,14 @@ div.body table {width:100%;   }
 div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}
 
+div.navi    {width: 164px; float: left; margin-right: 16px;}
 
+div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 10px 10px 0px;padding: 5px 0px; }
+div.navi li.active  {background-color:#EEF;border-left: 4px solid #77F;}
+div.navi li.active a {color:#22F;}
+div.navi li a   {color:#444;padding: 8px;margin-left: 5px; }
+div.navi li a:hover {color:#F22;}
+div.subheader   {border-top: 1px solid #DDD;font-size: 1.2em;font-weight: bold;margin:20px 0px 5px 0px;padding: 5px 0px; }
 
 a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;  }
 a.logout:hover  {background: #88C;color: #FF8;}

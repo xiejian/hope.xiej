@@ -1,24 +1,30 @@
 import re,os, base64,datetime
 
 
-def myformat(value, type='N',format='%H:%M / %d-%m-%Y'):
+def myformat(value, type='N',format=''):
     if type =='D':  #for date
         if format == 'diff':
             dt = datetime.datetime.strptime(value,'%a, %d %b %Y %H:%M:%S +0000')
             return convertToHumanReadable(dt)
         else:
             dt = datetime.datetime.strptime(value,'%a %b %d %H:%M:%S +0000 %Y')
-        return dt.strftime(format)
+        if format == '':
+            return dt.strftime('%H:%M / %d-%m-%Y')
+        else:
+            return dt.strftime(format)
     elif type=='cd':  #for contract date
         return value.strftime("%Y-%m-%d %H:%M")
     elif type=='hr':  #for hour
         return value.hour
     elif type=='N': #for num
+
         if isinstance(value,datetime.datetime):
             return value.isoformat()
         try:
-            res = '{0:.8f}'.format(value).rstrip('0').rstrip('.')
-            return res
+            if format == '':
+                return '{0:.8f}'.format(value).rstrip('0').rstrip('.')
+            else:
+                return format % value
         except Exception:
             return ''
     elif type=='F': #for Full

@@ -132,28 +132,7 @@ $.tools.validator.fn("[minlength]", function(input, value) {
     };
 });
 
-$(function () {
-    $("form").validator({
-        position: 'bottom left',
-        offset: [8, 0],
-        message: '<div><em/></div>' // em element is the arrow
-    });
-    var triggers = $(".modalInput").overlay({
-        // some mask tweaks suitable for modal dialogs
-
-        onClose: function(event, tabIndex) {
-            $("div.error").remove();
-            $("div.modal form").show();
-            $('div.modal').find('.form_result').hide();
-        },
-        mask: {
-            color: '#331',
-            loadSpeed: 200,
-            opacity: 0.8
-        },
-        effect: 'apple',
-        closeOnClick: false
-    });
+function init_modalInputF() {
     var triggersF = $(".modalInputF").overlay({
         // some mask tweaks suitable for modal dialogs
 
@@ -196,6 +175,34 @@ $(function () {
         closeOnClick: false
     });
 
+    return triggersF;
+}
+
+$(function () {
+    $(".scrollable").scrollable({circular: true}).autoscroll({ autoplay: false });
+    //$(".scrollable").scrollable({clickable: false}).circular().autoscroll({autoplay: true, steps: 1});
+    $("form").validator({
+        position: 'bottom left',
+        offset: [8, 0],
+        message: '<div><em/></div>' // em element is the arrow
+    });
+    var triggers = $(".modalInput").overlay({
+        // some mask tweaks suitable for modal dialogs
+
+        onClose: function(event, tabIndex) {
+            $("div.error").remove();
+            $("div.modal form").show();
+            $('div.modal').find('.form_result').hide();
+        },
+        mask: {
+            color: '#331',
+            loadSpeed: 200,
+            opacity: 0.8
+        },
+        effect: 'apple',
+        closeOnClick: false
+    });
+    var triggersF = init_modalInputF();
 
     $("div.msg_err,div.msg_suc,div.msg_message").fadeIn('slow', function() {
         // Animation complete

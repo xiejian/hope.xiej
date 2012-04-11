@@ -1,12 +1,4 @@
-div.navi    {width: 164px;
-    height: 330px;
-    float: left;
-    background-color: #EEE;
-    margin-right: 16px;}
 
-div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 0px 20px 25px;padding: 10px 0px 5px 0px; }
-div.navi li.active  {background-color:#ABF;border-right: 4px solid #45F;}
-div.navi li a   {padding: 8px; }
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;background: url("../img/logo.s.gif") no-repeat 96% 92%;  padding: 8px; }
 h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}

@@ -5,61 +5,65 @@
 {% endblock %}
 {% block content %}
 
-<div class="grid_13 ">
-<h4>Open Contracts</h4><a href="{{url_for('contract')}}">Create My Own Contract</a>
-<table>
-<tr><th>Name</th><th>Full Name</th><th>Settle Date</th>
-    <th>Region</th><th>Sector</th><th>latestpoint</th><th>Change</th><th>Volume</th><th>Trade</th></tr>
-{% for c in cont if cont[c].status =='O'%}
-    <tr>
-        <td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button">{{cont[c].name}}</button></a></td><td>{{cont[c].fullname}}</td>
-        <td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td><td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].latestpoint|f}}</td><td>+ 10.5%</td><td>123.99</td>
-        <td><a href="{{ url_for('trade',c=c) }}"> TRADE </a></td>
-    </tr>
-{% else %}
-    <tr>None</tr>
-{% endfor %}
-</table>
+<div class="navi">
 
-<h4>New Contracts</h4>
-<table>
-    <tr><th>Status</th><th>Name</th><th>Full Name</th><th>Open Date</th><th>Settle Date</th>
-        <th>Region</th><th>Sector</th><th>Author</th></tr>
-    {% for c in cont if cont[c].status in ['N','P']%}
-    <tr>
-        <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button">{{cont[c].name}}</button></a></td><td>{{cont[c].fullname}}</td>
-        <td>{{cont[c].opendate|f("cd")}}</td><td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td><td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].owner}}</td>  </tr>
-    {% else %}
-    <tr>None</tr>
-    {% endfor %}
-</table>
+    <ul class="submenu">
+        <li><a href=0>Open conts</a></li>
+        <li><a href=1>New conts</a></li>
+        <li><a href=2>Closed conts</a></li>
+    </ul>
+    <div class="subheader"> Top 3 </div>
 
-<h4>Closed Contracts</h4>
-<table>
-    <tr><th>Status</th><th>Name</th><th>Full Name</th><th>Settle Date</th>
-        <th>Region</th><th>Sector</th><th>Settle Point</th><th>Author</th></tr>
-    {% for c in cont if cont[c].status in ['C','Q','S']%}
-    <tr>
-        <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-        <button type="button"> {{cont[c].fullname}} </button></a>{{cont[c].name}}</td><td></td>
-        <td>{{cont[c].settledate}}</td><td>{{cont[c].region}}</td><td>{{cont[c].sector}}</td><td>{{cont[c].settlepoint}}</td><td>{{cont[c].owner}}</td></tr>
-    {% else %}
-    <tr>None</tr>
-    {% endfor %}
-</table>
+
+
+    <!-- root element for scrollable -->
+    <div class="navi"></div>
+    <div class="scrollable">
+
+        <!-- root element for the items -->
+        <div class="items">
+
+            <div>
+                Volume:
+                <table><tr><th>1</th><td>USD</td><td>USD</td><td>USD</td></tr></table>
+            </div>
+
+            <div>
+                Up:
+                <table><tr><th>1</th><td>USD</td><td>USD</td><td>USD</td></tr></table>
+            </div>
+
+            <div>
+                Down:
+                <table><tr><th>1</th><td>USD</td><td>USD</td><td>USD</td></tr></table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- "next page" action -->
+    </div>
+
+
+<div class="grid_13 subm_tab">
+    <h3>Open Contracts</h3>
+    <div id='o_cont_grid' class="grid_13 alpha omega" style="height:500px;"></div>
 </div>
-<div class="grid_3">
-    <h5>Top Volume</h5>
-    <table><tr><th>1</th><td></td></tr></table>
-    <h5>Top Change</h5>
-    <table><tr><th>1</th><td></td></tr></table>
-    <h5>Top Change</h5>
-    <table><tr><th>1</th><td></td></tr></table>
 
-
+<div class="grid_13 subm_tab">
+    <h3>New Contracts</h3>
+    <div id='n_cont_grid' class="grid_13 alpha omega" style="height:500px;"></div>
 </div>
+
+<div class="grid_13 subm_tab">
+    <h3>Closed Contracts</h3>
+    <div id='c_cont_grid' class="grid_13 alpha omega" style="height:500px;"></div>
+</div>
+
+
+<a href="{{url_for('contract')}}">Create My Own Contract</a>
+
 
 <!-- overlayed element -->
 <div class="modal F" id="cont_overlay">

@@ -5,20 +5,6 @@
  * Time: 3:47 PM
  * To change this template use File | Settings | File Templates.
  */
-function showtab(tab){
-    $('div.account_tab').each(function(i,div){
-        if(i == tab)
-            $(div).show();
-        else
-            $(div).hide();
-    });
-    $('#accountmenu li').each(function(i,li){
-        if(i == tab)
-            $(li).addClass("active");
-        else
-            $(li).removeClass("active");
-    });
-}
 
 function getiploc(){
     $('.ip').each(function(i,td){
@@ -36,11 +22,6 @@ $(function(){
     activepage(2);
     //showtab(0);
     getiploc();
-    $("#accountmenu li a").click(function(e){
-        e.preventDefault();
-        tab = $(this).attr("href");
-        showtab(tab);
-    });
 
     $(".edit_cont_form input[type='button']").click(function(){
         $(this).parent(".edit_cont_form").attr({action: this.name});

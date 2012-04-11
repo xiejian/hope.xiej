@@ -1,6 +1,13 @@
 {% extends "__wrap.html" %}
 {% block thead %}
+    <script type="text/javascript" src="{{url_for('static',filename='js/jquery.event.drag-2.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/slick.core.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/slick.grid.js')}}"></script>
+
     <script type="text/javascript" src="{{url_for('static',filename='js/_utitle.js')}}"></script>
+    <link type="text/css" href="{{url_for('static',filename='css/slick.grid.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('static',filename='css/slick-default-theme.css')}}" rel="stylesheet" />
+
     <link type="text/css" href="{{url_for('static',filename='css/_utitle.css')}}" rel="stylesheet" />
     <script type=text/javascript>
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};

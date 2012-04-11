@@ -2,7 +2,7 @@ from _db import  _connect_db
 import datetime,decimal
 
 gv_contract = {}    #global vars of contract info
-
+gv_contlist = {'O':[],'N':[],'C':[]}
 
 def _update_contract(db,cid = 'contract_id',type='D'):
     cur = db.cursor()
@@ -32,8 +32,44 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             #update contract trade vol
             ocur.execute("SELECT ifnull(sum(value),0)/2 FROM v_trans WHERE contract_id = %s",row[0])
             gv_contract[row[0]]['vol'] = ocur.fetchone()[0]
+            gv_contract[row[0]]['M']=[]
         ocur.close()
+        _update_marketinfo(db)
+        _update_contlist()
     cur.close()
+
+def _update_marketinfo(db):
+    cur = db.cursor()
+    for c in gv_contract:
+        if gv_contract[c]['status'] in ['O','C','Q','S']:
+            cur.execute("select ceil(unix_timestamp(t.timestamp)/3600)*3600000, round(SUBSTRING_INDEX(GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp), ',', 1 ),8) as open, \
+                        max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, round(sum(t.point * t.lots * c.btc_multi),8) as vol \
+                        from trans t join orders o on t.buy_oid=o.order_id join contract c on o.contract_id = c.contract_id where t.timestamp > (NOW() + interval - 1 year) and o.contract_id = %s group by ceil(unix_timestamp(t.timestamp)/3600)",c)
+            gv_contract[c]['M'] =[(orow[0],orow[1],orow[2],orow[3],orow[4],orow[5]) for orow in cur.fetchall()]
+            cur.execute("select max(t.timestamp),round(SUBSTRING_INDEX(GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp), ',', 1 ),8) as open, \
+                        max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, round(sum(t.point * t.lots * c.btc_multi),8) as vol \
+                        from trans t join orders o on t.buy_oid=o.order_id join contract c on o.contract_id = c.contract_id where t.timestamp > (NOW() + interval - 1 day) and o.contract_id = %s",c)
+            gv_contract[c]['D'] =cur.fetchone()
+
+    cur.close()
+
+def _update_contlist():
+    tt = {'O':[],'N':[],'C':[]}
+    for c in gv_contract:
+        vchange = ''
+        vvol = ''
+        if 'D' in gv_contract[c] and len(gv_contract[c]['D'])>=1:
+            vchange = (gv_contract[c]['D'][4] - gv_contract[c]['D'][1])*100 / gv_contract[c]['D'][1]
+            vvol = gv_contract[c]['D'][5]
+        temp = dict(c=c, st=gv_contract[c]['status'],n=gv_contract[c]['name'],fn=gv_contract[c]['fullname'],od=gv_contract[c]['opendate'],sd=gv_contract[c]['settledate'],
+            o=gv_contract[c]['owner'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=vchange,vl=vvol)
+        if temp['st'] == 'O':
+            tt['O'].append(temp)
+        elif temp['st'] in ['N','P']:
+            tt['N'].append(temp)
+        elif temp['st'] in ['C','Q','S']:
+            tt['C'].append(temp)
+    gv_contlist.update(tt)
 
 def _update_usergl(cur,user_id,openbal_dt):
 

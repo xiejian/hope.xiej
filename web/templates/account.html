@@ -6,23 +6,27 @@
 
 
 {% block content %}
-<h3>Effect Fee Rate: ( <em>{{ (g.u['feerate']*100)|f }}%</em> + Contract Fee ) × <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
-    {% if g.u['s_coupon'] %}{% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} × <em> {{ (sc['coupon'] * 100)|f }}% OFF{% endfor %}</em> {% endif %} </h3>
 
 <div class="navi">
-<ul id="accountmenu">
+<ul class="submenu">
     <li><a href=0>General Info</a></li>
     <li><a href=1>Account History</a></li>
     <li><a href=2>My Contracts</a></li>
     <li><a href=3>Security Info</a></li>
 </ul>
+    <div class="subheader">
+        Effect Fee Rate
+    </div>
+     ( <em>{{ (g.u['feerate']*100)|f }}%</em> + Contract Fee ) × <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
+        {% if g.u['s_coupon'] %}{% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} × <em> {{ (sc['coupon'] * 100)|f }}% OFF{% endfor %}</em> {% endif %}
 </div>
-<div class="grid_13 account_tab">
-<h4>
-    Current Fee Rate: <em>{{ (g.u['feerate']*100)|f }}%</em>
-</h4>
+<div class="grid_13 subm_tab">
+
 <div class="grid_9 alpha ">
-<p>Your trade fee rate is set from 0.4% to 0.07% based on your trade volume in last one month. </p>
+    <h4>
+        Current Fee Rate: <em>{{ (g.u['feerate']*100)|f }}%</em>
+    </h4>
+    <p>Your trade fee rate is set from 0.4% to 0.07% based on your trade volume in last one month. </p>
     <p>The more you trade, the lower fee rate you get.</p>
 
     <table class="ginfo grid_5 push_1">
@@ -31,7 +35,8 @@
     <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table>
 </div>
 
-<div class="grid_3 prefix_1 omega">
+<div class="grid_3 push_1 omega">
+    <br/>
     <table><tr><th>Trade Volume</th><th>Fee Rate</th></tr>
         <tr{% if g.u['feerate']|float == 0.004 %} class="selected" {% endif %}><td>< 50</td><td>0.4%</td></tr>
         <tr{% if g.u['feerate']|float == 0.003 %} class="selected" {% endif %}><td>< 100</td><td>0.3%</td></tr>
@@ -44,11 +49,11 @@
 </div>
 <div class="clear"></div>
 
-<h4>
-    This Month Fee Coupon: <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
-</h4>
 <div class="grid_9 alpha ">
-<p>You could use fee coupon and receive a fee discount return at the end of month.</p>
+    <h4>
+        This Month Fee Coupon: <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
+    </h4>
+    <p>You could use fee coupon and receive a fee discount return at the end of month.</p>
     <p>Your fee coupon of this month is set from 10% to 80% based on you and your friends' trade volume in last one month.</p>
     <p> The more friends you get, the higher fee coupon you get.</p>
     <table class="ginfo grid_5 prefix_1 alpha">
@@ -72,7 +77,8 @@
     </div>
 </div>
 
-<div class="grid_3 prefix_1 omega">
+<div class="grid_3 push_1 ">
+    <br/>
     <table><tr><th>Trade Volume</th><th>Coupon Rate</th></tr>
         <tr{% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.2 %} class="selected" {% endif %}><td>< 400</td><td>20% OFF</td></tr>
@@ -100,7 +106,7 @@
 
 </div>
 
-<div class="grid_13 account_tab">
+<div class="grid_13 subm_tab">
 
 <h4>Transaction History</h4>
 <table>
@@ -140,10 +146,10 @@
 
   <div class="clear"></div>
 </div>
-
-{% include "account.cont.html" %}
-
-<div class="grid_13 account_tab">
+<div class="grid_13 subm_tab">
+    {% include "account.cont.html" %}
+</div>
+<div class="grid_13 subm_tab">
     <h4>Account Status</h4>
     <table class="ginfo grid_6 push_1 alpha"><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
         <tr><th>Email Validate</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['email_v'] +'.png')}}"></td>

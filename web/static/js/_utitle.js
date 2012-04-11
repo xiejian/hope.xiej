@@ -37,6 +37,27 @@ function activepage(page){
     });
 }
 
+function showtab(tab){
+    $('div.subm_tab').each(function(i,div){
+        if(i == tab)
+            $(div).show();
+        else
+            $(div).hide();
+    });
+    $('.submenu li').each(function(i,li){
+        if(i == tab)
+            $(li).addClass("active");
+        else
+            $(li).removeClass("active");
+    });
+}
 $.ajaxSetup({ cache: false });
 
+$(function () {
+    $(".submenu li a").click(function(e){
+        e.preventDefault();
+        tab = $(this).attr("href");
+        showtab(tab);
+    });
+});
 
