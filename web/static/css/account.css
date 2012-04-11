@@ -2,7 +2,8 @@
 
 div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;background: url("../img/logo.s.gif") no-repeat 96% 92%;  padding: 8px; }
 h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
-
+div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
+div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}
 
 div.account_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em; }
 div.account_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}

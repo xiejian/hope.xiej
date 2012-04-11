@@ -179,7 +179,7 @@ function init_modalInputF() {
 }
 
 $(function () {
-    $(".scrollable").scrollable({circular: true}).autoscroll({ autoplay: false });
+    $(".scrollable").scrollable({circular: true}).autoscroll({ autoplay: false }).navigator({navi: '.scrollnavi', naviItem: 'a'});
     //$(".scrollable").scrollable({clickable: false}).circular().autoscroll({autoplay: true, steps: 1});
     $("form").validator({
         position: 'bottom left',

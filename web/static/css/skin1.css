@@ -188,7 +188,7 @@ element stays still.
     position:relative;
     overflow:hidden;
     /*width: 260px;*/
-    height:90px;
+    height:200px;
 }
 
 /*
@@ -209,4 +209,32 @@ this element is the one that *you* will style the most.
 */
 .items div {
     float:left;
+    width: 164px;
+}
+
+/* position and dimensions of the navigator */
+.scrollnavi {
+    height:20px;
+}
+
+
+/* items inside navigator */
+.scrollnavi a {
+    width:8px;
+    height:8px;
+    float:right;
+    margin:3px;
+    background:url(../img/scroll_navi.png) 0 0 no-repeat;
+    display:block;
+    font-size:1px;
+}
+
+/* mouseover state */
+.scrollnavi a:hover {
+    background-position:0 -8px;
+}
+
+/* active state (current page state) */
+.scrollnavi a.active {
+    background-position:0 -16px;
 }

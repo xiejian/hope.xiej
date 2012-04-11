@@ -40,12 +40,35 @@ function get_contlist(){
         d: 1
     }, function(data) {
         v_contlist = data;
-        updatepage_contlist();
+        update_conttop();
+        update_contlist();
     });
     return false;
 }
 
-function updatepage_contlist(){
+function update_conttop(){
+    v_contv = v_contlist['O'].sort(function(x,y){return x['vl']-y['vl'];});
+    v_contu = v_contlist['O'].sort(function(x,y){return x['ch']-y['ch'];});
+    v_contd = v_contlist['O'].sort(function(x,y){return y['ch']-x['ch'];});
+    var htm ='';
+    for(i = 0 ; i < v_contv.length && i < 5 ; i++){
+        htm += '<tr><td>'+v_contv[i]["n"]+'</td><td>'+v_contv[i]["lp"]+'</td><td>'+v_contv[i]["ch"]+'</td></tr>'
+    }
+    $("table#top_v").html(htm);
+    htm ='';
+    for(i = 0 ; i < v_contu.length && i < 5 ; i++){
+        htm += '<tr><td>'+v_contv[i]["n"]+'</td><td>'+v_contv[i]["lp"]+'</td><td>'+v_contv[i]["ch"]+'</td></tr>'
+    }
+    $("table#top_u").html(htm);
+    htm ='';
+    for(i = 0 ; i < v_contd.length && i < 5 ; i++){
+        htm += '<tr><td>'+v_contv[i]["n"]+'</td><td>'+v_contv[i]["lp"]+'</td><td>'+v_contv[i]["ch"]+'</td></tr>'
+    }
+    $("table#top_d").html(htm);
+}
+
+
+function update_contlist(){
     var ocolumns = [
         {id: "name", name: "Name", field: "n", sortable:true,formatter: function ( row, cell, value, columnDef, dataContext ) {
                 return '<a name="'+dataContext['c']+'" href="'+$SCRIPT_ROOT + '/contract?c=' + dataContext['c'] + '" class="modalInputF" rel="#cont_overlay">' + value + '</a>';}

@@ -20,8 +20,7 @@ ul.topnav a:hover   {color: #F22}
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 
 div.body table {width:100%;   }
-div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
-div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}
+div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;}
 
 div.navi    {width: 164px; float: left; margin-right: 16px;}
 
