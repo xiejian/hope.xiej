@@ -22,7 +22,7 @@ span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 div.body table {width:100%;   }
 div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;}
 
-div.navi    {width: 164px; float: left; margin-right: 16px;}
+div.navi    {width: 170px; float: left; margin-right: 10px;}
 
 div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 10px 10px 0px;padding: 5px 0px; }
 div.navi li.active  {background-color:#EEF;border-left: 4px solid #77F;}

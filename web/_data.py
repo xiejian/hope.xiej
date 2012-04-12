@@ -59,7 +59,7 @@ def _update_contlist():
         vchange = ''
         vvol = ''
         if 'D' in gv_contract[c] and len(gv_contract[c]['D'])>=1:
-            vchange = (gv_contract[c]['D'][4] - gv_contract[c]['D'][1])*100 / gv_contract[c]['D'][1]
+            vchange = round((gv_contract[c]['D'][4] - gv_contract[c]['D'][1])*100 / gv_contract[c]['D'][1],2)
             vvol = gv_contract[c]['D'][5]
         temp = dict(c=c, st=gv_contract[c]['status'],n=gv_contract[c]['name'],fn=gv_contract[c]['fullname'],od=gv_contract[c]['opendate'],sd=gv_contract[c]['settledate'],
             o=gv_contract[c]['owner'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=vchange,vl=vvol)

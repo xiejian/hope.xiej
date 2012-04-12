@@ -61,3 +61,14 @@ $(function () {
     });
 });
 
+/*for SlickGrid*/
+function rendercontName(cellNode, row, dataContext, colDef) {
+    var htm = '<a name="'+dataContext['c']+'" href="'+$SCRIPT_ROOT + '/contract?c=' + dataContext['c'] + '" class="modalInputF" rel="#cont_overlay">' + dataContext['n'] + '</a>';
+    $(cellNode).html(htm);
+    init_modalInputF($(cellNode).find('a.modalInputF'));
+}
+function updn_formatter(row, cell, value, columnDef, dataContext ) {
+    if(value > 0){return '<span class="up">+'+value+'%</span>';}
+    if (value < 0){return '<span class="dn"> '+value+'%</span>';}
+    else {return ' - ';}
+}

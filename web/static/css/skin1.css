@@ -209,7 +209,7 @@ this element is the one that *you* will style the most.
 */
 .items div {
     float:left;
-    width: 164px;
+    /*width: 164px;*/
 }
 
 /* position and dimensions of the navigator */

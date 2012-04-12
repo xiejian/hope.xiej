@@ -132,8 +132,8 @@ $.tools.validator.fn("[minlength]", function(input, value) {
     };
 });
 
-function init_modalInputF() {
-    var triggersF = $(".modalInputF").overlay({
+function init_modalInputF(obj) {
+    var triggersF = $(obj).overlay({
         // some mask tweaks suitable for modal dialogs
 
         onClose: function(event, tabIndex) {
@@ -146,8 +146,6 @@ function init_modalInputF() {
             var wrap = this.getOverlay().find(".cont_wrap");
             // load the page specified in the trigger
             wrap.load(this.getTrigger().attr("href"));
-
-
         },
         onLoad: function(){
             loadcontchart(this.getTrigger().attr("name"));
@@ -179,7 +177,7 @@ function init_modalInputF() {
 }
 
 $(function () {
-    $(".scrollable").scrollable({circular: true}).autoscroll({ autoplay: false }).navigator({navi: '.scrollnavi', naviItem: 'a'});
+
     //$(".scrollable").scrollable({clickable: false}).circular().autoscroll({autoplay: true, steps: 1});
     $("form").validator({
         position: 'bottom left',
@@ -202,7 +200,9 @@ $(function () {
         effect: 'apple',
         closeOnClick: false
     });
-    var triggersF = init_modalInputF();
+    $('.modalInputF').each(function(index) {
+        init_modalInputF(this);
+    });
 
     $("div.msg_err,div.msg_suc,div.msg_message").fadeIn('slow', function() {
         // Animation complete

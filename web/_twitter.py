@@ -21,7 +21,7 @@ class _updatec(threading.Thread):
         tdata = urllib2.urlopen(urlt)
         gv_twt.update( {'talk': json.loads(tdata.read())})
         for c in gv_contract :
-            if str(gv_contract[c]['twitter_id']) > 0:
+            if len(gv_contract[c]['twitter_id']) > 0:
                 urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name="+gv_contract[c]['twitter_id']+"&count="+count
                 adata = urllib2.urlopen(urla)
                 gv_twt.update({c: json.loads(adata.read())})
