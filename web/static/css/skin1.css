@@ -178,7 +178,7 @@ a.caldisabled {
     width:35px;
 }
 .modal.F    {width:910px;font-size:1.0em; padding: 25px 10px 25px 30px;  }
-.modal.F .modal_wrap,.modal.F .cont_wrap    { height: 670px; overflow-y: auto;}
+.modal.F .modal_wrap,.modal.F .scroll_wrap    { height: 600px; overflow-y: auto;width:910px; }
 /*
 root element for the scrollable.  when scrolling occurs this
 element stays still.
@@ -187,8 +187,8 @@ element stays still.
     /* required settings */
     position:relative;
     overflow:hidden;
-    /*width: 260px;*/
-    height:200px;
+    /*width: 260px;
+    height:200px;*/
 }
 
 /*
@@ -197,12 +197,16 @@ and it should have a extremely large width to accommodate scrollable
 items.  it's enough that you set width and height for the root element
 and not for this element.
 */
-.scrollable .items {
-    /* this cannot be too large */
+.scrollable .items.hor {
+    /* this cannot be too large*/
     width:20000em;
     position:absolute;
 }
-
+.scrollable .items.ver {
+    /* this cannot be too large*/
+    height:20000em;
+    position:absolute;
+}
 /*
 a single item. must be floated in horizontal scrolling.  typically,
 this element is the one that *you* will style the most.

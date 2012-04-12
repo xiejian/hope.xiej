@@ -18,7 +18,21 @@
 <body>
 <div id="infobar">
     <div class="container_16">
-        USD1209:  22.23  +10.9% , USD1209:  22.23  +10.9% , USD1209:  22.23  +10.9% , USD1209:  22.23  +10.9%
+        <div class="scrollable" title='infobar'>
+            <div class="items ver">
+                {% for a in twt['ann'] %}
+                    <div class="grid_16"> {{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
+                    <span> <a href="https://twitter.com/intent/tweet?in_reply_to={{ a.id_str }}"  class="twt_reply"></a>
+                    <a href="https://twitter.com/intent/retweet?tweet_id={{ a.id_str }}"  class="twt_retweet"></a>
+                    <a href="https://twitter.com/intent/favorite?tweet_id={{ a.id_str }}" class="twt_favor"></a></span>
+                    </div>
+                {% else %}
+                <div class="grid_16">Welcome to Bitcoin Futures Exchange <span class="twt_text">BTCFE.com</span></div>
+                {% endfor %}
+            </div>
+        </div>
+
+
     </div>
 </div>
 <div id="titlebar">

@@ -274,7 +274,6 @@ def contract():
     cont = request.args.get('c', 0,type=int)
     data = request.args.get('d', 0,type=int)
     if data == 1:
-        print gv_contract[cont]['M']
         return jsonify({'data':gv_contract[cont]['M'],'name':gv_contract[cont]['name']})
     else:
         return render_template('contract.html',c=cont)

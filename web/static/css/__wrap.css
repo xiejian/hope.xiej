@@ -7,7 +7,9 @@ h3 {    font-size: 21px;}
 h4 {    font-size: 19px;}
 h5 {    font-size: 16px;}
 a {text-decoration: none;}
-div#infobar {font-size:1.2em;background:#BBB; color:#000; text-align:center;}
+div#infobar {background:#CCC; color:#666; text-align:center;height: 25px;}
+div.scrollable[title=infobar]  {height: 25px;}
+
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px 5px 30px 5px; margin-top:20px;}
 div#titlebar  {background:#DDCCB1; border-bottom:4px solid  #88C;}
 div#body    {padding-bottom: 20px;}

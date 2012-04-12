@@ -65,7 +65,7 @@ function update_conttop(){
     var dgrid = new Slick.Grid("#top_d_grid", v_contd, tcolumns, toptions);
     v_contu = v_contlist['O'].sort(function(x,y){return y['ch']-x['ch'];});
     var ugrid = new Slick.Grid("#top_u_grid", v_contu, tcolumns, toptions);
-    $(".scrollable").scrollable({circular: true}).navigator({navi: '.scrollnavi', naviItem: 'a'}).autoscroll({ autoplay: true });
+    $(".scrollable[title=top]").scrollable({circular: true}).navigator({navi: '.scrollnavi', naviItem: 'a'}).autoscroll({ autoplay: true });
 }
 
 function update_contlist(){

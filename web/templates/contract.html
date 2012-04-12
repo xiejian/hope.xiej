@@ -1,8 +1,8 @@
-
-
-<h4>{{cont[c].name}}</h4>
-
-
+<div class="grid_9 alpha">
+    {% if cont[c].status =='O' and 'user_id'in session %}<a name='trade' href="{{ url_for('trade',c=c) }}">TRADE</a>{% endif %}
+    <h4>{{cont[c].name}}</h4>
+</div>
+<div class="scroll_wrap">
 <div class="grid_9 alpha">
     <table>
         <tr><td rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><br/> {%if 'D' in cont[c]%}
@@ -42,5 +42,6 @@
 </div>
 <div class="clear"></div>
 <div class="grid_15">
-
+<!--todo add more info eg. orderqueue-->
+</div>
 </div>

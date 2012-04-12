@@ -177,7 +177,7 @@ function init_modalInputF(obj) {
 }
 
 $(function () {
-
+    $(".scrollable[title=infobar]").scrollable({circular: true,vertical: true}).autoscroll({ autoplay: true, interval: 6000 });
     //$(".scrollable").scrollable({clickable: false}).circular().autoscroll({autoplay: true, steps: 1});
     $("form").validator({
         position: 'bottom left',

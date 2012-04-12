@@ -9,7 +9,6 @@ from _data import _update_contract
 NOT = {'B':'S','S':'B'}
 EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
-#todo add the number of users' invite based usr's activity,or balance movement. when invite num = 0, +1;  3 + .5 5 + .3 10. + .1
 
 
 #contract status: N:New, P:Open Approval, O:Open, C:Close, Q:Settle Approval, S:Settled, A:Achieved, R:rejected

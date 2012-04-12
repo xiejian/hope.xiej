@@ -3,3 +3,4 @@
     padding: 1px;
     border: none;
 }
+.scrollable[title=top]{height: 200px;}
