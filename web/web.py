@@ -49,6 +49,25 @@ def teardown_request(exception):
         g.db.close()
 
 #=================================================================
+@app.route('/data')
+def data():
+    t = request.args.get('t', 'cl')
+    n = request.args.get('n', 0,type=int)
+    if t == 'cl':
+        return jsonify(gv_contlist)
+    elif t=='c':
+        if n in gv_contract:
+            return jsonify({'data':gv_contract[n]['M'],'name':gv_contract[n]['name']})
+        else:
+            abort(404)
+    elif t=='u':
+        if 'user_id' in session:
+            return jsonify(_update_user(g.db,session,['orders','positions']))
+        else:
+            abort(404)
+
+
+
 @app.route('/_contdata')
 def contdata():
     cls = request.args.getlist('cl[]', type=int)
@@ -67,26 +86,6 @@ def contdata():
     session['latestcont'] = cont
     return jsonify(gv_contract[cont])
 
-@app.route('/_userdata')
-def userdata():
-    if 'user_id' not in session:
-        abort(401)
-    return jsonify(_update_user(session['user_id']))
-
-@app.route('/_marketdata')
-def marketdata():
-    oqu = request.args.get('c', 0, type=int)
-    cont = request.args.getlist('p', type=int)
-    if (oqu > 0 and oqu not in gv_oqueue.keys()) or not reduce(lambda x, y: x and y, [c in gv_contract.keys() for c in cont]):
-        abort(401)
-    latestp,oqt = {},{}
-    for c in cont:
-        latestp[c] =  gv_contract[c]['latestpoint']
-    if oqu > 0:
-        oqt[oqu] = gv_oqueue[oqu]
-        return jsonify(oq = oqt,lp = latestp)
-    else:
-        return jsonify(lp = latestp)
 #=================================================================
 @app.route('/', methods=['GET','POST'])
 def home():
@@ -112,13 +111,6 @@ def logout():
     session.pop('user_id', None)
     #flash('You were logged out','suc')
     return redirect(url_for('home'))
-
-@app.route('/twt')
-def twt_update():
-    global gv_twta,gv_twtt
-    [gv_twta,gv_twtt] = _update_twt()
-    return  jsonify(twt = [gv_twta,gv_twtt])
-
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -175,10 +167,14 @@ def trade():
         return redirect(url_for('trade'))
     else:
         g.u = _update_user(g.db,session,['orders','positions'])
-        contract_id = request.args.get('c', 0, type=int)
-        if contract_id == 0 and 'latestcont' in session:
-            contract_id = session['latestcont']
-        return render_template('trade.html',default_cid = contract_id )
+        data = request.args.get('d', 0,type=int)
+        if data == 1:
+            return jsonify(g.u)
+        else:
+            contract_id = request.args.get('c', 0, type=int)
+            if contract_id == 0 and 'latestcont' in session:
+                contract_id = session['latestcont']
+            return render_template('trade.html',default_cid = contract_id )
 
 @app.route('/account', methods=['GET','POST'])
 def account():
@@ -262,21 +258,14 @@ def bitcoin():
 
 @app.route('/market', methods=['GET','POST'])
 def market():
-    data = request.args.get('d', 0,type=int)
-    if data == 1:
-        return jsonify(gv_contlist)
-    else:
-        g.u=_update_user(g.db,session)
-        return render_template('market.html')
+    g.u=_update_user(g.db,session)
+    return render_template('market.html')
+
 
 @app.route('/contract', methods=['GET'])
 def contract():
     cont = request.args.get('c', 0,type=int)
-    data = request.args.get('d', 0,type=int)
-    if data == 1:
-        return jsonify({'data':gv_contract[cont]['M'],'name':gv_contract[cont]['name']})
-    else:
-        return render_template('contract.html',c=cont)
+    return render_template('contract.html',c=cont)
 
 @app.route('/index', methods=['GET','POST'])
 def index():

@@ -14,7 +14,7 @@ function n(b_s){
 var chart;
 
 function loadcontchart(cid) {
-    $.getJSON('http://127.0.0.1:5000/contract?c='+cid+'&d=1', function(odata) {
+    $.getJSON($SCRIPT_ROOT + '/data',{t:'c',n:cid }, function(odata) {
         data = odata['data'];
         // split the data set into ohlc and volume
 

@@ -52,6 +52,48 @@ function update_o_c(){
     }
 }
 
+var v_userd;
+function get_userd(){
+    $.getJSON($SCRIPT_ROOT + '/data', {t: 'u'}, function(data) {
+        v_userd = data;
+        update_userop();
+    });
+    return false;
+}
+
+function update_userop(){
+    var cl = {
+        cn:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
+        mg:{id: "margin", name: "Margin", field: "mg",width:90, sortable:true},
+        ot:{id: "orderdt", name: "Order Time", field: "ot", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
+        bs:{id: "bs", name: "B/S", field: "bs", width:50,sortable:true, formatter:function(row, cell, value){return _dec['t'][value];}},
+        ct:{id: "ct", name: "Cost", field: "ct", sortable:true},
+        pt:{id: "pt", name: "Point", field: "pt", sortable:true},
+        pl:{id: "pl", name: "P/L", field: "", width:50,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext ) {
+            var pl = dataContext['mv'] - dataContext['ct'];
+            if(pl > 0){return '<span class="up">+'+pl+'</span>'; }
+            if(pl < 0){return '<span class="dn">'+pl+'</span>'; }
+            else    {return pl;}}
+        },
+        mv:{id: "mv", name: "Market Value", field: "mv", sortable:true},
+        lt:{id: "lt", name: "Lots", field: "lt", width:50,sortable:true},
+        a:{id: "trade", name: "", field: "c",formatter: function ( row, cell, value, columnDef, dataContext ) {
+            return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
+        }
+    };
+    var pcolumns = [cl.cn,cl.bs,cl.pt,cl.lt,cl.ct,cl.mv,cl.mg,cl.pl];
+    var toptions = {
+        enableCellNavigation: true,
+        enableColumnReorder: false,
+        enableAsyncPostRender: true,
+        autoHeight:true
+    };
+
+    var pgrid = new Slick.Grid("#p_user_grid", v_userd['positions'], pcolumns, toptions);
+    pgrid.onSort.subscribe(multi_sort);
+
+}
+
 $(function () {
     activepage(1);
     get_contdata($("#contract").val());
@@ -65,4 +107,5 @@ $(function () {
         $("div.trade").addClass($(this).val());
         update_o_c();
     });
+    get_userd();
 });

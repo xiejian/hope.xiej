@@ -101,7 +101,7 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
         temp['orders'] = []
         for row in cur.fetchall():
-            tt=dict(order_id=row[0],contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],rm_lots=row[5],type=row[6],\
+            tt=dict(order_id=row[0],contract_id=row[1],cname=gv_contract[row[1]]['name'],buy_sell=row[2],point=row[3],lots=row[4],rm_lots=row[5],type=row[6],\
                 value=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],createtime=row[7])
             if row[6] == 'O':
                 tt.update(dict(margin = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
@@ -110,15 +110,15 @@ def _update_user(db,session,content = []):    #get user's info
             temp['orders'].append(tt)
     # get user's positions info
     if 'positions' in content:
-        cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,DATE_FORMAT(opentime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM positions WHERE user_id = %s",session['user_id'])
+        cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,opentime FROM positions WHERE user_id = %s",session['user_id'])
         temp['positions']=[]
         for row in cur.fetchall():
-            tt = dict(contract_id=row[1],buy_sell=row[2],point=row[3],lots=row[4],opentime=row[5],marketvalue=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
-                margin = gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
+            tt = dict(c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],ot=row[5],mv=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
+                ct = row[3]*row[4]*gv_contract[row[1]]['btc_multi'],mg = gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
             if row[2] == 'B':
-                tt.update(dict(p_l = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
+                tt.update(dict(pl = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
             else:
-                tt.update(dict(p_l = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
+                tt.update(dict(pl = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
             temp['positions'].append(tt)
     if 'trans' in content:
         temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
