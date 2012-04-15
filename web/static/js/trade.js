@@ -86,6 +86,7 @@ function update_userop(){
         enableCellNavigation: true,
         enableColumnReorder: false,
         enableAsyncPostRender: true,
+        multiColumnSort: true,
         autoHeight:true
     };
 

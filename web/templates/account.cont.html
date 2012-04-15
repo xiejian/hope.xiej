@@ -68,6 +68,7 @@
                                     <option value="S" {% if cont[c].sector == "S" %} selected="selected" {% endif %}>Sports</option>
                                     <option value="P" {% if cont[c].sector == "P" %} selected="selected" {% endif %}>Politic</option>
                                     <option value="E" {% if cont[c].sector == "E" %} selected="selected" {% endif %}>Entertainment</option>
+                                    <option value="N" {% if cont[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
                                     <option value="O" {% if cont[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                                 </select></td></tr>
                             <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{cont[c].write_fee * 2000}}"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
@@ -116,6 +117,7 @@
                             <option value="S" >Sports</option>
                             <option value="P" >Politic</option>
                             <option value="E" >Entertainment</option>
+                            <option value="N" >Natural</option>
                             <option value="O" >Others</option>
                         </select></td></tr>
                     <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="0"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>

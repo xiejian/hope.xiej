@@ -93,7 +93,7 @@ function multi_sort(e, args) {
 var _dec = {'t':{'O':'Open','C':'Close','B':'Buy','S':'Sell'},
     'st':{'N':'New', 'P':'Open Approved', 'O':'Trading', 'C':'Closed', 'Q':'Settle Approved', 'S':'Settled', 'A':'Achieved', 'R':'Rejected','D':'Deleted'},
     'r':{"W":"World Wide","N":"North America","L":"Latin America / Carib.","O":"Oceania / Australia","M":"Middle East","E":"Europe","A":"Asia","F":"Africa"},
-    's': {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","O":"Others"}};
+    's': {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","N":"Natural","O":"Others"}};
 
 /*basefuncion*/
 function parseDate(tdate) {

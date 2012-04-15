@@ -47,7 +47,7 @@ def myformat(value, type='N',format=''):
         else:
             return value
     elif type=='S': #for Sector
-        dt = {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","O":"Others"}
+        dt = {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","N":"Natural","O":"Others"}
         if value in dt.keys():
             return dt[value]
         else:
