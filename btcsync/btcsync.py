@@ -93,6 +93,7 @@ if __name__ == "__main__":
     print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Started.'
     updateuser('FEE')
     updateuser('P_L')
+    ag.settxfee(0)
     while True:        
         actionsproc()
         transsync()

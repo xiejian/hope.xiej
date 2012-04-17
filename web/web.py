@@ -60,6 +60,11 @@ def data():
             return jsonify({'data':gv_contract[n]['M'],'name':gv_contract[n]['name']})
         else:
             abort(404)
+    elif t=='tc':
+        if n in gv_contract:
+            return jsonify(gv_contract[n])
+        else:
+            abort(404)
     elif t=='u':
         if 'user_id' in session:
             return jsonify(_update_user(g.db,session,['orders','positions']))
@@ -154,10 +159,8 @@ def trade():
     if 'user_id' not in session:
         return redirect(url_for('home'))
     if request.method == 'POST':
-        if 'b_s' in request.form:   #---Add order---
-            res = _add_order(g.db,session,request.form['contract_id'],request.form['b_s'], request.form['point'], request.form['lots'])
-        else:   #---Cancel order---
-            res = _cancel_order(g.db,session,request.form['orderid'])
+        #---Add order---
+        res = _add_order(g.db,session,request.form['contract_id'],request.form['b_s'], request.form['point'], request.form['lots'])
         flash(res['msg'],res['category'])
         if res['category'] == 'suc':
             if 'Deal' in res['msg']:
@@ -166,12 +169,16 @@ def trade():
                 _update_contract(g.db,request.form['contract_id'],'C')
         return redirect(url_for('trade'))
     else:
-        g.u = _update_user(g.db,session,['orders','positions'])
-        data = request.args.get('d', 0,type=int)
-        if data == 1:
-            return jsonify(g.u)
+        co = request.args.get('co', 0,type=int)
+        contract_id = request.args.get('c', 0, type=int)
+        if co >= 1:   #Cancel order
+            res = _cancel_order(g.db,session,co)
+            flash(res['msg'],res['category'])
+            print res
+            _update_contract(g.db,contract_id,'C')
+            return redirect(url_for('trade',c=contract_id))
         else:
-            contract_id = request.args.get('c', 0, type=int)
+            g.u = _update_user(g.db,session,['orders','positions'])
             if contract_id == 0 and 'latestcont' in session:
                 contract_id = session['latestcont']
             return render_template('trade.html',default_cid = contract_id )
@@ -308,3 +315,4 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0')
 
 
+#todo minimus margin limit

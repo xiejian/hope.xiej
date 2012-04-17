@@ -20,7 +20,7 @@ div.modal .form_result  {display: none;}
 
 .form_result.err    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #CD0A0A;background: #FEF1EC url(../img/_icon_error.png) 3% 50%  no-repeat; color: #CD0A0A;}
 .form_result.suc    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #FCEFA1;background: #FBF9EE url(../img/_icon_error.png) 3% 50%  no-repeat; color: #363636;}
-span.comment   {color: #666;}
+
 a:hover   {color: #F22; }
 .error {
     /* supply height to ensure consistent positioning for every browser */
@@ -64,8 +64,9 @@ a.twt_reply:hover,a.twt_retweet:hover,a.twt_favor:hover {background-position: ri
 a.twt_reply     {background-image:url(../img/reply-sprite.png);}
 a.twt_retweet   {background-image:url(../img/retweet-sprite.png);}
 a.twt_favor     {background-image:url(../img/favorite-sprite.png);}
-div#cont_overlay table th {border:0px;text-align: right;color: gray;background-color: transparent;}
-div#cont_overlay table td {border:0px;text-align: left;}
+div.body table th {border:0px;text-align: right;color: gray;background-color: transparent;vertical-align: middle;padding: 4px;}
+div.body table td {border:0px;text-align: left;vertical-align: middle;padding: 4px;}
 
 span.up {color: #093; }
 span.dn {color: #D14836; }
+span.gr   {color: #666;}

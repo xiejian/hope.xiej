@@ -103,17 +103,17 @@ function parseDate(tdate) {
         system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))
     }
     var diff = Math.floor((user_date - system_date) / 1000);
-    if (diff <= -2592000) {return "in "+Math.round(-diff / 2592000) + " months";}
+    if (diff <= -2592000) {return "in "+Math.round(-diff / 2592000) + " mons";}
     if (diff <= -86400) {return "in "+Math.round(-diff / 86400) + " days";}
-    if (diff <= -3600) {return "in "+Math.round(-diff / 3600) + " hours";}
-    if (diff <= -60) {return "in "+Math.round(-diff / 60) + " minutes";}
-    if (diff < -15) {return "in "- diff + " seconds ago";}
+    if (diff <= -3600) {return "in "+Math.round(-diff / 3600) + " hrs";}
+    if (diff <= -60) {return "in "+Math.round(-diff / 60) + " mins";}
+    if (diff < -15) {return "in "+ (- diff) + " secs ago";}
     if (diff < 15) {return "just now";}
-    if (diff < 60) {return diff + " seconds ago";}
-    if (diff <= 3600) {return Math.round(diff / 60) + " minutes ago";}
-    if (diff <= 86400) {return Math.round(diff / 3600) + " hours ago";}
+    if (diff < 60) {return diff + " secs ago";}
+    if (diff <= 3600) {return Math.round(diff / 60) + " mins ago";}
+    if (diff <= 86400) {return Math.round(diff / 3600) + " hrs ago";}
     if (diff < 2592000) {return Math.round(diff / 86400) + " days ago";}
-    else {return Math.round(diff / 2592000) + " months ago";}
+    else {return Math.round(diff / 2592000) + " mons ago";}
 
 }
 

@@ -27,7 +27,7 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY point ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
             #update transactions history
-            ocur.execute("SELECT t.point,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
+            ocur.execute("SELECT t.point,t.lots,TIMESTAMP,direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
             #update contract trade vol
             ocur.execute("SELECT ifnull(sum(value),0)/2 FROM v_trans WHERE contract_id = %s",row[0])
@@ -41,28 +41,29 @@ def _update_contract(db,cid = 'contract_id',type='D'):
 def _update_marketinfo(db):
     cur = db.cursor()
     for c in gv_contract:
+        gv_contract[c]['ch'] = ''
         if gv_contract[c]['status'] in ['O','C','Q','S']:
             cur.execute("select ceil(unix_timestamp(t.timestamp)/3600)*3600000, round(SUBSTRING_INDEX(GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp), ',', 1 ),8) as open, \
                         max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, round(sum(t.point * t.lots * c.btc_multi),8) as vol \
                         from trans t join orders o on t.buy_oid=o.order_id join contract c on o.contract_id = c.contract_id where t.timestamp > (NOW() + interval - 1 year) and o.contract_id = %s group by ceil(unix_timestamp(t.timestamp)/3600)",c)
             gv_contract[c]['M'] =[(orow[0],orow[1],orow[2],orow[3],orow[4],orow[5]) for orow in cur.fetchall()]
             cur.execute("select max(t.timestamp),round(SUBSTRING_INDEX(GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp), ',', 1 ),8) as open, \
-                        max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, round(sum(t.point * t.lots * c.btc_multi),8) as vol \
+                        max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, ifnull(round(sum(t.point * t.lots * c.btc_multi),8),0) as vol \
                         from trans t join orders o on t.buy_oid=o.order_id join contract c on o.contract_id = c.contract_id where t.timestamp > (NOW() + interval - 1 day) and o.contract_id = %s",c)
             gv_contract[c]['D'] =cur.fetchone()
+            if gv_contract[c]['D'][1] is not None:
+                gv_contract[c]['ch'] = round((gv_contract[c]['D'][4] - gv_contract[c]['D'][1])*100 / gv_contract[c]['D'][1],2)
 
     cur.close()
 
 def _update_contlist():
     tt = {'O':[],'N':[],'C':[]}
     for c in gv_contract:
-        vchange = ''
-        vvol = ''
-        if 'D' in gv_contract[c] and len(gv_contract[c]['D'])>=1:
-            vchange = round((gv_contract[c]['D'][4] - gv_contract[c]['D'][1])*100 / gv_contract[c]['D'][1],2)
+        vvol = 0
+        if 'D' in gv_contract[c] and gv_contract[c]['D'][1] is not None:
             vvol = gv_contract[c]['D'][5]
         temp = dict(c=c, st=gv_contract[c]['status'],n=gv_contract[c]['name'],fn=gv_contract[c]['fullname'],od=gv_contract[c]['opendate'],sd=gv_contract[c]['settledate'],
-            o=gv_contract[c]['owner'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=vchange,vl=vvol)
+            o=gv_contract[c]['owner'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=gv_contract[c]['ch'],vl=vvol)
         if temp['st'] == 'O':
             tt['O'].append(temp)
         elif temp['st'] in ['N','P']:
@@ -101,12 +102,12 @@ def _update_user(db,session,content = []):    #get user's info
         cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
         temp['orders'] = []
         for row in cur.fetchall():
-            tt=dict(order_id=row[0],contract_id=row[1],cname=gv_contract[row[1]]['name'],buy_sell=row[2],point=row[3],lots=row[4],rm_lots=row[5],type=row[6],\
-                value=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],createtime=row[7])
+            tt=dict(o=row[0],c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],rlt=row[5],ty=row[6],\
+                v=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],at=row[7])
             if row[6] == 'O':
-                tt.update(dict(margin = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
+                tt.update(dict(mg = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
             else:
-                tt.update(dict(margin = 0))
+                tt.update(dict(mg = 0))
             temp['orders'].append(tt)
     # get user's positions info
     if 'positions' in content:

@@ -8,8 +8,8 @@
 var gv_cont={};
 
 function get_contdata(cid){
-    $.getJSON($SCRIPT_ROOT + '/_contdata', {
-        c: cid
+    $.getJSON($SCRIPT_ROOT + '/data', {
+        t:'tc',n: cid
     }, function(data) {
         gv_cont[cid] = data;
         updatepage_contdata(cid);
@@ -18,8 +18,8 @@ function get_contdata(cid){
 }
 function updatepage_contdata(cid){
     var settledt = new Date(gv_cont[cid]['settledate']);
-    var htm = "<tr><td>Settle Date: "+settledt.getFullYear()+"-"+(settledt.getMonth()+1)+"-"+settledt.getDate() + "</td><td>BTC Multi:" + gv_cont[cid]["btc_multi"]+"</tr>";
-    htm += "<tr><td>Leverage: "+gv_cont[cid]['leverage'] + "</td><td>Description:" + gv_cont[cid]["name"]+"</tr>";
+    var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>BTC multi:</th><td>" + gv_cont[cid]["btc_multi"]+"</td></tr>";
+    htm += "<tr><th>leverage:</th><td>"+gv_cont[cid]['leverage']*100 + "%</td><th>write fee:</th><td>" + gv_cont[cid]["write_fee"]*1000+"‰</td></tr>";
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["S"], function(index,val) {
@@ -29,7 +29,14 @@ function updatepage_contdata(cid){
     $.each(gv_cont[cid]["B"], function(index,val) {
         htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
     });
-    $("h3.contheader").html("<h3>"+gv_cont[cid]['name'] + " : " + gv_cont[cid]["latestpoint"]+"</h3>");
+    var cname = '<a name="'+cid+'" href="/contract?c='+cid+'" class="modalInputF" rel="#cont_overlay">'+gv_cont[cid]['name']+'</a> 　';
+    var cprice;
+    if(gv_cont[cid]["ch"] > 0){ cprice = gv_cont[cid]["latestpoint"]+' <span class="up">(+'+gv_cont[cid]["ch"]+' %)</span>'; }
+    else if(gv_cont[cid]["ch"] < 0){ cprice = gv_cont[cid]["latestpoint"]+' <span class="dn">('+gv_cont[cid]["ch"]+' %)</span>'; }
+    else    { cprice = gv_cont[cid]["latestpoint"]+' <span class="gr">('+gv_cont[cid]["ch"]+' %)</span>';}
+    $("h3.contheader").html(cname+cprice);
+    init_modalInputF($("h3.contheader a"));
+
     $("#oqueue").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["T"], function(index,val) {
@@ -63,25 +70,41 @@ function get_userd(){
 
 function update_userop(){
     var cl = {
+        at:{id: "addtime", name: "Add @", field: "at",sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         cn:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
-        mg:{id: "margin", name: "Margin", field: "mg",width:90, sortable:true},
-        ot:{id: "orderdt", name: "Order Time", field: "ot", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
-        bs:{id: "bs", name: "B/S", field: "bs", width:50,sortable:true, formatter:function(row, cell, value){return _dec['t'][value];}},
-        ct:{id: "ct", name: "Cost", field: "ct", sortable:true},
-        pt:{id: "pt", name: "Point", field: "pt", sortable:true},
-        pl:{id: "pl", name: "P/L", field: "", width:50,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext ) {
-            var pl = dataContext['mv'] - dataContext['ct'];
-            if(pl > 0){return '<span class="up">+'+pl+'</span>'; }
-            if(pl < 0){return '<span class="dn">'+pl+'</span>'; }
-            else    {return pl;}}
+        mg:{id: "margin", name: "Margin", field: "mg",width:80, sortable:true},
+        ot:{id: "opentime", name: "Open @", field: "ot", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
+        ty:{id: "ty", name: "O/C", field: "ty", width:40,sortable:true, formatter:function(row, cell, value){
+            return '<img src="/static/img/_i_'+value+'.png" title="'+_dec['t'][value]+'"/>';}},
+        bs:{id: "bs", name: "B/S", field: "bs", width:40,sortable:true, formatter:function(row, cell, value){
+            return '<img src="/static/img/_i_'+value+'.png" title="'+_dec['t'][value]+'"/>';}},
+        ct:{id: "ct", name: "Cost", field: "ct",width:70, sortable:true},
+        pt:{id: "pt", name: "Point", field: "pt",width:70, sortable:true},
+        pl:{id: "pl", name: "P/L", field: "pl", width:100,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
+            if(value > 0){return '<span class="up">+'+value+' ('+value*100/dataContext['ct']+' %)</span>'; }
+            else if(value < 0){return '<span class="dn">'+value+' ('+value*100/dataContext['ct']+' %)</span>'; }
+            else    {return '<span class="gr">'+value+'</span>';}}
         },
-        mv:{id: "mv", name: "Market Value", field: "mv", sortable:true},
+        mv:{id: "mv", name: "Market Value", field: "mv",width:70, sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
+            if(value > dataContext['ct']){return '<span class="up">'+value+'</span>'; }
+            else if(value < dataContext['ct']){return '<span class="dn">'+value+'</span>'; }
+            else{return '<span class="gr">'+value+'</span>'; }}
+        },
+        v:{id: "v", name: "Value", field: "v", sortable:true},
         lt:{id: "lt", name: "Lots", field: "lt", width:50,sortable:true},
+        rlt:{id: "rlt", name: "Remain Lots", field: "rlt", width:50,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
+            if(value == dataContext['lt']){return '<span class="gr">'+value+'</span>'; }
+            else {return value;}}
+        },
         a:{id: "trade", name: "", field: "c",formatter: function ( row, cell, value, columnDef, dataContext ) {
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
+        },
+        co:{id: "co", name: "Cancel", field: "o",width:45,formatter: function ( row, cell, value, columnDef, dataContext ) {
+            return '<a href="'+$SCRIPT_ROOT + '/trade?co=' + value + '&c='+dataContext['c']+'"><img src="/static/img/_i_eject.png" title="Cancel"/></a>';}
         }
     };
-    var pcolumns = [cl.cn,cl.bs,cl.pt,cl.lt,cl.ct,cl.mv,cl.mg,cl.pl];
+    var pcolumns = [cl.ot,cl.cn,cl.bs,cl.pt,cl.lt,cl.ct,cl.mv,cl.mg,cl.pl];
+    var ocolumns = [cl.at,cl.ty,cl.cn,cl.bs,cl.pt,cl.lt,cl.rlt,cl.v,cl.mg,cl.co];
     var toptions = {
         enableCellNavigation: true,
         enableColumnReorder: false,
@@ -90,6 +113,8 @@ function update_userop(){
         autoHeight:true
     };
 
+    var ogrid = new Slick.Grid("#o_user_grid", v_userd['orders'], ocolumns, toptions);
+    ogrid.onSort.subscribe(multi_sort);
     var pgrid = new Slick.Grid("#p_user_grid", v_userd['positions'], pcolumns, toptions);
     pgrid.onSort.subscribe(multi_sort);
 

@@ -27,3 +27,8 @@ span.s_toc.C:before {
 
 div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px;}
 div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px;}
+.slick-cell {
+    padding: 1px;
+    border: none;
+}
+.slick-cell img {width: 24px;height: 24px;}
