@@ -71,26 +71,6 @@ def data():
         else:
             abort(404)
 
-
-
-@app.route('/_contdata')
-def contdata():
-    cls = request.args.getlist('cl[]', type=int)
-    if cls:
-        temp = {}
-        for cl in cls:
-            if cl in gv_contract.keys():
-                temp[cl] = gv_contract[cl]
-                del temp[cl]['B']
-                del temp[cl]['S']
-                del temp[cl]['T']
-        return jsonify(temp)
-    cont = request.args.get('c', 0, type=int)
-    if cont not in gv_contract.keys():
-        abort(401)
-    session['latestcont'] = cont
-    return jsonify(gv_contract[cont])
-
 #=================================================================
 @app.route('/', methods=['GET','POST'])
 def home():

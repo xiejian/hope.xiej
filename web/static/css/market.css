@@ -1,4 +1,5 @@
 .scrollable .slick-header-columns { display: none; }
+div.body .slick-header-column {margin-left: 1px;}
 .slick-cell {
     padding: 1px;
     border: none;

@@ -25,7 +25,7 @@ function updatepage_contdata(cid){
     $.each(gv_cont[cid]["S"], function(index,val) {
         htm = "<tr><td>S"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
     });
-    htm = htm + '<tr><td colspan="3" ><hr/></td></tr>';
+    htm = htm + '<tr><td colspan="3" ><div></div></td></tr>';
     $.each(gv_cont[cid]["B"], function(index,val) {
         htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
     });
@@ -40,9 +40,24 @@ function updatepage_contdata(cid){
     $("#oqueue").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["T"], function(index,val) {
-        htm += "<tr><td>"+val["time"]+"</td><td>"+val["point"]+"</td><td>"+val["lots"]+"</td><td>"+val["dir"]+"</td></tr>";
+        htm += "<tr><td>"+parseDate(val["time"])+"</td><td>"+val["point"]+"</td><td>"+val["lots"]+'</td><td><img src="/static/img/_i_' +val["dir"]+'.png"></td></tr>';
     });
     $("#transhis").html(htm);
+    hoverpoint();
+}
+
+function hoverpoint(){
+    $("table#oqueue tr,table#transhis tr").hover(function(){
+        $(this).css("background-color","#F8F3D7");
+    },function(){
+        $(this).css("background-color","");
+    });
+    $("table#oqueue tr,table#transhis tr").click(function(){
+        var vpoint = $(this).find("td:eq(1)").html();
+        var vlots = $(this).find("td:eq(2)").html();
+        $("input#t_point").val(vpoint);
+        $("input#t_lots").val(vlots);
+    });
 }
 
 function update_o_c(){
@@ -67,7 +82,6 @@ function get_userd(){
     });
     return false;
 }
-
 function update_userop(){
     var cl = {
         at:{id: "addtime", name: "Add @", field: "at",sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
@@ -81,8 +95,8 @@ function update_userop(){
         ct:{id: "ct", name: "Cost", field: "ct",width:70, sortable:true},
         pt:{id: "pt", name: "Point", field: "pt",width:70, sortable:true},
         pl:{id: "pl", name: "P/L", field: "pl", width:100,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
-            if(value > 0){return '<span class="up">+'+value+' ('+value*100/dataContext['ct']+' %)</span>'; }
-            else if(value < 0){return '<span class="dn">'+value+' ('+value*100/dataContext['ct']+' %)</span>'; }
+            if(value > 0){return '<span class="up">+'+value+' (+'+(value*100/dataContext['ct']).toFixed(1)+'%)</span>'; }
+            else if(value < 0){return '<span class="dn">'+value+' ('+(value*100/dataContext['ct']).toFixed(1)+'%)</span>'; }
             else    {return '<span class="gr">'+value+'</span>';}}
         },
         mv:{id: "mv", name: "Market Value", field: "mv",width:70, sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
@@ -91,8 +105,8 @@ function update_userop(){
             else{return '<span class="gr">'+value+'</span>'; }}
         },
         v:{id: "v", name: "Value", field: "v", sortable:true},
-        lt:{id: "lt", name: "Lots", field: "lt", width:50,sortable:true},
-        rlt:{id: "rlt", name: "Remain Lots", field: "rlt", width:50,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
+        lt:{id: "lt", name: "Lots", field: "lt", width:40,sortable:true},
+        rlt:{id: "rlt", name: "Remain Lots", field: "rlt", width:40,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
             if(value == dataContext['lt']){return '<span class="gr">'+value+'</span>'; }
             else {return value;}}
         },
@@ -100,7 +114,7 @@ function update_userop(){
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
         },
         co:{id: "co", name: "Cancel", field: "o",width:45,formatter: function ( row, cell, value, columnDef, dataContext ) {
-            return '<a href="'+$SCRIPT_ROOT + '/trade?co=' + value + '&c='+dataContext['c']+'"><img src="/static/img/_i_eject.png" title="Cancel"/></a>';}
+            return '<a title="Cancel" href="'+$SCRIPT_ROOT + '/trade?co=' + value + '&c='+dataContext['c']+'"></a>';}
         }
     };
     var pcolumns = [cl.ot,cl.cn,cl.bs,cl.pt,cl.lt,cl.ct,cl.mv,cl.mg,cl.pl];
@@ -119,6 +133,7 @@ function update_userop(){
     pgrid.onSort.subscribe(multi_sort);
 
 }
+
 
 $(function () {
     activepage(1);

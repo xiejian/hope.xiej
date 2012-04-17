@@ -64,8 +64,8 @@ a.twt_reply:hover,a.twt_retweet:hover,a.twt_favor:hover {background-position: ri
 a.twt_reply     {background-image:url(../img/reply-sprite.png);}
 a.twt_retweet   {background-image:url(../img/retweet-sprite.png);}
 a.twt_favor     {background-image:url(../img/favorite-sprite.png);}
-div.body table th {border:0px;text-align: right;color: gray;background-color: transparent;vertical-align: middle;padding: 4px;}
-div.body table td {border:0px;text-align: left;vertical-align: middle;padding: 4px;}
+div.body table th {border:0px;text-align: right;color: gray;background-color: transparent;vertical-align: middle;padding: 2px;}
+div.body table td {border:0px;text-align: left;vertical-align: middle;padding: 2px;}
 
 span.up {color: #093; }
 span.dn {color: #D14836; }

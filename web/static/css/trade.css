@@ -27,8 +27,13 @@ span.s_toc.C:before {
 
 div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px;}
 div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px;}
-.slick-cell {
-    padding: 1px;
-    border: none;
-}
-.slick-cell img {width: 24px;height: 24px;}
+
+div.body .slick-header-column {margin-left: 1px;}
+.slick-cell {   border: none;}
+.slick-cell img,table#transhis img {width: 24px;height: 24px;}
+
+.slick-cell a[title=Cancel]     { padding:7px 12px;background-image:url(../img/_i_E.png);background-position: right bottom;}
+.slick-cell a[title=Cancel]:hover{background-position: left bottom;}
+
+table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
+table#oqueue div    {border: 1px solid #ddc781; }

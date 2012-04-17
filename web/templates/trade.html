@@ -21,14 +21,14 @@
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <table><tr><td><span class="s_tbs">　</span>　<label id="l_tb" for="t_b">BUY</label><input tabindex="1" type="radio" name="b_s" value="B" id="t_b" checked="checked"/>　
         <label id="l_ts" for="t_s">SELL</label><input tabindex="2" type="radio" name="b_s" id="t_s" value="S" />　</td>
-            <td>Point:<input tabindex="4" type=number name="point" value="" size="15" min="0.01" required="required"/><br/></td></tr>
+            <td>Point:<input id="t_point" tabindex="4" type=number name="point" value="" size="15" min="0.01" required="required"/><br/></td></tr>
         <tr><td>        <label for="contract">Cont:</label>
             <select tabindex="3" id="contract" name="contract_id">
                 {% for ck in cont.keys() if cont[ck]['status']=='O' %}
                     <option value={{ck}} {% if ck == default_cid %} selected="selected" {% endif %} >{{cont[ck]['name']}}</option>
                 {% endfor %}
             </select></td>
-            <td>Lots:<input tabindex="5" type=number name="lots" value="" size="15" min="1" required="required"/><br/></td>
+            <td>Lots:<input id="t_lots" tabindex="5" type=number name="lots" value="" size="15" min="1" required="required"/><br/></td>
         </tr>
 
     </table>
