@@ -147,7 +147,7 @@ def trade():
                 _update_contract(g.db,request.form['contract_id'],'D')
             else:
                 _update_contract(g.db,request.form['contract_id'],'C')
-        return redirect(url_for('trade'))
+        return redirect(url_for('trade',c=request.form['contract_id']))
     else:
         co = request.args.get('co', 0,type=int)
         contract_id = request.args.get('c', 0, type=int)
