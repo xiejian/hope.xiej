@@ -23,11 +23,11 @@ function updatepage_contdata(cid){
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont[cid]["S"], function(index,val) {
-        htm = "<tr><td>S"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
+        htm = "<tr><td><span class='gr'>　S"+(index+1)+"</span></td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
     });
     htm = htm + '<tr><td colspan="3" ><div></div></td></tr>';
     $.each(gv_cont[cid]["B"], function(index,val) {
-        htm = htm + "<tr><td>B"+(index+1)+"</td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
+        htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
     });
     var cname = '<a name="'+cid+'" href="/contract?c='+cid+'" class="modalInputF" rel="#cont_overlay">'+gv_cont[cid]['name']+'</a> 　';
     var cprice;

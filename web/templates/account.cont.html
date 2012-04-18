@@ -39,7 +39,7 @@
             {% elif cont[c].status == 'N' %}<a class="modalInputF" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
             <div class="modal F" id="edit_cont{{c}}">
                 <h3>Edit Contract</h3>
-                <div class="modal_wrap">        <br/>
+                <div class="modal_wrap">
                     <form class="edit_cont_form" method=post>
                         <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
                         <table>
@@ -73,7 +73,7 @@
                                 </select></td></tr>
                             <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{cont[c].write_fee * 2000}}"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
                             <tr><th>Description</th><td colspan="3">
-                                <textarea name="description" rows="10" cols="60">{{cont[c].description}}</textarea></td></tr>
+                                <textarea name="description" rows="10" cols="80">{{cont[c].description}}</textarea></td></tr>
                             <tr><th>Approval Msg</th><td colspan="3">
                                 {{cont[c].apinstruction}}</td></tr>
                         </table>
@@ -90,15 +90,16 @@
     </table>
     <div class="modal F" id="edit_cont">
         <h3>Create a New Contract</h3>
-        <div class="modal_wrap">        <br/>
+        <div class="modal_wrap">
+            <div class="grid_10">
             <form action="{{ url_for('account',t='C') }}" method=post>
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="0">
                 <table>
-                    <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td>
-                        <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ><input style="width: 35px;" type=number value=0 name=opentime min=0 max=23 required="required">h</td>
-                    <tr><th>Full Name</th><td><input type=text name=fullname></td>
-                        <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ><input style="width: 35px;" type=number value=0 name=settletime min=0 max=23 required="required">h</td></tr>
-                    <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>
+                    <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td><th>Full Name</th><td><input type=text name=fullname></td>
+                    <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>    <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ><input style="width: 35px;" type=number value=0 name=opentime min=0 max=23 required="required">h</td>
+                    <tr>
+                    <th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required"> % </td><th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ><input style="width: 35px;" type=number value=0 name=settletime min=0 max=23 required="required">h</td></tr>
+                    <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="0"> ‰ </td>
                         <th>Region</th><td><select name="region">
                             <option value="W" >World Wide</option>
                             <option value="N" >North America</option>
@@ -108,8 +109,8 @@
                             <option value="E" >Europe</option>
                             <option value="A" >Asia</option>
                             <option value="F" >Africa</option>
-                        </select></td>
-                    <tr><th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required"> % </td>
+                        </select></td></tr>
+                    <tr><th>Twitter ID</th><td><input type=text name=twitter_id></td>
                         <th>Sector</th><td><select name="sector">
                             <option value="C" >Currency</option>
                             <option value="I" >Stock Index</option>
@@ -120,11 +121,12 @@
                             <option value="N" >Natural</option>
                             <option value="O" >Others</option>
                         </select></td></tr>
-                    <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="0"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
                     <tr><th>Description</th><td colspan="3">
-                        <textarea name="description" rows="10" cols="60"></textarea></td></tr>
+                        <textarea name="description" rows="10" cols="80"></textarea></td></tr>
                 </table>
                 <input type=submit value=SAVE>
             </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
+            </div>
+            <div class="grid_5">hihi</div>
         </div>
     </div>

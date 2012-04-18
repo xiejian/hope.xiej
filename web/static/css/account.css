@@ -18,7 +18,9 @@ div.account_tab div.modal td {font-size: 1.2em;}
 div.account_tab div.modal select {font-size: 1.1em; padding: 5px;margin: 5px;}
 
 
-input {font-size:1.1em;padding: 5px; margin: 10px; }
+input,select {font-size:1.1em;padding: 5px; margin: 8px 5px; }
+textarea    {padding: 5px; margin: 5px;}
+
 table.ginfo {font-size: 1.2em;}
 
 form.btc_out    {font-size: 1.2em;margin: 20px 30px;}
