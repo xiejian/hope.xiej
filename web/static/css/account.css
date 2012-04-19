@@ -5,23 +5,16 @@ h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}
 
-div.account_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em; }
-div.account_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
+div.subm_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em;color: #444; }
+div.subm_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
 tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
-div.account_tab a.modalInput     {font-family:"Trebuchet MS",sans-serif;padding:5px;font-size: 1.3em; border:1px solid #88C;border-radius: 5px;
-                                float:right;margin: 5px;  }
-div.account_tab a.modalInput:hover  {background: #88C;color: #FF8;}
-div.account_tab div.modal td {font-size: 1.2em;}
-/**/div.account_tab div.modal input {margin: 2px;}
-div.account_tab div.modal select {font-size: 1.1em; padding: 5px;margin: 5px;}
-
 
 input,select {font-size:1.1em;padding: 5px; margin: 8px 5px; }
 textarea    {padding: 5px; margin: 5px;}
 
-table.ginfo {font-size: 1.2em;}
+table.ginfo {font-size: 1.2em;margin: 5px;}
 
 form.btc_out    {font-size: 1.2em;margin: 20px 30px;}
 form.btc_out tr td  {text-align: left;vertical-align:middle;}

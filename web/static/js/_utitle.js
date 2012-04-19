@@ -100,7 +100,7 @@ function parseDate(tdate) {
     var system_date = new Date(Date.parse(tdate));
     var user_date = new Date();
     if (K.ie) {
-        system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))
+        /*system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))todo:fix IE date parse bug*/
     }
     var diff = Math.floor((user_date - system_date) / 1000);
     if (diff <= -2592000) {return "in "+Math.round(-diff / 2592000) + " mons";}

@@ -1,9 +1,12 @@
 
 
-div.trade   {border:1px solid #ccc; border-radius: 10px; padding: 10px;color:#FCC;}
+div.trade   {border:1px solid #ccc; border-radius: 10px; padding: 10px;color:#FCC;text-align: center}
+div.trade table td {text-align: right;}
 div.trade.S {background:#A44;}
 div.trade.B {background:#08A;}
 div.trade span {color: #010;}
+/*div.trade div#td_nec    {float: left;color:#ddc781;  }*/
+div.trade form div.hr {border-bottom: 1px solid #ddc781;margin: -15px 5px 5px;text-align: right;}
 div.trade input[type=number],div.trade input[type=submit],#contract {font-size: 1.3em;margin: 15px 15px 5px 5px;padding: 5px;width: 130px;}
 label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -2px 25px 0px;color:#Fcc;}
 
@@ -16,24 +19,18 @@ span.s_toc.O  { background: url("../img/_i_O.png") no-repeat right ;padding: 6px
 
 span.s_toc.C  {background: url("../img/_i_C.png") no-repeat right;padding: 6px;}
 
-span.s_toc.O:before {
-    content:"OPEN";
-    padding-left: 4px;
-}
-span.s_toc.C:before {
-    content:"CLOSE";
-    padding-left: 4px;
-}
 
 div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px;}
 div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px;}
 
-div.body .slick-header-column {margin-left: 1px;}
+/*div.body .slick-header-column {margin-left: 1px;}*/
 .slick-cell {   border: none;}
 .slick-cell img,table#transhis img {width: 24px;height: 24px;}
 
-.slick-cell a[title=Cancel]     { padding:7px 12px;background-image:url(../img/_i_E.png);background-position: right bottom;}
+.slick-cell a[title=Cancel]     { padding:7px 12px;background:url(../img/_i_E.png) no-repeat right bottom;}
 .slick-cell a[title=Cancel]:hover{background-position: left bottom;}
 
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
 table#oqueue div    {border: 1px solid #ddc781; }
+
+table#oqueue tr:hover,table#transhis tr:hover{background-color:#F8F3D7;}

@@ -1,5 +1,5 @@
 <div class="grid_9 alpha">
-    {% if cont[c].status =='O' and 'user_id'in session %}<a name='trade' href="{{ url_for('trade',c=c) }}">TRADE</a>{% endif %}
+    {% if cont[c].status =='O' and 'user_id'in session %}<a class='button' href="{{ url_for('trade',c=c) }}">TRADE</a>{% endif %}
     <h4>{{cont[c].name}}</h4>
 </div>
 <div class="clear"></div>
@@ -20,11 +20,11 @@
     <script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
 
     <table><tr><th>Description</th><td>
-        <textarea rows="5" cols="60" readonly="readonly">{{cont[c].description}}</textarea>
+        <textarea rows="5" cols="70" readonly="readonly">{{cont[c].description}}</textarea>
     </td><tr><th>SettlePoint</th><td>{{ cont[c].settlepoint }}</td></tr>
         <tr><th>SettleProof</th>
             <td colspan="2">
-                <textarea rows="5" cols="60" readonly="readonly">{{cont[c].settleproof}}</textarea></td>
+                <textarea rows="5" cols="70" readonly="readonly">{{cont[c].settleproof}}</textarea></td>
         </tr>
     </table>
 

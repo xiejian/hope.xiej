@@ -11,8 +11,6 @@ div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 15px
 span.stepinfo   {font-style: italic;color: #666;}
 
 div.h_news    {}
-a[name=register]    {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding:5px 10px 5px 10px;color:#FCA;background:#08A;border:2px solid #055;
-    border-radius: 15px;
-    box-shadow: 0px 0px 15px #660;}
-a[name=register]:hover{background:#246;color:#FFF;}
+a[name=register]    {margin: -5px 200px;}
+
 

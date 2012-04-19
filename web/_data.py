@@ -100,7 +100,7 @@ def _update_user(db,session,content = []):    #get user's info
     # get user's orders info
     if 'orders' in content:
         cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
-        temp['orders'] = []
+        temp['ord'] = []
         for row in cur.fetchall():
             tt=dict(o=row[0],c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],rlt=row[5],ty=row[6],\
                 v=row[3]*row[5]*gv_contract[row[1]]['btc_multi'],at=row[7])
@@ -108,11 +108,11 @@ def _update_user(db,session,content = []):    #get user's info
                 tt.update(dict(mg = row[3]*row[5]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage']))
             else:
                 tt.update(dict(mg = 0))
-            temp['orders'].append(tt)
+            temp['ord'].append(tt)
     # get user's positions info
     if 'positions' in content:
         cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,opentime FROM positions WHERE user_id = %s",session['user_id'])
-        temp['positions']=[]
+        temp['pos']=[]
         for row in cur.fetchall():
             tt = dict(c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],ot=row[5],mv=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
                 ct = row[3]*row[4]*gv_contract[row[1]]['btc_multi'],mg = gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi']*gv_contract[row[1]]['leverage'])
@@ -120,7 +120,7 @@ def _update_user(db,session,content = []):    #get user's info
                 tt.update(dict(pl = (gv_contract[row[1]]['latestpoint']-row[3])*row[4]*gv_contract[row[1]]['btc_multi']))
             else:
                 tt.update(dict(pl = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
-            temp['positions'].append(tt)
+            temp['pos'].append(tt)
     if 'trans' in content:
         temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
 

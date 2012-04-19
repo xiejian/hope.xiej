@@ -33,23 +33,8 @@
         <tr><th>My Trade Volume</th><td> {{ g.u['tradevol'] |f }}</td></tr>
 
     <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table>
-</div>
+    <div class="clear"></div>
 
-<div class="grid_3 push_1 omega">
-    <br/>
-    <table><tr><th>Trade Volume</th><th>Fee Rate</th></tr>
-        <tr{% if g.u['feerate']|float == 0.004 %} class="selected" {% endif %}><td>< 50</td><td>0.4%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.003 %} class="selected" {% endif %}><td>< 100</td><td>0.3%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.0025 %} class="selected" {% endif %}><td>< 200</td><td>0.25%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.002 %} class="selected" {% endif %}><td>< 400</td><td>0.2%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.0015 %} class="selected" {% endif %}><td>< 1k</td><td>0.15%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.001 %} class="selected" {% endif %}><td>< 2k</td><td>0.1%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.0008 %} class="selected" {% endif %}><td>< 5k</td><td>0.08%</td></tr>
-        <tr{% if g.u['feerate']|float == 0.0007 %} class="selected" {% endif %}><td>>= 10k</td><td>0.07%</td></tr></table>
-</div>
-<div class="clear"></div>
-
-<div class="grid_9 alpha ">
     <h4>
         This Month Fee Coupon: <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
     </h4>
@@ -61,25 +46,51 @@
         <tr><th>My Friends' Trade Volume</th><td> {{ g.u['rtradevol'] |f }}</td></tr>
         <tr><th>My Effective Trade Volume</th><td> {{ (g.u['tradevol'] + g.u['rtradevol'])|f }}</td></tr>
         <tr><th>Fee Return Rate</th><td>{{ (g.u['returnrate']*100)|f }}%</td></tr></table>
-    <div class="grid_3 omega">
-    <a class="modalInput" rel="#invite_friend" href="#invite_friend">Invite friends</a>
-    </div>
+
+    <div class="clear"></div>
+    {% if g.u['s_coupon']%}
+        <h4>Special Coupon: {% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} <em>{{ (sc['coupon'] * 100)|f }}% OFF{% endfor %} </em></h4>
+        <p>You could apply both of regular fee coupon and special coupon same time.</p>
+        <table class="ginfo grid_7 push_1">
+            <tr><th>Coupon</th><th>Month</th><th>Comment</th>
+                {% for sc in g.u['s_coupon']%}
+                    <tr{% if sc['ifactive'] == 1 %} class="selected" {% endif %}>
+                        <td> {{ (sc['coupon'] * 100)|f }}% OFF</td><td> {{  sc['month'] }} </td><td>{{ sc['comment'] }}</td></tr>
+                {% endfor %}
+        </table>
+
+        <div class="clear"></div>
+    {% endif %}
+
+</div>
+
+<div class="grid_3 push_1 alpha">
+    <br/>
+        <a class="modalInput button" rel="#invite_friend" href="#invite_friend">Invite Friends</a>
+    <br/><br/>
     <div class="modal" id="invite_friend">
         <h3>Invite your friends to join BTCFE</h3>
-            <h4>As reward:</h4>
-            <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
-            <p>You will get all this trade volume in the future.</p>
+        <h4>As reward:</h4>
+        <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
+        <p>You will get all this trade volume in the future.</p>
         <form action="{{ url_for('account',t='I') }}" method=post class="invite">
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <input type=email name="email" value="" size="22" required="required"/>
             <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
         </form>
     </div>
-</div>
-
-<div class="grid_3 push_1 ">
-    <br/>
-    <table><tr><th>Trade Volume</th><th>Coupon Rate</th></tr>
+    <div class="subheader">Fee Rate</div>
+    <table><tr><th>Volume</th><th>Fee Rate</th></tr>
+        <tr{% if g.u['feerate']|float == 0.004 %} class="selected" {% endif %}><td>< 50</td><td>0.4%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.003 %} class="selected" {% endif %}><td>< 100</td><td>0.3%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.0025 %} class="selected" {% endif %}><td>< 200</td><td>0.25%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.002 %} class="selected" {% endif %}><td>< 400</td><td>0.2%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.0015 %} class="selected" {% endif %}><td>< 1k</td><td>0.15%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.001 %} class="selected" {% endif %}><td>< 2k</td><td>0.1%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.0008 %} class="selected" {% endif %}><td>< 5k</td><td>0.08%</td></tr>
+        <tr{% if g.u['feerate']|float == 0.0007 %} class="selected" {% endif %}><td>>= 10k</td><td>0.07%</td></tr></table>
+    <div class="subheader">Monthly Coupon</div>
+    <table><tr><th>Volume</th><th>Coupon</th></tr>
         <tr{% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.2 %} class="selected" {% endif %}><td>< 400</td><td>20% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.3 %} class="selected" {% endif %}><td>< 1.5k</td><td>30% OFF</td></tr>
@@ -89,21 +100,8 @@
         <tr{% if g.u['returnrate'] |float== 0.7 %} class="selected" {% endif %}><td>< 500k</td><td>70% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.8 %} class="selected" {% endif %}><td>>= 2m</td><td>80% OFF</td></tr></table>
 </div>
-<div class="clear"></div>
-{% if g.u['s_coupon']%}
-    <h4>Special Coupon: {% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} <em>{{ (sc['coupon'] * 100)|f }}% OFF{% endfor %} </em></h4>
-    <p>You could apply both of regular fee coupon and special coupon same time.</p>
-    <table class="ginfo grid_7 push_1">
-        <tr><th>Coupon</th><th>Month</th><th>Comment</th>
-        {% for sc in g.u['s_coupon']%}
-            <tr{% if sc['ifactive'] == 1 %} class="selected" {% endif %}>
-                <td> {{ (sc['coupon'] * 100)|f }}% OFF</td><td> {{  sc['month'] }} </td><td>{{ sc['comment'] }}</td></tr>
-        {% endfor %}
-    </table>
 
 <div class="clear"></div>
-{% endif %}
-
 </div>
 
 <div class="grid_13 subm_tab">

@@ -22,6 +22,11 @@ div.modal .form_result  {display: none;}
 .form_result.suc    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #FCEFA1;background: #FBF9EE url(../img/_icon_error.png) 3% 50%  no-repeat; color: #363636;}
 
 a:hover   {color: #F22; }
+a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right;margin:10px;padding:5px 10px 5px 10px;color:#FCA;background:#08A;border:2px solid #055;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px #660;}
+a.button:hover{background:#246;color:#FFF;}
+
 .error {
     /* supply height to ensure consistent positioning for every browser */
     height:15px;

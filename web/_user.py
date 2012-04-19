@@ -42,6 +42,7 @@ def _activeuser(db,code):
         return  False
     finally:
         cur.close()
+        #todo: new user get 0.1 BTC for free
 
 def _activecode(db,email):
     cur = db.cursor()
