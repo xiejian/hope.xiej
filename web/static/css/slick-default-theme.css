@@ -49,7 +49,8 @@ classes should alter those!
   padding-left: 4px;
   padding-right: 4px;
 }
-
+.slick-cell {   border: none;}
+.slick-cell img,table#transhis img {width: 24px;height: 24px;}
 .slick-group {
   border-bottom: 2px solid silver;
 }

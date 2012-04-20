@@ -24,8 +24,7 @@ div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right 
 div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px;}
 
 /*div.body .slick-header-column {margin-left: 1px;}*/
-.slick-cell {   border: none;}
-.slick-cell img,table#transhis img {width: 24px;height: 24px;}
+
 
 .slick-cell a[title=Cancel]     { padding:7px 12px;background:url(../img/_i_E.png) no-repeat right bottom;}
 .slick-cell a[title=Cancel]:hover{background-position: left bottom;}

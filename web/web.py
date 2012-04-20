@@ -1,6 +1,6 @@
 import os,base64,time
 from _db import _connect_db
-from _data import gv_contract,gv_contlist,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont
+from _data import gv_contract,gv_contlist,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont,_update_usergl
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
@@ -66,10 +66,14 @@ def data():
         else:
             abort(404)
     elif t=='u':
-        if 'user_id' in session:
-            return jsonify(_update_user(g.db,session,['orders','positions']))
-        else:
+        if 'user_id' not in session:
             abort(404)
+        return jsonify(_update_user(g.db,session,['orders','positions']))
+    elif t=='ua':
+        if 'user_id' not in session:
+            abort(404)
+        return jsonify(_update_usergl(g.db,session['user_id'],n))
+
 
 #=================================================================
 @app.route('/', methods=['GET','POST'])
@@ -228,7 +232,7 @@ def account():
             else:
                 return jsonify(msg)
 
-    g.u=_update_user(g.db,session,['positions','trans','info','rtvol','log'])
+    g.u=_update_user(g.db,session,['positions','info','rtvol','log'])
     tab = request.args.get('tab', 0)
     return render_template('account.html',tab=tab)
 

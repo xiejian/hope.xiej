@@ -107,40 +107,7 @@
 <div class="grid_13 subm_tab">
 
 <h4>Transaction History</h4>
-<table>
-    {% for t in g.u['trans'] %}
-        {% if loop.first %}
-    <tr><th>TimeStamp</th><th colspan="2">Action</th><th>Point</th><th>Lots</th><th>Fee</th><th>Pofit/Loss</th><th>BTC I/O</th><th>Comment</th></tr>
-    <tr  class="selected" ><th>{{ g.u['openbal']['balance_dt'] }}</th><th colspan="2">Opening Balance</th><th></th><th></th><th>{{ g.u['openbal']['bal_fee']|f }}</th><th>{{ g.u['openbal']['bal_pl']|f }}</th>
-        <th>{{ g.u['openbal']['bal_btc']|f }}</th><th>SUM: {{ g.u['openbal']['balance']|f }}</th></tr>
-        {% endif %}
-
-    {% if t.sector == 'T' %}
-        <tr><td>{{t.timestamp}}</td><td>{{t.buy_sell|f("F")}}</td><td><a name="{{t.contract_id}}" href="{{ url_for('contract',c=t.contract_id) }}" class="modalInputF" rel="#cont_overlay" >
-            <button type="button">{{cont[t.contract_id].name}}</button></a></td><td>{{t.point|f}}</td>
-            <td>{{t.lots}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
-    {% elif t.sector == 'R'  %}
-        <tr><td>{{t.timestamp}}</td><td colspan="2">Apply Fee Coupon</td><td></td><td></td>
-            <td>{{t.fee|f}}</td><td></td><td></td><td>{{t.type|f("F")}}</td></tr>
-    {% elif t.sector == 'H'  %}
-        <tr><td>{{t.timestamp}}</td><td>{{t.type|f("F")}}</td><td>{{cont[t.contract_id]['name']}}</td>
-            <td colspan="2"></td><td>{{t.fee|f}}</td><td></td><td></td><td></td></tr>
-    {% elif t.sector == 'C'  %}
-        <tr><td>{{t.timestamp}}</td><td>Own</td><td>{{cont[t.contract_id]['name']}}</td>
-            <td colspan="2"></td><td></td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
-    {% elif t.sector == 'B' %}
-        <tr><td>{{t.timestamp}}</td><td colspan="2">Bitcoin Transfer</td><td colspan="2"></td><td></td><td></td>
-            <td>{{ t.btc_transfer|f }}</td><td>{{t.type|f("F")}}</td></tr>
-    {% endif %}
-    {% else %}
-    <tr><th>None</th></tr>
-    {% endfor %}
-    {% if g.u['trans'] %}
-    <tr  class="selected" ><th>{{ g.u['trans'][-1]['timestamp'] }}</th><th colspan="2">Closing Balance</th><th></th><th></th><th>{{ (g.u['trans']|sum(attribute='fee') + g.u['openbal']['bal_fee'])|f }}</th>
-        <th>{{ (g.u['trans']|sum(attribute='p_l')+g.u['openbal']['bal_pl'])|f }}</th><th>{{ (g.u['trans']|sum(attribute='btc_transfer')+g.u['openbal']['bal_btc'])|f }}</th>
-        <th>SUM: {{ (g.u['openbal']['balance']+g.u['trans']|sum(attribute='fee')+g.u['trans']|sum(attribute='p_l')+g.u['trans']|sum(attribute='btc_transfer'))|f }}</th></tr>
-    {% endif %}
-</table>
+    <div id='acc_his_grid' class="grid_13 alpha omega" style="height:500px;"></div>
 
   <div class="clear"></div>
 </div>

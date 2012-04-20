@@ -72,8 +72,15 @@ def _update_contlist():
             tt['C'].append(temp)
     gv_contlist.update(tt)
 
-def _update_usergl(cur,user_id,openbal_dt):
-
+def _update_usergl(db,user_id,n):
+    cur = db.cursor()
+    if n==0:
+        cur.execute("select timestamp from v_gl where user_id=%s order by timestamp desc limit 30,1",[user_id])
+        openbal_dt = cur.fetchone()[0]
+        if openbal_dt is None:
+            openbal_dt = [datetime.date(2011,10,31),0,0,0,0]
+    else:
+        openbal_dt= datetime.datetime.fromtimestamp(n)
     cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
     row = cur.fetchone()
     if row is None:
@@ -81,9 +88,9 @@ def _update_usergl(cur,user_id,openbal_dt):
     openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4])
     cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),timestamp,value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and DATE_FORMAT(timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
                 ORDER BY timestamp",[user_id,openbal['balance_dt']])
-    trans = [dict(contract_id=row[0],type=row[1],buy_sell=row[2], point=row[3],lots=row[4],fee=row[5],p_l=row[6],
-        timestamp=row[7],value = row[8],btc_transfer = row[9],sector = row[10]) for row in cur.fetchall()]
-
+    trans = [dict(c=row[0],n=gv_contract[row[0]]['name'] if row[0] in gv_contract else '',ty=row[1],bs=row[2], pt=row[3],lt=row[4],fee=row[5],pl=row[6],
+        t=row[7],v = row[8],b = row[9],s = row[10]) for row in cur.fetchall()]
+    cur.close()
     return {'openbal':openbal,'trans':trans}
 
 
@@ -121,8 +128,8 @@ def _update_user(db,session,content = []):    #get user's info
             else:
                 tt.update(dict(pl = (row[3]-gv_contract[row[1]]['latestpoint'])*row[4]*gv_contract[row[1]]['btc_multi']))
             temp['pos'].append(tt)
-    if 'trans' in content:
-        temp.update(_update_usergl(cur,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
+    if 'trans' in content:#todo to be deleted
+        temp.update(_update_usergl(db,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
 
     if 'btctrans' in content:
         cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s ORDER BY timestamp DESC LIMIT 0,10",session['email'])
