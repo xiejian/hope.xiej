@@ -150,6 +150,7 @@ function update_userop(){
         enableColumnReorder: false,
         enableAsyncPostRender: true,
         multiColumnSort: true,
+        rowHeight: 28,
         autoHeight:true
     };
     var ogrid = new Slick.Grid("#o_user_grid", v_userd['ord'], ocolumns, toptions);

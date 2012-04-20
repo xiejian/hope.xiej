@@ -21,12 +21,13 @@ function update_conttop(){
     var tcolumns = [
         {id: "name", name: "Name", field: "n",width:65, asyncPostRender: rendercontName},
         {id: "latestpt", name: "Latest PT", field: "lp",width:52},
-        {id: "change", name: "Change", field: "ch",width:53, formatter: updn_formatter}
+        {id: "change", name: "Change", field: "ch",width:53, formatter: updn_percent}
     ];
     var toptions = {
         enableCellNavigation: true,
         enableColumnReorder: false,
-        enableAsyncPostRender: true
+        enableAsyncPostRender: true,
+        rowHeight: 28
     };
 
     v_contv = v_contlist['O'].sort(function(x,y){return y['vl']-x['vl'];});
@@ -49,7 +50,7 @@ function update_contlist(){
         r:{id: "region", name: "Region", field: "r", width:100,sortable:true, formatter:function(row, cell, value){return _dec['r'][value];}},
         s:{id: "sector", name: "Sector", field: "s", width:100,sortable:true, formatter:function(row, cell, value){return _dec['s'][value];}},
         lp:{id: "latestpt", name: "Latest PT", field: "lp", sortable:true},
-        ch:{id: "change", name: "Change", field: "ch",width:70, sortable:true,formatter: updn_formatter},
+        ch:{id: "change", name: "Change", field: "ch",width:70, sortable:true,formatter: updn_percent},
         sp:{id: "settlept", name: "Settle PT", field: "sp", sortable:true},
         vl:{id: "volume", name: "Volume", field: "vl", sortable:true},
         o:{id: "owner", name: "Author", field: "o", width:120, sortable:true},
@@ -61,7 +62,8 @@ function update_contlist(){
         enableCellNavigation: true,
         enableColumnReorder: false,
         multiColumnSort: true,
-        enableAsyncPostRender: true
+        enableAsyncPostRender: true,
+        rowHeight: 28
     };
     //var data = [];
     var ocolumns=[cl.n,cl.fn,cl.sd,cl.r,cl.s,cl.lp,cl.ch,cl.vl,cl.a];

@@ -13,9 +13,9 @@ def myformat(value, type='N',format=''):
         else:
             return dt.strftime(format)
     elif type=='cd':  #for contract date
-        return value.strftime("%Y-%m-%d %H:%M")
+        return datetime.datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M")
     elif type=='hr':  #for hour
-        return value.hour
+        return datetime.datetime.fromtimestamp(value).hour
     elif type=='N': #for num
 
         if isinstance(value,datetime.datetime):

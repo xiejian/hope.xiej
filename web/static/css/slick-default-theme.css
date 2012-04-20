@@ -10,15 +10,23 @@ classes should alter those!
   border-bottom: 1px solid silver;
 }
 
-.slick-header-column {
-  background: url('../img/header-columns-bg.gif') repeat-x center bottom;
-  border-right: 1px solid silver;
-}
-
 .slick-header-column:hover, .slick-header-column-active {
   background: white url('../img/header-columns-over-bg.gif') repeat-x center bottom;
 }
+.slick-header-columns .slick-header-column    {margin-left: 1px;}
+.slick-cell {   border: none;}
+.slick-cell img,table#transhis img {width: 24px;height: 24px;}
+.slick-headerrow-columns .slick-headerrow-column {
+    color: #9a6f00;
+    font-weight: bold;
+    overflow: visible;
+    height: 19px;
+    border-right:none;
+    border-bottom-color: #9a6f00;
+    padding: 4px 0px;
+}
 
+/*
 .slick-headerrow {
   background: #fafafa;
 }
@@ -49,8 +57,7 @@ classes should alter those!
   padding-left: 4px;
   padding-right: 4px;
 }
-.slick-cell {   border: none;}
-.slick-cell img,table#transhis img {width: 24px;height: 24px;}
+
 .slick-group {
   border-bottom: 2px solid silver;
 }
@@ -102,4 +109,4 @@ classes should alter those!
 
 .slick-cell.invalid {
   border-color: red;
-}
+}*/

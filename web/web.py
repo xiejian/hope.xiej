@@ -162,7 +162,7 @@ def trade():
             _update_contract(g.db,contract_id,'C')
             return redirect(url_for('trade',c=contract_id))
         else:
-            g.u = _update_user(g.db,session,['orders','positions'])
+            g.u = _update_user(g.db,session,[])
             if contract_id == 0 and 'latestcont' in session:
                 contract_id = session['latestcont']
             return render_template('trade.html',default_cid = contract_id )

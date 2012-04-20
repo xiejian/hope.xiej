@@ -67,11 +67,12 @@ function rendercontName(cellNode, row, dataContext, colDef) {
     $(cellNode).html(htm);
     init_modalInputF($(cellNode).find('a.modalInputF'));
 }
-function updn_formatter(row, cell, value, columnDef, dataContext ) {
+function updn_percent(row, cell, value, columnDef, dataContext ) {
     if(value > 0){return '<span class="up">+'+value+'%</span>';}
     if (value < 0){return '<span class="dn"> '+value+'%</span>';}
     else {return ' - ';}
 }
+
 
 function multi_sort(e, args) {
     var cols = args.sortCols;
@@ -96,8 +97,13 @@ var _dec = {'t':{'O':'Open','C':'Close','B':'Buy','S':'Sell'},
     's': {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","N":"Natural","O":"Others"}};
 
 /*basefuncion*/
+function updn( value) {
+    if(value > 0){return '<span class="up">'+value+'</span>'; }
+    else if(value < 0){return '<span class="dn">'+value+'</span>'; }
+    else{return '<span class="gr">'+value+'</span>';}}
+
 function parseDate(tdate) {
-    var system_date = new Date(Date.parse(tdate));
+    var system_date = new Date(tdate*1000);
     var user_date = new Date();
     if (K.ie) {
         /*system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))todo:fix IE date parse bug*/

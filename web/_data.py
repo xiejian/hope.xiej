@@ -1,5 +1,5 @@
 from _db import  _connect_db
-import datetime,decimal
+import datetime,time,decimal
 
 gv_contract = {}    #global vars of contract info
 gv_contlist = {'O':[],'N':[],'C':[]}
@@ -16,10 +16,10 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         if cid in gv_contract:
             gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee,c.settlemargin "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,unix_timestamp(c.opendate),c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee,c.settlemargin "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
-            gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],name=row[1]+row[6].strftime("%y%m"),
+            gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=time.mktime(row[6].timetuple()),name=row[1]+row[6].strftime("%y%m"),
                 leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
@@ -27,7 +27,7 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY point ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
             #update transactions history
-            ocur.execute("SELECT t.point,t.lots,TIMESTAMP,direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
+            ocur.execute("SELECT t.point,t.lots,unix_timestamp(TIMESTAMP),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
             #update contract trade vol
             ocur.execute("SELECT ifnull(sum(value),0)/2 FROM v_trans WHERE contract_id = %s",row[0])
@@ -72,25 +72,26 @@ def _update_contlist():
             tt['C'].append(temp)
     gv_contlist.update(tt)
 
-def _update_usergl(db,user_id,n):
+def _update_usergl(db,user_id,openbal_dt):
     cur = db.cursor()
-    if n==0:
-        cur.execute("select timestamp from v_gl where user_id=%s order by timestamp desc limit 30,1",[user_id])
-        openbal_dt = cur.fetchone()[0]
-        if openbal_dt is None:
-            openbal_dt = [datetime.date(2011,10,31),0,0,0,0]
-    else:
-        openbal_dt= datetime.datetime.fromtimestamp(n)
-    cur.execute("select balance_dt,balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= convert(%s,date) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
+    if openbal_dt==0:
+        try:
+            cur.execute("select unix_timestamp(timestamp) from v_gl where user_id=%s order by timestamp desc limit 30,1",[user_id])
+            openbal_dt = cur.fetchone()[0]
+        except :
+            openbal_dt = time.mktime(datetime.date(2011,10,31).timetuple())
+
+    cur.execute("select unix_timestamp(balance_dt),balance,bal_fee,bal_pl,bal_btc from userbalance where user_id = %s and balance_dt <= from_unixtime(%s) ORDER BY balance_dt DESC LIMIT 0,1 ",[user_id,openbal_dt])
     row = cur.fetchone()
     if row is None:
-        row = [datetime.date(2011,10,31),0,0,0,0]
+        row = [time.mktime(datetime.date(2011,10,31).timetuple()),0,0,0,0]
     openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4])
-    cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),timestamp,value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and DATE_FORMAT(timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
+    cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),unix_timestamp(timestamp),value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and DATE_FORMAT(timestamp, '%%Y-%%m-%%d') > from_unixtime(%s)  \
                 ORDER BY timestamp",[user_id,openbal['balance_dt']])
     trans = [dict(c=row[0],n=gv_contract[row[0]]['name'] if row[0] in gv_contract else '',ty=row[1],bs=row[2], pt=row[3],lt=row[4],fee=row[5],pl=row[6],
         t=row[7],v = row[8],b = row[9],s = row[10]) for row in cur.fetchall()]
     cur.close()
+    print openbal
     return {'openbal':openbal,'trans':trans}
 
 
@@ -106,7 +107,7 @@ def _update_user(db,session,content = []):    #get user's info
     temp.update(dict(balance=row[0],bal_unconf=row[1],bal_unact=row[2],onum=row[3],omargin=row[4],pnum=row[5],pmargin=row[6],p_l=row[7]))
     # get user's orders info
     if 'orders' in content:
-        cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,DATE_FORMAT(createtime,'%%Y-%%m-%%d %%H:%%m:%%s') FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
+        cur.execute("SELECT order_id,contract_id,buy_sell,point,lots,rm_lots,type,unix_timestamp(createtime) FROM orders WHERE STATUS = 'O' AND user_id = %s ORDER BY order_id DESC",session['user_id'])
         temp['ord'] = []
         for row in cur.fetchall():
             tt=dict(o=row[0],c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],rlt=row[5],ty=row[6],\
@@ -118,7 +119,7 @@ def _update_user(db,session,content = []):    #get user's info
             temp['ord'].append(tt)
     # get user's positions info
     if 'positions' in content:
-        cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,opentime FROM positions WHERE user_id = %s",session['user_id'])
+        cur.execute("SELECT position_id,contract_id,buy_sell,point,lots,unix_timestamp(opentime) FROM positions WHERE user_id = %s",session['user_id'])
         temp['pos']=[]
         for row in cur.fetchall():
             tt = dict(c=row[1],n=gv_contract[row[1]]['name'],bs=row[2],pt=row[3],lt=row[4],ot=row[5],mv=gv_contract[row[1]]['latestpoint']*row[4]*gv_contract[row[1]]['btc_multi'],
