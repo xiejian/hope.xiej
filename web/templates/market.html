@@ -20,19 +20,23 @@
 
             <div>
                 Volume:
-                <div id="top_v_grid" style="height:100px;"></div>
+                <div id="top_v_grid" style="width:170px;height:100px;"></div>
             </div>
             <div>
                 Up:
-                <div id="top_u_grid" style="height:100px;"></div>
+                <div id="top_u_grid" style="width:170px;height:100px;"></div>
             </div>
             <div>
                 Down:
-                <div id="top_d_grid" style="height:100px;"></div>
+                <div id="top_d_grid" style="width:170px;height:100px;"></div>
             </div>
 
         </div>
     </div>
+    <div class="subheader"></div>
+    {% if 'user_id' in session %}
+        <a class="button" href="{{url_for('account',tab=2)}}">Create My Own Contract</a>
+    {% endif %}
 
 </div>
 
@@ -51,8 +55,6 @@
     <div id='c_cont_grid' class="grid_13 alpha omega" style="height:500px;"></div>
 </div>
 
-
-<a href="{{url_for('contract')}}">Create My Own Contract</a>
 
 
 <!-- overlayed element -->

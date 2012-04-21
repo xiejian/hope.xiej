@@ -39,8 +39,10 @@ function activepage(page){
 
 function showtab(tab){
     $('div.subm_tab').each(function(i,div){
-        if(i == tab)
+        if(i == tab){
             $(div).show();
+            if($(div).find('#acc_his_grid').html()==''){get_gl();}
+        }
         else
             $(div).hide();
     });
@@ -63,7 +65,7 @@ $(function () {
 
 /*for SlickGrid*/
 function rendercontName(cellNode, row, dataContext, colDef) {
-    var htm = '<a name="'+dataContext['c']+'" href="'+$SCRIPT_ROOT + '/contract?c=' + dataContext['c'] + '" class="modalInputF" rel="#cont_overlay">' + dataContext['n'] + '</a>';
+    var htm = '<a title="Click to see detail" name="'+dataContext['c']+'" href="'+$SCRIPT_ROOT + '/contract?c=' + dataContext['c'] + '" class="modalInputF" rel="#cont_overlay">' + dataContext['n'] + '</a>';
     $(cellNode).html(htm);
     init_modalInputF($(cellNode).find('a.modalInputF'));
 }
@@ -108,19 +110,19 @@ function parseDate(tdate) {
     if (K.ie) {
         /*system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))todo:fix IE date parse bug*/
     }
+    var title = system_date.toString();
     var diff = Math.floor((user_date - system_date) / 1000);
-    if (diff <= -2592000) {return "in "+Math.round(-diff / 2592000) + " mons";}
-    if (diff <= -86400) {return "in "+Math.round(-diff / 86400) + " days";}
-    if (diff <= -3600) {return "in "+Math.round(-diff / 3600) + " hrs";}
-    if (diff <= -60) {return "in "+Math.round(-diff / 60) + " mins";}
-    if (diff < -15) {return "in "+ (- diff) + " secs ago";}
-    if (diff < 15) {return "just now";}
-    if (diff < 60) {return diff + " secs ago";}
-    if (diff <= 3600) {return Math.round(diff / 60) + " mins ago";}
-    if (diff <= 86400) {return Math.round(diff / 3600) + " hrs ago";}
-    if (diff < 2592000) {return Math.round(diff / 86400) + " days ago";}
-    else {return Math.round(diff / 2592000) + " mons ago";}
-
+    if (diff <= -2592000) {return "<span title='"+title+"'><span class='gr'>in</span> "+Math.round(-diff / 2592000) + " mon<span class='gr'>s</span></span>";}
+    if (diff <= -86400) {return "<span title='"+title+"'><span class='gr'>in</span> "+Math.round(-diff / 86400) + " day<span class='gr'>s</span></span>";}
+    if (diff <= -3600) {return "<span title='"+title+"'><span class='gr'>in</span> "+Math.round(-diff / 3600) + " hr<span class='gr'>s</span></span>";}
+    if (diff <= -60) {return "<span title='"+title+"'><span class='gr'>in</span> "+Math.round(-diff / 60) + " min<span class='gr'>s</span></span>";}
+    if (diff < -15) {return "<span title='"+title+"'><span class='gr'>in</span> "+ (- diff) + " sec<span class='gr'>s</span></span>";}
+    if (diff < 15) {return "<span title='"+title+"'>just now</span>";}
+    if (diff < 60) {return "<span title='"+title+"'>"+diff + " sec<span class='gr'>s ago</span></span>";}
+    if (diff <= 3600) {return "<span title='"+title+"'>"+Math.round(diff / 60) + " min<span class='gr'>s ago</span></span>";}
+    if (diff <= 86400) {return "<span title='"+title+"'>"+Math.round(diff / 3600) + " hr<span class='gr'>s ago</span></span>";}
+    if (diff < 2592000) {return "<span title='"+title+"'>"+Math.round(diff / 86400) + " day<span class='gr'>s ago</span></span>";}
+    else {return "<span title='"+title+"'>"+Math.round(diff / 2592000) + " mon<span class='gr'>s ago</span></span>";}
 }
 
 var K = function () {

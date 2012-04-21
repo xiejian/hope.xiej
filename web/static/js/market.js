@@ -20,7 +20,7 @@ function get_contlist(){
 function update_conttop(){
     var tcolumns = [
         {id: "name", name: "Name", field: "n",width:65, asyncPostRender: rendercontName},
-        {id: "latestpt", name: "Latest PT", field: "lp",width:52},
+        {id: "latestpt", name: "Latest PT", field: "lp",width:50},
         {id: "change", name: "Change", field: "ch",width:53, formatter: updn_percent}
     ];
     var toptions = {

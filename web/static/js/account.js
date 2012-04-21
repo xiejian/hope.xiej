@@ -21,36 +21,36 @@ function test(){
 var v_gl;
 function get_gl(){
     $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua'}, function(data) {
-        v_gl = data['trans'];
-        v_gl['openbal']=data['openbal'];
+        v_gl = data;
         update_gl();
     });
     return false;
 }
 function update_gl(){
     var columns = [
-        {id: "time", name: "Time", field: "t", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
+        {id: "time", name: "Time", field: "t", width:85,sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         {id: "s", name: "Action", field: "s",width:80,formatter:function(row, cell, value, columnDef, dataContext){
             if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> <img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
             else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 34px;"/> ' +dataContext['ty'];}
             else if(value=='B'){return '<img src="/static/img/_i_BTC.png" title="Bitcoin"/> ' + dataContext['ty'];}
             else {return value;}
         }},
-        {id: "name", name: "Contract", field: "n", width:90, sortable:true,asyncPostRender: rendercontName},
+        {id: "name", name: "Contract", field: "n", width:93, sortable:true,asyncPostRender: rendercontName},
         {id: "point", name: "Point", field: "pt", sortable:true},
         {id: "lt", name: "Lots", field: "lt", width:40,sortable:true},
-        {id: "v", name: "Value", field: "v", width:90, sortable:true},
-        {id: "pl", name: "P/L", field: "pl", width:90,sortable:true,formatter: function(row, cell, value){return updn(value);}},
-        {id: "btc", name: "BTC I/O", field: "b", width:90, sortable:true,formatter: function(row, cell, value){return updn(value);}},
-        {id: "fee", name: "FEE", field: "fee", width:90, sortable:true,formatter: function(row, cell, value){return updn(value);}},
+        {id: "v", name: "Value", field: "v", width:93, sortable:true},
+        {id: "pl", name: "Profit/Loss", field: "pl", width:93,sortable:true,formatter: function(row, cell, value){return updn(value);}},
+        {id: "btc", name: "BTC In/Out", field: "b", width:93, sortable:true,formatter: function(row, cell, value){return updn(value);}},
+        {id: "fee", name: "FEE", field: "fee", width:93, sortable:true,formatter: function(row, cell, value){return updn(value);}}
     ];
     var toptions = {
         enableCellNavigation: true,
         enableColumnReorder: false,
+        enableAsyncPostRender: true,
         showHeaderRow: true,
         headerRowHeight: 32,
         rowHeight: 28,
-        enableAsyncPostRender: true
+        autoHeight:true
     };
 
     v_gl.getItemMetadata = function (row) {
@@ -58,21 +58,37 @@ function update_gl(){
             return {"columns": {1: {"colspan": 3 }}};
         }
     };
-    var vgrid = new Slick.Grid("#acc_his_grid", v_gl, columns, toptions);
-    $('<span>'+parseDate(v_gl['openbal']['balance_dt'])+'</span>').appendTo(vgrid.getHeaderRowColumn('time'));
-    $('<span>Opening balance</span>').appendTo(vgrid.getHeaderRowColumn('name'));
-    $('<span>'+updn(v_gl['openbal']['bal_pl'])+'</span>').appendTo(vgrid.getHeaderRowColumn('pl'));
-    $('<span>'+updn(v_gl['openbal']['bal_btc'])+'</span>').appendTo(vgrid.getHeaderRowColumn('btc'));
-    $('<span>'+updn(v_gl['openbal']['bal_fee'])+'</span>').appendTo(vgrid.getHeaderRowColumn('fee'));
-    $('<span> sum('+updn(v_gl['openbal']['balance'])+')</span>').appendTo(vgrid.getHeaderRowColumn('lt'));
+    var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);
 
+    function filltitle(){
+        $(vgrid.getHeaderRowColumn('time')).html(parseDate(v_gl['openbal']['balance_dt']));
+        var link = '';
+        if(v_gl['openbal']['n'] > 1319990400){  link = '<a title="Click to get more data" href="#" ><↑more↑></a>';     }
+        $(vgrid.getHeaderRowColumn('s')).html(link);
+        $(vgrid.getHeaderRowColumn('name')).html('<span>　　Opening balance</span>');
+        $(vgrid.getHeaderRowColumn('pl')).html('<span>'+updn(v_gl['openbal']['bal_pl'])+'</span>');
+        $(vgrid.getHeaderRowColumn('btc')).html('<span>'+updn(v_gl['openbal']['bal_btc'])+'</span>');
+        $(vgrid.getHeaderRowColumn('fee')).html('<span>'+updn(v_gl['openbal']['bal_fee'])+'</span>');
+        $(vgrid.getHeaderRowColumn('lt')).html('<span title="= Profit/Loss + BTC In/Out + Fee"> sum('+updn(v_gl['openbal']['balance'])+')</span>');
+    }
+    filltitle();
+    $(vgrid.getHeaderRowColumn('s')).click(function(){
+        $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua',n:v_gl['openbal']['n']-3600*24*7}, function(data) {
+            v_gl = data['trans'];
+            v_gl['openbal']=data['openbal'];
+            //vgrid.invalidateAllRows();
+            vgrid.setData(v_gl);
+            vgrid.updateRowCount();
+            filltitle();vgrid.render();
+        });
+    });
 }
 
 $(function(){
     activepage(2);
     //showtab(0);
     getiploc();
-    get_gl();
+    //get_gl();
     $(".edit_cont_form input[type='button']").click(function(){
         $(this).parent(".edit_cont_form").attr({action: this.name});
         $(this).parent(".edit_cont_form").submit();

@@ -76,7 +76,7 @@ def _update_usergl(db,user_id,openbal_dt):
     cur = db.cursor()
     if openbal_dt==0:
         try:
-            cur.execute("select unix_timestamp(timestamp) from v_gl where user_id=%s order by timestamp desc limit 30,1",[user_id])
+            cur.execute("select unix_timestamp(timestamp) from v_gl where user_id=%s order by timestamp desc limit 10,1",[user_id])
             openbal_dt = cur.fetchone()[0]
         except :
             openbal_dt = time.mktime(datetime.date(2011,10,31).timetuple())
@@ -85,7 +85,7 @@ def _update_usergl(db,user_id,openbal_dt):
     row = cur.fetchone()
     if row is None:
         row = [time.mktime(datetime.date(2011,10,31).timetuple()),0,0,0,0]
-    openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4])
+    openbal = dict(balance_dt=row[0],balance=row[1],bal_fee=row[2], bal_pl=row[3],bal_btc=row[4],n=row[0])
     cur.execute("SELECT contract_id,type,buy_sell, point,lots,ifnull(fee,0),ifnull(p_l,0),unix_timestamp(timestamp),value,ifnull(btc,0),sector from v_gl WHERE user_id = %s and DATE_FORMAT(timestamp, '%%Y-%%m-%%d') > from_unixtime(%s)  \
                 ORDER BY timestamp",[user_id,openbal['balance_dt']])
     trans = [dict(c=row[0],n=gv_contract[row[0]]['name'] if row[0] in gv_contract else '',ty=row[1],bs=row[2], pt=row[3],lt=row[4],fee=row[5],pl=row[6],

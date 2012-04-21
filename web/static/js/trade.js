@@ -92,7 +92,7 @@ function update_tradeform(){
     }
     $("span#ts_margin").html(vmg);
     if (vmg > (v_userd.balance + v_userd.p_l - v_userd.omargin - v_userd.pmargin)){
-        $("div.trade form div.hr").html('　Not enough BTC');
+        $("div.trade form div.hr").html('　Not enough BTC. <a href="/bitcoin">add more</a>');
         $("div.trade input[type=submit]").attr({disabled:"disabled"});
     }
     else{
@@ -150,8 +150,8 @@ function update_userop(){
         enableColumnReorder: false,
         enableAsyncPostRender: true,
         multiColumnSort: true,
-        rowHeight: 28,
-        autoHeight:true
+        autoHeight:true,
+        rowHeight: 28
     };
     var ogrid = new Slick.Grid("#o_user_grid", v_userd['ord'], ocolumns, toptions);
     ogrid.onSort.subscribe(multi_sort);

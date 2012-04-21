@@ -16,6 +16,7 @@ classes should alter those!
 .slick-header-columns .slick-header-column    {margin-left: 1px;}
 .slick-cell {   border: none;}
 .slick-cell img,table#transhis img {width: 24px;height: 24px;}
+.slick-headerrow-columns    {background-color: #f8f3d7}
 .slick-headerrow-columns .slick-headerrow-column {
     color: #9a6f00;
     font-weight: bold;
