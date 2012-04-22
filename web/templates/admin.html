@@ -15,13 +15,13 @@
 <table>
     <tr><th>ID</th><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
         <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Settle Point</th></tr>
-    <tr><th colspan="3"><th colspan="4">Description</th><th colspan="4">Settle Proof</th><th>Action</th></tr>
+    <tr><th colspan="2"><th>Owner</th><th colspan="4">Description</th><th colspan="4">Settle Proof</th><th>Action</th></tr>
     {% for c in cont %}
     <tr>
         <td>{{c}}</td><td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
         <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].settlepoint}}</td></tr>
-    <tr><th colspan="3"></th><th colspan="4"><textarea rows="3" cols="40">{{cont[c].description}}</textarea></th><th colspan="4"><textarea rows="3" cols="40">{{cont[c].settleproof}}</textarea></th>
+    <tr><th colspan="2"></th><td>{{cont[c].owner}}</td><th colspan="4"><textarea rows="3" cols="40">{{cont[c].description}}</textarea></th><th colspan="4"><textarea rows="3" cols="40">{{cont[c].settleproof}}</textarea></th>
         <td colspan="2"><form action="{{ url_for('admin') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value={{c}}>
             {% if cont[c].status in ['N','C'] %}
