@@ -255,7 +255,13 @@ def market():
 
 @app.route('/contract', methods=['GET'])
 def contract():
+    t = request.args.get('t', 'i')
     cont = request.args.get('c', 0,type=int)
+    if t=='e':
+        if 'user_id' in session and (cont == 0 or gv_contract[cont]['owner']==session['email']):
+            return render_template('contract_edit.html',c=cont)
+        else:
+            abort(404)
     return render_template('contract.html',c=cont)
 
 @app.route('/index', methods=['GET','POST'])

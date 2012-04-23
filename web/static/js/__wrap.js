@@ -17,11 +17,9 @@ function loadcontchart(cid) {
     $.getJSON($SCRIPT_ROOT + '/data',{t:'c',n:cid }, function(odata) {
         data = odata['data'];
         // split the data set into ohlc and volume
-
         var ohlc = [],
             volume = [],
             dataLength = data.length;
-
         for (i = 0; i < dataLength; i++) {
             ohlc.push([
                 data[i][0], // the date
@@ -30,7 +28,6 @@ function loadcontchart(cid) {
                 data[i][3], // low
                 data[i][4] // close
             ]);
-
             volume.push([
                 data[i][0], // the date
                 data[i][5] // the volume
@@ -44,14 +41,12 @@ function loadcontchart(cid) {
             'month',
             [1, 2, 3]
         ]];
-
         // create the chart
         chart = new Highcharts.StockChart({
             chart: {
                 renderTo: 'contchart',
                 alignTicks: false
             },
-
             rangeSelector: {
                 buttons : [ {
                     type : 'day',
@@ -71,14 +66,9 @@ function loadcontchart(cid) {
                     text : 'All'
                 }],
                 selected: 1,
-                inputBoxStyle: {
-                    right: '65px'
-                },
-                labelStyle: {
-                    display:'none'
-                }
+                inputBoxStyle: { right: '65px'   },
+                labelStyle: { display:'none' }
             },
-
             title: {
                 text: odata['name'],
                 floating: true,
@@ -86,7 +76,6 @@ function loadcontchart(cid) {
                 x:150
 
             },
-
             yAxis: [{
 
                 height: 250,
@@ -98,7 +87,6 @@ function loadcontchart(cid) {
                 offset: 0,
                 lineWidth: 1
             }],
-
             series: [{
                 type: 'candlestick',
                 name: 'AAPL',
@@ -146,16 +134,38 @@ function init_modalInputF(obj) {
             var wrap = this.getOverlay().find(".cont_wrap");
             // load the page specified in the trigger
             wrap.load(this.getTrigger().attr("href"));
+            $("div.modal form").submit(function(e) {
+                var form = $(this);
+                // client-side validation OK.
+                if (!e.isDefaultPrevented()) {
+                    $.post( form.attr('action'), form.serialize(),function( response ) {
+                            if ('goto' in response) {window.location = response.goto;}
+                            $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
+                        }
+                    );
+                    form.hide();
+                    $('div.modal').find('.form_result').fadeIn('slow');
+                    e.preventDefault();
+                }
+            });
+            $(":date").dateinput({format: "yyyy-mm-dd"});
+            $("form").validator({
+                position: 'bottom left',
+                offset: [8, 0],
+                message: '<div><em/></div>' // em element is the arrow
+            });
+            $(".edit_ct_form input[type='button']").click(function(){
+                $(this).parent(".edit_ct_form").attr({action: this.name});
+                $(this).parent(".edit_ct_form").submit();
+            });
         },
         onLoad: function(){
             loadcontchart(this.getTrigger().attr("name"));
             $("div#contchart").dblclick(function(){
                 if($(this).width() == 530){
                     $(this).width(890);
-                    //$(this).height(600);
                 }else{
                     $(this).width(530);
-                    //$(this).height(400);
                 }
                 chart.setSize(
                     this.offsetWidth ,
@@ -215,7 +225,6 @@ $(function () {
 
         // client-side validation OK.
         if (!e.isDefaultPrevented()) {
-
             $.post( form.attr('action'), form.serialize(),function( response ) {
                     if ('goto' in response) {window.location = response.goto;}
                     $('div.modal').find('.form_result').addClass(response.type).html(response.msg );

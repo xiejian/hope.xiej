@@ -89,10 +89,5 @@ $(function(){
     //showtab(0);
     getiploc();
     //get_gl();
-    $(".edit_cont_form input[type='button']").click(function(){
-        $(this).parent(".edit_cont_form").attr({action: this.name});
-        $(this).parent(".edit_cont_form").submit();
-    });
-
 
 });

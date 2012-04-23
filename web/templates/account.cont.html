@@ -8,7 +8,8 @@
         <div class=" homestep">5. Get settle approval & and settle all holding</div>
     </div>
 
-    <a class="modalInputF button" rel="#edit_cont" href="#Edit">Create My Own Contract</a>
+
+    <a name="0" class="modalInputF button" rel="#edit_cont" href="/contract?t=e">Create My Own Contract</a>
     <h4>My Contracts</h4>
     <table>
 
@@ -36,52 +37,9 @@
                         <input type="submit" value="SAVE" />
                 </form>
             </div>
-            {% elif cont[c].status == 'N' %}<a class="modalInputF" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
-            <div class="modal F" id="edit_cont{{c}}">
-                <h3>Edit Contract</h3>
-                <div class="modal_wrap">
-                    <form class="edit_cont_form" method=post>
-                        <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
-                        <table>
-                            <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ cont[c].code }}"></td>
-                                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ cont[c].opendate }}" >
-                                    <input style="width: 35px;" type=number value={{cont[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td>
-                            <tr><th>Full Name</th><td><input type=text name=fullname value="{{cont[c].fullname}}"></td>
-                                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{cont[c].settledate}}" >
-                                <input style="width: 35px;" type=number value={{cont[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
-                            <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{cont[c].btc_multi}}"></td>
-                                <th>Region</th><td><select name="region" >
-                                    <option value="W" {% if cont[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
-                                    <option value="N" {% if cont[c].region == "N" %} selected="selected" {% endif %}>North America</option>
-                                    <option value="L" {% if cont[c].region == "L" %} selected="selected" {% endif %}>Latin America / Carib.</option>
-                                    <option value="O" {% if cont[c].region == "O" %} selected="selected" {% endif %}>Oceania / Australia</option>
-                                    <option value="M" {% if cont[c].region == "M" %} selected="selected" {% endif %}>Middle East</option>
-                                    <option value="E" {% if cont[c].region == "E" %} selected="selected" {% endif %}>Europe</option>
-                                    <option value="A" {% if cont[c].region == "A" %} selected="selected" {% endif %}>Asia</option>
-                                    <option value="F" {% if cont[c].region == "F" %} selected="selected" {% endif %}>Africa</option>
-                                </select></td>
-                            <tr><th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{cont[c].leverage * 100}}"> % </td>
-                                <th>Sector</th><td><select name="sector">
-                                    <option value="C" {% if cont[c].sector == "C" %} selected="selected" {% endif %}>Currency</option>
-                                    <option value="I" {% if cont[c].sector == "I" %} selected="selected" {% endif %}>Stock Index</option>
-                                    <option value="M" {% if cont[c].sector == "M" %} selected="selected" {% endif %}>Commodity</option>
-                                    <option value="S" {% if cont[c].sector == "S" %} selected="selected" {% endif %}>Sports</option>
-                                    <option value="P" {% if cont[c].sector == "P" %} selected="selected" {% endif %}>Politic</option>
-                                    <option value="E" {% if cont[c].sector == "E" %} selected="selected" {% endif %}>Entertainment</option>
-                                    <option value="N" {% if cont[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
-                                    <option value="O" {% if cont[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
-                                </select></td></tr>
-                            <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{cont[c].write_fee * 2000}}"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
-                            <tr><th>Description</th><td colspan="3">
-                                <textarea name="description" rows="10" cols="80">{{cont[c].description}}</textarea></td></tr>
-                            <tr><th>Approval Msg</th><td colspan="3">
-                                {{cont[c].apinstruction}}</td></tr>
-                        </table>
-                        <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
-                        <input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />
-                    </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
-                </div>
-            </div>
+            {% elif cont[c].status == 'N' %}
+            <a name="{{ c }}" class="modalInputF" rel="#edit_cont" href="/contract?t=e&c={{ c }}">EDIT</a>
+
             {% endif %}</td>
     </tr>
     {% else %}
@@ -89,44 +47,5 @@
     {% endfor %}
     </table>
     <div class="modal F" id="edit_cont">
-        <h3>Create a New Contract</h3>
-        <div class="modal_wrap">
-            <div class="grid_10">
-            <form action="{{ url_for('account',t='C') }}" method=post>
-                <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="0">
-                <table>
-                    <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td><th>Full Name</th><td><input type=text name=fullname></td>
-                    <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>    <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ><input style="width: 35px;" type=number value=0 name=opentime min=0 max=23 required="required">h</td>
-                    <tr>
-                    <th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required"> % </td><th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ><input style="width: 35px;" type=number value=0 name=settletime min=0 max=23 required="required">h</td></tr>
-                    <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="0"> ‰ </td>
-                        <th>Region</th><td><select name="region">
-                            <option value="W" >World Wide</option>
-                            <option value="N" >North America</option>
-                            <option value="L" >Latin America / Carib.</option>
-                            <option value="O" >Oceania / Australia</option>
-                            <option value="M" >Middle East</option>
-                            <option value="E" >Europe</option>
-                            <option value="A" >Asia</option>
-                            <option value="F" >Africa</option>
-                        </select></td></tr>
-                    <tr><th>Twitter ID</th><td><input type=text name=twitter_id></td>
-                        <th>Sector</th><td><select name="sector">
-                            <option value="C" >Currency</option>
-                            <option value="I" >Stock Index</option>
-                            <option value="M" >Commodity</option>
-                            <option value="S" >Sports</option>
-                            <option value="P" >Politic</option>
-                            <option value="E" >Entertainment</option>
-                            <option value="N" >Natural</option>
-                            <option value="O" >Others</option>
-                        </select></td></tr>
-                    <tr><th>Description</th><td colspan="3">
-                        <textarea name="description" rows="10" cols="80"></textarea></td></tr>
-                </table>
-                <input type=submit value=SAVE>
-            </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
-            </div>
-            <div class="grid_5">hihi</div>
-        </div>
+        <div class="cont_wrap"></div>
     </div>
