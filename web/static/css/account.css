@@ -11,12 +11,18 @@ div.subm_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
 
-input,select {font-size:1.1em;padding: 4px; margin: 7px 5px; border: 1px solid #CCC;    -moz-box-shadow:0 0 10px #eee inset;
+input,select {font-size:1.2em;padding: 4px; border: 1px solid #CCC; margin: 1px;   -moz-box-shadow:0 0 10px #eee inset;
     -webkit-box-shadow:0 0 10px #eee inset;}
-textarea    {padding: 5px; margin: 5px;}
+textarea    {padding: 4px; }
 input:hover {border: 1px solid #db8616;}
-form    {border: 1px solid #999;background-color: white; margin: 10px 20px;padding: 10px;}
-div.body form table th   {color: #000;font-weight: bold;padding: 5px;}
+
+div.body table th,div.body table td   {padding: 3px 4px; border: 1px solid #999;}
+div.body table th {color: #640;}
+div.body form table th,div.body form table td   {padding: 8px 8px; border:none;}
+div.body form  {border: 1px solid #999;background-color: white; margin: 5px 40px 5px 20px;padding: 10px 40px;}
+div.body form table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
+div.body form table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
+
 table.ginfo {font-size: 1.2em;margin: 5px;}
 
 form.btc_out    {font-size: 1.2em;margin: 20px 30px;}

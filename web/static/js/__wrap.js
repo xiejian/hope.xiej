@@ -180,7 +180,7 @@ function init_modalInputF(obj) {
             loadSpeed: 200,
             opacity: 0.8
         },
-        top:5,
+        top:0,
         effect: 'apple',
         closeOnClick: false
     });

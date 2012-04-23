@@ -29,7 +29,7 @@
     <p>Your trade fee rate is set from 0.4% to 0.07% based on your trade volume in last one month. </p>
     <p>The more you trade, the lower fee rate you get.</p>
 
-    <table class="ginfo grid_5 push_1">
+    <table class="ginfo grid_6 push_1">
         <tr><th>My Trade Volume</th><td> {{ g.u['tradevol'] |f }}</td></tr>
 
     <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table>
@@ -41,7 +41,7 @@
     <p>You could use fee coupon and receive a fee discount return at the end of month.</p>
     <p>Your fee coupon of this month is set from 10% to 80% based on you and your friends' trade volume in last one month.</p>
     <p> The more friends you get, the higher fee coupon you get.</p>
-    <table class="ginfo grid_5 prefix_1 alpha">
+    <table class="ginfo grid_6 push_1">
         <tr><th>Num of My Friends</th><td> {{ g.u['rnum'] |f }}</td></tr>
         <tr><th>My Friends' Trade Volume</th><td> {{ g.u['rtradevol'] |f }}</td></tr>
         <tr><th>My Effective Trade Volume</th><td> {{ (g.u['tradevol'] + g.u['rtradevol'])|f }}</td></tr>
@@ -69,8 +69,8 @@
         <a class="modalInput button" rel="#invite_friend" href="#invite_friend">Invite Friends</a>
     <br/><br/>
     <div class="modal" id="invite_friend">
-        <h3>Invite your friends to join BTCFE</h3>
-        <h4>As reward:</h4>
+        <h4>Invite your friends to join BTCFE</h4>
+        <h5>As reward:</h5>
         <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
         <p>You will get all this trade volume in the future.</p>
         <form action="{{ url_for('account',t='I') }}" method=post class="invite">
@@ -138,7 +138,7 @@
     </table>
 
     <div class="modal" id="set_pass">
-    <h2>Reset Password</h2><br/>
+    <h4>Reset Password</h4>
         <form action="{{ url_for('account',t='P') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>
@@ -153,7 +153,7 @@
     </div>
 
     <div class="modal" id="valid_mail">
-    <h2>Send Validate Email Again</h2><br/><br/><table><tr><th>
+    <h4>Send Validate Email Again</h4><br/><table><tr><th>
         <h3><em>{{ session['email'] }}</em></h3><br/>
         <form action="{{ url_for('account',t='E') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
@@ -162,7 +162,7 @@
     </div>
 
     <div class="modal" id="set_cpass">
-        <h2>Reset Capital Password</h2><br/>
+        <h4>Reset Capital Password</h4>
         <form action="{{ url_for('account',t='Q') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>

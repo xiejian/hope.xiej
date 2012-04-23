@@ -21,7 +21,7 @@
         <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
         <table>
             <tr><th title="{{ hint.code }}">Code</th><td title="{{ hint.code }}"><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
-                <th>Full Name</th><td title="{{ hint.fullname }}"><input type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
+                <td class="vhr" rowspan="5"></td><td rowspan="5"></td><th>Full Name</th><td title="{{ hint.fullname }}"><input style="width: 200px;" type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
             <tr><th>Btc Multi</th><td title="{{ hint.btc_multi }}"><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"></td>
                 <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
             <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
@@ -48,12 +48,12 @@
                     <option value="N" {% if ct[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
                     <option value="O" {% if ct[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                 </select></td></tr>
-            <tr><th>Description</th><td title="{{ hint.description }}" colspan="3">
+            <tr><th>Description</th><td title="{{ hint.description }}" colspan="5">
                 <textarea name="description" rows="10" cols="80">{{ct[c].description}}</textarea></td></tr>
-            <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="3">
+            <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="5">
                 {{ct[c].apinstruction}}</td></tr>
-        </table>
+        </table><br>
         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
-        {% if c > 0 %}<input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />{% endif %}
+        {% if c > 0 %}　<input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />{% endif %}
     </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
 </div>

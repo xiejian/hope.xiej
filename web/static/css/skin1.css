@@ -161,9 +161,9 @@ a.caldisabled {
      */
     width:440px;
     /* some padding to layout nested elements nicely  */
-    padding:45px 75px;
+    padding:25px 10px 25px 30px;
     /* a little styling */
-    font-size:1.2em;
+    font-size:1.1em;
     /*text-align: center;*/
 
 }
