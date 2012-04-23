@@ -1,19 +1,33 @@
+{% set hint = {'title':'As a BTCFE contract author, you are response',
+    'code' : 'e.g. USD. This is the ID of contract.',
+   'fullname': 'e.g. US Dollar',
+   'opendate': 'hello',
+   'settledate': '',
+   'fullname': 'hi',
+   'btc_multi': 'e.g. 0.001. This is ussed to convert Contract Point to Value in BTC',
+   'leverage': 'e.g. 25%. Margin Rate ',
+   'region': '',
+   'sector': '',
+   'write_fee': 'e.g. 1%. ',
+   'twitter_id': 'hi',
+   'description': 'e.g.',
+   'apr_msg':'Message from Site Admin' }%}
 {% if c==0 %}
-        {% set ct=[{'code':'','opendate':2,'fullname':'','settledate':30,'btc_multi':'0.0001','region':'W','sector':'C','leverage':'0.25','write_fee':'0.0005','description':'','apinstruction':''}] %}
+        {% set ct=[{'code':'','opendate':2,'fullname':'','settledate':30,'btc_multi':'0.0001','region':'W','sector':'C','leverage':'','write_fee':'0','description':'','apinstruction':''}] %}
 {% else %}   {% set ct = cont %} {% endif %}
-<h3>Create a New ctract</h3>
+<h3>Create a New contract</h3>
 <div class="modal_wrap">
     <form class="edit_ct_form" method=post>
         <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
         <table>
-            <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
-                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" >
-                    <input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td>
-            <tr><th>Full Name</th><td><input type=text name=fullname value="{{ct[c].fullname}}"></td>
-                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" >
-                    <input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
-            <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"></td>
-                <th>Region</th><td><select name="region" >
+            <tr><th title="{{ hint.code }}">Code</th><td title="{{ hint.code }}"><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
+                <th>Full Name</th><td title="{{ hint.fullname }}"><input type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
+            <tr><th>Btc Multi</th><td title="{{ hint.btc_multi }}"><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"></td>
+                <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
+            <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
+                <th>Settle Date</th><td  title="{{ hint.settledate }}"><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" ><input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
+            <tr><th>Write FeeRate</th><td title="{{ hint.write_fee }}"><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td>
+                <th>Region</th><td  title="{{ hint.region }}"><select name="region" >
                     <option value="W" {% if ct[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
                     <option value="N" {% if ct[c].region == "N" %} selected="selected" {% endif %}>North America</option>
                     <option value="L" {% if ct[c].region == "L" %} selected="selected" {% endif %}>Latin America / Carib.</option>
@@ -23,8 +37,8 @@
                     <option value="A" {% if ct[c].region == "A" %} selected="selected" {% endif %}>Asia</option>
                     <option value="F" {% if ct[c].region == "F" %} selected="selected" {% endif %}>Africa</option>
                 </select></td>
-            <tr><th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
-                <th>Sector</th><td><select name="sector">
+            <tr><th>Twitter ID</th><td  title="{{ hint.twitter_id }}"><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td>
+                <th>Sector</th><td  title="{{ hint.sector }}"><select name="sector">
                     <option value="C" {% if ct[c].sector == "C" %} selected="selected" {% endif %}>Currency</option>
                     <option value="I" {% if ct[c].sector == "I" %} selected="selected" {% endif %}>Stock Index</option>
                     <option value="M" {% if ct[c].sector == "M" %} selected="selected" {% endif %}>Commodity</option>
@@ -34,10 +48,9 @@
                     <option value="N" {% if ct[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
                     <option value="O" {% if ct[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                 </select></td></tr>
-            <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td></tr>
-            <tr><th>Description</th><td colspan="3">
+            <tr><th>Description</th><td title="{{ hint.description }}" colspan="3">
                 <textarea name="description" rows="10" cols="80">{{ct[c].description}}</textarea></td></tr>
-            <tr><th>Approval Msg</th><td colspan="3">
+            <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="3">
                 {{ct[c].apinstruction}}</td></tr>
         </table>
         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
