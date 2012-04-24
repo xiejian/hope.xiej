@@ -159,7 +159,7 @@ a.caldisabled {
          width after the growing animation finishes
          height is automatically calculated
      */
-    width:440px;
+    width:480px;
     /* some padding to layout nested elements nicely  */
     padding:25px 10px 25px 30px;
     /* a little styling */
@@ -169,7 +169,6 @@ a.caldisabled {
 }
 
 
-.modal form {text-align: center;}
 .modal .close {
     background-image:url(../img/close.png);
     position:absolute; right:-6px; top:-4px;

@@ -5,28 +5,25 @@ h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 /*div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}*/
 
-div.subm_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em;color: #444; }
+div.subm_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em;color: #666; }
 div.subm_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
 tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
 
-input,select {font-size:1.2em;padding: 4px; border: 1px solid #CCC; margin: 1px;   -moz-box-shadow:0 0 10px #eee inset;
+input,select {font-size:1.2em;padding: 4px; border: 1px solid #CCC; margin: 2px;   -moz-box-shadow:0 0 10px #eee inset;
     -webkit-box-shadow:0 0 10px #eee inset;}
-textarea    {padding: 4px; }
+textarea    {padding: 4px;margin: 2px;  }
 input:hover {border: 1px solid #db8616;}
 
-div.body table th,div.body table td   {padding: 3px 4px; border: 1px solid #999;}
-div.body table th {color: #640;}
-div.body form table th,div.body form table td   {padding: 8px 8px; border:none;}
-div.body form  {border: 1px solid #999;background-color: white; margin: 5px 40px 5px 20px;padding: 10px 40px;}
-div.body form table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
-div.body form table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
+div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 8px;font-size: 1.2em;margin: 5px 0px ;background-color:#Ffe; }
+div.body table th  {color: #640;padding: 4px;text-align: center; }
+div.body table td  {padding: 6px;}
+div.body form table th {text-align: right;font-size: 1.1em;}
 
-table.ginfo {font-size: 1.2em;margin: 5px;}
-
-form.btc_out    {font-size: 1.2em;margin: 20px 30px;}
-form.btc_out tr td  {text-align: left;vertical-align:middle;}
+div.body form  {border: 1px solid #999;background-color: white; margin: 0px 40px 5px 20px;padding: 10px 40px;text-align: center;}
+div.body table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
+div.body table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
 
 
 div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 30px 5px;padding: 11px 20px 16px 5px;

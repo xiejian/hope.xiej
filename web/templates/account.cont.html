@@ -9,22 +9,22 @@
     </div>
 
 
+    <div class="clear"></div>
     <a name="0" class="modalInputF button" rel="#edit_cont" href="/contract?t=e">Create My Own Contract</a>
     <h4>My Contracts</h4>
-    <table>
-
+    <table style="border: 1px solid #DDCCB1">
     {% for c in cont if cont[c].owner == session['email']%}
         {% if loop.first %}
-        <tr><th>Status</th><th>Name</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+        <tr><th>Status</th><th>Name</th><th>Open Date</th><th>Settle Date</th>
             <th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Settle Margin</th><th>Action</th></tr>
         {% endif %}
         <tr>
         <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
-            <button type="button">{{cont[c].name}}</button></a></td><td>{{(cont[c].leverage*100)|f}}%</td><td>{{cont[c].btc_multi|f}}</td>
+            {{cont[c].name}}</a></td>
         <td>{{cont[c].opendate|f("cd")}}</td><td>{{cont[c].settledate|f("cd")}}</td><td>{{cont[c].region|f("R")}}</td>
         <td>{{cont[c].sector|f("S")}}</td><td>{{cont[c].twitter_id}}</td><td>{{(cont[c].write_fee*2000)|f}}‰</td><td>{{cont[c].vol|f}}</td><td>{{ cont[c].settlemargin|f }}</td>
         <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>
-        {% elif cont[c].status == 'C' %}<a class="modalInput" rel="#settle_cont{{c}}" href="#Settle"> Settle </a>
+        {% elif cont[c].status == 'C' %}<a class="modalInput" rel="#settle_cont{{c}}" href="#Settle"><button> Settle </button></a>
             <div class="modal settle_cont" id="settle_cont{{c}}">
                 <h3>Settle Contract</h3>
                 <form action="{{ url_for('account',t='S') }}" method=post>
@@ -38,7 +38,7 @@
                 </form>
             </div>
             {% elif cont[c].status == 'N' %}
-            <a name="{{ c }}" class="modalInputF" rel="#edit_cont" href="/contract?t=e&c={{ c }}">EDIT</a>
+            <a name="{{ c }}" class="modalInputF" rel="#edit_cont" href="/contract?t=e&c={{ c }}"><button> Edit </button></a>
 
             {% endif %}</td>
     </tr>

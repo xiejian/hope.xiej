@@ -13,6 +13,8 @@ def myformat(value, type='N',format=''):
         else:
             return dt.strftime(format)
     elif type=='cd':  #for contract date
+        if value <= 1000:
+            return value
         return datetime.datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M")
     elif type=='hr':  #for hour
         return datetime.datetime.fromtimestamp(value).hour

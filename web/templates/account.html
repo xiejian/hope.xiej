@@ -29,10 +29,10 @@
     <p>Your trade fee rate is set from 0.4% to 0.07% based on your trade volume in last one month. </p>
     <p>The more you trade, the lower fee rate you get.</p>
 
-    <table class="ginfo grid_6 push_1">
+    <div class="ginfo grid_6 push_1"><table>
         <tr><th>My Trade Volume</th><td> {{ g.u['tradevol'] |f }}</td></tr>
 
-    <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table>
+    <tr><th>My Fee Rate</th><td>{{ (g.u['feerate']*100)|f }}%</td></tr></table></div>
     <div class="clear"></div>
 
     <h4>
@@ -41,23 +41,23 @@
     <p>You could use fee coupon and receive a fee discount return at the end of month.</p>
     <p>Your fee coupon of this month is set from 10% to 80% based on you and your friends' trade volume in last one month.</p>
     <p> The more friends you get, the higher fee coupon you get.</p>
-    <table class="ginfo grid_6 push_1">
+    <div class="ginfo grid_6 push_1"><table>
         <tr><th>Num of My Friends</th><td> {{ g.u['rnum'] |f }}</td></tr>
         <tr><th>My Friends' Trade Volume</th><td> {{ g.u['rtradevol'] |f }}</td></tr>
         <tr><th>My Effective Trade Volume</th><td> {{ (g.u['tradevol'] + g.u['rtradevol'])|f }}</td></tr>
-        <tr><th>Fee Return Rate</th><td>{{ (g.u['returnrate']*100)|f }}%</td></tr></table>
+        <tr><th>Fee Return Rate</th><td>{{ (g.u['returnrate']*100)|f }}%</td></tr></table></div>
 
     <div class="clear"></div>
     {% if g.u['s_coupon']%}
         <h4>Special Coupon: {% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} <em>{{ (sc['coupon'] * 100)|f }}% OFF{% endfor %} </em></h4>
         <p>You could apply both of regular fee coupon and special coupon same time.</p>
-        <table class="ginfo grid_7 push_1">
+        <div class="ginfo grid_7 push_1"><table>
             <tr><th>Coupon</th><th>Month</th><th>Comment</th>
                 {% for sc in g.u['s_coupon']%}
                     <tr{% if sc['ifactive'] == 1 %} class="selected" {% endif %}>
                         <td> {{ (sc['coupon'] * 100)|f }}% OFF</td><td> {{  sc['month'] }} </td><td>{{ sc['comment'] }}</td></tr>
                 {% endfor %}
-        </table>
+        </table></div>
 
         <div class="clear"></div>
     {% endif %}
@@ -80,7 +80,7 @@
         </form>
     </div>
     <div class="subheader">Fee Rate</div>
-    <table><tr><th>Volume</th><th>Fee Rate</th></tr>
+    <table style="border: 1px solid #DDCCB1"><tr><th>Volume</th><th>Fee Rate</th></tr>
         <tr{% if g.u['feerate']|float == 0.004 %} class="selected" {% endif %}><td>< 50</td><td>0.4%</td></tr>
         <tr{% if g.u['feerate']|float == 0.003 %} class="selected" {% endif %}><td>< 100</td><td>0.3%</td></tr>
         <tr{% if g.u['feerate']|float == 0.0025 %} class="selected" {% endif %}><td>< 200</td><td>0.25%</td></tr>
@@ -90,7 +90,7 @@
         <tr{% if g.u['feerate']|float == 0.0008 %} class="selected" {% endif %}><td>< 5k</td><td>0.08%</td></tr>
         <tr{% if g.u['feerate']|float == 0.0007 %} class="selected" {% endif %}><td>>= 10k</td><td>0.07%</td></tr></table>
     <div class="subheader">Monthly Coupon</div>
-    <table><tr><th>Volume</th><th>Coupon</th></tr>
+    <table style="border: 1px solid #DDCCB1"><tr><th>Volume</th><th>Coupon</th></tr>
         <tr{% if g.u['returnrate']|float == 0.1 %} class="selected" {% endif %}><td>< 100</td><td>10% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.2 %} class="selected" {% endif %}><td>< 400</td><td>20% OFF</td></tr>
         <tr{% if g.u['returnrate'] |float== 0.3 %} class="selected" {% endif %}><td>< 1.5k</td><td>30% OFF</td></tr>
@@ -117,18 +117,18 @@
 </div>
 <div class="grid_13 subm_tab">
     <h4>Account Status</h4>
-    <table class="ginfo grid_6 push_1 alpha"><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
+    <div class="ginfo grid_6 alpha omega "><table><tr><th>Trade Password</th><td><img src="{{url_for('static',filename='img/_i_Y.png')}}"></td><td><button class="modalInput" rel="#set_pass">Reset</button></td></tr>
         <tr><th>Email Validate</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['email_v'] +'.png')}}"></td>
             <td>{% if g.u['email_v'] == 'N' %}<button class="modalInput" rel="#valid_mail">Validate</button>{% endif %}</td></tr>
-        <tr><th>Capital Password</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['password2'] +'.png')}}"></td><td><button class="modalInput" rel="#set_cpass">Reset</button></td></tr></table>
-    <div class="grid_6 prefix_1 omega">
+        <tr><th>Capital Password</th><td><img src="{{url_for('static',filename='img/_i_' + g.u['password2'] +'.png')}}"></td><td><button class="modalInput" rel="#set_cpass">Reset</button></td></tr></table></div>
+    <div class="grid_6 prefix_1 alpha omega">
         <p>Trade Password: for login and trade</p>
         <p>Validate Email: for reset password if lost password</p>
         <p>Capital Password: for Bitcoin Withdraw</p>
     </div>
     <div class="clear"></div>
     <h4>Access Log</h4>
-    <table>
+    <table style="border: 1px solid #DDCCB1">
         <tr><th>Timestamp</th><th>Action</th><th>IP Address</th><th>Approximate Location</th><th>Times</th></tr>
         {% for l in g.u['log'] %}
             <tr>
