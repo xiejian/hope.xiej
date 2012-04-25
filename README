@@ -3,6 +3,7 @@ sudo apt-get install mysql-server mysql-client
 
 install python-mysqldb
 install simplejson
+sudo easy_install Flask
 
 modify helpers.py:
     import datetime

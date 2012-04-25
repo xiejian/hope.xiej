@@ -63,7 +63,7 @@ function update_gl(){
     function filltitle(){
         $(vgrid.getHeaderRowColumn('time')).html(parseDate(v_gl['openbal']['balance_dt']));
         var link = '';
-        if(v_gl['openbal']['n'] > 1319990400){  link = '<a title="Click to get more data" href="#" ><↑more↑></a>';     }
+        if(v_gl['openbal']['n'] > 1320019200){  link = '<a title="Click to get more data" href="#" ><↑more↑></a>';     }
         $(vgrid.getHeaderRowColumn('s')).html(link);
         $(vgrid.getHeaderRowColumn('name')).html('<span>　　Opening balance</span>');
         $(vgrid.getHeaderRowColumn('pl')).html('<span>'+updn(v_gl['openbal']['bal_pl'])+'</span>');

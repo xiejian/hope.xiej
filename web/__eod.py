@@ -4,10 +4,10 @@
 import threading,time,datetime
 from _db import _connect_db
 from _data import _update_contract
+from config import EOD_INTERVAL
 
 #data = {'name':'xiejian','id':3}
 NOT = {'B':'S','S':'B'}
-EOD_INTERVAL = 60#*60*12
 gv_eod_status = 'A'
 
 

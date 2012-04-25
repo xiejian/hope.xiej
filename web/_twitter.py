@@ -12,8 +12,9 @@ class _updatec(threading.Thread):
 
     def run(self):
         global gv_twt
-        proxy = urllib2.ProxyHandler(http_proxy)
-        urllib2.install_opener(urllib2.build_opener(proxy))
+        if http_proxy is not None:
+            proxy = urllib2.ProxyHandler(http_proxy)
+            urllib2.install_opener(urllib2.build_opener(proxy))
         urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name=BTCFE&count="+count
         urlt = "http://search.twitter.com/search.json?callback=?&q=BTCFE&include_entities=true"
         adata = urllib2.urlopen(urla)

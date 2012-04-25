@@ -91,7 +91,6 @@ def _update_usergl(db,user_id,openbal_dt):
     trans = [dict(c=row[0],n=gv_contract[row[0]]['name'] if row[0] in gv_contract else '',ty=row[1],bs=row[2], pt=row[3],lt=row[4],fee=row[5],pl=row[6],
         t=row[7],v = row[8],b = row[9],s = row[10]) for row in cur.fetchall()]
     cur.close()
-    print openbal
     return {'openbal':openbal,'trans':trans}
 
 
