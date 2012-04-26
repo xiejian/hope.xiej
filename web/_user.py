@@ -20,7 +20,6 @@ def _createuser(db,email,password,referrer):
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()
-    _change_invitenum(db,referrer,1)
     return True
 
 def _activeuser(db,code):
@@ -28,12 +27,14 @@ def _activeuser(db,code):
     try:
         str = code.split('~')
         d_email = base64.urlsafe_b64decode(str[0].encode('ascii','ignore'))
-        resrows = cur.execute('SELECT user_id,password from users where email=%s', d_email)
+        resrows = cur.execute('SELECT user_id,password,referrer from users where email=%s', d_email)
         if resrows != 1:
             return False
         result = cur.fetchone()
         if str[1] == base64.urlsafe_b64encode(hashlib.sha512(result[1]).digest()):
             cur.execute("UPDATE users SET email_v = 'Y' WHERE user_id = %s",result[0])
+            _change_invitenum(db,result[0],3)
+            _change_invitenum(db,result[2],1)
             db.commit()
             return result[0]
         else:
