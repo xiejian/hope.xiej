@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*
 #this server started by os every 12 hours. notify web server his start and end.
 
-import threading,time,datetime
+import threading,time,datetime,sys
 from _db import _connect_db
 from _data import _update_contract
 from config import EOD_INTERVAL
@@ -15,7 +15,7 @@ gv_eod_status = 'A'
 def open_cont():
     rows = cur.execute("UPDATE contract SET status = 'O' WHERE status ='P' and opendate <= NOW() and settledate > NOW()")
     db.commit()
-    print rows,'contracts opened.'
+    print >> sys.stderr, rows,'contracts opened.'
 
 def close_cont():
     cur.execute("SELECT contract_id FROM contract WHERE status ='O' and settledate <= NOW()")
@@ -28,11 +28,11 @@ def close_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('p_exchange',(o[0],o[1],'C'))
-            print 'Cancel Order',ocur.fetchone()
+            print >> sys.stderr, 'Cancel Order',ocur.fetchone()
 
     ocur.close()
     ccur.close()
-    print rows,'contracts closed.'
+    print >> sys.stderr, rows,'contracts closed.'
 
 def settle_cont():
     cur.execute("SELECT contract_id,settlepoint,settlemargin,owner FROM contract WHERE status ='Q' and settlepoint is not null")
@@ -44,22 +44,22 @@ def settle_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('p_exchange',(o[0],o[1],'C'))
-            print 'Cancel Order',ocur.fetchone()
+            print >> sys.stderr, 'Cancel Order',ocur.fetchone()
             ocur.nextset()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
             ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
-            print 'Add Order',ocur.fetchall()
+            print >> sys.stderr, 'Add Order',ocur.fetchall()
             ocur.nextset()
 
         ccur.execute(" insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) \
             select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",(-1*c[2],c[0],c[3]))
         ccur.execute("UPDATE contract SET status = 'S',settlemargin = 0 WHERE status ='Q' and contract_id = %s",c[0])
 
-        print c[0],'Contract Settled at Point',c[1]
+        print >> sys.stderr, c[0],'Contract Settled at Point',c[1]
     ocur.close()
     ccur.close()
-    print len(dbres),"contracts settled."
+    print >> sys.stderr, len(dbres),"contracts settled."
 
 def achieve_cont():
     #todo achieve old contracts
@@ -72,12 +72,12 @@ def update_feerate():
     rows = cur.execute("update users u left join v_tradevol v on u.user_id=v.user_id set u.feerate = f_FRATE(v.tradevol)")
 
     db.commit()
-    print rows,'user fee rate updated.'
+    print >> sys.stderr, rows,'user fee rate updated.'
 
 def return_fee():
     cur.callproc('p_eod')
     cur.callproc('p_eom')
-    print 'EOD','EOM'
+    print >> sys.stderr, 'EOD','EOM'
 
 
 def balance2date(balance2dt):
@@ -103,7 +103,7 @@ def balance2date(balance2dt):
                         group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])
         db.commit()
 
-        print rows,'/',rown, 'Users Balance Updated'
+        print >> sys.stderr, rows,'/',rown, 'Users Balance Updated'
 
 def forced_close():
     cur.execute("select user_id,balance + p_l - pmargin,omargin from v_userbtc where balance + p_l - omargin - pmargin < 0")
@@ -115,12 +115,12 @@ def forced_close():
             ocur.execute("SELECT order_id FROM orders WHERE status ='O' and type = 'O' and user_id = %s",u[0])
             for o in ocur.fetchall():
                 ccur.callproc('p_exchange',(o[0],u[0],'C'))
-                print ccur.fetchone()
+                print >> sys.stderr, ccur.fetchone()
                 ocur.nextset()
         elif u[1] <= 0:
             #forced close postion
             ocur.callproc('p_forced_close',(u[0],-u[1]))
-            print ocur.fetchone(),'btc Forced Close remained'
+            print >> sys.stderr, ocur.fetchone(),'btc Forced Close remained'
             ocur.nextset()
         #todo send email to notify user
     db.commit()
@@ -147,17 +147,17 @@ def eod_process():
 
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Process Finished.'
 
 def _start_eod_sevice():
     t = threading.Timer(EOD_INTERVAL, eod_process)
     t.start()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Started.'
 
 def _stop_eod_sevice():
     global t
     t.cancel()
-    print time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'EOD Service Stopped.'
 
 if __name__ == '__main__':
     #_start_eod_sevice()

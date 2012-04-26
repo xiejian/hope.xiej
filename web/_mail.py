@@ -39,7 +39,6 @@ class _mailc(threading.Thread):
         server.login(email['sendadd'],email['passwd'])
         server.sendmail(email['sendadd'], self.toaddrs, msg.as_string())
         server.close()
-        #print (email['sendadd'], self.toaddrs, msg.as_string())
 
 
 def _send_mail(toaddrs,content):

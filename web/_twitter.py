@@ -1,4 +1,4 @@
-import urllib2,threading,datetime
+import urllib2,threading,datetime,sys
 import simplejson as json
 from config import http_proxy
 from _data import gv_contract
@@ -34,7 +34,7 @@ def _update_twt():
         twt = _updatec()
         twt.start()
         twt_lastupdate = datetime.datetime.now()
-        print twt_lastupdate,'update_twt'
+        print >> sys.stderr,twt_lastupdate,'update_twt'
 
 if __name__ == '__main__':
     global twta,twtt

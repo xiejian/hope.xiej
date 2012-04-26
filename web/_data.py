@@ -190,7 +190,6 @@ def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,le
     cur = db.cursor()
     write_fee = decimal.Decimal(vol_feerate)/2000
     margin_rate = decimal.Decimal(leverage)/100
-    print write_fee,margin_rate
     cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',margin_rate,fullname,owner,twitter_id,write_fee,region,sector,description))
     result = cur.fetchone()
     if result is None:
@@ -224,4 +223,3 @@ if __name__ == "__main__":
     a = _update_contract(g.db)
     b = _update_user(g,session)
     c = _add_order(g,session,)
-    print b

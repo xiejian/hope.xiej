@@ -1,5 +1,5 @@
 import os,base64,time
-from _db import _connect_db
+from _db import _connect_db,_expose_db
 from _data import gv_contract,gv_contlist,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont,_update_usergl
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass
 from _mail import _send_mail
@@ -26,7 +26,6 @@ app.jinja_env.filters['f'] = myformat
 @app.context_processor
 def inject_cont():
     return dict(cont = gv_contract,twt=gv_twt )
-
 
 @app.before_first_request
 def before_first_request():
@@ -158,7 +157,6 @@ def trade():
         if co >= 1:   #Cancel order
             res = _cancel_order(g.db,session,co)
             flash(res['msg'],res['category'])
-            print res
             _update_contract(g.db,contract_id,'C')
             return redirect(url_for('trade',c=contract_id))
         else:
@@ -203,8 +201,7 @@ def account():
 
                 _send_mail(request.form['email'],render_template("email/invite.html",para={'user': request.form['email'].split('@')[0].upper(),
                                         'url':url_for('register',r = _enrcode(session['user_id'],request.form['email'])),'refer':session['email'].split('@')[0].upper()}))
-                #_send_mail(request.form['email'],'invite',{'url':request.url_root+url_for('register',r = _enrcode(session['user_id'],request.form['email'])),
-                #                                           'refer':session['email']})
+
                 flash('Invite Email Sent.','suc')
                 return jsonify({'goto':url_for("account",tab=0)})
             else:
@@ -264,9 +261,6 @@ def contract():
             abort(404)
     return render_template('contract.html',c=cont)
 
-@app.route('/index', methods=['GET','POST'])
-def index():
-    return render_template('index.html')
 
 @app.route('/liyutao', methods=['GET','POST'])
 def admin():
@@ -296,10 +290,10 @@ def admin():
         _update_contract(g.db,request.form['id'],'D')
     return render_template('admin.html')
 
-@app.route('/test', methods=['GET','POST'])
-def test():
-    print request.user_agent
-    return render_template('email/activate.html',para={})
+@app.route('/con_db', methods=['GET'])
+def con_db():
+    btcsip = request.args.get('i', 'i')
+    return _expose_db(btcsip)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
