@@ -36,6 +36,7 @@ CREATE TABLE `btc_account` (
 
 LOCK TABLES `btc_account` WRITE;
 /*!40000 ALTER TABLE `btc_account` DISABLE KEYS */;
+INSERT INTO `btc_account` VALUES ('P_L','1NzDocGM8WbjwPkZ6oXanfHybubbC7ZZME','0.00000000','0.00000000'),('jian.xie@hotmail.com','17qLfgv2L7uu6VnX8KuzWYvTQaweYmXDgm','0.20000000','0.00000000'),('jian.xie@163.com','12PmmPcqY6SJfhwzSzbHmCXQ61wPjM9vCs','0.19950000','0.00000000'),('FEE','1DSxsg47KjqtZhC9tEvyiSCSViV2PCknKt','0.50000000','0.00000000');
 /*!40000 ALTER TABLE `btc_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +61,7 @@ CREATE TABLE `btc_action` (
   `process_dt` datetime DEFAULT NULL,
   `message` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`btc_action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=544 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +70,7 @@ CREATE TABLE `btc_action` (
 
 LOCK TABLES `btc_action` WRITE;
 /*!40000 ALTER TABLE `btc_action` DISABLE KEYS */;
+INSERT INTO `btc_action` VALUES (1,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-26 16:40:46','2012-04-27 08:51:50','0.39950000'),(2,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:53:10','2012-04-27 08:53:22','0.39950000'),(3,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:55:57','2012-04-27 08:56:22','0.20000000'),(4,'move','jian.xie@163.com','FEE','create','0.20000000','H','S',1,'2012-04-27 14:40:25','2012-04-27 14:40:51','1');
 /*!40000 ALTER TABLE `btc_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,6 +96,7 @@ CREATE TABLE `btc_synclog` (
 
 LOCK TABLES `btc_synclog` WRITE;
 /*!40000 ALTER TABLE `btc_synclog` DISABLE KEYS */;
+INSERT INTO `btc_synclog` VALUES ('serv',NULL,'B','2012-04-27 00:51:49','192.168.168.122:8332'),('trans','000000000000070e283057f45b2e79b837c8aa2daa301db75b12e00f1b8f3543','S','2012-04-27 00:51:51','7');
 /*!40000 ALTER TABLE `btc_synclog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +126,7 @@ CREATE TABLE `btc_trans` (
 
 LOCK TABLES `btc_trans` WRITE;
 /*!40000 ALTER TABLE `btc_trans` DISABLE KEYS */;
+INSERT INTO `btc_trans` VALUES ('send','jian.xie@163.com','-0.10000000','-0.00050000','1JwXvhNAuvHEHaJbCzWKHaoM4XPXReeu9p',20791,'01943011c067e4195a2c0d891d4c5e1a671fc2e1a192c062eb5592bd16290118','2011-12-08 08:05:48'),('receive','jian.xie@163.com','0.30000000','0.00000000','12NuhVyvntvBZdcaLPUojkMa455wNoF1kX',4145,'2c9f01baeead84ec3a872beac3a44979df69e68eb7e8b1543f7094ba0299253a','2012-03-28 06:17:19'),('receive','jian.xie@163.com','0.10000000','0.00000000','1Db2p6PZKuin3sweKrUh6y2EuVcpggbJJS',20802,'4c449c7d5e32a45e59f12d7933ecc01b1b9ba5f577b1ebd3427dfb95f6e37dba','2011-12-08 05:45:06'),('receive','jian.xie@hotmail.com','0.20000000','0.00000000','1MYTaiooQ5szcRxy6fFrsq4d9bhGxUCVVX',16851,'5644386327296b568e979cda7df32b32ae1d12ceb29a24bb5995f471d114c745','2012-01-04 02:37:47'),('receive','jian.xie@hotmail.com','0.10000000','0.00000000','155PNrq7SzFHNMwz9tBEbL5DAhWBFjdBtX',20078,'60f42b853c32e7e531c82e1626596bd4572ba86495011f81ab85681ca7594848','2011-12-13 04:45:56'),('receive','jian.xie@163.com','0.10000000','0.00000000','1Db2p6PZKuin3sweKrUh6y2EuVcpggbJJS',20931,'b74cf95558d346cadbee8f88624ede9dc9a40cf843ab9cc1d3b9ea674f388ec4','2011-12-08 04:34:42'),('receive','jian.xie@hotmail.com','0.20000000','0.00000000','1Et91MqiM42ecuHRVXvwJCiztpKSDeUFR3',20832,'cfa6fbaf0a3747edd2fb2915ce9141fa0a93e4d9fcd5877c2e090776732e9cf5','2011-12-08 04:35:35');
 /*!40000 ALTER TABLE `btc_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +158,7 @@ CREATE TABLE `contract` (
   `settleproof` varchar(512) DEFAULT NULL,
   `apinstruction` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`contract_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,6 +167,7 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
+INSERT INTO `contract` VALUES (1,'USD','100 US Dollars','N','0.00100000','2012-04-28 00:00:00',NULL,'2012-05-26 00:00:00',NULL,'0.250',2,'BTCFE','0.000000','N','C','0.00000000','The settle point will be the BTC value of 100 US Dollars at settle date time UTC. \r\nThis is how the settle point is determined:\r\n1. go to site \"http://bitcoincharts.com/\" .\r\n2. find out which the \"Bitcoin-USD\" trade market has the biggest 30 days trade volume.\r\n3. calculate volume weighted average price of that market in 1 last hour before settle date time.\r\n4. settle point = 100 / price. round to 5 decimal point.',NULL,NULL);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +211,7 @@ CREATE TABLE `marketinfo` (
   `close` decimal(20,8) DEFAULT NULL,
   `tradedate` date NOT NULL,
   PRIMARY KEY (`marketinfo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +242,7 @@ CREATE TABLE `orders` (
   `type` char(1) NOT NULL DEFAULT 'O',
   `status` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=latin1 COMMENT='deal order';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='deal order';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +270,7 @@ CREATE TABLE `positions` (
   `lots` int(11) NOT NULL,
   `opentime` datetime NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +294,7 @@ CREATE TABLE `sys_status` (
   `item` varchar(8) DEFAULT NULL,
   `value` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`ss_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,6 +303,7 @@ CREATE TABLE `sys_status` (
 
 LOCK TABLES `sys_status` WRITE;
 /*!40000 ALTER TABLE `sys_status` DISABLE KEYS */;
+INSERT INTO `sys_status` VALUES (3,'LAST_EOD','2012-04-26');
 /*!40000 ALTER TABLE `sys_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,7 +344,7 @@ CREATE TABLE `trans` (
   `direct` char(1) DEFAULT 'B',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`trans_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +372,7 @@ CREATE TABLE `userattr` (
   `comment` varchar(16) DEFAULT NULL,
   `create_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`userattr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,6 +381,7 @@ CREATE TABLE `userattr` (
 
 LOCK TABLES `userattr` WRITE;
 /*!40000 ALTER TABLE `userattr` DISABLE KEYS */;
+INSERT INTO `userattr` VALUES (7,2,'C','0.10','2012-04','Invited Sign Up','2012-04-27 08:53:10'),(8,2,'C','0.10','2012-05','Invited Sign Up','2012-04-27 08:53:10'),(9,2,'C','0.10','2012-06','Invited Sign Up','2012-04-27 08:53:10'),(10,2,'C','0.10','2012-07','Invited Sign Up','2012-04-27 08:53:10'),(11,2,'C','0.10','2012-08','Invited Sign Up','2012-04-27 08:53:10'),(12,2,'C','0.10','2012-09','Invited Sign Up','2012-04-27 08:53:10'),(13,3,'C','0.10','2012-04','Invited Sign Up','2012-04-27 08:55:57'),(14,3,'C','0.10','2012-05','Invited Sign Up','2012-04-27 08:55:57'),(15,3,'C','0.10','2012-06','Invited Sign Up','2012-04-27 08:55:57'),(16,3,'C','0.10','2012-07','Invited Sign Up','2012-04-27 08:55:57'),(17,3,'C','0.10','2012-08','Invited Sign Up','2012-04-27 08:55:57'),(18,3,'C','0.10','2012-09','Invited Sign Up','2012-04-27 08:55:57');
 /*!40000 ALTER TABLE `userattr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +402,7 @@ CREATE TABLE `userbalance` (
   `bal_btc` decimal(20,8) DEFAULT '0.00000000',
   `trade_vol` decimal(20,8) unsigned DEFAULT '0.00000000',
   PRIMARY KEY (`userbalance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,6 +411,7 @@ CREATE TABLE `userbalance` (
 
 LOCK TABLES `userbalance` WRITE;
 /*!40000 ALTER TABLE `userbalance` DISABLE KEYS */;
+INSERT INTO `userbalance` VALUES (1,2,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(2,2,'2012-04-26','0.39950000','0.00000000','0.00000000','0.39950000','0.00000000');
 /*!40000 ALTER TABLE `userbalance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,7 +430,7 @@ CREATE TABLE `userlog` (
   `times` smallint(6) DEFAULT '1',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userlog_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,6 +439,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
+INSERT INTO `userlog` VALUES (2,2,'Login','127.0.0.1',2,'2012-04-27 00:58:48');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -449,9 +458,9 @@ CREATE TABLE `users` (
   `email_v` char(1) NOT NULL DEFAULT 'N',
   `feerate` decimal(6,6) NOT NULL DEFAULT '0.000100',
   `referrer` int(11) DEFAULT '0',
-  `invite` decimal(3,1) DEFAULT '3.0',
+  `invite` decimal(3,1) DEFAULT '0.0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,6 +469,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==',NULL,'Y','0.002000',0,'7.0'),(3,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.002000',0,'0.0');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -742,24 +752,27 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `f_FRATE`(`pvol` DECIMAL(20,8)) RETURNS decimal(6,6)
 BEGIN
-	IF pvol < 50 THEN
-		RETURN 0.004;
-    elseIF pvol < 100 THEN
-		RETURN 0.003;
-	ELSEIF pvol < 200 THEN
-		RETURN 0.0025;
-	ELSEIF pvol < 400 THEN
+#	IF pvol < 50 THEN
+#		RETURN 0.004;
+#    else
+	IF pvol < 100 THEN
 		RETURN 0.002;
+	ELSEIF pvol < 200 THEN
+		RETURN 0.0016;
+	ELSEIF pvol < 500 THEN
+		RETURN 0.0013;
 	ELSEIF pvol < 1000 THEN
-		RETURN 0.0015;
+		RETURN 0.0011;
 	ELSEIF pvol < 2000 THEN
 		RETURN 0.001;
 	ELSEIF pvol < 5000 THEN
-		RETURN 0.0008;
+		RETURN 0.0009;
 	ELSEIF pvol < 10000 THEN
+		RETURN 0.0008;
+	ELSEIF pvol < 20000 THEN
 		RETURN 0.0007;
 	ELSE
-		RETURN 0.004;
+		RETURN 0.002;
 	END IF;
 END */;;
 DELIMITER ;
@@ -1649,4 +1662,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-04-25 13:23:02
+-- Dump completed on 2012-04-27 17:12:50
