@@ -6,25 +6,27 @@
 <div class="scroll_wrap">
 <div class="grid_9 alpha">
     <table>
-        <tr><td style="width:180px;" rowspan="4"><h4>{{cont[c].latestpoint|f}}</h4><br/> {%if 'D' in cont[c]%}
-            {{(cont[c]['D'][4] - cont[c]['D'][1])}} ( {{((cont[c]['D'][4] - cont[c]['D'][1])*100 / cont[c]['D'][1])|f}}% ){% endif %}
+        <tr><td style="width:160px;" rowspan="4"><h4>{{cont[c].latestpoint|f}}
+            {% if cont[c]["ch"]|f in [0,''] %} <span class="gr">( - )</span>
+            {% elif cont[c]["ch"]|f < 0%} <span class="dn">( {{ cont[c]["ch"] }} %)</span>
+            {% else  %} <span class="up"> ( +{{ cont[c]["ch"] }} %)</span>{% endif %}</h4>
             {{cont[c].fullname}}</td>
-            <th>status</th><td>{{cont[c].status|f("C")}}</td><th>Open Date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
-        <tr><th>btc_multi</th><td>{{cont[c].btc_multi|f}}</td><th>Settle Date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
-        <tr><th>leverage</th><td>{{(cont[c].leverage*100)|f}}%</td><th>Region</th><td>{{cont[c].region|f("R")}}</td></tr>
-        <tr><th>Write Fee</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>Sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
+            <th>status</th><td>{{cont[c].status|f("C")}}</td><th>open date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
+        <tr><th>contract value</th><td>{{cont[c].btc_multi|f}} × point</td><th>settle date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
+        <tr><th>margin rate</th><td>{{(cont[c].leverage*100)|f}}%</td><th>region</th><td>{{cont[c].region|f("R")}}</td></tr>
+        <tr><th>fees to writer</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
 
 </table>
 
-    <div id="contchart" style="height: 480px; min-width: 530px"></div>​
+    <div id="contchart" style="height: 500px; min-width: 530px"></div>​
     <script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
 
-    <table><tr><th>Description</th><td>
-        <textarea rows="5" cols="70" readonly="readonly">{{cont[c].description}}</textarea>
-    </td><tr><th>SettlePoint</th><td>{{ cont[c].settlepoint }}</td></tr>
-        <tr><th>SettleProof</th>
+    <table><tr><th>contract definition</th><td>
+        <textarea rows="8" cols="80" readonly="readonly">{{cont[c].description}}</textarea>
+    </td><tr><th>settle point</th><td>{{ cont[c].settlepoint }}</td></tr>
+        <tr><th>settle proof</th>
             <td colspan="2">
-                <textarea rows="5" cols="70" readonly="readonly">{{cont[c].settleproof}}</textarea></td>
+                <textarea rows="8" cols="80" readonly="readonly">{{cont[c].settleproof}}</textarea></td>
         </tr>
     </table>
 

@@ -16,11 +16,11 @@ var chart;
 function loadcontchart(cid) {
     $.getJSON($SCRIPT_ROOT + '/data',{t:'c',n:cid }, function(odata) {
         data = odata['data'];
+        if(data.length==0){$("div#contchart").remove();return;}
         // split the data set into ohlc and volume
         var ohlc = [],
-            volume = [],
-            dataLength = data.length;
-        for (i = 0; i < dataLength; i++) {
+            volume = [];
+        for (i = 0; i < data.length; i++) {
             ohlc.push([
                 data[i][0], // the date
                 data[i][1], // open
@@ -74,16 +74,15 @@ function loadcontchart(cid) {
                 floating: true,
                 align: 'left',
                 x:150
-
             },
             yAxis: [{
 
-                height: 250,
+                height: 270,
                 lineWidth: 1
             }, {
 
-                top: 288,
-                height: 90,
+                top: 308,
+                height: 100,
                 offset: 0,
                 lineWidth: 1
             }],

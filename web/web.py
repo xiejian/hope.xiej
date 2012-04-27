@@ -72,6 +72,8 @@ def data():
         if 'user_id' not in session:
             abort(404)
         return jsonify(_update_usergl(g.db,session['user_id'],n))
+    elif t=='test':
+        return jsonify(request.headers)
 
 
 #=================================================================
@@ -259,6 +261,7 @@ def contract():
             return render_template('contract_edit.html',c=cont)
         else:
             abort(404)
+    print gv_contract[cont]["ch"]
     return render_template('contract.html',c=cont)
 
 
@@ -300,3 +303,4 @@ if __name__ == '__main__':
 
 
 #todo minimus margin limit
+#todo trade point fluctuate limit

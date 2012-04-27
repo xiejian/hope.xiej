@@ -44,7 +44,7 @@ function update_contlist(){
     var cl = {
         st:{id: "status", name: "Status", field: "st",width:60, sortable:true, formatter:function(row, cell, value){return _dec['st'][value];}},
         n:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
-        fn:{id: "fullname", name: "Fullname", field: "fn",width:90, sortable:true},
+        fn:{id: "fullname", name: "Fullname", field: "fn",width:100, sortable:true},
         od:{id: "opendt", name: "Open DT", field: "od", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         sd:{id: "settledt", name: "Settle DT", field: "sd", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         r:{id: "region", name: "Region", field: "r", width:100,sortable:true, formatter:function(row, cell, value){return _dec['r'][value];}},
@@ -54,7 +54,7 @@ function update_contlist(){
         sp:{id: "settlept", name: "Settle PT", field: "sp", sortable:true},
         vl:{id: "volume", name: "Volume", field: "vl", sortable:true},
         o:{id: "owner", name: "Author", field: "o", width:120, sortable:true},
-        a:{id: "trade", name: "", field: "c",formatter: function ( row, cell, value, columnDef, dataContext ) {
+        a:{id: "trade", name: "", field: "c",width:70,formatter: function ( row, cell, value, columnDef, dataContext ) {
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
         }
     };

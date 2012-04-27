@@ -40,7 +40,7 @@ function activepage(page){
 function showtab(tab){
     $('div.subm_tab').each(function(i,div){
         if(i == tab){
-            $(div).show();
+            $(div).fadeIn();
             if($(div).find('#acc_his_grid').html()==''){get_gl();}
         }
         else

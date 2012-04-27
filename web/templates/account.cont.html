@@ -16,7 +16,7 @@
     {% for c in cont if cont[c].owner == session['email']%}
         {% if loop.first %}
         <tr><th>Status</th><th>Name</th><th>Open Date</th><th>Settle Date</th>
-            <th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Settle Margin</th><th>Action</th></tr>
+            <th>Region</th><th>Sector</th><th>Twitter</th><th>Fees to Writer</th><th>Vol</th><th>Settle Margin</th><th>Action</th></tr>
         {% endif %}
         <tr>
         <td>{{cont[c].status|f("C")}}</td><td><a name="{{c}}" href="{{ url_for('contract',c=c) }}" class="modalInputF" rel="#cont_overlay" >
