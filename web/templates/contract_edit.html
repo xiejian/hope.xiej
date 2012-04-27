@@ -1,19 +1,23 @@
 {% set hint = {'title':'As a BTCFE contract author, you are response',
-    'code' : 'e.g. USD. This is the ID of contract.',
-   'fullname': 'e.g. US Dollar',
-   'opendate': 'hello',
-   'settledate': '',
-   'fullname': 'hi',
-   'btc_multi': 'e.g. 0.001. This is ussed to convert Contract Point to Value in BTC',
-   'leverage': 'e.g. 25%. Margin Rate ',
+    'code' : 'The ID of contract, unique in one settlement month. \ne.g. USD.',
+   'fullname': 'The full name of what we are trading. \ne.g. 100 US Dollars.',
+   'opendate': 'The earliest datetime the contract start to trade after approval.',
+   'settledate': 'VERY IMPORTANT! \nThe datetime the contract settle point will be determined.',
+   'btc_multi': 'The value in BTC of 1 contract. \ne.g. 0.001.',
+   'leverage': 'The ratio of contract value you have to put up to hold futures contract positions. \ne.g. 25%.',
    'region': '',
    'sector': '',
-   'write_fee': 'e.g. 1%. ',
-   'twitter_id': 'hi',
-   'description': 'e.g.',
-   'apr_msg':'Message from Site Admin' }%}
+   'write_fee': 'Fees charged by contract writer based on contract''s trade volume. \ne.g. 1‰. ',
+   'twitter_id': 'Contract writter''s twitter ID for information announcement. \ne.g. BTCFE',
+   'description': 'VERY IMPORTANT! \nDefine how settle point is determined at settledate in detail.
+e.g.
+1. go to site "http://bitcoincharts.com/" .
+2. find out which the "Bitcoin-USD" trade market has the biggest 30 days trade volume.
+3. calculate volume weighted average price of that market in 1 last hour before settle date time.
+4. settle point = 100 / price. round to 5 decimal point.',
+   'apr_msg':'Message from site admin' }%}
 {% if c==0 %}
-        {% set ct=[{'code':'','opendate':2,'fullname':'','settledate':30,'btc_multi':'0.0001','region':'W','sector':'C','leverage':'','write_fee':'0','description':'','apinstruction':''}] %}
+        {% set ct=[{'code':'','opendate':1,'fullname':'','settledate':30,'btc_multi':'0.0001','region':'W','sector':'C','leverage':'','write_fee':'0','description':'','apinstruction':''}] %}
 {% else %}   {% set ct = cont %} {% endif %}
 <h3>Create a New contract</h3>
 <div class="modal_wrap">
@@ -22,11 +26,11 @@
         <table>
             <tr><th title="{{ hint.code }}">Code</th><td title="{{ hint.code }}"><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
                 <td class="vhr" rowspan="5"></td><td rowspan="5"></td><th>Full Name</th><td title="{{ hint.fullname }}"><input style="width: 200px;" type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
-            <tr><th>Btc Multi</th><td title="{{ hint.btc_multi }}"><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"></td>
+            <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
                 <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
             <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
                 <th>Settle Date</th><td  title="{{ hint.settledate }}"><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" ><input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
-            <tr><th>Write FeeRate</th><td title="{{ hint.write_fee }}"><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td>
+            <tr><th>Fees to Writer</th><td title="{{ hint.write_fee }}"><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td>
                 <th>Region</th><td  title="{{ hint.region }}"><select name="region" >
                     <option value="W" {% if ct[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
                     <option value="N" {% if ct[c].region == "N" %} selected="selected" {% endif %}>North America</option>
@@ -48,7 +52,7 @@
                     <option value="N" {% if ct[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
                     <option value="O" {% if ct[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                 </select></td></tr>
-            <tr><th>Description</th><td title="{{ hint.description }}" colspan="5">
+            <tr><th>Contract Definition</th><td title="{{ hint.description }}" colspan="5">
                 <textarea name="description" rows="10" cols="80">{{ct[c].description}}</textarea></td></tr>
             <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="5">
                 {{ct[c].apinstruction}}</td></tr>
