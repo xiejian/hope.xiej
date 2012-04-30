@@ -18,7 +18,7 @@
 <body>
 <div id="infobar">
     <div class="container_16">
-        <div class="scrollable" title='infobar'>
+        <div class="scrollable infobar">
             <div class="items ver">
                 {% for a in twt['ann'] %}
                     <div class="grid_16"> {{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>

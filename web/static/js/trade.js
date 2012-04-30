@@ -140,7 +140,7 @@ function update_userop(){
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
         },
         co:{id: "co", name: "Cancel", field: "o",width:45,formatter: function ( row, cell, value, columnDef, dataContext ) {
-            return '<a title="Cancel" href="'+$SCRIPT_ROOT + '/trade?co=' + value + '&c='+dataContext['c']+'"></a>';}
+            return '<a title="Cancel" class="cancel" href="'+$SCRIPT_ROOT + '/trade?co=' + value + '&c='+dataContext['c']+'"></a>';}
         }
     };
     var pcolumns = [cl.ot,cl.cn,cl.bs,cl.pt,cl.lt,cl.ct,cl.mv,cl.mg,cl.pl];
