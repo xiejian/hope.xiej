@@ -21,8 +21,8 @@ function get_contdata(cid){
 }
 function updatepage_contdata(){
     var settledt = new Date(gv_cont['settledate']);
-    var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
-    htm += "<tr><th>contract value:</th><td>" + gv_cont["btc_multi"]+" × point</td><th>fees to writer:</th><td>" + gv_cont["write_fee"]*1000+"‰</td></tr>";
+    var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>fees to writer:</th><td>" + gv_cont["write_fee"]*1000+"‰</td></tr>";
+    htm += "<tr><th>contract value:</th><td>" + gv_cont["btc_multi"]+" × point</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont["S"], function(index,val) {
@@ -36,7 +36,7 @@ function updatepage_contdata(){
     var cprice;
     if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">(+'+gv_cont["ch"]+' %)</span>'; }
     else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">('+gv_cont["ch"]+' %)</span>'; }
-    else    { cprice = gv_cont["latestpoint"]+' <span class="gr">('+gv_cont["ch"]+' %)</span>';}
+    else    { cprice = gv_cont["latestpoint"]+' <span class="gr">( - )</span>';}
     $("h3.contheader").html(cname+cprice);
     init_modalInputF($("h3.contheader a"));
 

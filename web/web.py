@@ -261,7 +261,6 @@ def contract():
             return render_template('contract_edit.html',c=cont)
         else:
             abort(404)
-    print gv_contract[cont]["ch"]
     return render_template('contract.html',c=cont)
 
 
@@ -303,4 +302,4 @@ if __name__ == '__main__':
 
 
 #todo minimus margin limit
-#todo trade point fluctuate limit
+#todo trade point fluctuate limit. change base last close point.
