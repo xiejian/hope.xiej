@@ -1,5 +1,5 @@
 from _db import  _connect_db
-import datetime
+import datetime,decimal
 
 gv_contract = {}    #global vars of contract info
 
@@ -112,15 +112,15 @@ def _update_user(db,session,content = []):    #get user's info
         vol = cur.fetchone()
         temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
 
-        cur.execute("select coupon,month,comment from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
+        cur.execute("select coupon,month,comment,month=date_format(NOW(),'%%Y-%%m') from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
 
-        s_coupon = [dict(coupon=row[0],month=row[1],comment=row[2]) for row in cur.fetchall()]
+        s_coupon = [dict(coupon=row[0],month=row[1],comment=row[2],ifactive=row[3]) for row in cur.fetchall()]
         temp.update({'s_coupon':s_coupon})
-        s_coupona = 0
-        for row in s_coupon:
-            if row['month'] == datetime.date.today().strftime("%Y-%m"):
-                s_coupona = row['coupon']
-        temp.update({'s_coupona':s_coupona})
+        #s_coupona = 0
+        #for row in s_coupon:
+        #    if row['month'] == datetime.date.today().strftime("%Y-%m"):
+        #        s_coupona = row['coupon']
+        #temp.update({'s_coupona':s_coupona})
     cur.close()
     return temp
 
@@ -144,8 +144,10 @@ def _cancel_order(db,session,orderid):
 
 def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,leverage,fullname,owner,twitter_id,vol_feerate,region,sector,description):
     cur = db.cursor()
-    write_fee = float(vol_feerate)/2
-    cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
+    write_fee = decimal.Decimal(vol_feerate)/2000
+    margin_rate = decimal.Decimal(leverage)/100
+    print write_fee,margin_rate
+    cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',margin_rate,fullname,owner,twitter_id,write_fee,region,sector,description))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','type':'err'},id

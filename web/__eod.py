@@ -43,16 +43,18 @@ def settle_cont():
         #cancel all open order; add close order with settlepoint and oppsite b_s in positions
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
-            ocur.callproc('exchange',(o[0],o[1],'C'))
+            ocur.callproc('p_exchange',(o[0],o[1],'C'))
             print 'Cancel Order',ocur.fetchone()
+            ocur.nextset()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
             ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
-            print 'Add Order',ocur.fetchone()
+            print 'Add Order',ocur.fetchall()
+            ocur.nextset()
         ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
 
         ccur.execute(" insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) \
-            select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",-1*c[2],c[0],c[3])
+            select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",(-1*c[2],c[0],c[3]))
         #todo problem found here.
         #todo reward contract author
         print c[0],'Contract Settled at Point',c[1]

@@ -59,7 +59,7 @@
                                     <option value="A" {% if cont[c].region == "A" %} selected="selected" {% endif %}>Asia</option>
                                     <option value="F" {% if cont[c].region == "F" %} selected="selected" {% endif %}>Africa</option>
                                 </select></td>
-                            <tr><th>Leverage</th><td><input type=number name=leverage min=0.1 max=1 required="required" value="{{cont[c].leverage}}"></td>
+                            <tr><th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{cont[c].leverage * 100}}"> % </td>
                                 <th>Sector</th><td><select name="sector">
                                     <option value="C" {% if cont[c].sector == "C" %} selected="selected" {% endif %}>Currency</option>
                                     <option value="I" {% if cont[c].sector == "I" %} selected="selected" {% endif %}>Stock Index</option>
@@ -69,10 +69,10 @@
                                     <option value="E" {% if cont[c].sector == "E" %} selected="selected" {% endif %}>Entertainment</option>
                                     <option value="O" {% if cont[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                                 </select></td></tr>
-                            <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="{{cont[c].write_fee * 2}}"></td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
+                            <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{cont[c].write_fee * 2000}}"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
                             <tr><th>Description</th><td colspan="3">
                                 <textarea name="description" rows="10" cols="60">{{cont[c].description}}</textarea></td></tr>
-                            <tr><th>Approval Instruction</th><td colspan="3">
+                            <tr><th>Approval Msg</th><td colspan="3">
                                 {{cont[c].apinstruction}}</td></tr>
                         </table>
                         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
@@ -107,7 +107,7 @@
                             <option value="A" >Asia</option>
                             <option value="F" >Africa</option>
                         </select></td>
-                    <tr><th>Leverage</th><td><input type=number name=leverage min=0.1 max=1 required="required"></td>
+                    <tr><th>Margin Rate</th><td><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required"> % </td>
                         <th>Sector</th><td><select name="sector">
                             <option value="C" >Currency</option>
                             <option value="I" >Stock Index</option>
@@ -117,7 +117,7 @@
                             <option value="E" >Entertainment</option>
                             <option value="O" >Others</option>
                         </select></td></tr>
-                    <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="0"></td><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
+                    <tr><th>Write FeeRate</th><td><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="0"> ‰ </td><th>Twitter ID</th><td><input type=text name=twitter_id></td></tr>
                     <tr><th>Description</th><td colspan="3">
                         <textarea name="description" rows="10" cols="60"></textarea></td></tr>
                 </table>
