@@ -61,6 +61,13 @@ function clickpoint(){
 }
 
 function update_tradeform(){
+    var dp = 0;
+    if (gv_cont["bp"] <1000)    {dp=1;}
+    if (gv_cont["bp"] <100)    {dp=2;}
+    if (gv_cont["bp"] <10)    {dp=3;}
+    if (gv_cont["bp"] <1)    {dp=4;}
+    $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+
     $("span#ts_point").html($("input#t_point").val());
     $("span#ts_lots").html($("input#t_lots").val());
     $("span#ts_btc_multi").html(gv_cont["btc_multi"]);

@@ -3,7 +3,7 @@
 
 import threading,time,datetime,sys
 from _db import _connect_db
-from _data import _update_contract
+from _data import _update_contract,_add_order
 from config import EOD_INTERVAL
 
 #data = {'name':'xiejian','id':3}
@@ -48,6 +48,7 @@ def settle_cont():
             ocur.nextset()
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
+            #_add_order()
             ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
             print >> sys.stderr, 'Add Order',ocur.fetchall()
             ocur.nextset()

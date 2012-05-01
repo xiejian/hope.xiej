@@ -16,11 +16,11 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         if cid in gv_contract:
             gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,unix_timestamp(c.opendate),c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee,c.settlemargin "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,unix_timestamp(c.opendate),c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee,c.settlemargin,c.movelimit "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=time.mktime(row[6].timetuple()),name=row[1]+row[6].strftime("%y%m"),
-                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18])
+                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18],movelimit=row[19])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
