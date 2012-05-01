@@ -7,8 +7,8 @@
 <div class="grid_9 alpha">
     <table>
         <tr><td style="width:160px;" rowspan="4"><h4>{{cont[c].latestpoint|f}}
-            {% if cont[c]["ch"]|f in [0,''] %} <span class="gr">( - )</span>
-            {% elif cont[c]["ch"]|f < 0%} <span class="dn">( {{ cont[c]["ch"] }} %)</span>
+            {% if cont[c]["ch"] in [0,''] %} <span class="gr">( - )</span>
+            {% elif cont[c]["ch"] < 0%} <span class="dn">( {{ cont[c]["ch"] }} %)</span>
             {% else  %} <span class="up"> ( +{{ cont[c]["ch"] }} %)</span>{% endif %}</h4>
             {{cont[c].fullname}}</td>
             <th>status</th><td>{{cont[c].status|f("C")}}</td><th>open date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
