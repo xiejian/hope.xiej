@@ -33,6 +33,7 @@ function update_gl(){
             if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> <img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
             else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 34px;"/> ' +dataContext['ty'];}
             else if(value=='B'){return '<img src="/static/img/_i_BTC.png" title="Bitcoin"/> ' + dataContext['ty'];}
+            else if(value=='R'){return '<img src="/static/img/logo.s.gif" style="height:20px;width: 34px;" title="Refund"/> refund :  ' + dataContext['ty'];}
             else {return value;}
         }},
         {id: "name", name: "Contract", field: "n", width:93, sortable:true,asyncPostRender: rendercontName},
@@ -53,10 +54,8 @@ function update_gl(){
         autoHeight:true
     };
 
-    v_gl.getItemMetadata = function (row) {
-        if (v_gl[row]['s'] == 'B') {
-            return {"columns": {1: {"colspan": 3 }}};
-        }
+    (v_gl['trans']).getItemMetadata = function (row) {
+        if ($.inArray(v_gl['trans'][row]['s'],['B','R']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
     };
     var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);
 
@@ -74,11 +73,13 @@ function update_gl(){
     filltitle();
     $(vgrid.getHeaderRowColumn('s')).click(function(){
         $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua',n:v_gl['openbal']['n']-3600*24*7}, function(data) {
-            v_gl = data['trans'];
-            v_gl['openbal']=data['openbal'];
-            //vgrid.invalidateAllRows();
-            vgrid.setData(v_gl);
+            v_gl = data;
+            (v_gl['trans']).getItemMetadata = function (row) {
+                if ($.inArray(v_gl['trans'][row]['s'],['B','R']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
+            };
+            vgrid.setData(v_gl['trans']);
             vgrid.updateRowCount();
+
             filltitle();vgrid.render();
         });
     });

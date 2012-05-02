@@ -9,7 +9,7 @@ div.trade span {color: #010;}
 div.trade form div.hr {border-bottom: 1px solid #ddc781;margin: -15px 5px 5px;text-align: right;}
 input#t_point,#t_lots, #contract {font-size: 1.3em;margin: 15px 15px 0px 5px;padding: 5px;width: 130px;}
 input.submit    {font-size: 1.3em;margin: 20px 15px 5px 5px;padding: 5px;}
-label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -2px 25px 0px;color:#Fcc;}
+label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -6px 25px 0px;color:#Fcc;}
 
 div.trade.B label#l_ts  {background:#E66;}
 div.trade.S label#l_tb  {background: #2AA}
@@ -21,12 +21,12 @@ span.s_toc.O  { background: url("../img/_i_O.png") no-repeat right ;padding: 6px
 span.s_toc.C  {background: url("../img/_i_C.png") no-repeat right;padding: 6px;}
 
 
-div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px;}
-div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px;}
+div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px 20px;display: inline-block}
+div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px 20px;display: inline-block}
 
 /*div.body .slick-header-column {margin-left: 1px;}*/
 
-.slick-cell a.cancel     { padding:7px 12px;background:url(../img/_i_E.png) no-repeat right bottom;}
+.slick-cell a.cancel     { padding:7px 12px;background:url(../img/_i_E.png) no-repeat right bottom;display: inline-block;}
 .slick-cell a.cancel:hover{background-position: left bottom;}
 
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
