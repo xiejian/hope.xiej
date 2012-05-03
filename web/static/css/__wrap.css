@@ -1,7 +1,7 @@
 body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;}
 input,select,textarea  {    font: 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;}
 
-h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 10px 0px;}
+h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 6px 0px;}
 h1 {    font-size: 25px;}
 h2 {    font-size: 23px;}
 h3 {    font-size: 21px;}
