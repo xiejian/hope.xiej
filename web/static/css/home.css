@@ -9,7 +9,7 @@ div.h_feature div.grid_1{text-align:center;}
 div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 15px 5px;padding: 11px 20px 16px 5px;
         background-image:url(../img/h.stepa.gif);}
 span.stepinfo   {font-style: italic;color: #666;}
-
+div.h_feature img   {width: 36px;height: 36px;}
 div.h_news    {}
 a[name=register]    {margin: -5px 200px;}
 
