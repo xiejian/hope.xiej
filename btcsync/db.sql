@@ -61,7 +61,7 @@ CREATE TABLE `btc_action` (
   `process_dt` datetime DEFAULT NULL,
   `message` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`btc_action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `btc_action` (
 
 LOCK TABLES `btc_action` WRITE;
 /*!40000 ALTER TABLE `btc_action` DISABLE KEYS */;
-INSERT INTO `btc_action` VALUES (1,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-26 16:40:46','2012-04-27 08:51:50','0.39950000'),(2,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:53:10','2012-04-27 08:53:22','0.39950000'),(3,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:55:57','2012-04-27 08:56:22','0.20000000'),(4,'move','jian.xie@163.com','FEE','create','0.20000000','H','S',1,'2012-04-27 14:40:25','2012-04-27 14:40:51','1'),(5,'move','jian.xie@163.com','FEE',NULL,'0.00004200','F','N',1,'2012-04-30 15:42:55',NULL,NULL),(6,'move','jian.xie@163.com','FEE',NULL,'0.00004200','G','N',1,'2012-04-30 15:42:55',NULL,NULL),(7,'move','jian.xie@163.com','FEE',NULL,'0.00004100','F','N',2,'2012-04-30 15:43:37',NULL,NULL),(8,'move','jian.xie@163.com','FEE',NULL,'0.00004100','G','N',2,'2012-04-30 15:43:37',NULL,NULL),(9,'move','jian.xie@163.com','P_L',NULL,'-0.00050000','P','N',2,'2012-04-30 15:43:37',NULL,NULL),(10,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004400','F','N',3,'2012-04-30 17:12:41',NULL,NULL),(11,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004400','G','N',3,'2012-04-30 17:12:41',NULL,NULL),(12,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004600','F','N',4,'2012-04-30 17:45:41',NULL,NULL),(13,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004600','G','N',4,'2012-04-30 17:45:41',NULL,NULL),(14,'move','jian.xie@hotmail.com','P_L',NULL,'0.00100000','P','N',4,'2012-04-30 17:45:41',NULL,NULL),(15,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00100000','Q','N',4,'2012-04-30 17:45:41',NULL,NULL),(16,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004800','F','N',5,'2012-04-30 17:50:29',NULL,NULL),(17,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004800','G','N',5,'2012-04-30 17:50:29',NULL,NULL),(18,'move','jian.xie@163.com','FEE',NULL,'0.00004100','F','N',6,'2012-04-30 18:59:00',NULL,NULL),(19,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004100','G','N',6,'2012-04-30 18:59:00',NULL,NULL),(20,'move','jian.xie@hotmail.com','P_L',NULL,'0.00350000','Q','N',6,'2012-04-30 18:59:00',NULL,NULL),(21,'move','jian.xie@163.com','FEE','2012-04 19.0%','-0.00003933','R','N',NULL,'2012-05-01 11:59:31',NULL,NULL),(22,'move','jian.xie@hotmail.com','FEE','2012-04 19.0%','-0.00006023','R','N',NULL,'2012-05-01 11:59:31',NULL,NULL),(24,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004600','F','N',7,'2012-05-01 11:59:37',NULL,NULL),(25,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004600','G','N',7,'2012-05-01 11:59:37',NULL,NULL),(26,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00100000','P','N',7,'2012-05-01 11:59:37',NULL,NULL),(27,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004100','F','N',8,'2012-05-01 12:01:21',NULL,NULL),(28,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004100','G','N',8,'2012-05-01 12:01:21',NULL,NULL),(29,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00250000','P','N',8,'2012-05-01 12:01:21',NULL,NULL),(30,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004200','F','N',9,'2012-05-02 15:41:49',NULL,NULL),(31,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004200','G','N',9,'2012-05-02 15:41:49',NULL,NULL),(32,'move','jian.xie@hotmail.com','P_L',NULL,'0.00050000','P','N',9,'2012-05-02 15:41:49',NULL,NULL),(33,'move','jian.xie@163.com','FEE',NULL,'0.00004620','F','N',10,'2012-05-03 10:21:44',NULL,NULL),(34,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','G','N',10,'2012-05-03 10:21:44',NULL,NULL),(35,'move','jian.xie@163.com','P_L',NULL,'0.00260000','P','N',10,'2012-05-03 10:21:44',NULL,NULL),(36,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004200','F','N',11,'2012-05-03 11:09:58',NULL,NULL),(37,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004200','G','N',11,'2012-05-03 11:09:58',NULL,NULL),(38,'move','jian.xie@163.com','FEE',NULL,'0.00004400','F','N',12,'2012-05-03 13:14:46',NULL,NULL),(39,'move','jian.xie@163.com','FEE',NULL,'0.00004400','G','N',12,'2012-05-03 13:14:46',NULL,NULL),(40,'move','jian.xie@163.com','P_L',NULL,'-0.00100000','Q','N',12,'2012-05-03 13:14:46',NULL,NULL),(41,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004236','F','N',13,'2012-05-03 13:38:26',NULL,NULL),(42,'move','jian.xie@163.com','FEE',NULL,'0.00004236','G','N',13,'2012-05-03 13:38:26',NULL,NULL),(43,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00192000','P','N',13,'2012-05-03 13:38:26',NULL,NULL),(44,'move','jian.xie@163.com','P_L',NULL,'-0.00068000','Q','N',13,'2012-05-03 13:38:26',NULL,NULL),(45,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004220','F','N',14,'2012-05-03 13:38:26',NULL,NULL),(46,'move','jian.xie@163.com','FEE',NULL,'0.00004220','G','N',14,'2012-05-03 13:38:26',NULL,NULL),(47,'move','jian.xie@hotmail.com','P_L',NULL,'0.00010000','P','N',14,'2012-05-03 13:38:26',NULL,NULL),(48,'move','jian.xie@163.com','P_L',NULL,'0.00090000','Q','N',14,'2012-05-03 13:38:26',NULL,NULL),(50,'move','jian.xie@hotmail.com','FEE',NULL,'0.00156140','F','N',15,'2012-05-03 13:46:36',NULL,NULL),(51,'move','jian.xie@163.com','FEE',NULL,'0.00156140','G','N',15,'2012-05-03 13:46:36',NULL,NULL),(52,'move','jian.xie@163.com','FEE',NULL,'0.00004420','F','N',16,'2012-05-03 13:49:02',NULL,NULL),(53,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004420','G','N',16,'2012-05-03 13:49:02',NULL,NULL),(54,'move','jian.xie@163.com','P_L',NULL,'0.00100000','P','N',16,'2012-05-03 13:49:02',NULL,NULL),(55,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00100000','Q','N',16,'2012-05-03 13:49:02',NULL,NULL),(56,'move','jian.xie@163.com','FEE',NULL,'0.00004620','F','N',17,'2012-05-03 14:38:02',NULL,NULL),(57,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','G','N',17,'2012-05-03 14:38:02',NULL,NULL),(58,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00200000','Q','N',17,'2012-05-03 14:38:02',NULL,NULL),(59,'move','jian.xie@163.com','FEE',NULL,'0.00069300','F','N',18,'2012-05-03 15:21:43',NULL,NULL),(60,'move','jian.xie@hotmail.com','FEE',NULL,'0.00069300','G','N',18,'2012-05-03 15:21:43',NULL,NULL),(61,'move','jian.xie@hotmail.com','P_L',NULL,'-0.03000000','Q','N',18,'2012-05-03 15:21:43',NULL,NULL),(62,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','F','N',19,'2012-05-03 15:21:43',NULL,NULL),(63,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','G','N',19,'2012-05-03 15:21:43',NULL,NULL),(64,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00200000','Q','N',19,'2012-05-03 15:21:43',NULL,NULL),(65,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','F','N',20,'2012-05-03 15:21:43',NULL,NULL),(66,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004620','G','N',20,'2012-05-03 15:21:43',NULL,NULL),(67,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00200000','Q','N',20,'2012-05-03 15:21:43',NULL,NULL),(68,'move','jian.xie@163.com','FEE',NULL,'0.00069300','F','N',21,'2012-05-03 15:26:22',NULL,NULL),(69,'move','jian.xie@hotmail.com','FEE',NULL,'0.00069300','G','N',21,'2012-05-03 15:26:22',NULL,NULL),(70,'move','jian.xie@163.com','P_L',NULL,'0.03000000','P','N',21,'2012-05-03 15:26:22',NULL,NULL),(71,'move','jian.xie@hotmail.com','P_L',NULL,'-0.03000000','Q','N',21,'2012-05-03 15:26:22',NULL,NULL),(72,'move','jian.xie@hotmail.com','FEE','create','0.20000000','H','N',3,'2012-05-03 15:52:18',NULL,NULL),(73,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004558','F','N',22,'2012-05-04 08:56:53',NULL,NULL),(74,'move','jian.xie@hotmail.com','FEE',NULL,'0.00004558','G','N',22,'2012-05-04 08:56:53',NULL,NULL),(75,'move','jian.xie@hotmail.com','P_L',NULL,'-0.00169000','Q','N',22,'2012-05-04 08:56:53',NULL,NULL);
+INSERT INTO `btc_action` VALUES (1,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-26 16:40:46','2012-04-27 08:51:50','0.39950000'),(2,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:53:10','2012-04-27 08:53:22','0.39950000'),(3,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-04-27 08:55:57','2012-04-27 08:56:22','0.20000000'),(4,'move','jian.xie@163.com','FEE','create','0.20000000','H','S',1,'2012-04-27 14:40:25','2012-04-27 14:40:51','1');
 /*!40000 ALTER TABLE `btc_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,6 @@ CREATE TABLE `btc_synclog` (
 
 LOCK TABLES `btc_synclog` WRITE;
 /*!40000 ALTER TABLE `btc_synclog` DISABLE KEYS */;
-INSERT INTO `btc_synclog` VALUES ('serv',NULL,'B','2012-04-27 00:51:49','192.168.168.122:8332'),('trans','000000000000070e283057f45b2e79b837c8aa2daa301db75b12e00f1b8f3543','S','2012-04-27 00:51:51','7'),('serv',NULL,'E','2012-04-27 09:13:33','192.168.168.122:8332'),('serv',NULL,'B','2012-04-30 00:11:43','192.168.168.122:8332'),('serv',NULL,'E','2012-04-30 00:12:33','192.168.168.122:8332');
 /*!40000 ALTER TABLE `btc_synclog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +125,6 @@ CREATE TABLE `btc_trans` (
 
 LOCK TABLES `btc_trans` WRITE;
 /*!40000 ALTER TABLE `btc_trans` DISABLE KEYS */;
-INSERT INTO `btc_trans` VALUES ('send','jian.xie@163.com','-0.10000000','-0.00050000','1JwXvhNAuvHEHaJbCzWKHaoM4XPXReeu9p',20791,'01943011c067e4195a2c0d891d4c5e1a671fc2e1a192c062eb5592bd16290118','2011-12-08 08:05:48'),('receive','jian.xie@163.com','0.30000000','0.00000000','12NuhVyvntvBZdcaLPUojkMa455wNoF1kX',4145,'2c9f01baeead84ec3a872beac3a44979df69e68eb7e8b1543f7094ba0299253a','2012-03-28 06:17:19'),('receive','jian.xie@163.com','0.10000000','0.00000000','1Db2p6PZKuin3sweKrUh6y2EuVcpggbJJS',20802,'4c449c7d5e32a45e59f12d7933ecc01b1b9ba5f577b1ebd3427dfb95f6e37dba','2011-12-08 05:45:06'),('receive','jian.xie@hotmail.com','0.20000000','0.00000000','1MYTaiooQ5szcRxy6fFrsq4d9bhGxUCVVX',16851,'5644386327296b568e979cda7df32b32ae1d12ceb29a24bb5995f471d114c745','2012-01-04 02:37:47'),('receive','jian.xie@hotmail.com','0.10000000','0.00000000','155PNrq7SzFHNMwz9tBEbL5DAhWBFjdBtX',20078,'60f42b853c32e7e531c82e1626596bd4572ba86495011f81ab85681ca7594848','2011-12-13 04:45:56'),('receive','jian.xie@163.com','0.10000000','0.00000000','1Db2p6PZKuin3sweKrUh6y2EuVcpggbJJS',20931,'b74cf95558d346cadbee8f88624ede9dc9a40cf843ab9cc1d3b9ea674f388ec4','2011-12-08 04:34:42'),('receive','jian.xie@hotmail.com','0.20000000','0.00000000','1Et91MqiM42ecuHRVXvwJCiztpKSDeUFR3',20832,'cfa6fbaf0a3747edd2fb2915ce9141fa0a93e4d9fcd5877c2e090776732e9cf5','2011-12-08 04:35:35');
 /*!40000 ALTER TABLE `btc_trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +166,6 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
-INSERT INTO `contract` VALUES (1,'USD','100 US Dollars','O','0.00100000','2012-04-28 00:00:00','22.79000000','2012-05-26 00:00:00',NULL,'0.250','0.10',2,'BTCFE','0.000000','N','C','0.00000000','The settle point will be the BTC value of 100 US Dollars at settle date time UTC. \r\nThis is how the settle point is determined:\r\n1. go to site \"http://bitcoincharts.com/\" .\r\n2. find out which the \"Bitcoin-USD\" trade market has the biggest 30 days trade volume.\r\n3. calculate volume weighted average price of that market in 1 last hour before settle date time.\r\n4. settle point = 100 / price. round to 5 decimal point.',NULL,NULL),(3,'hs3k','hs300','N','0.00010000','2012-05-04 08:00:00',NULL,'2012-06-02 08:00:00',NULL,'0.250','0.11',3,'obama','0.000000','W','C','0.00000000','',NULL,NULL);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,34 +191,6 @@ CREATE TABLE `exchange_lock` (
 LOCK TABLES `exchange_lock` WRITE;
 /*!40000 ALTER TABLE `exchange_lock` DISABLE KEYS */;
 /*!40000 ALTER TABLE `exchange_lock` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `marketinfo`
---
-
-DROP TABLE IF EXISTS `marketinfo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `marketinfo` (
-  `marketinfo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `contract_id` int(11) NOT NULL,
-  `open` decimal(20,8) DEFAULT NULL,
-  `high` decimal(20,8) DEFAULT NULL,
-  `low` decimal(20,8) DEFAULT NULL,
-  `close` decimal(20,8) DEFAULT NULL,
-  `tradedate` date NOT NULL,
-  PRIMARY KEY (`marketinfo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `marketinfo`
---
-
-LOCK TABLES `marketinfo` WRITE;
-/*!40000 ALTER TABLE `marketinfo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `marketinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -306,7 +275,6 @@ CREATE TABLE `sys_status` (
 
 LOCK TABLES `sys_status` WRITE;
 /*!40000 ALTER TABLE `sys_status` DISABLE KEYS */;
-INSERT INTO `sys_status` VALUES (3,'LAST_EOD','2012-04-26'),(4,'LAST_EOD','2012-04-29'),(5,'LAST_EOD','2012-04-30'),(6,'LAST_EOD','2012-05-02'),(7,'LAST_EOD','2012-05-03');
 /*!40000 ALTER TABLE `sys_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,7 +324,6 @@ CREATE TABLE `trans` (
 
 LOCK TABLES `trans` WRITE;
 /*!40000 ALTER TABLE `trans` DISABLE KEYS */;
-INSERT INTO `trans` VALUES (1,1,2,'21.00000000',1,'S','2012-04-30 07:42:55'),(2,3,2,'20.50000000',1,'B','2012-04-30 07:43:37'),(3,5,6,'22.00000000',1,'S','2012-04-30 09:12:41'),(4,7,8,'23.00000000',1,'S','2012-04-30 09:45:41'),(5,9,10,'24.00000000',1,'S','2012-04-30 09:50:29'),(6,4,11,'20.50000000',1,'S','2012-04-30 10:59:00'),(7,12,13,'23.00000000',1,'S','2012-05-01 03:59:37'),(8,14,16,'20.50000000',1,'S','2012-05-01 04:01:21'),(9,17,18,'21.00000000',1,'S','2012-05-02 07:41:49'),(10,20,37,'23.10000000',1,'S','2012-05-03 02:21:44'),(11,43,42,'21.00000000',1,'B','2012-05-03 03:09:58'),(12,48,39,'22.00000000',1,'B','2012-05-03 05:14:46'),(13,45,49,'21.18000000',1,'S','2012-05-03 05:38:26'),(14,43,49,'21.10000000',1,'S','2012-05-03 05:38:26'),(15,50,51,'21.10000000',37,'S','2012-05-03 05:46:36'),(16,52,53,'22.10000000',1,'S','2012-05-03 05:49:02'),(17,72,73,'23.10000000',1,'S','2012-05-03 06:38:02'),(18,88,89,'23.10000000',15,'S','2012-05-03 07:21:43'),(19,61,89,'23.10000000',1,'S','2012-05-03 07:21:43'),(20,71,89,'23.10000000',1,'S','2012-05-03 07:21:43'),(21,93,95,'23.10000000',15,'S','2012-05-03 07:26:22'),(22,98,99,'22.79000000',1,'S','2012-05-04 00:56:53');
 /*!40000 ALTER TABLE `trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +352,6 @@ CREATE TABLE `userattr` (
 
 LOCK TABLES `userattr` WRITE;
 /*!40000 ALTER TABLE `userattr` DISABLE KEYS */;
-INSERT INTO `userattr` VALUES (7,2,'C','0.10','2012-04','Invited Sign Up','2012-04-27 08:53:10'),(8,2,'C','0.10','2012-05','Invited Sign Up','2012-04-27 08:53:10'),(9,2,'C','0.10','2012-06','Invited Sign Up','2012-04-27 08:53:10'),(10,2,'C','0.10','2012-07','Invited Sign Up','2012-04-27 08:53:10'),(11,2,'C','0.10','2012-08','Invited Sign Up','2012-04-27 08:53:10'),(12,2,'C','0.10','2012-09','Invited Sign Up','2012-04-27 08:53:10'),(13,3,'C','0.10','2012-04','Invited Sign Up','2012-04-27 08:55:57'),(14,3,'C','0.10','2012-05','Invited Sign Up','2012-04-27 08:55:57'),(15,3,'C','0.10','2012-06','Invited Sign Up','2012-04-27 08:55:57'),(16,3,'C','0.10','2012-07','Invited Sign Up','2012-04-27 08:55:57'),(17,3,'C','0.10','2012-08','Invited Sign Up','2012-04-27 08:55:57'),(18,3,'C','0.10','2012-09','Invited Sign Up','2012-04-27 08:55:57');
 /*!40000 ALTER TABLE `userattr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -415,7 +381,6 @@ CREATE TABLE `userbalance` (
 
 LOCK TABLES `userbalance` WRITE;
 /*!40000 ALTER TABLE `userbalance` DISABLE KEYS */;
-INSERT INTO `userbalance` VALUES (1,2,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(2,2,'2012-04-26','0.39950000','0.00000000','0.00000000','0.39950000','0.00000000'),(3,2,'2012-04-29','0.19950000','-0.20000000','0.00000000','0.39950000','0.00000000'),(4,3,'2012-04-29','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(5,2,'2012-04-30','0.19979300','-0.20020700','0.00050000','0.39950000','0.10350000'),(6,3,'2012-04-30','-0.00381700','-0.00031700','-0.00350000','0.00000000','0.15850000'),(7,2,'2012-05-02','0.19983233','-0.20016767','0.00050000','0.39950000','0.00000000'),(8,3,'2012-05-02','-0.00043077','-0.00043077','0.00000000','0.00000000','0.08700000'),(9,2,'2012-05-03','0.16375577','-0.20342423','-0.03232000','0.39950000','1.62828000'),(10,3,'2012-05-03','-0.13504813','-0.20386813','0.06882000','0.00000000','1.71868000');
 /*!40000 ALTER TABLE `userbalance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,7 +408,6 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (2,2,'Login','127.0.0.1',2,'2012-04-27 00:58:48'),(3,3,'Login','192.168.168.122',1,'2012-04-30 01:03:40'),(4,3,'Login','127.0.0.1',2,'2012-04-30 01:39:08'),(5,2,'Login','192.168.168.122',1,'2012-04-30 01:47:50'),(6,3,'Login','192.168.168.122',2,'2012-04-30 02:50:59'),(7,3,'Login','127.0.0.1',3,'2012-04-30 05:37:27'),(8,2,'Login','127.0.0.1',2,'2012-04-30 05:38:14'),(9,3,'Login','192.168.168.122',2,'2012-05-02 07:43:00'),(10,3,'Login','127.0.0.1',1,'2012-05-03 00:15:03'),(11,2,'Login','192.168.168.122',3,'2012-05-03 00:38:04'),(12,3,'Login','192.168.168.122',1,'2012-05-04 00:14:10'),(13,3,'Login','127.0.0.1',1,'2012-05-04 00:16:04');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -473,7 +437,6 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'jian.xie@163.com','UgXYBQe0A4UNKXrp45nRW27afaiHo/jY+Rvbdw==',NULL,'Y','0.002000',0,'12.4'),(3,'jian.xie@hotmail.com','IOV3LkRV1JsVpCsPUv4JE0dL3o+W4ebP6eo9zw==',NULL,'N','0.002000',0,'1.9');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1630,4 +1593,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-04 15:07:52
+-- Dump completed on 2012-05-04 16:09:28
