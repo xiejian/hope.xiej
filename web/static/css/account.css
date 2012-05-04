@@ -17,13 +17,13 @@ textarea    {padding: 4px;margin: 2px;  }
 input:hover {border: 1px solid #db8616;}
 
 div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 8px;font-size: 1.2em;margin: 5px 0px ;background-color:#Ffe; }
-div.body table th  {color: #640;padding: 4px;text-align: center; }
-div.body table td  {padding: 6px;}
-div.body form table th {text-align: right;font-size: 1.1em;}
+div.subm_tab table th  {color: #640;padding: 4px;text-align: center; }
+div.subm_tab table td  {padding: 6px;}
+div.subm_tab form table th {text-align: right;font-size: 1.1em;}
 
-div.body form  {border: 1px solid #999;background-color: white; margin: 0px 40px 5px 20px;padding: 10px 40px;text-align: center;}
-div.body table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
-div.body table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
+div.subm_tab form  {border: 1px solid #999;background-color: white; margin: 0px 40px 5px 20px;padding: 10px 40px;text-align: center;}
+div.subm_tab table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
+div.subm_tab table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
 
 
 div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 30px 5px;padding: 11px 20px 16px 5px;

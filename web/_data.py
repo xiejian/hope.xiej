@@ -9,9 +9,9 @@ def _update_contract(db,cid = 'contract_id',type='D'):
     if type == 'C' and long(cid) in gv_contract:
             #no deal made, just update order queues
         cur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' group by point ORDER BY point DESC ,createtime LIMIT 0,10",cid)
-        gv_contract[cid]['B'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
+        gv_contract[long(cid)]['B'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
         cur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' group by point ORDER BY point ,createtime LIMIT 0,10",cid)
-        gv_contract[cid]['S'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
+        gv_contract[long(cid)]['S'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
     else:   #deals had been made, update all
         if cid in gv_contract:
             gv_contract.pop(cid)

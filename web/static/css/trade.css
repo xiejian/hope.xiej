@@ -30,6 +30,6 @@ div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right 
 .slick-cell a.cancel:hover{background-position: right top;}
 
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
-table#oqueue div    {border: 1px solid #ddc781; }
+table#oqueue div    {background-color: #cea13c;height: 1px;margin: 1px 8px;}
 
 table#oqueue tr:hover,table#transhis tr:hover{background-color:#F8F3D7;}

@@ -11,6 +11,10 @@ a {text-decoration: none;}
 div#infobar {background:#CCC; color:#666; text-align:center;height: 25px;}
 /*div.scrollable.infobar  {height: 25px;}*/
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
+div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
+div#cont_overlay span.fullname {font-size: 0.8em;margin-left:20px;font-weight: normal; }
+div#cont_overlay h3 {font-weight: bold; font-style: normal;}
+div#cont_overlay h4 {margin: 15px 0px; font-style: normal; text-align: center;}
 
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px 5px 30px 5px; margin-top:20px;}
 div#titlebar  {background:#DDCCB1; border-bottom:4px solid  #88C;}

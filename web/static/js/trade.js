@@ -22,7 +22,7 @@ function get_contdata(cid){
 function updatepage_contdata(){
     var settledt = new Date(gv_cont['settledate']);
     var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>fees 2 writer:</th><td>" + gv_cont["write_fee"]*1000+"‰</td></tr>";
-    htm += "<tr><th>contract value:</th><td>" + gv_cont["btc_multi"]+" × pt</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
+    htm += "<tr><th>contract size:</th><td>" + gv_cont["btc_multi"]+" × pt</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont["S"], function(index,val) {
@@ -32,7 +32,7 @@ function updatepage_contdata(){
     $.each(gv_cont["B"], function(index,val) {
         htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title='"+val["count"]+" orders'>"+val["rm_lots"]+"</td></tr>";
     });
-    var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a> 　';
+    var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a>　';
     var cprice;
     if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">(+'+gv_cont["ch"]+' %)</span>'; }
     else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">('+gv_cont["ch"]+' %)</span>'; }
