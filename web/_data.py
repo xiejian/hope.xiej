@@ -8,10 +8,10 @@ def _update_contract(db,cid = 'contract_id',type='D'):
     cur = db.cursor()
     if type == 'C' and long(cid) in gv_contract:
             #no deal made, just update order queues
-        cur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",cid)
-        gv_contract[long(cid)]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in cur.fetchall()]
-        cur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY point ,createtime LIMIT 0,10",cid)
-        gv_contract[long(cid)]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in cur.fetchall()]
+        cur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' group by point ORDER BY point DESC ,createtime LIMIT 0,10",cid)
+        gv_contract[cid]['B'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
+        cur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' group by point ORDER BY point ,createtime LIMIT 0,10",cid)
+        gv_contract[cid]['S'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in cur.fetchall()]
     else:   #deals had been made, update all
         if cid in gv_contract:
             gv_contract.pop(cid)
@@ -22,10 +22,10 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=time.mktime(row[6].timetuple()),name=row[1]+row[6].strftime("%y%m"),
                 leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18],movelimit=row[19])
             #update order queues
-            ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
-            gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
-            ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' ORDER BY point ,createtime LIMIT 0,10",row[0])
-            gv_contract[row[0]]['S'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
+            ocur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' group by point ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
+            gv_contract[row[0]]['B'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in ocur.fetchall()]
+            ocur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='S' group by point ORDER BY point ,createtime LIMIT 0,10",row[0])
+            gv_contract[row[0]]['S'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in ocur.fetchall()]
             #update transactions history
             ocur.execute("SELECT t.point,t.lots,unix_timestamp(TIMESTAMP),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
@@ -179,9 +179,13 @@ def _update_user(db,session,content = []):    #get user's info
     cur.close()
     return temp
 
-def _add_order(db,session,contract_id,b_s,point,lots):
+def _add_order(db,uid,contract_id,b_s,point,lots,type=''):
     cur = db.cursor()
-    cur.callproc('p_addorder',(contract_id,session['user_id'],b_s,point,lots))
+    bp = gv_contract[contract_id]['bp']
+    if bp>0: #daily point move limit
+        point = min(max(float(point),bp*float(1-gv_contract[contract_id]['movelimit'])),bp*float(1+gv_contract[contract_id]['movelimit']))
+    dp = 4 if bp < 1 else 3 if bp < 10 else 2 if bp < 100 else 1 if bp < 1000 else 0
+    cur.callproc('p_addorder',(contract_id,uid,b_s,round(point,dp),lots,type))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}
@@ -197,11 +201,12 @@ def _cancel_order(db,session,orderid):
     cur.close()
     return dict(msg=result[1],category=result[0])
 
-def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,leverage,fullname,owner,twitter_id,vol_feerate,region,sector,description):
+def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,leverage,fullname,owner,twitter_id,vol_feerate,region,sector,description,movelimit):
     cur = db.cursor()
     write_fee = decimal.Decimal(vol_feerate)/2000
     margin_rate = decimal.Decimal(leverage)/100
-    cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',margin_rate,fullname,owner,twitter_id,write_fee,region,sector,description))
+    pmovelimit = decimal.Decimal(movelimit)/100
+    cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',margin_rate,fullname,owner,twitter_id,write_fee,region,sector,description,pmovelimit))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','type':'err'},id

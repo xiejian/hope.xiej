@@ -16,11 +16,11 @@
     </table>
 </div>
 <div class="grid_11">
-<div class="grid_8  push_1 trade B">
+<div class="grid_8  push_1 trade {% if 'bs' in session %}{{ session['bs'] }}{% else %} B {% endif %}">
     <form action="{{ url_for('trade') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-    <table><tr><td><span class="s_tbs">　</span>　　<label id="l_tb" for="t_b">BUY</label><input tabindex="1" type="radio" name="b_s" value="B" id="t_b" checked="checked"/>　
-        <label id="l_ts" for="t_s">SELL</label><input tabindex="2" type="radio" name="b_s" id="t_s" value="S" />　</td>
+    <table><tr><td><span class="s_tbs">　</span>　　<label id="l_tb" for="t_b">BUY</label><input tabindex="1" type="radio" name="b_s" value="B" id="t_b" {% if 'bs' not in session or session['bs']=='B' %}checked="checked" {% endif %}/>　
+        <label id="l_ts" for="t_s">SELL</label><input tabindex="2" type="radio" name="b_s" id="t_s" value="S" {% if 'bs' in session and session['bs']=='S' %}checked="checked" {% endif %}/>　</td>
             <td>Point:<input id="t_point" tabindex="4" type=number name="point" value="" size="15" min="0.01" required="required"/><br/></td></tr>
         <tr><td>   <span class="s_toc">　</span>     　<label for="contract">Cont:</label>
             <select tabindex="3" id="contract" name="contract_id">
@@ -32,7 +32,7 @@
         </tr>
     </table><input class="submit" tabindex="6" type=submit value=" TRADE ">
     <div class="hr">　</div>
-        p:<span title="Point" id="ts_point"></span> × l:<span title="Lots" id="ts_lots">-</span> × m:<span title="BTC Multi" id="ts_btc_multi"></span>
+        pt:<span title="Point" id="ts_point"></span> × l:<span title="Lots" id="ts_lots">-</span> × m:<span title="BTC Multi" id="ts_btc_multi"></span>
             = v:<span title="Value" id="ts_value"></span> , × le:<span title="Leverage" id="ts_leverage"></span> = mg:<span title="Margin" id="ts_margin">-</span>
 </form>
 </div>

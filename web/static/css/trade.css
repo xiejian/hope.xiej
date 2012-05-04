@@ -26,8 +26,8 @@ div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right 
 
 /*div.body .slick-header-column {margin-left: 1px;}*/
 
-.slick-cell a.cancel     { padding:7px 12px;background:url(../img/_i_E.png) no-repeat right bottom;display: inline-block;}
-.slick-cell a.cancel:hover{background-position: left bottom;}
+.slick-cell a.cancel     { padding:12px 12px;background:url(../img/_i_E.png) no-repeat left top;display: inline-block;}
+.slick-cell a.cancel:hover{background-position: right top;}
 
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
 table#oqueue div    {border: 1px solid #ddc781; }

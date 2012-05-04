@@ -4,7 +4,8 @@
    'opendate': 'The earliest datetime the contract start to trade after approval.',
    'settledate': 'VERY IMPORTANT! \nThe datetime the contract settle point will be determined.',
    'btc_multi': 'The value in BTC of 1 contract. \ne.g. 0.001.',
-   'leverage': 'The ratio of contract value you have to put up to hold futures contract positions. \ne.g. 25%.',
+   'leverage': 'The ratio of contract value you have to put up to hold futures contract positions. Should be >= "MoveLimit" + 5% \ne.g. 25%.',
+   'movelimit':'The contracts daily point fluctuation limit. \ne.g. 10%.',
    'region': '',
    'sector': '',
    'write_fee': 'Fees charged by contract writer based on contract''s trade volume. \ne.g. 1‰. ',
@@ -17,7 +18,7 @@ e.g.
 4. settle point = 100 / price. round to 5 decimal point.',
    'apr_msg':'Message from site admin' }%}
 {% if c==0 %}
-        {% set ct=[{'code':'','opendate':1,'fullname':'','settledate':30,'btc_multi':'0.0001','region':'W','sector':'C','leverage':'','write_fee':'0','description':'','apinstruction':''}] %}
+        {% set ct=[{'code':'','opendate':1,'fullname':'','settledate':30,'btc_multi':'0.0001','movelimit':0.1,'region':'W','sector':'C','leverage':'','write_fee':'0','description':'','apinstruction':''}] %}
 {% else %}   {% set ct = cont %} {% endif %}
 <h3>Create a New contract</h3>
 <div class="modal_wrap">
@@ -26,11 +27,11 @@ e.g.
         <table>
             <tr><th title="{{ hint.code }}">Code</th><td title="{{ hint.code }}"><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
                 <td class="vhr" rowspan="5"></td><td rowspan="5"></td><th>Full Name</th><td title="{{ hint.fullname }}"><input style="width: 200px;" type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
-            <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
+            <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input style="width: 90px;" type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
                 <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
-            <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
+            <tr><th>Move Limit</th><td  title="{{ hint.movelimit }}"><input style="width: 60px;" type=number name=movelimit min=5 max=50 required="required" value="{{ct[c].movelimit * 100}}"> % </td>
                 <th>Settle Date</th><td  title="{{ hint.settledate }}"><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" ><input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
-            <tr><th>Fees to Writer</th><td title="{{ hint.write_fee }}"><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td>
+            <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
                 <th>Region</th><td  title="{{ hint.region }}"><select name="region" >
                     <option value="W" {% if ct[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
                     <option value="N" {% if ct[c].region == "N" %} selected="selected" {% endif %}>North America</option>
@@ -41,7 +42,7 @@ e.g.
                     <option value="A" {% if ct[c].region == "A" %} selected="selected" {% endif %}>Asia</option>
                     <option value="F" {% if ct[c].region == "F" %} selected="selected" {% endif %}>Africa</option>
                 </select></td>
-            <tr><th>Twitter ID</th><td  title="{{ hint.twitter_id }}"><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td>
+            <tr><th>Fees to Writer</th><td title="{{ hint.write_fee }}"><input style="width: 60px;" type=number name=write_fee min=0 max=10 value="{{ct[c].write_fee * 2000}}"> ‰ </td>
                 <th>Sector</th><td  title="{{ hint.sector }}"><select name="sector">
                     <option value="C" {% if ct[c].sector == "C" %} selected="selected" {% endif %}>Currency</option>
                     <option value="I" {% if ct[c].sector == "I" %} selected="selected" {% endif %}>Stock Index</option>
@@ -52,6 +53,7 @@ e.g.
                     <option value="N" {% if ct[c].sector == "N" %} selected="selected" {% endif %}>Natural</option>
                     <option value="O" {% if ct[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                 </select></td></tr>
+            <tr></tr><th>Twitter ID</th><td  title="{{ hint.twitter_id }}"><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td></tr>
             <tr><th>Contract Definition</th><td title="{{ hint.description }}" colspan="5">
                 <textarea name="description" rows="10" cols="80">{{ct[c].description}}</textarea></td></tr>
             <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="5">

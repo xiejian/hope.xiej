@@ -21,16 +21,16 @@ function get_contdata(cid){
 }
 function updatepage_contdata(){
     var settledt = new Date(gv_cont['settledate']);
-    var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>fees to writer:</th><td>" + gv_cont["write_fee"]*1000+"‰</td></tr>";
-    htm += "<tr><th>contract value:</th><td>" + gv_cont["btc_multi"]+" × point</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
+    var htm = "<tr><th>settle date:</th><td>"+parseDate(settledt) + "</td><th>fees 2 writer:</th><td>" + gv_cont["write_fee"]*1000+"‰</td></tr>";
+    htm += "<tr><th>contract value:</th><td>" + gv_cont["btc_multi"]+" × pt</td><th>margin rate:</th><td>"+gv_cont['leverage']*100 + "%</td></tr>";
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont["S"], function(index,val) {
-        htm = "<tr><td><span class='gr'>　S"+(index+1)+"</span></td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>" + htm;
+        htm = "<tr><td><span class='gr'>　S"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title='"+val["count"]+" orders'>"+val["rm_lots"]+"</td></tr>" + htm;
     });
     htm = htm + '<tr><td colspan="3" ><div></div></td></tr>';
     $.each(gv_cont["B"], function(index,val) {
-        htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td>"+val["rm_lots"]+"</td></tr>";
+        htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title='"+val["count"]+" orders'>"+val["rm_lots"]+"</td></tr>";
     });
     var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a> 　';
     var cprice;
@@ -82,7 +82,9 @@ function update_tradeform(){
             if (v_userd['pos'][i]['bs'] =='B'){v_lots += v_userd['pos'][i]['lt'];}else{v_lots -= v_userd['pos'][i]['lt'];}}
     }
     for(i=0;i<v_userd['ord'].length;i++){
-        if (v_userd['ord'][i]['c'] == gv_cont['id'] && v_userd['ord'][i]['ty']=='C'){v_lots -= v_userd['ord'][i]['lt'];}
+        if (v_userd['ord'][i]['c'] == gv_cont['id'] && v_userd['ord'][i]['ty']!='O'){
+            if (v_lots < 0 ){v_lots += v_userd['ord'][i]['rlt'];}else{v_lots -= v_userd['ord'][i]['rlt'];}
+        }
     }
     var vifc=(b_s == 'S'&& v_lots >= lots) ||(b_s == 'B'&& -v_lots >= lots);
     var vmg=0;
@@ -138,11 +140,10 @@ function update_userop(){
             else{return '<span class="gr">'+value+'</span>'; }}
         },
         v:{id: "v", name: "Value", field: "v", sortable:true},
-        lt:{id: "lt", name: "Lots", field: "lt", width:40,sortable:true},
-        rlt:{id: "rlt", name: "Remain Lots", field: "rlt", width:40,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
-            if(value == dataContext['lt']){return '<span class="gr">'+value+'</span>'; }
-            else {return value;}}
-        },
+        lt:{id: "lt", name: "Lots", field: "lt", width:40,sortable:true,formatter: function ( row, cell, value, columnDef, dataContext) {
+            if(value == dataContext['rlt']){return '<span class="gr">'+value+'</span>'; }
+            else {return value;}}},
+        rlt:{id: "rlt", name: "Remain Lots", field: "rlt", width:40,sortable:true},
         a:{id: "trade", name: "", field: "c",formatter: function ( row, cell, value, columnDef, dataContext ) {
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
         },
@@ -164,6 +165,12 @@ function update_userop(){
     ogrid.onSort.subscribe(multi_sort);
     var pgrid = new Slick.Grid("#p_user_grid", v_userd['pos'], pcolumns, toptions);
     pgrid.onSort.subscribe(multi_sort);
+    $("#o_user_grid a.cancel").hover(function(){
+        $(this).parents("div.slick-row").css("background-color", "#def");
+    },function(){
+        $(this).parents("div.slick-row").css("background-color", "");
+    });
+
 }
 
 

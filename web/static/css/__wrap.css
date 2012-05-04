@@ -1,5 +1,5 @@
 body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;}
-input,select,textarea  {    font: 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;}
+input,select,textarea  {  font:13px 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;}
 
 h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 10px 0px;}
 h1 {    font-size: 25px;}
@@ -9,7 +9,7 @@ h4 {    font-size: 19px;}
 h5 {    font-size: 16px;}
 a {text-decoration: none;}
 div#infobar {background:#CCC; color:#666; text-align:center;height: 25px;}
-div.scrollable.infobar  {height: 25px;}
+/*div.scrollable.infobar  {height: 25px;}*/
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px 5px 30px 5px; margin-top:20px;}

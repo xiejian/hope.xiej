@@ -2,8 +2,9 @@
 #this server started by os every 12 hours. notify web server his start and end.
 
 import threading,time,datetime,sys
+from decimal import ROUND_CEILING
 from _db import _connect_db
-from _data import _update_contract,_add_order
+from _data import gv_contract,_update_contract,_add_order
 from config import EOD_INTERVAL
 
 #data = {'name':'xiejian','id':3}
@@ -63,8 +64,9 @@ def settle_cont():
     print >> sys.stderr, len(dbres),"contracts settled."
 
 def achieve_cont():
+    rows = cur.execute("delete from orders where `status`='C' and createtime < (now() + interval -1 month)")
+    db.commit()
     #todo achieve old contracts
-    pass
 
 def cal_userinfo():
     pass
@@ -111,18 +113,26 @@ def forced_close():
     ccur = db.cursor()
     ocur = db.cursor()
     for u in cur.fetchall():
-        if u[2] > 0:
-            #cancel all open order;
-            ocur.execute("SELECT order_id FROM orders WHERE status ='O' and type = 'O' and user_id = %s",u[0])
-            for o in ocur.fetchall():
-                ccur.callproc('p_exchange',(o[0],u[0],'C'))
-                print >> sys.stderr, ccur.fetchone()
-                ocur.nextset()
-        elif u[1] <= 0:
-            #forced close postion
-            ocur.callproc('p_forced_close',(u[0],-u[1]))
-            print >> sys.stderr, ocur.fetchone(),'btc Forced Close remained'
+        #cancel all  orders;
+        ocur.execute("SELECT order_id FROM orders WHERE status ='O' and user_id = %s ",u[0])
+        for o in ocur.fetchall():
+            ccur.callproc('p_exchange',(o[0],u[0],'C'))
+            print >> sys.stderr, ccur.fetchone()
             ocur.nextset()
+        if u[1] <= 0:
+            preqamt = -u[1]
+            ocur.execute("SELECT contract_id,buy_sell,lots FROM v_pos WHERE user_id = %s ORDER BY p_l Desc",u[0])
+            for p in ocur.fetchall():
+                lt = min((preqamt/(gv_contract[p[0]]['latestpoint']*gv_contract[p[0]]['btc_multi']*gv_contract[p[0]]['leverage'])).to_integral_exact(rounding=ROUND_CEILING),p[2])
+                if p[1] =='B':
+                    _add_order(db,u[0],p[0],'S',gv_contract[p[0]]['bp']*float(1-gv_contract[p[0]]['movelimit']),lt,'F')
+                elif p[1] =='S':
+                    _add_order(db,u[0],p[0],'B',gv_contract[p[0]]['bp']*float(1+gv_contract[p[0]]['movelimit']),lt,'F')
+                preqamt = preqamt - gv_contract[p[0]]['latestpoint']*gv_contract[p[0]]['btc_multi']*gv_contract[p[0]]['leverage'] * lt
+                print >> sys.stderr, gv_contract[p[0]]['name'],lt,preqamt,' Forced Close remained'
+                if preqamt <= 0:
+                    break
+
         #todo send email to notify user
     db.commit()
 

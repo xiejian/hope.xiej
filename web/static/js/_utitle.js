@@ -93,7 +93,7 @@ function multi_sort(e, args) {
     this.invalidate();
     this.render();
 }
-var _dec = {'t':{'O':'Open','C':'Close','B':'Buy','S':'Sell'},
+var _dec = {'t':{'O':'Open','C':'Close','F':'Force Close','B':'Buy','S':'Sell'},
     'st':{'N':'New', 'P':'Open Approved', 'O':'Trading', 'C':'Closed', 'Q':'Settle Approved', 'S':'Settled', 'A':'Achieved', 'R':'Rejected','D':'Deleted'},
     'r':{"W":"World Wide","N":"North America","L":"Latin America / Carib.","O":"Oceania / Australia","M":"Middle East","E":"Europe","A":"Asia","F":"Africa"},
     's': {"C":"Currency","I":"Stock Index","M":"Commodity","S":"Sports","P":"Politic","E":"Entertainment","N":"Natural","O":"Others"}};
@@ -107,9 +107,6 @@ function updn( value) {
 function parseDate(tdate) {
     var system_date = new Date(tdate*1000);
     var user_date = new Date();
-    if (K.ie) {
-        /*system_date = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))todo:fix IE date parse bug*/
-    }
     var title = system_date.toString();
     var diff = Math.floor((user_date - system_date) / 1000);
     if (diff <= -2592000) {return "<span title='"+title+"'><span class='gr'>in</span> "+Math.round(-diff / 2592000) + " mon<span class='gr'>s</span></span>";}
@@ -124,10 +121,3 @@ function parseDate(tdate) {
     if (diff < 2592000) {return "<span title='"+title+"'>"+Math.round(diff / 86400) + " day<span class='gr'>s ago</span></span>";}
     else {return "<span title='"+title+"'>"+Math.round(diff / 2592000) + " mon<span class='gr'>s ago</span></span>";}
 }
-
-var K = function () {
-    var a = navigator.userAgent;
-    return {
-        ie: a.match(/MSIE\s([^;]*)/)
-    }
-}();

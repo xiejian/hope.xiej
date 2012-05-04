@@ -13,7 +13,7 @@ classes should alter those!
 .slick-header-column:hover, .slick-header-column-active {
   background: white url('../img/header-columns-over-bg.gif') repeat-x center bottom;
 }
-.slick-header-columns .slick-header-column    {margin-left: 1px;}
+/*.slick-header-columns .slick-header-column    {margin-left: 1px;}*/
 .slick-cell {   border: none;}
 .slick-cell img,table#transhis img {width: 24px;height: 24px;}
 .slick-headerrow-columns    {background-color: #ffe;}

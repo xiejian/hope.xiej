@@ -4,7 +4,7 @@ div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     width: 252px;
     margin: 12px 25px 1px 17px;
     padding: 10px 16px 30px 14px; }
-div.binfo>table {width: 100%;height: 100%;}
+div.binfo>table {width: 99%;height: 100%;}
 
 div.binfo>table td  {text-align: right;}
 div.binfo>table th  {text-align: left;color: #666;font-style: italic;font-family: Arial,sans-serif;}
