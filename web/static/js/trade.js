@@ -34,9 +34,9 @@ function updatepage_contdata(){
     });
     var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a>　';
     var cprice;
-    if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">(+'+gv_cont["ch"]+' %)</span>'; }
-    else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">('+gv_cont["ch"]+' %)</span>'; }
-    else    { cprice = gv_cont["latestpoint"]+' <span class="gr">( - )</span>';}
+    if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">+'+gv_cont["ch"]+'%</span>'; }
+    else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">'+gv_cont["ch"]+'%</span>'; }
+    else    { cprice = gv_cont["latestpoint"]+' <span class="gr"> - </span>';}
     $("h3.contheader").html(cname+cprice);
     init_modalInputF($("h3.contheader a"));
 
@@ -66,7 +66,9 @@ function update_tradeform(){
     if (gv_cont["bp"] <100)    {dp=2;}
     if (gv_cont["bp"] <10)    {dp=3;}
     if (gv_cont["bp"] <1)    {dp=4;}
-    $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+    if (gv_cont["bp"] > 0)  {
+        $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+    }
 
     $("span#ts_point").html($("input#t_point").val());
     $("span#ts_lots").html($("input#t_lots").val());
