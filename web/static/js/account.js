@@ -30,7 +30,7 @@ function update_gl(){
     var columns = [
         {id: "time", name: "Time", field: "t", width:85,sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         {id: "s", name: "Action", field: "s",width:80,formatter:function(row, cell, value, columnDef, dataContext){
-            if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> <img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
+            if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> 　<img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
             else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 34px;"/> ' +dataContext['ty'];}
             else if(value=='B'){return '<img src="/static/img/_i_BTC.png" title="Bitcoin"/> ' + dataContext['ty'];}
             else if(value=='R'){return '<img src="/static/img/logo.s.gif" style="height:20px;width: 34px;" title="Refund"/> refund :  ' + dataContext['ty'];}

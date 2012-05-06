@@ -9,12 +9,16 @@ var gv_cont={};
 var v_userd;
 
 function get_contdata(cid){
+    $("table#continfo").parent("div").hide();
+    $("table#continfo").parent("div").next("img").fadeIn();
     $.getJSON($SCRIPT_ROOT + '/data', {
         t:'tc',n: cid
     }, function(data) {
         gv_cont = data;
         gv_cont['id']=cid;
         updatepage_contdata();
+        $("table#continfo").parent("div").next("img").hide();
+        $("table#continfo").parent("div").fadeIn();
         update_tradeform();
     });
     return false;
@@ -68,7 +72,7 @@ function update_tradeform(){
     if (gv_cont["bp"] <1)    {dp=4;}
     if (gv_cont["bp"] > 0)  {
         $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
-    }
+    }else{$("input#t_point").attr({min:0.1,max:99999});}
 
     $("span#ts_point").html($("input#t_point").val());
     $("span#ts_lots").html($("input#t_lots").val());

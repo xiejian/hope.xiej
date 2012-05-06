@@ -60,6 +60,7 @@ def data():
         else:
             abort(404)
     elif t=='tc':
+        #return 1
         if n in gv_contract:
             return jsonify(gv_contract[n])
         else:
