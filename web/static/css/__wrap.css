@@ -33,6 +33,8 @@ a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right
     border-radius: 15px;
     box-shadow: 0px 0px 15px #660;}
 a.button:hover{background:#246;color:#FFF;}
+a.contact { width: 36px;height: 44px; float: right; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat }
+a.contact:hover {background: url(../img/_i_contact2.png) no-repeat }
 
 .error {
     /* supply height to ensure consistent positioning for every browser */

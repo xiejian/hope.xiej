@@ -18,6 +18,7 @@
 <body>
 <div id="infobar">
     <div class="container_16">
+        <a class="modalInput contact" title="Contact Us" rel="#feedback_overlay" href="#feedback"></a>
         <div class="scrollable" style="height:25px;">
             <div class="items ver">
                 {% for a in twt['ann'] %}
@@ -47,6 +48,17 @@
             <div class="msg_{{ category }}">{{ message }}</div>
         {% endfor %}
         {% block content %}{% endblock %}
+    </div>
+    <div class="modal F" id="feedback_overlay">
+        <!-- the external content is loaded inside this tag -->
+        <h3>Feed Back</h3>
+        <form>
+            <input type="text">
+            <input type="text">
+            <textarea name="text" rows="10" cols="80"></textarea>
+            <input type="submit">
+        </form>
+
     </div>
 </div>
 <div id="footer">
