@@ -11,11 +11,11 @@
     <div class="grid_7 ptlogin">
         <form class="login" action="{{ url_for('home',t='L') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            <input type=email name=username value="{{ g.login_failed }}" size="20" required="required">
+            <input type=email name=username value="{{ g.login_failed }}" style="width: 180px;" required="required" tabindex="1">
             <!--span class="placeholder">Email</span-->
-            <input type=password name=password pattern="[\u0020-\u007e]+" size="10" required="required">
+            <input type=password name=password pattern="[\u0020-\u007e]+" style="width: 100px;" required="required" tabindex="2">
             <!--span class="placeholder">Password</span-->
-            <input type=submit value=Login>
+            <button type=submit tabindex="3">LogIn</button>
             {% if g.login_failed %}
                 <div class="login_failed">Username or Password is Incorrect. <a class="modalInput" rel="#recover_pass" href="#recover_pass">Lost password?</a></div><!--todo password recovery -->
             {% endif %}

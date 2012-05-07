@@ -1,6 +1,7 @@
 div.ptlogin  {margin:20px 20px 0px 0px; }
-div.ptlogin input   {font-size: 1.2em;border: 1px solid #AAE;background: #88A;color: #FFF;margin-left: -2px;padding: 5px;}
-form.login {text-align:center;  padding: 2px; }
+div.ptlogin input {font-size: 1.2em;border: 1px solid #db8616;background: #FFF;margin-left: -1px;padding: 5px;}
+div.ptlogin button {height: 28px; border: none;background: #db8616;color: #fff;margin-left: -1px;filter:chroma(color=#000000);}
+
 div.modal input     {font-size: 1.1em;padding: 8px;}
 div.login_failed    {color: #FFF;}
 span.placeholder    {position: absolute;

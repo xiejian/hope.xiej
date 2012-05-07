@@ -14,7 +14,7 @@
     <div class="subheader">Transactions</div>
     <table id="transhis">
     </table>
-    </div><img src="{{ url_for('static',filename='img/loading.gif') }}">
+    </div> <img src="{{ url_for('static',filename='img/loading.gif') }}">
 </div>
 <div class="grid_11">
 <div class="grid_8  push_1 trade {% if 'bs' in session %}{{ session['bs'] }}{% else %} B {% endif %}">
@@ -33,8 +33,8 @@
         </tr>
     </table><input class="submit" tabindex="6" type=submit value=" TRADE ">
     <div class="hr">　</div>
-        pt:<span title="Point" id="ts_point"></span> × l:<span title="Lots" id="ts_lots">-</span> × m:<span title="BTC Multi" id="ts_btc_multi"></span>
-            = v:<span title="Value" id="ts_value"></span> , × le:<span title="Leverage" id="ts_leverage"></span> = mg:<span title="Margin" id="ts_margin">-</span>
+        pt:<span title="Point" id="ts_point"></span> × l:<span title="Lots" id="ts_lots">-</span> × m:<span title="BTC Multi " id="ts_btc_multi"></span>
+            = v:<span title="Value" id="ts_value"></span> , × mr:<span title="Margin Rate" id="ts_leverage"></span> = mg:<span title="Margin Required" id="ts_margin">-</span>
 </form>
 </div>
 <div class="clear"></div>
