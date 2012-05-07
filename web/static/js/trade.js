@@ -9,12 +9,16 @@ var gv_cont={};
 var v_userd;
 
 function get_contdata(cid){
+    $("table#continfo").parent("div").hide();
+    $("table#continfo").parent("div").next("img").fadeIn();
     $.getJSON($SCRIPT_ROOT + '/data', {
         t:'tc',n: cid
     }, function(data) {
         gv_cont = data;
         gv_cont['id']=cid;
         updatepage_contdata();
+        $("table#continfo").parent("div").next("img").hide();
+        $("table#continfo").parent("div").fadeIn();
         update_tradeform();
     });
     return false;
@@ -34,9 +38,9 @@ function updatepage_contdata(){
     });
     var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a>　';
     var cprice;
-    if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">(+'+gv_cont["ch"]+' %)</span>'; }
-    else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">('+gv_cont["ch"]+' %)</span>'; }
-    else    { cprice = gv_cont["latestpoint"]+' <span class="gr">( - )</span>';}
+    if(gv_cont["ch"] > 0){ cprice = gv_cont["latestpoint"]+' <span class="up">+'+gv_cont["ch"]+'%</span>'; }
+    else if(gv_cont["ch"] < 0){ cprice = gv_cont["latestpoint"]+' <span class="dn">'+gv_cont["ch"]+'%</span>'; }
+    else    { cprice = gv_cont["latestpoint"]+' <span class="gr"> - </span>';}
     $("h3.contheader").html(cname+cprice);
     init_modalInputF($("h3.contheader a"));
 
@@ -66,7 +70,9 @@ function update_tradeform(){
     if (gv_cont["bp"] <100)    {dp=2;}
     if (gv_cont["bp"] <10)    {dp=3;}
     if (gv_cont["bp"] <1)    {dp=4;}
-    $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+    if (gv_cont["bp"] > 0)  {
+        $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+    }else{$("input#t_point").attr({min:0.1,max:99999});}
 
     $("span#ts_point").html($("input#t_point").val());
     $("span#ts_lots").html($("input#t_lots").val());

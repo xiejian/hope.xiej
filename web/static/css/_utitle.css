@@ -2,8 +2,9 @@
 div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     height: 72px;
     width: 252px;
-    margin: 12px 25px 1px 17px;
+    margin: 12px 25px -10px 17px;
     padding: 10px 16px 30px 14px; }
+div#titlebar a img {margin-top: 10px;}
 div.binfo>table {width: 99%;height: 100%;}
 
 div.binfo>table td  {text-align: right;}

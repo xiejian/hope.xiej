@@ -13,19 +13,20 @@ div#infobar {background:#CCC; color:#666; text-align:center;height: 25px;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.fullname {font-size: 0.8em;margin-left:20px;font-weight: normal; }
-div#cont_overlay h3 {font-weight: bold; font-style: normal;}
-div#cont_overlay h4 {margin: 15px 0px; font-style: normal; text-align: center;}
+div#cont_overlay div.title h3 { font-style: normal;font-family:"Trebuchet MS",sans-serif;}
+div#cont_overlay div.scroll_wrap h3 {margin: 15px 0px; font-style: normal;text-align: center;}
+div#cont_overlay div.scroll_wrap h3 span {margin-left: 5px; font-size: 0.8em;}
 
 div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px 5px 30px 5px; margin-top:20px;}
 div#titlebar  {background:#DDCCB1; border-bottom:4px solid  #88C;}
 div#body    {padding-bottom: 20px;}
 div.msg_err, div.msg_suc,div.msg_message {padding:10px 10px 10px 45px;border-radius: 5px;float: right;border: 1px solid #CD0A0A;margin-top: 10px;display:none;
-    background: #FEF1EC url(../img/_icon_error.png) 3% 50%  no-repeat; color: #CD0A0A;z-index: 999999;}
-div.msg_suc {border: 1px solid #FCEFA1;background: #FBF9EE url(../img/_icon_info.png) 3% 50% no-repeat;color: #363636;}
+    background: #FEF1EC url(../img/_i_sad.png) 3% 50%  no-repeat; color: #CD0A0A;z-index: 999999;}
+div.msg_suc {border: 1px solid #94c95a;background: #FBF9EE url(../img/_i_happy.png) 3% 50% no-repeat;color: #363636;}
 div.modal .form_result  {display: none;}
 
-.form_result.err    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #CD0A0A;background: #FEF1EC url(../img/_icon_error.png) 3% 50%  no-repeat; color: #CD0A0A;}
-.form_result.suc    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #FCEFA1;background: #FBF9EE url(../img/_icon_error.png) 3% 50%  no-repeat; color: #363636;}
+.form_result.err    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #CD0A0A;background: #FEF1EC url(../img/_i_sad.png) 3% 50%  no-repeat; color: #CD0A0A;}
+.form_result.suc    {padding:10px 10px 10px 45px;border-radius: 5px;border: 1px solid #94c95a;background: #FBF9EE url(../img/_i_happy.png) 3% 50%  no-repeat; color: #363636;}
 
 a:hover   {color: #F22; }
 a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right;margin:10px;padding:5px 10px 5px 10px;color:#FCA;background:#08A;border:2px solid #055;

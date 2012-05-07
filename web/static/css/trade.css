@@ -29,6 +29,9 @@ div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right 
 .slick-cell a.cancel     { padding:12px 12px;background:url(../img/_i_E.png) no-repeat left top;display: inline-block;}
 .slick-cell a.cancel:hover{background-position: right top;}
 
+h3.contheader   {font-style: normal;}
+h3.contheader span   {font-size:0.8em;margin-left: 10px;}
+h3.contheader a   {font-family:"Trebuchet MS",sans-serif;}
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
 table#oqueue div    {background-color: #cea13c;height: 1px;margin: 1px 8px;}
 

@@ -4,8 +4,8 @@
     <link type="text/css" href="{{url_for('static',filename='css/trade.css')}}" rel="stylesheet" />
 {% endblock %}
 {% block content %}
-<h3 class="contheader"></h3>
-<div class="grid_5">
+<h3 class="contheader">　</h3>
+<div class="grid_5"><div>
     <table id="continfo">
     </table>
     <div class="subheader">Order Queue</div>
@@ -14,6 +14,7 @@
     <div class="subheader">Transactions</div>
     <table id="transhis">
     </table>
+    </div><img src="{{ url_for('static',filename='img/loading.gif') }}">
 </div>
 <div class="grid_11">
 <div class="grid_8  push_1 trade {% if 'bs' in session %}{{ session['bs'] }}{% else %} B {% endif %}">

@@ -41,7 +41,7 @@ def _update_contract(db,cid = 'contract_id',type='D'):
 def _update_marketinfo(db):
     cur = db.cursor()
     for c in gv_contract:
-        gv_contract[c]['bp'],gv_contract[c]['ch'] = '',''
+        gv_contract[c]['bp'],gv_contract[c]['ch'] = None,None
         if gv_contract[c]['status'] in ['O','C','Q','S']:
             cur.execute("select floor(unix_timestamp(t.timestamp)/3600)*3600000, round(SUBSTRING_INDEX(GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp), ',', 1 ),8) as open, \
                         max(t.point) as high,min(t.point) as low,round(SUBSTRING_INDEX( GROUP_CONCAT(CAST(t.point AS CHAR) ORDER BY t.timestamp DESC), ',', 1 ),8) as close, round(sum(t.point * t.lots * c.btc_multi),8) as vol \
@@ -50,10 +50,10 @@ def _update_marketinfo(db):
             for i in range(max(-24,-1*len(gv_contract[c]['M'])),0):
                 if math.floor(time.time()/(3600*24)) > math.floor(gv_contract[c]['M'][i][0]/(3600000*24)):
                     gv_contract[c]['bp'] = gv_contract[c]['M'][i][4]
-                elif math.floor(time.time()/(3600*24)) == math.floor(gv_contract[c]['M'][i][0]/(3600000*24)) and gv_contract[c]['bp']=='':
+                elif math.floor(time.time()/(3600*24)) == math.floor(gv_contract[c]['M'][i][0]/(3600000*24)) and gv_contract[c]['bp'] is None:
                     gv_contract[c]['bp'] = gv_contract[c]['M'][i][1]
                     break
-            if gv_contract[c]['bp'] != '':
+            if gv_contract[c]['bp']:
                 gv_contract[c]['ch'] = round((gv_contract[c]['M'][-1][4]-gv_contract[c]['bp'])*100/gv_contract[c]['bp'],2)
 
 
@@ -182,10 +182,10 @@ def _update_user(db,session,content = []):    #get user's info
 def _add_order(db,uid,contract_id,b_s,point,lots,type=''):
     cur = db.cursor()
     bp = gv_contract[contract_id]['bp']
-    if bp>0: #daily point move limit
+    if bp not in [None,0]: #daily point move limit
         point = min(max(float(point),bp*float(1-gv_contract[contract_id]['movelimit'])),bp*float(1+gv_contract[contract_id]['movelimit']))
     dp = 4 if bp < 1 else 3 if bp < 10 else 2 if bp < 100 else 1 if bp < 1000 else 0
-    cur.callproc('p_addorder',(contract_id,uid,b_s,round(point,dp),lots,type))
+    cur.callproc('p_addorder',(contract_id,uid,b_s,round(float(point),dp),lots,type))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}

@@ -1,4 +1,4 @@
-<div class="grid_9 alpha">
+<div class="grid_9 alpha title">
     {% if cont[c].status =='O' and 'user_id'in session %}<a class='button' href="{{ url_for('trade',c=c) }}">TRADE</a>{% endif %}
     <h3>{{cont[c].name}} <span class="fullname">( {{cont[c].status|f("C")}} )</span></h3>
 </div>
@@ -6,10 +6,10 @@
 <div class="scroll_wrap">
 <div class="grid_9 alpha">
     <table>
-        <tr><td style="width:160px;" rowspan="4"><h4>{{cont[c].latestpoint|f}}
-            {% if cont[c]["ch"] in [0,''] %} <span class="gr">( - )</span>
-            {% elif cont[c]["ch"] < 0%} <span class="dn">( {{ cont[c]["ch"] }} %)</span>
-            {% else  %} <span class="up"> ( +{{ cont[c]["ch"] }} %)</span>{% endif %}</h4>
+        <tr><td style="width:170px;" rowspan="4"><h3>{{cont[c].latestpoint|f}}
+            {% if cont[c]["ch"] in [0,None] %} <span class="gr"> - </span>
+            {% elif cont[c]["ch"] < 0%} <span class="dn"> {{ cont[c]["ch"] }}%</span>
+            {% else  %} <span class="up">  +{{ cont[c]["ch"] }}%</span>{% endif %}</h3>
             {{cont[c].fullname}}</td>
             <th>contract size</th><td>{{cont[c].btc_multi|f}} × pt</td><th>open date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
         <tr><th>move limit</th><td>{{(cont[c].movelimit*100)|f}}%</td><th>settle date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
@@ -36,7 +36,7 @@
     <div class="footer"></div>
     <table><tr><th>contract definition</th><td colspan="3">
         <textarea rows="9" readonly="readonly" style="width:750px;">{{cont[c].description}}</textarea>
-    </td><tr><th>settle point</th><td>{{ cont[c].settlepoint }}</td><th>settle guaranty</th><td>{{ cont[c].settlemargin }}</td></tr>
+    </td><tr><th>settle point</th><td>{{ cont[c].settlepoint }}</td><th>settle guaranty</th><td>{{ cont[c].settlemargin|f }}</td></tr>
         <tr><th>settle proof</th>
             <td colspan="3">
                 <textarea rows="9" readonly="readonly" style="width:750px;">{{cont[c].settleproof}}</textarea></td>
