@@ -18,7 +18,7 @@ e.g.
 4. settle point = 100 / price. round to 5 decimal point.',
    'apr_msg':'Message from site admin' }%}
 {% if c==0 %}
-        {% set ct=[{'code':'','opendate':1,'fullname':'','settledate':30,'btc_multi':'0.0001','movelimit':0.1,'region':'W','sector':'C','leverage':'','write_fee':0,'description':'','apinstruction':''}] %}
+        {% set ct=[{'code':'','opendate':1,'fullname':'','settledate':30,'btc_multi':'0.0001','movelimit':0.1,'region':'W','sector':'C','leverage':0.25,'write_fee':0,'description':'','apinstruction':''}] %}
 {% else %}   {% set ct = cont %} {% endif %}
 <h3>Create a New contract</h3>
 <div class="modal_wrap">

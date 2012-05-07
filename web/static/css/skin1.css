@@ -204,7 +204,7 @@ and not for this element.
 .scrollable .items.ver {
     /* this cannot be too large*/
     height:20000em;
-    /*position:absolute;*/
+    position:absolute;
 }
 /*
 a single item. must be floated in horizontal scrolling.  typically,
