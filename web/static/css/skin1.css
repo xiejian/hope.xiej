@@ -201,11 +201,14 @@ and not for this element.
     width:20000em;
     position:absolute;
 }
-.scrollable .items.ver {
+.scrollable.ver .items {
     /* this cannot be too large*/
     height:20000em;
     position:absolute;
+    text-align: center;
+    width: 100%;
 }
+.scrollable.ver .items div  {width: 100%;}
 /*
 a single item. must be floated in horizontal scrolling.  typically,
 this element is the one that *you* will style the most.

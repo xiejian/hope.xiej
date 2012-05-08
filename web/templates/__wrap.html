@@ -18,23 +18,22 @@
 <body>
 <div id="infobar">
     <div class="container_16">
-        <a class="modalInput contact" title="Contact Us" rel="#feedback_overlay" href="#feedback"></a>
-        <div class="scrollable" style="height:25px;">
-            <div class="items ver">
+        {% if 'user_id' in session %}<a class="modalInput contact" title="Contact Us" rel="#feedback_overlay" href="#feedback"></a>{% endif %}
+        <div class="scrollable ver" style="height:25px;">
+            <div class="items" >
                 {% for a in twt['ann'] %}
-                    <div class="grid_16 alpha omega"> {{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
+                    <div > {{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
                     <span> <a href="https://twitter.com/intent/tweet?in_reply_to={{ a.id_str }}"  class="twt_reply"></a>
                     <a href="https://twitter.com/intent/retweet?tweet_id={{ a.id_str }}"  class="twt_retweet"></a>
                     <a href="https://twitter.com/intent/favorite?tweet_id={{ a.id_str }}" class="twt_favor"></a></span>
                     </div>
                 {% else %}
-                <div class="grid_16 alpha omega">Welcome to Bitcoin Futures Exchange <span class="twt_text">BTCFE.com</span></div>
+                <div >Welcome to Bitcoin Futures Exchange <span class="twt_text">BTCFE.com</span></div>
                 {% endfor %}
             </div>
         </div>
-
     </div>
-    <!--todo feedback dialog: help,bug report, advice-->
+
 </div>
 <div id="titlebar">
     <div class="container_16">
@@ -49,15 +48,17 @@
         {% endfor %}
         {% block content %}{% endblock %}
     </div>
-    <div class="modal F" id="feedback_overlay">
+    <div class="modal" id="feedback_overlay">
         <!-- the external content is loaded inside this tag -->
-        <h3>Feed Back</h3>
-        <form>
-            <input type="text">
-            <input type="text">
-            <textarea name="text" rows="10" cols="80"></textarea>
-            <input type="submit">
-        </form>
+        <h4>Feed Back</h4>
+        <form action="{{ url_for('feedback') }}" method=post><input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            <table><tr><th>Category</th><td><input tabindex="1" type="radio" name="category" value="Question" id="fb_tq" checked="checked"/><label for="fb_tq">Question</label>　
+            <input tabindex="2" type="radio" name="category" value="Bug Report" id="fb_tb" /><label for="fb_tb">Bug Report</label>
+            <input tabindex="3" type="radio" name="category" value="Advice" id="fb_ta" /><label for="fb_ta">Advice</label>　　
+            </td></tr>
+            <th>Message</th><td><textarea name="msg" rows="13" style="width: 370px;" ></textarea></td>
+            </table><button type=submit >Send</button>
+        </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
 
     </div>
 </div>

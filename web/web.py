@@ -253,6 +253,13 @@ def market():
     g.u=_update_user(g.db,session)
     return render_template('market.html')
 
+@app.route('/feedback', methods=['POST'])
+def feedback():
+
+    _send_mail(app.config['FEEDBACKMAIL'],render_template("email/feedback.html",category=request.form['category'],msg=request.form['msg']))
+
+    msg = dict(msg='Feed back sent successfully.',type = 'suc')
+    return jsonify(msg)
 
 @app.route('/contract', methods=['GET'])
 def contract():

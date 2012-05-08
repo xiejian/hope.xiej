@@ -8,8 +8,8 @@ h3 {    font-size: 21px;}
 h4 {    font-size: 19px;}
 h5 {    font-size: 16px;}
 a {text-decoration: none;}
-div#infobar {background:#CCC; color:#666; text-align:center;height: 25px;}
-/*div.scrollable.infobar  {height: 25px;}*/
+div#infobar {background:#CCC; color:#666; height: 25px;position: relative;}
+
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.fullname {font-size: 0.8em;margin-left:20px;font-weight: normal; }
@@ -35,6 +35,7 @@ a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right
 a.button:hover{background:#246;color:#FFF;}
 a.contact { width: 36px;height: 44px; float: right; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat }
 a.contact:hover {background: url(../img/_i_contact2.png) no-repeat }
+div#feedback_overlay form {border: 1px solid #999;background-color: white; padding: 5px;margin: 0px 15px 0px 0px;text-align: center;}}
 
 .error {
     /* supply height to ensure consistent positioning for every browser */

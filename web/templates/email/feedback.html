@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{{ session['email'] }} send a {{ category }}</title>
+
+</head>
+<body style="font:'Georgia', Arial;margin: 0px; width: 600px;">
+{{ category }}:
+<br/>
+    <pre>
+    {{ msg }}
+    </pre>
+<br/>
+Sent by <a href="mailto:{{ session['email'] }}">{{ session['email'] }}</a>
+</body>
+</html>
+

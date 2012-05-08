@@ -1,5 +1,4 @@
 
-
 div.trade   {border:1px solid #ccc; border-radius: 10px; padding: 10px;color:#FCC;text-align: center}
 div.trade table td {text-align: right;}
 div.trade.S {background:#A44;}
@@ -9,7 +8,7 @@ div.trade span {color: #010;}
 div.trade form div.hr {border-bottom: 1px solid #ddc781;margin: -15px 5px 5px;text-align: right;}
 input#t_point,#t_lots, #contract {font-size: 1.4em;margin: 15px 15px 0px 5px;padding: 3px;width: 130px;}
 input.submit    {font-size: 1.3em;margin: 20px 15px 5px 5px;padding: 5px;}
-label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px -6px 25px 0px;color:#Fcc;}
+label#l_tb, label#l_ts {border:1px solid #ccc; font-size: 1.2em; background: #666;border-radius: 10px; padding: 5px 10px 5px 10px;margin:10px 0px 25px -4px;color:#Fcc;}
 
 div.trade.B label#l_ts  {background:#E66;}
 div.trade.S label#l_tb  {background: #2AA}
