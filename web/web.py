@@ -95,7 +95,7 @@ def home():
                 return redirect(url_for('trade'))
             else:
                 g.login_failed = request.form['username']
-    return render_template('home.html')
+    return render_template('home.html',fbmail=app.config['FEEDBACKMAIL'])
 
 @app.route('/logout')
 def logout():
@@ -245,13 +245,15 @@ def bitcoin():
         res = _btc_withdraw(g.db,session['email'],request.form['address'],request.form['amount'],request.form['password'],request.form['cpassword'])
         flash(res['msg'],res['category'])
     g.u=_update_user(g.db,session,['address','btctrans','info'])
-    return render_template('bitcoin.html')
+    tab = request.args.get('tab', 0)
+    return render_template('bitcoin.html',tab=tab)
 
 
 @app.route('/market', methods=['GET','POST'])
 def market():
     g.u=_update_user(g.db,session)
-    return render_template('market.html')
+    tab = request.args.get('tab', 0)
+    return render_template('market.html',tab=tab)
 
 @app.route('/feedback', methods=['POST'])
 def feedback():

@@ -18,7 +18,9 @@
 <body>
 <div id="infobar">
     <div class="container_16">
-        {% if 'user_id' in session %}<a class="modalInput contact" title="Contact Us" rel="#feedback_overlay" href="#feedback"></a>{% endif %}
+
+        <span class="topleft"></span>
+        <span class="topright"><a class="modalInput contact" title="Contact Us" rel={% if 'user_id' in session %}"#feedback_overlay"{% else %}"#feedback_nolog"{% endif %} href="#feedback"></a></span>
         <div class="scrollable ver" style="height:25px;">
             <div class="items" >
                 {% for a in twt['ann'] %}
@@ -59,11 +61,34 @@
             <th>Message</th><td><textarea name="msg" rows="13" style="width: 370px;" ></textarea></td>
             </table><button type=submit >Send</button>
         </form><h3><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span></h3>
-
+    </div>
+    <div class="modal" id="feedback_nolog">
+        <!-- the external content is loaded inside this tag -->
+        <h4>Feed Back</h4>
+        <br/>
+            <h5>If you have any questions or advices, Please don't hesitate to tell us.</h5>
+        <br/>
+            <h5>Send mail to: <a href="mailto:{{ fbmail }}">{{ fbmail }}</a> </h5>
     </div>
 </div>
 <div id="footer">
-    <div class="container_16">CopyRight 2012 BTCFE.com
+    <div class="container_16">
+    <div class="grid_14 prefix_1 suffix_1">
+        <table><tr>
+            <td>Market<br/><a href="{{ url_for('market',tab=0) }}">Open contracts</a><br/><a href="{{ url_for('market',tab=1) }}">New contracts</a><br/><a href="{{ url_for('market',tab=2) }}">Closed contracts</a></td>
+            <td>Trade</td><td>Account<br/><a href="{{ url_for('account',tab=0) }}">General info</a><br/><a href="{{ url_for('account',tab=1) }}">Account history</a><br/><a href="{{ url_for('account',tab=2) }}">My contracts</a><br/><a href="{{ url_for('account',tab=3) }}">Security info</a></td>
+            <td>Bitcoin<br/><a href="{{ url_for('bitcoin',tab=0) }}">Transfer in</a><br/><a href="{{ url_for('bitcoin',tab=1) }}">Transfer Out</a><br/><a href="{{ url_for('bitcoin',tab=2) }}">Transfer records</a></td>
+            <td>Help<br/><a class="modalInput contact" title="Contact Us" rel={% if 'user_id' in session %}"#feedback_overlay"{% else %}"#feedback_nolog"{% endif %} href="#feedback">Feed back</a></td>
+        </tr>
+
+
+        </table>
+
+
+        <div class="clear"></div>
+        <div class="subheader"></div>
+        CopyRight 2012 BTCFE.com
+    </div>
     </div>
 </div>
 

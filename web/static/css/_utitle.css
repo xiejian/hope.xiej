@@ -4,6 +4,7 @@ div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     width: 252px;
     margin: 12px 25px -10px 17px;
     padding: 10px 16px 30px 14px; }
+
 div#titlebar a img {margin-top: 10px;}
 div.binfo>table {width: 99%;height: 100%;}
 
@@ -30,7 +31,6 @@ div.navi li.active  {background-color:#EEF;border-left: 4px solid #77F;}
 div.navi li.active a {color:#22F;}
 div.navi li a   {color:#444;padding: 8px;margin-left: 5px; }
 div.navi li a:hover {color:#F22;}
-div.subheader   {border-top: 1px solid #DDD;font-size: 1.2em;font-weight: bold;margin:20px 0px 5px 0px;padding: 5px 0px; }
 
 a.logout    {font-family:"Trebuchet MS",sans-serif;padding:2px 5px 2px 5px;  }
 a.logout:hover  {background: #88C;color: #FF8;}

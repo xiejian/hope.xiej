@@ -9,6 +9,5 @@
 
 $(function(){
     activepage(3);
-    showtab(0);
 
 });

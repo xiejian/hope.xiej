@@ -1,4 +1,4 @@
-body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;}
+body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;background-color: #F6F6F2;}
 input,select,textarea  {  font:13px 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;}
 
 h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 6px 0px;}
@@ -8,8 +8,8 @@ h3 {    font-size: 21px;}
 h4 {    font-size: 19px;}
 h5 {    font-size: 16px;}
 a {text-decoration: none;}
-div#infobar {background:#CCC; color:#666; height: 25px;position: relative;}
-
+div#infobar {background:#EDCB94; color:#456; height: 25px;position: relative;}
+div#infobar div.container_16 {background:#CBA;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.fullname {font-size: 0.8em;margin-left:20px;font-weight: normal; }
@@ -17,9 +17,44 @@ div#cont_overlay div.title h3 { font-style: normal;font-family:"Trebuchet MS",sa
 div#cont_overlay div.scroll_wrap h3 {margin: 15px 0px; font-style: normal;text-align: center;}
 div#cont_overlay div.scroll_wrap h3 span {margin-left: 5px; font-size: 0.8em;}
 
-div#footer  {background:#222; color:#FFF; text-align:center;padding: 5px 5px 30px 5px; margin-top:20px;}
-div#titlebar  {background:#DDCCB1; border-bottom:4px solid  #88C;}
-div#body    {padding-bottom: 20px;}
+div#footer  {background:#F6F6F2; text-align:center;padding: 15px; }
+div#footer table td {width: 200px;padding-left: 20px;}
+div#footer table a {color: #888;font-size: 0.9em;}
+
+div#infobar span.topleft   {width: 48px;height: 25px;float: left;
+    background-color:#EDCB94;background-repeat:repeat-x;
+    background-image:-khtml-gradient(linear, left top, right top, from(#EDCB94), to(#CBA));
+    background-image:-moz-linear-gradient(left, #EDCB94, #CBA);
+    background-image:-ms-linear-gradient(left, #EDCB94, #CBA);
+    background-image:-webkit-gradient(linear, left top, right top, color-stop(0%, #EDCB94), color-stop(100%, #CBA));
+    background-image:-webkit-linear-gradient(left, #EDCB94, #CBA);
+    background-image:-o-linear-gradient(left, #EDCB94, #CBA);
+    background-image:linear-gradient(left, #EDCB94, #CBA);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDCB94', endColorstr='#CCBBAA', GradientType=1); }
+div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDCB94;background-repeat:repeat-x;
+    background-image:-khtml-gradient(linear, right top, left top, from(#EDCB94), to(#CBA));
+    background-image:-moz-linear-gradient(right, #EDCB94, #CBA);
+    background-image:-ms-linear-gradient(right, #EDCB94, #CBA);
+    background-image:-webkit-gradient(linear, right top, left top, color-stop(0%, #EDCB94), color-stop(100%, #CBA));
+    background-image:-webkit-linear-gradient(right, #EDCB94, #CBA);
+    background-image:-o-linear-gradient(right, #EDCB94, #CBA);
+    background-image:linear-gradient(right, #EDCB94, #CBA);
+    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCBBAA',endColorstr='#EDCB94', GradientType=1); }
+
+div#infobar a.contact { position:absolute;float: right;width: 36px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat; }
+div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat }
+
+div#titlebar{border-bottom:4px solid  #88C;background-color:#EDCB94;background-repeat:repeat-x;
+    background-image:-khtml-gradient(linear, left top, left bottom, from(#EDCB94), to(#FFEAD0));
+    background-image:-moz-linear-gradient(top, #EDCB94, #FFEAD0);
+    background-image:-ms-linear-gradient(top, #EDCB94, #FFEAD0);
+    background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #EDCB94), color-stop(100%, #FFEAD0));
+    background-image:-webkit-linear-gradient(top, #EDCB94, #FFEAD0);
+    background-image:-o-linear-gradient(top, #EDCB94, #FFEAD0);
+    background-image:linear-gradient(top, #EDCB94, #FFEAD0);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDCB94', endColorstr='#FFEAD0', GradientType=0);}
+
+div.body    {padding-bottom: 20px;background-color: white;}
 div.msg_err, div.msg_suc,div.msg_message {padding:10px 10px 10px 45px;border-radius: 5px;float: right;border: 1px solid #CD0A0A;margin-top: 10px;display:none;
     background: #FEF1EC url(../img/_i_sad.png) 3% 50%  no-repeat; color: #CD0A0A;z-index: 999999;}
 div.msg_suc {border: 1px solid #94c95a;background: #FBF9EE url(../img/_i_happy.png) 3% 50% no-repeat;color: #363636;}
@@ -33,9 +68,8 @@ a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right
     border-radius: 15px;
     box-shadow: 0px 0px 15px #660;}
 a.button:hover{background:#246;color:#FFF;}
-a.contact { width: 36px;height: 44px; float: right; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat }
-a.contact:hover {background: url(../img/_i_contact2.png) no-repeat }
-div#feedback_overlay form {border: 1px solid #999;background-color: white; padding: 5px;margin: 0px 15px 0px 0px;text-align: center;}}
+
+div#feedback_overlay form {border: 1px solid #999;background-color: white; padding: 5px;margin: 0px 15px 0px 0px;text-align: center;}
 
 .error {
     /* supply height to ensure consistent positioning for every browser */
@@ -86,3 +120,4 @@ span.up {color: #093; }
 span.dn {color: #D14836; }
 span.gr   {color: #888;font-style: italic;}
 
+div.subheader   {border-top: 1px solid #DDD;font-size: 1.2em;font-weight: bold;margin:20px 0px 5px 0px;padding: 5px 0px;min-height: 1px; }

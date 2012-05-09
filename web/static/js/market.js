@@ -80,7 +80,6 @@ function update_contlist(){
 
 $(function () {
     activepage(0);
-    showtab(0);
     get_contlist();
 });
 
