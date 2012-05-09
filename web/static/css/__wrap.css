@@ -1,4 +1,4 @@
-body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;background-color: #F6F6F2;}
+body  {    font: 13px/1.5 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;margin: 0;background-color: #F3F3F0;}
 input,select,textarea  {  font:13px 'Georgia', Arial, 'Liberation Sans', FreeSans, sans-serif;}
 
 h1,h2, h3, h4, h5   {  font-weight: normal; font-style: italic;margin: 1.2em 0px 6px 0px;}
@@ -17,9 +17,10 @@ div#cont_overlay div.title h3 { font-style: normal;font-family:"Trebuchet MS",sa
 div#cont_overlay div.scroll_wrap h3 {margin: 15px 0px; font-style: normal;text-align: center;}
 div#cont_overlay div.scroll_wrap h3 span {margin-left: 5px; font-size: 0.8em;}
 
-div#footer  {background:#F6F6F2; text-align:center;padding: 15px; }
+div#footer  {background:#F3F3F0; text-align:center;padding: 15px;border-top: 1px solid #F0F0ED }
 div#footer table td {width: 200px;padding-left: 20px;}
 div#footer table a {color: #888;font-size: 0.9em;}
+div#footer table a:hover   {color: #F22; }
 
 div#infobar span.topleft   {width: 48px;height: 25px;float: left;
     background-color:#EDCB94;background-repeat:repeat-x;
