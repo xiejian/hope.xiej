@@ -5,8 +5,7 @@ install python-mysqldb
 install simplejson
 sudo easy_install Flask
 
-modify helpers.py:
-    import datetime
-    dthandler = lambda obj: obj.isoformat() if isinstance(obj, datetime.datetime) else None
-        return current_app.response_class(json.dumps(dict(*args, **kwargs),default = dthandler,
-            indent=None if request.is_xhr else 2), mimetype='application/json')
+
+#----https
+$sudo a2enmod ssl
+sudo a2enmod rewrite
