@@ -1,43 +1,41 @@
-import urllib2,threading,datetime,sys
+import urllib2,threading,time,sys
 import simplejson as json
-from config import http_proxy
+from config import http_proxy,TWT_INTERVAL,TWT_COUNT
 from _data import gv_contract
 
 gv_twt={'ann':[],'talk':[]}
-count = '5'
 
-class _updatec(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
+def twt_update():
+    global gv_twt
+    if http_proxy is not None:
+        proxy = urllib2.ProxyHandler(http_proxy)
+        urllib2.install_opener(urllib2.build_opener(proxy))
+    urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name=BTCFE&count="+TWT_COUNT
+    urlt = "http://search.twitter.com/search.json?callback=?&q=BTCFE&include_entities=true"
+    adata = urllib2.urlopen(urla)
+    gv_twt.update( {'ann': json.loads(adata.read())})
+    tdata = urllib2.urlopen(urlt)
+    gv_twt.update( {'talk': json.loads(tdata.read())})
+    for c in gv_contract :
+        if len(gv_contract[c]['twitter_id']) > 0:
+            urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name="+gv_contract[c]['twitter_id']+"&count="+TWT_COUNT
+            adata = urllib2.urlopen(urla)
+            gv_twt.update({c: json.loads(adata.read())})
 
-    def run(self):
-        global gv_twt
-        if http_proxy is not None:
-            proxy = urllib2.ProxyHandler(http_proxy)
-            urllib2.install_opener(urllib2.build_opener(proxy))
-        urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name=BTCFE&count="+count
-        urlt = "http://search.twitter.com/search.json?callback=?&q=BTCFE&include_entities=true"
-        adata = urllib2.urlopen(urla)
-        gv_twt.update( {'ann': json.loads(adata.read())})
-        tdata = urllib2.urlopen(urlt)
-        gv_twt.update( {'talk': json.loads(tdata.read())})
-        for c in gv_contract :
-            if len(gv_contract[c]['twitter_id']) > 0:
-                urla = "http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name="+gv_contract[c]['twitter_id']+"&count="+count
-                adata = urllib2.urlopen(urla)
-                gv_twt.update({c: json.loads(adata.read())})
+    t = threading.Timer(TWT_INTERVAL, twt_update)
+    t.start()
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'Twitter Updated Finished.'
 
+def _start_twt_sevice():
+    t = threading.Timer(TWT_INTERVAL, twt_update)
+    t.start()
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'Twitter Update Service Started.'
 
-def _update_twt():
-    global twt_lastupdate
-    if 'twt_lastupdate' not in globals() or ('twt_lastupdate' in globals() and (datetime.datetime.now() - twt_lastupdate).seconds > 600) :
-        twt = _updatec()
-        twt.start()
-        twt_lastupdate = datetime.datetime.now()
-        print >> sys.stderr,twt_lastupdate,'update_twt'
+def _stop_twt_sevice():
+    global t
+    t.cancel()
+    print >> sys.stderr, time.strftime('%d_%H:%M',time.localtime(time.time())),'Twitter Update Service Stopped.'
+
 
 if __name__ == '__main__':
-    global twta,twtt
-    twta = {}
-    twtt = {}
-    twt = _update_twt()
+    twt_update()

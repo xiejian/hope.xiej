@@ -5,14 +5,12 @@ from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-from _twitter import gv_twt,_update_twt
-from __eod import _start_eod_sevice,_stop_eod_sevice,gv_eod_status
-
+from _twitter import gv_twt,_start_twt_sevice
+from __eod import _start_eod_sevice
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
-
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -20,7 +18,6 @@ def generate_csrf_token():
     return session['_csrf_token']
 app.jinja_env.globals['csrf_token'] = generate_csrf_token
 app.jinja_env.filters['f'] = myformat
-
 
 #================================================================
 @app.context_processor
@@ -32,18 +29,17 @@ def before_first_request():
     g.db  = _connect_db()
     _update_contract(g.db)
     _start_eod_sevice()
+    _start_twt_sevice()
 
 @app.before_request
 def before_request():
-    if request.method == "POST" and request.remote_addr not in app.config['INTERNAL_IP']:
+    if request.method == "POST":
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             abort(403)
     g.db  = _connect_db()
-    _update_twt()
 @app.teardown_request
 def teardown_request(exception):
-    """Closes the database again at the end of the request."""
     if hasattr(g, 'db'):
         g.db.close()
 
@@ -309,5 +305,5 @@ def con_db():
     return _expose_db(btcsip)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',port=5000)
 

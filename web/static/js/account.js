@@ -23,6 +23,7 @@ function get_gl(){
     $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua'}, function(data) {
         v_gl = data;
         update_gl();
+        $("#acc_his_grid").next().remove();
     });
     return false;
 }
@@ -57,6 +58,7 @@ function update_gl(){
     (v_gl['trans']).getItemMetadata = function (row) {
         if ($.inArray(v_gl['trans'][row]['s'],['B','R']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
     };
+
     var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);
 
     function filltitle(){
