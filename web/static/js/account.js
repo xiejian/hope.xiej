@@ -33,6 +33,7 @@ function update_gl(){
         {id: "s", name: "Action", field: "s",width:80,formatter:function(row, cell, value, columnDef, dataContext){
             if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> 　<img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
             else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 34px;"/> ' +dataContext['ty'];}
+            else if(value=='A'){return '<img src="/static/img/logo.s.gif" title="BTCFE new user " style="height:20px;width: 34px;"/> ' +dataContext['ty'];}
             else if(value=='B'){return '<img src="/static/img/_i_BTC.png" title="Bitcoin"/> ' + dataContext['ty'];}
             else if(value=='R'){return '<img src="/static/img/logo.s.gif" style="height:20px;width: 34px;" title="Refund"/> refund :  ' + dataContext['ty'];}
             else {return value;}
@@ -77,7 +78,7 @@ function update_gl(){
         $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua',n:v_gl['openbal']['n']-3600*24*7}, function(data) {
             v_gl = data;
             (v_gl['trans']).getItemMetadata = function (row) {
-                if ($.inArray(v_gl['trans'][row]['s'],['B','R']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
+                if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
             };
             vgrid.setData(v_gl['trans']);
             vgrid.updateRowCount();

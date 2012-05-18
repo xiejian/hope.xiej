@@ -1,12 +1,12 @@
 import hashlib, base64,decimal
-from config import mykey
+from config import mykey,newuserBTC
 
 def _createuser(db,email,password,referrer):
     cur = db.cursor()
     #check email is not registered
     resrows = cur.execute('SELECT password from users where email=%s', email)
     if resrows > 0:
-        return 'Email is existed.'
+        return 'Email is registered.'
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
     if referrer:
@@ -27,7 +27,7 @@ def _activeuser(db,code):
     try:
         str = code.split('~')
         d_email = base64.urlsafe_b64decode(str[0].encode('ascii','ignore'))
-        resrows = cur.execute('SELECT user_id,password,referrer from users where email=%s', d_email)
+        resrows = cur.execute('SELECT user_id,password,referrer from users where email_v = "N" and email=%s', d_email)
         if resrows != 1:
             return False
         result = cur.fetchone()
@@ -35,6 +35,8 @@ def _activeuser(db,code):
             cur.execute("UPDATE users SET email_v = 'Y' WHERE user_id = %s",result[0])
             _change_invitenum(db,result[0],3)
             _change_invitenum(db,result[2],1)
+            # new user get 0.1 BTC for free
+            cur.execute("insert into btc_action(action,account1,account2,address,amount,type,input_dt) values( 'move',%s,'FEE','sign up', %s,'A',NOW())",(d_email,-1*newuserBTC))
             db.commit()
             return result[0]
         else:
@@ -43,7 +45,7 @@ def _activeuser(db,code):
         return  False
     finally:
         cur.close()
-        #todo: new user get 0.1 BTC for free
+
 
 def _activecode(db,email):
     cur = db.cursor()
@@ -119,14 +121,20 @@ def _btc_withdraw(db,email,btc_add,amount,passwd,cpass):
     user_id = _loginuser(db,email,passwd)
     if user_id and _vali_cpass(db,email,cpass):
         cur = db.cursor()
+        cur.execute("select count(1) from btc_trans where type = 'receive' and user= %s",email)
+        newu = cur.fetchone()
+
         cur.execute("SELECT balance - omargin - pmargin + p_l,balance - omargin - pmargin FROM v_userbtc WHERE user_id = %s",user_id)
         btc_avail = cur.fetchone()
-        if btc_avail[0] < decimal.Decimal(amount):
+        if btc_avail[0] - decimal.Decimal(amount) <0:
             cur.close()
             return {'msg':"Available Bitcoin is not enough.",'category':'err'}
-        elif btc_avail[1] < decimal.Decimal(amount):
+        elif btc_avail[1] - decimal.Decimal(amount)<0:
             cur.close()
             return {'msg':"Realize your holding's P/L before withdraw.",'category':'err'}
+        elif newu[0] ==0 and (btc_avail[0] - decimal.Decimal(amount) <newuserBTC or btc_avail[1] - decimal.Decimal(amount)<newuserBTC):
+            cur.close()
+            return {'msg':"Have more activities before withdraw.",'category':'err'}
         else:
             cur.execute("insert into btc_action(action,account1,address,amount,type,input_dt) values ('sendfrom',%s,%s,%s,'W',NOW());"
             ,(email,btc_add,amount))
@@ -149,3 +157,4 @@ def _enrcode(user_id,email):
     a_user = base64.urlsafe_b64encode(str(user_id))
     a_email = base64.urlsafe_b64encode(email)
     return a_user + '~' + a_email
+#todo favico.ico
