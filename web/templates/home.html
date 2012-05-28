@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block extitle %}
-    <div class="grid_7">
+    <div class="grid_16 homeimg">
+        <div class="grid_7">
         <h1>Bitcoin Futures Exchange</h1>
-        <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4><p>　</p><p>　</p>
+        <h4>Bitcoin is not what we trade on BTCFE.com, it is the Currency we use to Trade EVERYTHING here.</h4>
+
+        </div>
+        <a href="{{url_for('register')}}" class="button" name="register" >Register Now!</a>
     </div>
-    <div class="grid_9">
-        <img name="h_img" src="{{url_for('static',filename='img/home2.gif')}}"/>
-    </div>
-    <a href="{{url_for('register')}}" class="button" name="register" >Register Now!</a>
     <div class="clear"></div>
 {% endblock %}
 
