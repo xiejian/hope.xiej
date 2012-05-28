@@ -126,6 +126,7 @@ def register():
             user_id = _activeuser(g.db,vcode)
             if user_id:
                 flash('Your account had been activated.','suc')
+                #todo:auto login after active
                 session['user_id'] = user_id
                 return render_template('register.html',type='A')
             else:

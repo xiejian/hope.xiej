@@ -10,7 +10,7 @@ div.binfo>table {width: 99%;height: 100%;}
 
 div.binfo>table td  {text-align: right;}
 div.binfo>table th  {text-align: left;color: #666;font-style: italic;font-family: Arial,sans-serif;}
-span.topnavr    {text-align: right;margin-top:8px; }
+div.topnavr    {text-align: right;margin-top:8px; }
 /*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
 
 ul.topnav   {margin-left: -15px;}
