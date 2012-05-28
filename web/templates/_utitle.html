@@ -23,7 +23,7 @@
     <div class=" binfo">
         {% if session.user_id %}
             <table><tr>
-                <th >AssetTotal</th><td colspan="3">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}, {{g.u['bal_unact']|float }}) </td>
+                <th >AssetTotal</th><td colspan="3" title="UnAct: {{g.u['bal_unact']|float }}">{{g.u.balance|float}} ({{g.u['bal_unconf']|float }}) </td>
             </tr><tr>
                 <th >Available</th><td colspan="3">{{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} ({{ g.u.p_l|float}}) </td>
             </tr>

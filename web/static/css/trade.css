@@ -15,13 +15,13 @@ div.trade.S label#l_tb  {background: #2AA}
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
 label#l_toc {font-size: 1.2em;font-weight: bold;margin-left:10px}
 
-span.s_toc.O  { background: url("../img/_i_O.png") no-repeat right ;padding: 6px;}
+span.s_toc.O  { background: url("../img/_i_O.png") no-repeat bottom;padding: 10px;}
 
-span.s_toc.C  {background: url("../img/_i_C.png") no-repeat right;padding: 6px;}
+span.s_toc.C  {background: url("../img/_i_C.png") no-repeat bottom;padding: 10px;}
 
 
-div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;padding: 15px 20px;display: inline-block}
-div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;padding: 15px 20px;display: inline-block}
+div.trade.B span.s_tbs     { background: url("../img/_i_B.png") no-repeat right ;width: 40px;height: 50px;display: inline-block}
+div.trade.S span.s_tbs     { background: url("../img/_i_S.png") no-repeat right ;width: 40px;height: 50px;display: inline-block}
 
 /*div.body .slick-header-column {margin-left: 1px;}*/
 
@@ -32,6 +32,6 @@ h3.contheader   {font-style: normal;}
 h3.contheader span   {font-size:0.8em;margin-left: 10px;}
 h3.contheader a   {font-family:"Trebuchet MS",sans-serif;}
 table#oqueue,table#transhis    {margin:5px;width: 90%;border:1px solid #DDCCB1;}
-table#oqueue div    {background-color: #cea13c;height: 1px;margin: 1px 8px;}
+table#oqueue div    {border-bottom: 1px solid #cea13c;height:1px;margin: 1px 8px;}
 
 table#oqueue tr:hover,table#transhis tr:hover{background-color:#F8F3D7;}

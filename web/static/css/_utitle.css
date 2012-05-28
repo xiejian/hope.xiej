@@ -1,19 +1,19 @@
 
 div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     height: 72px;
-    width: 252px;
-    margin: 12px 25px -10px 17px;
-    padding: 10px 16px 30px 14px; }
+    width: 248px;
+    margin: 12px 20px -10px 17px;
+    padding: 10px 15px 30px 15px; }
 
 div#titlebar a img {margin-top: 10px;}
-div.binfo>table {width: 99%;height: 100%;}
+div.binfo table {width: 99%;height: 100%;}
 
-div.binfo>table td  {text-align: right;}
-div.binfo>table th  {text-align: left;color: #666;font-style: italic;font-family: Arial,sans-serif;}
+div.binfo table td  {text-align: right;}
+div.binfo table th  {text-align: left;color: #666;font-style: italic;font-family: Arial,sans-serif;}
 div.topnavr    {text-align: right;margin-top:8px; }
 /*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
 
-ul.topnav   {margin-left: -15px;}
+
 ul.topnav li    {float: left;list-style: none;text-align: center;}
 ul.topnav li.active a {background: #88C;color: #FF8;border-top: 2px solid #AA8;}
 ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 5px 10px 5px 10px;}
