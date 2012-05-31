@@ -1,7 +1,20 @@
 from jsonrpc import ServiceProxy
-from config import database, btc_url, btc_minconf, btc_syncinterv
+from config import database, btc_url, btc_minconf, btc_syncinterv,logfilename
+import sys, os
 import time, MySQLdb
 import atexit
+import logging
+import logging.handlers
+
+logging.basicConfig(
+    filename=logfilename,
+    format='%(asctime)-6s: %(name)s - %(levelname)s - %(message)s')
+
+fileLogger = logging.handlers.RotatingFileHandler(filename=logfilename,
+    maxBytes = 2*1024*1024, backupCount = 1)
+logging.getLogger('BTC').addHandler(fileLogger)
+logger = logging.getLogger('BTC')
+logger.setLevel(logging.INFO)
 
 ag = ServiceProxy(btc_url)
 def transsync():    
@@ -25,17 +38,17 @@ def transsync():
         if len(res['transactions']) > 0:
             cursor.execute("DELETE FROM btc_synclog WHERE lastblock = %s",res['lastblock'])
             cursor.execute("INSERT INTO btc_synclog(type,lastblock,status,message)VALUES ('trans',%s,'S',%s)", [res['lastblock'], len(res['transactions'])])
-            print time.strftime('%d_%H:%M',time.localtime(time.time())),len(res['transactions']), 'transactions synced.'
+            logger.info(str(len(res['transactions'])), 'transactions synced.')
     except Exception as inst:
         cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('trans','F',%s)", "Err:{0}{1}".format(type(inst),inst.args))
-        print 'TransSync Error', type(inst), inst.args
+        logger.error('TransSync Error'+ str(type(inst))+ inst.args)
 
 def updateuser(account):
     vadd = ag.getaccountaddress(account)
     vbal = ag.getbalance(account, btc_minconf)
     vunbal = ag.getbalance(account, 0) - vbal
     cursor.execute("DELETE FROM btc_account where account=%s", account)
-    cursor.execute("INSERT INTO btc_account(account,address,balance,bal_unconf) VALUES(%s,%s,%s,%s)",[account, vadd, vbal+max(0,vunbal), vunbal])
+    cursor.execute("INSERT INTO btc_account(account,address,balance,bal_unconf) VALUES(%s,%s,%s,%s)",[account, vadd, vbal+min(0,vunbal), vunbal])
     return vbal
 
 def actionsproc(): 
@@ -61,7 +74,10 @@ def actionsproc():
                 cursor.execute("UPDATE btc_action SET status ='F',process_dt=NOW(),message=%s WHERE btc_action_id = %s", ["Err:{0}{1}".format(type(inst),inst.args), act[0]])
         elif act[1] == 'sendfrom':
             try:
-                res = ag.sendfrom(act[2], act[4], float(act[5]), btc_minconf)                
+
+                ag.walletpassphrase(passphrase,60)
+                res = ag.sendfrom(act[2], act[4], float(act[5]), btc_minconf)
+                ag.walletlock()
                 updateuser(act[2])
                 cursor.execute("UPDATE btc_action SET status ='S',process_dt=NOW(),message=%s WHERE btc_action_id = %s", [res, act[0]])
             except Exception as inst:                
@@ -69,34 +85,42 @@ def actionsproc():
         else:
             cursor.execute("UPDATE btc_action SET status ='F',process_dt=NOW(),message=%s WHERE btc_action_id = %s", ['Unsupport action', act[0]])
     if len(result)>0:
-        print time.strftime('%d_%H:%M',time.localtime(time.time())),len(result), 'actions processed.'
+        logger.info(str(len(result)) + 'actions processed.')
         
 def svrexit():
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','E',%s)", btc_url[btc_url.find('@')+1:-1])
     cursor.close()
     db.commit()
     db.close()
-    print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Stoped.'
+    logger.info('Bitcoin Sync to Mysql Service Stoped.')
 
 
 if __name__ == "__main__":
-    
+
+    if (len(sys.argv) <= 1):
+        logger.error('PassPhrase miss')
+        exit()
+
     try:
         res = ag.getinfo()
+        ag.walletpassphrasechange(sys.argv[1],sys.argv[1])
     except Exception as inst:
-        print time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Server Connection Failed.'
+        if len(res) > 0:
+            msg = inst.error['message']
+        logger.error('Bitcoin Server Connection Failed. ' + msg)
         exit()
     db=MySQLdb.connect(host=database['host'], user=database['user'], passwd=database['passwd'],db=database['db'])
-    cursor = db.cursor()    
-    atexit.register(svrexit)    
+    cursor = db.cursor()
+    atexit.register(svrexit)
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','B',%s)", btc_url[btc_url.find('@')+1:-1])
-    print  time.strftime('%d_%H:%M',time.localtime(time.time())),'Bitcoin Sync to Mysql Service Started.'
+    logger.info('Bitcoin Sync to Mysql Service Started.')
     updateuser('FEE')
     updateuser('P_L')
     ag.settxfee(0)
-    while True:        
+    while True:
         actionsproc()
         transsync()
         db.commit()
         time.sleep(btc_syncinterv)
+
 

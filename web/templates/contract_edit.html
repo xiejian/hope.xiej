@@ -55,11 +55,11 @@ e.g.
                 </select></td></tr>
             <tr></tr><th>Twitter ID</th><td  title="{{ hint.twitter_id }}"><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td></tr>
             <tr><th>Contract Definition</th><td title="{{ hint.description }}" colspan="5">
-                <textarea name="description" rows="10" cols="80">{{ct[c].description}}</textarea></td></tr>
+                <textarea name="description" rows="10" style="width: 570px;">{{ct[c].description}}</textarea></td></tr>
             <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="5">
                 {{ct[c].apinstruction}}</td></tr>
         </table><br>
         <input type="button" value="SAVE" name="{{ url_for('account',t='C') }}" />
         {% if c > 0 %}　<input type="button" value="DELETE" name="{{ url_for('account',t='D') }}" />{% endif %}
-    </form><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
+    </form><br/><span class="form_result"><img src="{{url_for('static',filename='img/loading.gif')}}" alt=""></span>
 </div>

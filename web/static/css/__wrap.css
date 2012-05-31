@@ -42,8 +42,8 @@ div#infobar span.topright  {width: 48px;height: 25px;float: right;background-col
     background-image:linear-gradient(right, #EDC98F, #CBA);
     filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCBBAA',endColorstr='#EDC98F', GradientType=1); }
 
-div#infobar a.contact { position:absolute;float: right;width: 36px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat; }
-div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat }
+div#infobar a.contact {float: right;width: 32px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat center; }
+div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat center; }
 
 div#titlebar{border-bottom:4px solid  #88C;background-color:#EDC98F;background-repeat:repeat-x;
     background-image:-khtml-gradient(linear, left top, left bottom, from(#EDC98F), to(#FFEAD0));

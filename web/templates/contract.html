@@ -20,7 +20,7 @@
     <div id="contchart" style="height: 500px; min-width: 530px"></div>​<script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
 </div>
 <div class="grid_6 omega">
-    <h5>{{cont[c].owner}}'s Twitter {{cont[c].twitter_id}}</h5>
+    <h5>{{cont[c].owneru}}'s Twitter {{cont[c].twitter_id}}</h5>
     <ul class="twt">
         {% for a in twt[c] %}
             <li>{{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>

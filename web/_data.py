@@ -20,7 +20,7 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=time.mktime(row[6].timetuple()),name=row[1]+row[6].strftime("%y%m"),
-                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18],movelimit=row[19])
+                leverage=row[7],fullname=row[8],owner=row[9],owneru=row[9].split('@')[0],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18],movelimit=row[19])
             #update order queues
             ocur.execute("SELECT point,sum(rm_lots),count(1) FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' group by point ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(count=orow[2],point=orow[0],rm_lots=orow[1]) for orow in ocur.fetchall()]
@@ -74,7 +74,7 @@ def _update_contlist():
         if 'D' in gv_contract[c] and gv_contract[c]['D'][1] is not None:
             vvol = gv_contract[c]['D'][5]
         temp = dict(c=c, st=gv_contract[c]['status'],n=gv_contract[c]['name'],fn=gv_contract[c]['fullname'],od=gv_contract[c]['opendate'],sd=gv_contract[c]['settledate'],
-            o=gv_contract[c]['owner'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=gv_contract[c]['ch'],vl=vvol)
+            o=gv_contract[c]['owneru'],r=gv_contract[c]['region'],s=gv_contract[c]['sector'],lp=gv_contract[c]['latestpoint'],sp=gv_contract[c]['settlepoint'],ch=gv_contract[c]['ch'],vl=vvol)
         if temp['st'] == 'O':
             tt['O'].append(temp)
         elif temp['st'] in ['N','P']:
