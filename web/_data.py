@@ -16,11 +16,11 @@ def _update_contract(db,cid = 'contract_id',type='D'):
         if cid in gv_contract:
             gv_contract.pop(cid)
         ocur = db.cursor()
-        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee "\
+        cur.execute("SELECT c.contract_id,c.code,c.status,c.btc_multi,c.opendate,c.latestpoint,c.settledate,c.leverage,c.fullname,u.email owner,c.twitter_id,c.region,c.sector,c.description,c.settlepoint,c.settleproof,c.apinstruction,c.write_fee,c.settlemargin "\
             "FROM contract c, users u WHERE c.owner = u.user_id and STATUS not in ('A','R') AND contract_id ="+str(cid))
         for row in cur.fetchall():
             gv_contract[row[0]] = dict(code=row[1],status=row[2],btc_multi=row[3],opendate=row[4],latestpoint=row[5],settledate=row[6],name=row[1]+row[6].strftime("%y%m"),
-                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17])
+                leverage=row[7],fullname=row[8],owner=row[9],twitter_id=row[10],region=row[11],sector=row[12],description=row[13],settlepoint=row[14],settleproof=row[15],apinstruction=row[16],write_fee=row[17],settlemargin=row[18])
             #update order queues
             ocur.execute("SELECT order_id,point,rm_lots FROM orders WHERE contract_id = %s AND STATUS = 'O' AND buy_sell ='B' ORDER BY point DESC ,createtime LIMIT 0,10",row[0])
             gv_contract[row[0]]['B'] = [dict(order_id=orow[0],point=orow[1],rm_lots=orow[2]) for orow in ocur.fetchall()]
@@ -30,7 +30,7 @@ def _update_contract(db,cid = 'contract_id',type='D'):
             ocur.execute("SELECT t.point,t.lots,DATE_FORMAT(TIMESTAMP,'%%d/%%H:%%m'),direct FROM trans t,orders o WHERE t.buy_oid = o.order_id AND o.contract_id = %s ORDER BY TIMESTAMP DESC LIMIT 0,5",row[0])
             gv_contract[row[0]]['T'] = [dict(point=orow[0],lots=orow[1],time=orow[2],dir=orow[3]) for orow in ocur.fetchall()]
             #update contract trade vol
-            ocur.execute("SELECT ifnull(sum(value),0) FROM v_gl WHERE contract_id = %s",row[0])
+            ocur.execute("SELECT ifnull(sum(value),0)/2 FROM v_trans WHERE contract_id = %s",row[0])
             gv_contract[row[0]]['vol'] = ocur.fetchone()[0]
         ocur.close()
     cur.close()
@@ -135,16 +135,17 @@ def _add_order(db,session,contract_id,b_s,point,lots):
 
 def _cancel_order(db,session,orderid):
     cur = db.cursor()
-    cur.callproc('exchange',(orderid,session['user_id'],'C'))
+    cur.callproc('p_exchange',(orderid,session['user_id'],'C'))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}
     cur.close()
     return dict(msg=result[1],category=result[0])
 
-def _modify_cont(db,id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description):
+def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,leverage,fullname,owner,twitter_id,vol_feerate,region,sector,description):
     cur = db.cursor()
-    cur.callproc('p_update_contract',(id,code,btc_multi,opendate,settledate,leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
+    write_fee = float(vol_feerate)/2
+    cur.callproc('p_update_contract',(id,code,btc_multi,str(opendate)+' '+str(opentime)+':00:00',str(settledate)+' '+str(settletime)+':00:00',leverage,fullname,owner,twitter_id,write_fee,region,sector,description))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','type':'err'},id

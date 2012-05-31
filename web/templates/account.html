@@ -115,11 +115,14 @@
         <tr><td>{{t.timestamp}}</td><td>{{t.buy_sell|f("F")}}</td><td>{{cont[t.contract_id]['name']}}</td><td>{{t.point|f}}</td>
             <td>{{t.lots}}</td><td>{{t.fee|f}}</td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
     {% elif t.sector == 'R'  %}
-        <tr><td>{{t.timestamp}}</td><td>Apply Fee Coupon</td><td>{% if t.contract_id in cont %}{{cont[t.contract_id]['name']}}{% endif %}</td><td colspan="2"></td>
+        <tr><td>{{t.timestamp}}</td><td colspan="2">Apply Fee Coupon</td><td></td><td></td>
             <td>{{t.fee|f}}</td><td></td><td></td><td>{{t.type|f("F")}}</td></tr>
-    {% elif t.sector == 'C'  %}
+    {% elif t.sector == 'H'  %}
         <tr><td>{{t.timestamp}}</td><td>{{t.type|f("F")}}</td><td>{{cont[t.contract_id]['name']}}</td>
             <td colspan="2"></td><td>{{t.fee|f}}</td><td></td><td></td><td></td></tr>
+    {% elif t.sector == 'C'  %}
+        <tr><td>{{t.timestamp}}</td><td>Own</td><td>{{cont[t.contract_id]['name']}}</td>
+            <td colspan="2"></td><td></td><td>{{t.p_l|f}}</td><td></td><td>{{t.type|f("F")}}</td></tr>
     {% elif t.sector == 'B' %}
         <tr><td>{{t.timestamp}}</td><td colspan="2">Bitcoin Transfer</td><td colspan="2"></td><td></td><td></td>
             <td>{{ t.btc_transfer|f }}</td><td>{{t.type|f("F")}}</td></tr>

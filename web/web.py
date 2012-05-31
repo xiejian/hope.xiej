@@ -223,7 +223,7 @@ def account():
             cid = long(request.form['id'])
             if cid == 0 or gv_contract[cid]['owner'] == session['email']:
                 if type == 'C':
-                    msg,cid = _modify_cont(g.db,cid,request.form['code'],request.form['btc_multi'],request.form['opendate'],request.form['settledate'],request.form['leverage'],\
+                    msg,cid = _modify_cont(g.db,cid,request.form['code'],request.form['btc_multi'],request.form['opendate'],request.form['opentime'],request.form['settledate'],request.form['settletime'],request.form['leverage'],\
                         request.form['fullname'],session['user_id'],request.form['twitter_id'],request.form['write_fee'],request.form['region'],request.form['sector'],request.form['description'])
                 elif type == 'D':   #delete
                     msg = _delete_cont(g.db,cid)

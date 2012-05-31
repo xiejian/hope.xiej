@@ -14,13 +14,13 @@
 
     {% for c in cont if cont[c].owner == session['email']%}
         {% if loop.first %}
-        <tr><th>Status</th><th>Name</th><th>latestpoint</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
-            <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Action</th></tr>
+        <tr><th>Status</th><th>Name</th><th>leverage</th><th>btc_multi</th><th>Open Date</th><th>Settle Date</th>
+            <th>Full Name</th><th>Region</th><th>Sector</th><th>Twitter</th><th>Write Fee</th><th>Vol</th><th>Settle Margin</th><th>Action</th></tr>
         {% endif %}
         <tr>
-        <td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].latestpoint|f}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
+        <td>{{cont[c].status|f("C")}}</td><td>{{cont[c].name}}</td><td>{{cont[c].leverage|f}}</td><td>{{cont[c].btc_multi|f}}</td>
         <td>{{cont[c].opendate}}</td><td>{{cont[c].settledate}}</td><td>{{cont[c].fullname}}</td><td>{{cont[c].region}}</td>
-        <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{cont[c].write_fee}}</td><td>{{cont[c].vol|f}}</td>
+        <td>{{cont[c].sector}}</td><td>{{cont[c].twitter_id}}</td><td>{{(cont[c].write_fee*2)|f}}</td><td>{{cont[c].vol|f}}</td><td>{{ cont[c].settlemargin|f }}</td>
         <td>{% if cont[c].status == 'O' %}<a href="{{ url_for('trade',c=c) }}"> Trade </a>
         {% elif cont[c].status == 'C' %}<a class="modalInput" rel="#settle_cont{{c}}" href="#Settle"> Settle </a>
             <div class="modal settle_cont" id="settle_cont{{c}}">
@@ -35,7 +35,6 @@
                         <input type="submit" value="SAVE" />
                 </form>
             </div>
-
             {% elif cont[c].status == 'N' %}<a class="modalInput" rel="#edit_cont{{c}}" href="#Edit"> Edit </a>
             <div class="modal edit_cont" id="edit_cont{{c}}">
                 <h3>Edit Contract</h3>
@@ -44,9 +43,11 @@
                         <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
                         <table>
                             <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ cont[c].code }}"></td>
-                                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ cont[c].opendate }}" ></td>
+                                <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value="{{ cont[c].opendate }}" >
+                                    <input style="width: 35px;" type=number value={{cont[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td>
                             <tr><th>Full Name</th><td><input type=text name=fullname value="{{cont[c].fullname}}"></td>
-                                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{cont[c].settledate}}" ></td></tr>
+                                <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value="{{cont[c].settledate}}" >
+                                <input style="width: 35px;" type=number value={{cont[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
                             <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{cont[c].btc_multi}}"></td>
                                 <th>Region</th><td><select name="region" >
                                     <option value="W" {% if cont[c].region == "W" %} selected="selected" {% endif %}>World Wide</option>
@@ -68,7 +69,7 @@
                                     <option value="E" {% if cont[c].sector == "E" %} selected="selected" {% endif %}>Entertainment</option>
                                     <option value="O" {% if cont[c].sector == "O" %} selected="selected" {% endif %}>Others</option>
                                 </select></td></tr>
-                            <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="{{cont[c].write_fee}}"></td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
+                            <tr><th>Write FeeRate</th><td><input type=number name=write_fee min=0 max=0.001 value="{{cont[c].write_fee * 2}}"></td><th>Twitter ID</th><td><input type=text name=twitter_id value="{{cont[c].twitter_id}}"></td></tr>
                             <tr><th>Description</th><td colspan="3">
                                 <textarea name="description" rows="10" cols="60">{{cont[c].description}}</textarea></td></tr>
                             <tr><th>Approval Instruction</th><td colspan="3">
@@ -92,9 +93,9 @@
                 <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="0">
                 <table>
                     <tr><th>Code</th><td><input type=text name=code minlength="3" maxlength="6" required="required"></td>
-                        <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ></td>
+                        <th>Open Date</th><td><input type=date name=opendate min=1 max=366 value=2 ><input style="width: 35px;" type=number value=0 name=opentime min=0 max=23 required="required">h</td>
                     <tr><th>Full Name</th><td><input type=text name=fullname></td>
-                        <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ></td></tr>
+                        <th>Settle Date</th><td><input type=date name=settledate min=7 max=400 value=31 ><input style="width: 35px;" type=number value=0 name=settletime min=0 max=23 required="required">h</td></tr>
                     <tr><th>Btc Multi</th><td><input type=number name=btc_multi min=0.000001 max=10000 required="required"></td>
                         <th>Region</th><td><select name="region">
                             <option value="W" >World Wide</option>

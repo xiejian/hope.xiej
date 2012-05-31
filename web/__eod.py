@@ -27,7 +27,7 @@ def close_cont():
         #cancel all open order; add close order with settlepoint and oppsite b_s in positions
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
-            ocur.callproc('exchange',(o[0],o[1],'C'))
+            ocur.callproc('p_exchange',(o[0],o[1],'C'))
             print 'Cancel Order',ocur.fetchone()
 
     ocur.close()
@@ -52,7 +52,7 @@ def settle_cont():
         ccur.execute("UPDATE contract SET status = 'S' WHERE status ='Q' and contract_id = %s",c[0])
 
         ccur.execute(" insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) \
-            select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",c[2],c[0],c[3])
+            select 'move',email,'FEE','settle', %s,%s,'C',NOW() from users where user_id =%s",-1*c[2],c[0],c[3])
         #todo problem found here.
         #todo reward contract author
         print c[0],'Contract Settled at Point',c[1]
@@ -93,8 +93,9 @@ def balance2date(balance2dt):
                     (select b.user_id from userbalance b);",[balance_dt,balance_dt,balance2dt])
 
         rown=cur.execute("insert into userbalance(user_id,balance_dt,balance,bal_fee,bal_pl,bal_btc,trade_vol) \
-                    select g.user_id,convert(%s,date),sum(g.fee)+sum(g.p_l)+sum(g.btc)+ifnull(b.balance,0),sum(g.fee)+ifnull(b.bal_fee,0), \
-                        sum(g.p_l)+ifnull(b.bal_pl,0),sum(g.btc)+ifnull(b.bal_btc,0),sum(g.value) from v_gl g left join userbalance b \
+                    select g.user_id,convert(%s,date),ifnull(sum(g.fee),0)+ifnull(sum(g.p_l),0)+ifnull(sum(g.btc),0)+ifnull(b.balance,0),\
+                    ifnull(sum(g.fee),0)+ifnull(b.bal_fee,0),ifnull(sum(g.p_l),0)+ifnull(b.bal_pl,0), \
+                        ifnull(sum(g.btc),0)+ifnull(b.bal_btc,0),ifnull(sum(g.value),0) from v_gl g left join userbalance b \
                         on g.user_id = b.user_id and b.balance_dt = convert(%s,date) and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') > convert(%s,date)  \
                         and DATE_FORMAT(g.timestamp, '%%Y-%%m-%%d') <= convert(%s,date) \
                         group by g.user_id;",[balance2dt,balance_dt,balance_dt,balance2dt])

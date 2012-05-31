@@ -61,7 +61,7 @@ CREATE TABLE `btc_action` (
   `process_dt` datetime DEFAULT NULL,
   `message` varchar(96) DEFAULT NULL,
   PRIMARY KEY (`btc_action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=890272 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=890322 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `btc_action` (
 
 LOCK TABLES `btc_action` WRITE;
 /*!40000 ALTER TABLE `btc_action` DISABLE KEYS */;
-INSERT INTO `btc_action` VALUES (437,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-03-28 14:22:40','2012-03-28 14:22:56','0.09950000'),(438,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-03-28 14:23:52','2012-03-28 14:23:57','0.50000000'),(439,'move','jian.xie@hotmail.com','FEE','create','0.30000000','H','S',27,'2012-03-28 15:07:35','2012-03-28 15:07:37','1'),(890269,'move','jian.xie@hotmail.com','FEE','2012-03-27',NULL,'C','N',27,'2012-03-28 17:12:02',NULL,NULL),(890270,'move','jian.xie@hotmail.com','FEE','2012-03-27',NULL,'C','N',27,'2012-03-28 17:13:02',NULL,NULL),(890271,'move','jian.xie@hotmail.com','FEE','2012-03-27',NULL,'C','N',27,'2012-03-28 17:13:46',NULL,NULL);
+INSERT INTO `btc_action` VALUES (437,'createuser','jian.xie@163.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-03-28 14:22:40','2012-03-28 14:22:56','0.09950000'),(438,'createuser','jian.xie@hotmail.com',NULL,NULL,'0.00000000',NULL,'S',NULL,'2012-03-28 14:23:52','2012-03-28 14:23:57','0.50000000'),(439,'move','jian.xie@hotmail.com','FEE','create','0.30000000','H','S',27,'2012-03-28 15:07:35','2012-03-28 15:07:37','1'),(890304,'move','jian.xie@163.com','FEE',NULL,'0.00050000','F','N',3,'2012-03-29 14:28:05',NULL,NULL),(890305,'move','jian.xie@hotmail.com','FEE',NULL,'0.00050000','G','N',3,'2012-03-29 14:28:05',NULL,NULL),(890306,'move','jian.xie@hotmail.com','FEE','2012-03-29','-0.00016200','C','N',27,'2012-03-30 14:28:37',NULL,NULL),(890307,'move','jian.xie@163.com','FEE','2012-03 19.000000%','-0.00009500','R','N',NULL,'2012-04-01 14:32:01',NULL,NULL),(890308,'move','jian.xie@hotmail.com','FEE','2012-03 19.000000%','-0.00009500','R','N',NULL,'2012-04-01 14:32:01',NULL,NULL),(890310,'move','jian.xie@163.com','FEE',NULL,'0.00050000','F','N',4,'2012-04-01 14:37:26',NULL,NULL),(890311,'move','jian.xie@hotmail.com','FEE',NULL,'0.00050000','G','N',4,'2012-04-01 14:37:26',NULL,NULL),(890312,'move','jian.xie@hotmail.com','FEE','2012-04-01','-0.00016200','C','N',27,'2012-04-02 14:38:07',NULL,NULL),(890313,'move','jian.xie@163.com','FEE','2012-04 19.0%','-0.00009500','R','N',NULL,'2012-05-01 14:51:15',NULL,NULL),(890314,'move','jian.xie@hotmail.com','FEE','2012-04 19.0%','-0.00009500','R','N',NULL,'2012-05-01 14:51:15',NULL,NULL),(890316,'move','jian.xie@163.com','FEE',NULL,'0.00050000','F','N',5,'2012-05-02 15:15:20',NULL,NULL),(890317,'move','jian.xie@hotmail.com','FEE',NULL,'0.00050000','G','N',5,'2012-05-02 15:15:20',NULL,NULL),(890318,'move','jian.xie@hotmail.com','FEE','2012-05-02','-0.00016200','C','N',27,'2012-05-03 15:15:48',NULL,NULL),(890319,'move','jian.xie@163.com','FEE',NULL,'0.00050000','F','N',6,'2012-05-03 15:18:03',NULL,NULL),(890320,'move','jian.xie@hotmail.com','FEE',NULL,'0.00050000','G','N',6,'2012-05-03 15:18:03',NULL,NULL),(890321,'move','jian.xie@163.com','FEE','create','0.20000000','H','N',29,'2012-05-31 16:41:03',NULL,NULL);
 /*!40000 ALTER TABLE `btc_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `contract` (
   `settleproof` varchar(512) DEFAULT NULL,
   `apinstruction` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`contract_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `contract` (
 
 LOCK TABLES `contract` WRITE;
 /*!40000 ALTER TABLE `contract` DISABLE KEYS */;
-INSERT INTO `contract` VALUES (27,'SP5k','S&P500','O','0.00010000','2012-03-27 00:00:00',NULL,'2012-05-31 00:00:00',NULL,'0.250',73,'BTCFE','0.001000','N','I','0.00000000','Spot Price:\r\nhttp://www.google.com/finance?q=INDEXSP:.INX',NULL,'more description');
+INSERT INTO `contract` VALUES (27,'SP5k','S&P500','C','0.00010000','2012-03-27 00:00:00','1000.00000000','2012-05-31 00:00:00','1200.00000000','0.250',73,'BTCFE','0.001000','N','I','0.00016200','Spot Price:\r\nhttp://www.google.com/finance?q=INDEXSP:.INX','Nonefdasfsdf','more description'),(29,'TEST','TWt','N','0.00010000','2012-06-02 12:00:00',NULL,'2012-07-01 22:00:00',NULL,'0.250',72,'BTCFE','0.000500','N','M','0.00000000','fdafdf',NULL,NULL);
 /*!40000 ALTER TABLE `contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `marketinfo` (
   `close` decimal(20,8) DEFAULT NULL,
   `tradedate` date NOT NULL,
   PRIMARY KEY (`marketinfo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +220,7 @@ CREATE TABLE `marketinfo` (
 
 LOCK TABLES `marketinfo` WRITE;
 /*!40000 ALTER TABLE `marketinfo` DISABLE KEYS */;
+INSERT INTO `marketinfo` VALUES (1,27,'1000.00000000','1000.00000000','1000.00000000','1000.00000000','2012-03-29'),(2,27,'995.00000000','995.00000000','995.00000000','995.00000000','2012-03-30'),(3,27,'1000.00000000','1000.00000000','1000.00000000','1000.00000000','2012-04-01'),(4,27,'1000.00000000','1000.00000000','1000.00000000','1000.00000000','2012-05-02'),(5,27,'1000.00000000','1000.00000000','1000.00000000','1000.00000000','2012-05-03');
 /*!40000 ALTER TABLE `marketinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +243,7 @@ CREATE TABLE `orders` (
   `type` char(1) NOT NULL DEFAULT 'O',
   `status` char(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='deal order';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COMMENT='deal order';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,6 +252,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (7,72,27,'B','1000.00000000',2,0,'2012-03-29 14:27:51','O','F'),(8,73,27,'S','1000.00000000',1,0,'2012-03-29 14:28:05','O','F'),(9,73,27,'S','1000.00000000',2,0,'2012-04-01 14:37:26','O','F'),(10,72,27,'B','1000.00000000',2,0,'2012-05-02 15:15:20','O','F'),(11,73,27,'S','1000.00000000',2,1,'2012-05-03 15:18:03','O','C');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +272,7 @@ CREATE TABLE `positions` (
   `lots` int(11) NOT NULL,
   `opentime` datetime NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,6 +281,7 @@ CREATE TABLE `positions` (
 
 LOCK TABLES `positions` WRITE;
 /*!40000 ALTER TABLE `positions` DISABLE KEYS */;
+INSERT INTO `positions` VALUES (5,72,27,'B','1000.00000000',1,'2012-03-29 14:28:05'),(6,73,27,'S','1000.00000000',1,'2012-03-29 14:28:05'),(7,72,27,'B','1000.00000000',1,'2012-04-01 14:37:26'),(8,73,27,'S','1000.00000000',1,'2012-04-01 14:37:26'),(9,72,27,'B','1000.00000000',1,'2012-05-02 15:15:20'),(10,73,27,'S','1000.00000000',1,'2012-05-02 15:15:20'),(11,72,27,'B','1000.00000000',1,'2012-05-03 15:18:03'),(12,73,27,'S','1000.00000000',1,'2012-05-03 15:18:03');
 /*!40000 ALTER TABLE `positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +297,7 @@ CREATE TABLE `sys_status` (
   `item` varchar(8) DEFAULT NULL,
   `value` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`ss_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +306,7 @@ CREATE TABLE `sys_status` (
 
 LOCK TABLES `sys_status` WRITE;
 /*!40000 ALTER TABLE `sys_status` DISABLE KEYS */;
-INSERT INTO `sys_status` VALUES (1,'LAST_EOD','2012-03-27'),(2,'LAST_EOD','2012-03-27'),(3,'LAST_EOD','2012-03-27');
+INSERT INTO `sys_status` VALUES (1,'LAST_EOD','2012-03-27'),(27,'LAST_EOD','2012-03-28'),(28,'LAST_EOD','2012-03-29'),(29,'LAST_EOD','2012-03-31'),(30,'LAST_EOD','2012-04-01'),(31,'LAST_EOD','2012-04-30'),(32,'LAST_EOD','2012-05-01'),(33,'LAST_EOD','2012-05-02'),(34,'LAST_EOD','2012-05-03'),(35,'LAST_EOD','2012-05-30');
 /*!40000 ALTER TABLE `sys_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +347,7 @@ CREATE TABLE `trans` (
   `direct` char(1) DEFAULT 'B',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`trans_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,6 +356,7 @@ CREATE TABLE `trans` (
 
 LOCK TABLES `trans` WRITE;
 /*!40000 ALTER TABLE `trans` DISABLE KEYS */;
+INSERT INTO `trans` VALUES (3,7,8,'1000.00000000',1,'S','2012-03-29 06:28:05'),(4,7,9,'1000.00000000',1,'S','2012-04-01 06:37:26'),(5,10,9,'1000.00000000',1,'B','2012-05-02 07:15:20'),(6,10,11,'1000.00000000',1,'S','2012-05-03 07:18:03');
 /*!40000 ALTER TABLE `trans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +406,7 @@ CREATE TABLE `userbalance` (
   `bal_btc` decimal(20,8) DEFAULT '0.00000000',
   `trade_vol` decimal(20,8) unsigned DEFAULT '0.00000000',
   PRIMARY KEY (`userbalance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,7 +415,7 @@ CREATE TABLE `userbalance` (
 
 LOCK TABLES `userbalance` WRITE;
 /*!40000 ALTER TABLE `userbalance` DISABLE KEYS */;
-INSERT INTO `userbalance` VALUES (1,72,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(2,73,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(4,72,'2012-03-27',NULL,NULL,NULL,'0.39950000',NULL),(5,73,'2012-03-27',NULL,'-0.30000000',NULL,'0.50000000',NULL);
+INSERT INTO `userbalance` VALUES (18,72,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(19,73,'2011-10-31','0.00000000','0.00000000','0.00000000','0.00000000','0.00000000'),(21,72,'2012-03-28',NULL,'-0.00050000',NULL,'0.39950000','0.10000000'),(22,73,'2012-03-28',NULL,'-0.30050000',NULL,'0.50000000','0.10000000'),(24,72,'2012-03-29',NULL,'-0.00100000',NULL,'0.79900000','0.10000000'),(25,73,'2012-03-29',NULL,'-0.60100000',NULL,'1.00000000','0.10000000'),(27,72,'2012-03-31',NULL,'-0.00050000',NULL,'0.39950000','0.10000000'),(28,73,'2012-03-31','0.19966200','-0.30050000','0.00016200','0.50000000','0.10000000'),(30,72,'2012-04-01','0.39859500','-0.00090500','0.00000000','0.39950000','0.20000000'),(31,73,'2012-04-01','0.19925700','-0.30090500','0.00016200','0.50000000','0.20000000'),(33,72,'2012-04-30',NULL,'-0.00090500',NULL,'0.39950000','0.20000000'),(34,73,'2012-04-30','0.19941900','-0.30090500','0.00032400','0.50000000','0.20000000'),(36,72,'2012-05-01','0.39869000','-0.00081000','0.00000000','0.39950000','0.20000000'),(37,73,'2012-05-01','0.19951400','-0.30081000','0.00032400','0.50000000','0.20000000'),(39,72,'2012-05-02','0.39819000','-0.00131000','0.00000000','0.39950000','0.30000000'),(40,73,'2012-05-02','0.19901400','-0.30131000','0.00032400','0.50000000','0.30000000'),(42,72,'2012-05-03','0.39769000','-0.00181000','0.00000000','0.39950000','0.40000000'),(43,73,'2012-05-03','0.19867600','-0.30181000','0.00048600','0.50000000','0.40000000'),(45,72,'2012-05-30','0.39769000','-0.00181000','0.00000000','0.39950000','0.40000000'),(46,73,'2012-05-30','0.19867600','-0.30181000','0.00048600','0.50000000','0.40000000');
 /*!40000 ALTER TABLE `userbalance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,7 +443,7 @@ CREATE TABLE `userlog` (
 
 LOCK TABLES `userlog` WRITE;
 /*!40000 ALTER TABLE `userlog` DISABLE KEYS */;
-INSERT INTO `userlog` VALUES (24,70,'Login','127.0.0.1',2,'2012-03-28 06:09:51'),(25,71,'Login','127.0.0.1',1,'2012-03-28 06:19:26'),(26,72,'Login','127.0.0.1',5,'2012-03-28 06:22:45'),(27,73,'Login','127.0.0.1',1,'2012-03-28 06:23:57');
+INSERT INTO `userlog` VALUES (24,70,'Login','127.0.0.1',2,'2012-03-28 06:09:51'),(25,71,'Login','127.0.0.1',1,'2012-03-28 06:19:26'),(26,72,'Login','127.0.0.1',6,'2012-03-28 06:22:45'),(27,73,'Login','127.0.0.1',2,'2012-03-28 06:23:57');
 /*!40000 ALTER TABLE `userlog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -729,7 +733,7 @@ declare res decimal(6,6);
 
 select ifnull(sum(b.value),0) into v_tvol from v_trans b where b.user_id = puser and b.timestamp >= DATE_FORMAT(NOW()+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(NOW(), '%Y-%m-01');
 select ifnull(sum(b.value),0) into v_rtvol from v_trans b, users u where b.user_id = u.referrer and u.user_id = puser and b.timestamp >= DATE_FORMAT(NOW()+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(NOW(), '%Y-%m-01');
-select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(NOW()+interval-1 month, '%Y-%m') and a.`type`='C';
+select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(NOW(), '%Y-%m') and a.`type`='C';
 
 return res;
 END */;;
@@ -950,7 +954,8 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_eod`()
 BEGIN
-declare v_lasteod,cursettledate datetime;
+declare v_lasteod date;
+declare cursettledate datetime;
 declare curcontract_id,curowner int;
 declare curwrite_fee decimal(6,6);
 declare v_cfee decimal(20,8);
@@ -959,20 +964,22 @@ DECLARE curc CURSOR FOR SELECT contract_id,write_fee,settledate,owner FROM contr
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 select ifnull(max(value),DATE_FORMAT(NOW()+interval - 1 month, '%Y-%m-%d')) into v_lasteod from sys_status where item = 'LAST_EOD';
 
-if DATE_FORMAT(NOW(), '%Y-%m-%d') > v_lasteod then
+if DATE_FORMAT(NOW(), '%Y-%m-%d') > DATE_FORMAT(v_lasteod+ interval +1 day, '%Y-%m-%d') then
 OPEN curc;
 cur_loop:LOOP
 	FETCH curc INTO curcontract_id,curwrite_fee,cursettledate,curowner;
 	IF done THEN LEAVE cur_loop; end if;
-	select sum(t.value * c.write_fee*(1-f_coupon(t.user_id))) into v_cfee from v_trans t,contract c 
-			where t.contract_id = curcontract_id and t.timestamp >= DATE_FORMAT(v_lasteod, '%Y-%m-%d') and t.timestamp < DATE_FORMAT(NOW(), '%Y-%m-%d');
+	select ifnull(sum(t.value * c.write_fee*(1-f_coupon(t.user_id))),0) into v_cfee from v_trans t,contract c 
+			where t.contract_id = c.contract_id and t.contract_id = curcontract_id and t.timestamp >= DATE_FORMAT(v_lasteod+ interval +1 day, '%Y-%m-%d') and t.timestamp < DATE_FORMAT(NOW(), '%Y-%m-%d');
 	
-	if datediff(cursettledate,v_lasteod) >=30 then 
-		insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) 
-			select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW() + interval -1 day, '%Y-%m-%d')),v_cfee,curcontract_id,'C',NOW() from users u 
-			where u.user_id = curowner ;
-	else
-		update contract set settlemargin = settlemargin + v_cfee where contract_id = curcontract_id;
+	if v_cfee > 0 then
+		if datediff(cursettledate,v_lasteod) >30 then 
+			insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) 
+				select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW() + interval -1 day, '%Y-%m-%d')),-1*v_cfee,curcontract_id,'C',NOW() from users u 
+				where u.user_id = curowner ;
+		else
+			update contract set settlemargin = settlemargin + v_cfee where contract_id = curcontract_id;
+		end if;
 	end if;
 end loop;
 insert into sys_status(item,value) values('LAST_EOD',DATE_FORMAT(NOW() + interval -1 day, '%Y-%m-%d'));
@@ -1000,7 +1007,7 @@ declare v_lastr datetime;
 select ifnull(max(input_dt),NOW() + interval -1 month) into v_lastr from btc_action where account2 = 'FEE' and type = 'R';
 if DATE_FORMAT(NOW(), '%Y-%m') > DATE_FORMAT(v_lastr, '%Y-%m') then
 	insert into btc_action(action,account1,account2,address,amount,type,input_dt) 
-		select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW()+interval-1 month, '%Y-%m'),' ',100*f_coupon(b.user_id),'%'),ifnull(sum(b.fee),0)*f_coupon(b.user_id),'R',NOW() from v_trans b ,users u
+		select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW()+interval-1 month, '%Y-%m'),' ',round(100*f_coupon(b.user_id),1),'%'),ifnull(sum(b.fee),0)*f_coupon(b.user_id),'R',NOW() from v_trans b ,users u
 		where b.user_id = u.user_id and b.timestamp >= DATE_FORMAT(NOW()+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(NOW(), '%Y-%m-01')	group by u.email,b.user_id;
 	commit;
 end if;
@@ -1429,7 +1436,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_gl` AS select 'T' AS `sector`,`t`.`trans_id` AS `trans_id`,`t`.`contract_id` AS `contract_id`,`t`.`type` AS `type`,`t`.`user_id` AS `user_id`,`t`.`buy_sell` AS `buy_sell`,`t`.`point` AS `point`,`t`.`lots` AS `lots`,`t`.`value` AS `value`,`t`.`timestamp` AS `timestamp`,`t`.`fee` AS `fee`,`t`.`p_l` AS `p_l`,NULL AS `btc` from `v_trans` `t` union all select 'R' AS `R`,NULL AS `NULL`,`a`.`trans_id` AS `trans_id`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` in ('R','r')) and (`a`.`account1` = `u`.`email`)) union all select 'C' AS `C`,NULL AS `NULL`,`a`.`trans_id` AS `trans_id`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` = 'H') and (`a`.`account1` = `u`.`email`)) union all select 'B' AS `B`,NULL AS `NULL`,NULL AS `NULL`,`b`.`type` AS `type`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`b`.`timestamp` AS `timestamp`,NULL AS `NULL`,NULL AS `NULL`,(`b`.`amount` + `b`.`fee`) AS `b.amount+b.fee` from (`btc_trans` `b` join `users` `u`) where (`b`.`user` = `u`.`email`) */;
+/*!50001 VIEW `v_gl` AS select 'T' AS `sector`,`t`.`trans_id` AS `trans_id`,`t`.`contract_id` AS `contract_id`,`t`.`type` AS `type`,`t`.`user_id` AS `user_id`,`t`.`buy_sell` AS `buy_sell`,`t`.`point` AS `point`,`t`.`lots` AS `lots`,`t`.`value` AS `value`,`t`.`timestamp` AS `timestamp`,`t`.`fee` AS `fee`,`t`.`p_l` AS `p_l`,NULL AS `btc` from `v_trans` `t` union all select 'R' AS `R`,NULL AS `NULL`,`a`.`trans_id` AS `trans_id`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` = 'R') and (`a`.`account1` = `u`.`email`)) union all select 'C' AS `C`,NULL AS `NULL`,`a`.`trans_id` AS `trans_id`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,NULL AS `NULL`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` = 'C') and (`a`.`account1` = `u`.`email`)) union all select 'H' AS `H`,NULL AS `NULL`,`a`.`trans_id` AS `trans_id`,`a`.`address` AS `address`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`a`.`input_dt` AS `input_dt`,-(`a`.`amount`) AS `-a.amount`,NULL AS `NULL`,NULL AS `NULL` from (`btc_action` `a` join `users` `u`) where ((`a`.`type` = 'H') and (`a`.`account1` = `u`.`email`)) union all select 'B' AS `B`,NULL AS `NULL`,NULL AS `NULL`,`b`.`type` AS `type`,`u`.`user_id` AS `user_id`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,`b`.`timestamp` AS `timestamp`,NULL AS `NULL`,NULL AS `NULL`,(`b`.`amount` + `b`.`fee`) AS `b.amount+b.fee` from (`btc_trans` `b` join `users` `u`) where (`b`.`user` = `u`.`email`) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1633,4 +1640,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-03-28 17:14:44
+-- Dump completed on 2012-05-31 17:47:00
