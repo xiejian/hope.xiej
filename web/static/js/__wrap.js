@@ -119,6 +119,33 @@ $.tools.validator.fn("[minlength]", function(input, value) {
     };
 });
 
+function init_editcont(){   //for contract new & edit popup
+    $("form.edit_ct_form").validator({
+        position: 'bottom left',
+        offset: [8, 0],
+        message: '<div><em/></div>' // em element is the arrow
+    });
+    $("div.modal form").submit(function(e) {
+        var form = $(this);
+        // client-side validation OK.
+        if (!e.isDefaultPrevented()) {
+            $.post( form.attr('action'), form.serialize(),function( response ) {
+                    if ('goto' in response) {window.location = response.goto;}
+                    $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
+                }
+            );
+            form.hide();
+            $('div.modal').find('.form_result').fadeIn('slow');
+            e.preventDefault();
+        }
+    });
+    $(".edit_ct_form input[type='button']").click(function(){
+        $(this).parent(".edit_ct_form").attr({action: this.name});
+        $(this).parent(".edit_ct_form").submit();
+    });
+    $(":date").dateinput({format: "yyyy-mm-dd"});
+}
+
 function init_modalInputF(obj) {
     var triggersF = $(obj).overlay({
         // some mask tweaks suitable for modal dialogs
@@ -148,33 +175,6 @@ function init_modalInputF(obj) {
                         this.offsetHeight
                     );
                 });
-            }
-            else{   //for contract new & edit popup
-                $("form.edit_ct_form").validator({
-                    position: 'bottom left',
-                    offset: [8, 0],
-                    message: '<div><em/></div>' // em element is the arrow
-                });
-                $("div.modal form").submit(function(e) {
-                    var form = $(this);
-                    // client-side validation OK.
-                    if (!e.isDefaultPrevented()) {
-                        $.post( form.attr('action'), form.serialize(),function( response ) {
-                                if ('goto' in response) {window.location = response.goto;}
-                                $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
-                            }
-                        );
-                        form.hide();
-                        $('div.modal').find('.form_result').fadeIn('slow');
-                        e.preventDefault();
-                    }
-                });
-
-                $(".edit_ct_form input[type='button']").click(function(){
-                    $(this).parent(".edit_ct_form").attr({action: this.name});
-                    $(this).parent(".edit_ct_form").submit();
-                });
-                $(":date").dateinput({format: "yyyy-mm-dd"});
             }
         },
         mask: {

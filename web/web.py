@@ -5,7 +5,7 @@ from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
-from _twitter import gv_twt,_start_twt_sevice
+from _twitter import gv_twt,_start_twt_sevice,gv_cont_sp
 from __eod import _start_eod_sevice
 
 app = Flask(__name__)
@@ -269,7 +269,11 @@ def contract():
             return render_template('contract_edit.html',c=cont)
         else:
             abort(404)
-    return render_template('contract.html',c=cont)
+    sp = {}
+    if gv_contract[cont]['code'] in gv_cont_sp:
+        sp = gv_cont_sp[gv_contract[cont]['code']]
+    print sp
+    return render_template('contract.html',c=cont,sp=sp)
 
 
 @app.route('/liyutao', methods=['GET','POST'])

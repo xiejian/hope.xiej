@@ -57,7 +57,7 @@ function update_gl(){
     };
 
     (v_gl['trans']).getItemMetadata = function (row) {
-        if ($.inArray(v_gl['trans'][row]['s'],['B','R']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
+        if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
     };
 
     var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);

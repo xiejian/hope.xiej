@@ -33,7 +33,7 @@ BEGIN
 
 DECLARE cfee1m decimal(3,2) DEFAULT 1;
 
-	RETURN GREATEST(ceiling(datediff(settledate,opendate)/30),2) * cfee1m ;
+	RETURN GREATEST(ceiling(datediff(settledate,opendate)/31),2) * cfee1m ;
 	   
 END */;;
 DELIMITER ;
@@ -1127,7 +1127,7 @@ DECLARE vfee_req,vbtcavail DECIMAL(20,10) DEFAULT 0;
 declare res int default 0;
 DECLARE vfee VARCHAR(40) default 'FEE';
 
-SELECT count(1) into res FROM contract WHERE code=pcode and DATE_FORMAT(settledate,'%%y%%m') = DATE_FORMAT(psettledate,'%%y%%m') and 
+SELECT count(1) into res FROM contract WHERE code=pcode and DATE_FORMAT(settledate,'%y%m') = DATE_FORMAT(psettledate,'%y%m') and 
     contract_id <> cid and status <> 'D';
 
 if res > 0 then
@@ -1227,4 +1227,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-01 10:35:51
+-- Dump completed on 2012-06-01 16:25:00

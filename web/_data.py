@@ -216,7 +216,7 @@ def _modify_cont(db,id,code,btc_multi,opendate,opentime,settledate,settletime,le
 def _delete_cont(db,id):
     cur = db.cursor()
     cur.execute("INSERT INTO btc_action(ACTION,account1,account2,address,amount,trans_id,input_dt,TYPE) \
-        select 'move',email,'FEE','delete',0.1-f_CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
+        select 'move',email,'FEE','delete',f_CFEE(now(),now())/2-f_CFEE(c.opendate,c.settledate),c.contract_id,NOW(),'H' from users u,contract c where u.user_id = c.owner and c.contract_id = %s;",id)
     cur.execute("UPDATE contract SET status = 'D' WHERE contract_id=%s",id)
     db.commit()
     cur.close()

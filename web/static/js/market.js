@@ -54,7 +54,7 @@ function update_contlist(){
         sp:{id: "settlept", name: "Settle PT", field: "sp", sortable:true},
         vl:{id: "volume", name: "Volume", field: "vl", sortable:true},
         o:{id: "owner", name: "Author", field: "o", width:120, sortable:true},
-        a:{id: "trade", name: "", field: "c",width:70,formatter: function ( row, cell, value, columnDef, dataContext ) {
+        a:{id: "trade", name: "", field: "c",width:60,formatter: function ( row, cell, value, columnDef, dataContext ) {
             return '<a href="'+$SCRIPT_ROOT + '/trade?c=' + dataContext['c'] + '"> TRADE </a>';}
         }
     };
