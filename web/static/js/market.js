@@ -44,7 +44,7 @@ function update_contlist(){
     var cl = {
         st:{id: "status", name: "Status", field: "st",width:60, sortable:true, formatter:function(row, cell, value){return _dec['st'][value];}},
         n:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
-        fn:{id: "fullname", name: "Fullname", field: "fn",width:100, sortable:true},
+        fn:{id: "fullname", name: "Fullname", field: "fn",width:110, sortable:true},
         od:{id: "opendt", name: "Open DT", field: "od", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         sd:{id: "settledt", name: "Settle DT", field: "sd", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         r:{id: "region", name: "Region", field: "r", width:100,sortable:true, formatter:function(row, cell, value){return _dec['r'][value];}},

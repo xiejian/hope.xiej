@@ -38,7 +38,7 @@ def transsync():
         if len(res['transactions']) > 0:
             cursor.execute("DELETE FROM btc_synclog WHERE lastblock = %s",res['lastblock'])
             cursor.execute("INSERT INTO btc_synclog(type,lastblock,status,message)VALUES ('trans',%s,'S',%s)", [res['lastblock'], len(res['transactions'])])
-            logger.info(str(len(res['transactions'])), 'transactions synced.')
+            logger.info(str(len(res['transactions']))+ ' transactions synced.')
     except Exception as inst:
         cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('trans','F',%s)", "Err:{0}{1}".format(type(inst),inst.args))
         logger.error('TransSync Error'+ str(type(inst))+ inst.args)
@@ -85,7 +85,7 @@ def actionsproc():
         else:
             cursor.execute("UPDATE btc_action SET status ='F',process_dt=NOW(),message=%s WHERE btc_action_id = %s", ['Unsupport action', act[0]])
     if len(result)>0:
-        logger.info(str(len(result)) + 'actions processed.')
+        logger.info(str(len(result)) + ' actions processed.')
         
 def svrexit():
     cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('serv','E',%s)", btc_url[btc_url.find('@')+1:-1])

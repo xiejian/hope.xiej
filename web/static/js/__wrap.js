@@ -135,44 +135,47 @@ function init_modalInputF(obj) {
             wrap.load(this.getTrigger().attr("href"));
         },
         onLoad: function(){
-            loadcontchart(this.getTrigger().attr("name"));
-            $("div#contchart").dblclick(function(){
-                if($(this).width() == 530){
-                    $(this).width(890);
-                }else{
-                    $(this).width(530);
-                }
-                chart.setSize(
-                    this.offsetWidth ,
-                    this.offsetHeight
-                );
-            });
-            $("form.edit_ct_form").validator({
-                position: 'bottom left',
-                offset: [8, 0],
-                message: '<div><em/></div>' // em element is the arrow
-            });
-            $("div.modal form").submit(function(e) {
-                var form = $(this);
-                // client-side validation OK.
-                if (!e.isDefaultPrevented()) {
-                    $.post( form.attr('action'), form.serialize(),function( response ) {
-                            if ('goto' in response) {window.location = response.goto;}
-                            $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
-                        }
+            if(this.getTrigger().attr("rel") == "#cont_overlay"){
+                loadcontchart(this.getTrigger().attr("name"));
+                $("div#contchart").dblclick(function(){
+                    if($(this).width() == 530){
+                        $(this).width(890);
+                    }else{
+                        $(this).width(530);
+                    }
+                    chart.setSize(
+                        this.offsetWidth ,
+                        this.offsetHeight
                     );
-                    form.hide();
-                    $('div.modal').find('.form_result').fadeIn('slow');
-                    e.preventDefault();
-                }
-            });
-            $(":date").dateinput({format: "yyyy-mm-dd"});
+                });
+            }
+            else{   //for contract new & edit popup
+                $("form.edit_ct_form").validator({
+                    position: 'bottom left',
+                    offset: [8, 0],
+                    message: '<div><em/></div>' // em element is the arrow
+                });
+                $("div.modal form").submit(function(e) {
+                    var form = $(this);
+                    // client-side validation OK.
+                    if (!e.isDefaultPrevented()) {
+                        $.post( form.attr('action'), form.serialize(),function( response ) {
+                                if ('goto' in response) {window.location = response.goto;}
+                                $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
+                            }
+                        );
+                        form.hide();
+                        $('div.modal').find('.form_result').fadeIn('slow');
+                        e.preventDefault();
+                    }
+                });
 
-            $(".edit_ct_form input[type='button']").click(function(){
-                $(this).parent(".edit_ct_form").attr({action: this.name});
-                $(this).parent(".edit_ct_form").submit();
-            });
-
+                $(".edit_ct_form input[type='button']").click(function(){
+                    $(this).parent(".edit_ct_form").attr({action: this.name});
+                    $(this).parent(".edit_ct_form").submit();
+                });
+                $(":date").dateinput({format: "yyyy-mm-dd"});
+            }
         },
         mask: {
             color: '#331',
