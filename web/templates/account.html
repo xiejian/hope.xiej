@@ -75,7 +75,7 @@
         <p>You will get all this trade volume in the future.</p>
         <form action="{{ url_for('account',t='I') }}" method=post class="invite">
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            <input type=email name="email" value="" size="22" required="required"/>
+            Email:<input type=email name="email" value="" style="width: 240px;" required="required"/><br/>
             <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
         </form>
     </div>
@@ -139,6 +139,7 @@
 
     <div class="modal" id="set_pass">
     <h4>Reset Password</h4>
+        <br/>
         <form action="{{ url_for('account',t='P') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>
@@ -163,6 +164,7 @@
 
     <div class="modal" id="set_cpass">
         <h4>Reset Capital Password</h4>
+        <br/>
         <form action="{{ url_for('account',t='Q') }}" method=post>
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <table>

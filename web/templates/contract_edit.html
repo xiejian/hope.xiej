@@ -27,7 +27,7 @@ e.g.
         <table>
             <tr><th title="{{ hint.code }}">Code</th><td title="{{ hint.code }}"><input type=text name=code minlength="3" maxlength="6" required="required" value="{{ ct[c].code }}"></td>
                 <td class="vhr" rowspan="5"></td><td rowspan="5"></td><th>Full Name</th><td title="{{ hint.fullname }}"><input style="width: 200px;" type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
-            <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input style="width: 90px;" type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
+            <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input style="width: 85px;" type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
                 <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
             <tr><th>Move Limit</th><td  title="{{ hint.movelimit }}"><input style="width: 60px;" type=number name=movelimit min=5 max=50 required="required" value="{{ct[c].movelimit * 100}}"> % </td>
                 <th>Settle Date</th><td  title="{{ hint.settledate }}"><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" ><input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
@@ -55,7 +55,7 @@ e.g.
                 </select></td></tr>
             <tr></tr><th>Twitter ID</th><td  title="{{ hint.twitter_id }}"><input type=text name=twitter_id value="{{ct[c].twitter_id}}"></td></tr>
             <tr><th>Contract Definition</th><td title="{{ hint.description }}" colspan="5">
-                <textarea name="description" rows="10" style="width: 570px;">{{ct[c].description}}</textarea></td></tr>
+                <textarea name="description" style="width: 570px;height: 170px;">{{ct[c].description}}</textarea></td></tr>
             <tr><th>Approval Msg</th><td  title="{{ hint.apr_msg }}" colspan="5">
                 {{ct[c].apinstruction}}</td></tr>
         </table><br>

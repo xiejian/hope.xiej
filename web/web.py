@@ -269,10 +269,9 @@ def contract():
             return render_template('contract_edit.html',c=cont)
         else:
             abort(404)
-    sp = {}
+    sp = None
     if gv_contract[cont]['code'] in gv_cont_sp:
         sp = gv_cont_sp[gv_contract[cont]['code']]
-    print sp
     return render_template('contract.html',c=cont,sp=sp)
 
 

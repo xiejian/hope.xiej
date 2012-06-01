@@ -5,7 +5,7 @@ h2 em,h3 em,h4 em  {background: #DDD;padding: 5px;}
 /*div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}*/
 
-div.subm_tab p   {padding-left: 20px;margin-bottom:10px;font-size:1.1em;color: #666; }
+div.subm_tab p   {padding-left: 20px;margin-bottom:8px;font-size:1.1em;color: #666; }
 div.subm_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
 tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
@@ -16,16 +16,16 @@ input,select {font-size:1.2em;padding: 4px; border: 1px solid #CCC; margin: 2px;
 textarea    {padding: 4px;margin: 2px;  }
 input:hover {border: 1px solid #db8616;}
 
-div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 8px;font-size: 1.2em;margin: 5px 0px ;background-color:#Ffe; }
+div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 0px 8px;font-size: 1.2em;margin: 5px 0px ;background-color:#Ffe; }
 div.subm_tab table th  {color: #640;padding: 4px;text-align: center; }
-div.subm_tab table td  {padding: 6px;}
+div.subm_tab table td  {padding: 5px;}
 div.subm_tab form table th {text-align: right;font-size: 1.1em;}
 
 div.subm_tab form  {border: 1px solid #999;background-color: white; margin: 0px 40px 5px 20px;padding: 10px 40px;text-align: center;}
-div.subm_tab table tr {border-bottom:1px dashed rgb(221, 204, 177); padding: 8px 8px;}
+div.subm_tab table tr {border-bottom:1px dashed rgb(221, 204, 177); }
 div.subm_tab table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
 
 
-div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px 30px 5px;padding: 11px 20px 16px 5px;
+div.homestep    {width: 98px; height: 72px;    float: left;margin: 15px 5px;padding: 11px 20px 16px 5px;
     background-image:url(../img/h.stepa.gif);}
 span.stepinfo   {font-style: italic;color: #666;}

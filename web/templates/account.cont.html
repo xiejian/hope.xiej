@@ -6,11 +6,14 @@
         <div class=" homestep">3. Trade till settle date</div>
         <div class=" homestep">4. Closed, Submit settle point and proof</div>
         <div class=" homestep">5. Get settle approval & and settle all holding</div>
+        <div class="clear"></div>
+        <h5>Fee to Create a Contract:</h5>
+        <p>1.0 + ( 1.0 per month of the contract )</p>
     </div>
 
 
     <div class="clear"></div>
-    <a name="0" class="modalInputF button" rel="#edit_cont" href="/contract?t=e">Create My Own Contract</a>
+    <a name="0" class="modalInputF button" rel="#edit_cont" href="/contract?t=e">Create my Contract</a>
     <h4>My Contracts</h4>
     <table style="border: 1px solid #DDCCB1">
     {% for c in cont if cont[c].owner == session['email']%}

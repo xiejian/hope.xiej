@@ -1,6 +1,11 @@
 <div class="grid_9 alpha title">
     {% if cont[c].status =='O' and 'user_id'in session %}<a class='button' href="{{ url_for('trade',c=c) }}">TRADE</a>{% endif %}
-    <h3>{{cont[c].name}} <span class="fullname">( {{cont[c].status|f("C")}} )</span></h3>
+    {% if sp %}<div class="spotprice" title="{{ sp['info'] }}">spot point<br/>{{ sp['pt'] }}</div>{% endif %}
+    <h3>{{cont[c].name}} <span class="status">( {{cont[c].status|f("C")}} )</span></h3>
+
+</div>
+<div class="grid_6 omega titleright">
+    <h5>{{cont[c].owneru}}<span class="gr">'s Twitter</span> {{cont[c].twitter_id}}</h5>
 </div>
 <div class="clear"></div>
 <div class="scroll_wrap">
@@ -20,7 +25,6 @@
     <div id="contchart" style="height: 500px; min-width: 530px"></div>​<script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
 </div>
 <div class="grid_6 omega">
-    <h5>{{cont[c].owneru}}'s Twitter {{cont[c].twitter_id}}</h5>
     <ul class="twt">
         {% for a in twt[c] %}
             <li>{{ a.created_at|f("D","%d%b") }}  <span class="twt_text"> {{ a.text }}</span>
