@@ -40,5 +40,11 @@
     <tr>None</tr>
     {% endfor %}
 </table>
+<br/>
+<table><tr><th>Account</th><th>Balance</th><th>BTC I/O in 30 days</th></tr>
+    {% for ua in u %}
+    <tr><td>{{ ua.account }}</td><td>{{ ua.balance }}</td><td>{{ ua.bio }}</td></tr>
+    {% endfor %}
+</table>
 </body>
 </html>

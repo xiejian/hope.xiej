@@ -123,11 +123,11 @@ def register():
         session.pop('user_id', None)
         vcode = request.args.get('v', False)
         if vcode:
-            user_id = _activeuser(g.db,vcode)
-            if user_id:
+            res = _activeuser(g.db,vcode)
+            if res is not False:
                 flash('Your account had been activated.','suc')
-                #todo:auto login after active
-                session['user_id'] = user_id
+                session['user_id'] = res[0]
+                session['email'] = res[1]
                 return render_template('register.html',type='A')
             else:
                 abort(401)
@@ -301,7 +301,13 @@ def admin():
             cur.close()
             flash("Approval Contract "+request.form['id']+" Successfully")
         _update_contract(g.db,request.form['id'],'D')
-    return render_template('admin.html')
+
+
+    cur = g.db.cursor()
+    cur.execute("select a.account, a.balance,b.bio from btc_account a left join \
+        (select user,sum(amount) as bio from btc_trans where timestamp > NOW() + interval -30 day group by user ) b on a.account = b.user")
+    btc_account = [dict(account=orow[0],balance=orow[1]) for orow in cur.fetchall()]
+    return render_template('admin.html',u = btc_account)
 
 @app.route('/con_db', methods=['GET'])
 def con_db():

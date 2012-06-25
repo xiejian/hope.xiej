@@ -38,7 +38,7 @@ def _activeuser(db,code):
             # new user get 0.1 BTC for free
             cur.execute("insert into btc_action(action,account1,account2,address,amount,type,input_dt) values( 'move',%s,'FEE','sign up', %s,'A',NOW())",(d_email,-1*newuserBTC))
             db.commit()
-            return result[0]
+            return result[0],d_email
         else:
             return False
     except Exception:
@@ -157,4 +157,3 @@ def _enrcode(user_id,email):
     a_user = base64.urlsafe_b64encode(str(user_id))
     a_email = base64.urlsafe_b64encode(email)
     return a_user + '~' + a_email
-#todo favico.ico

@@ -35,7 +35,7 @@ Please transfer Bitcoin to your unique address as follow:
         <tr><th>Address:</th>
         <td><input type=text name="address" value="" minlength="34" maxlength="34" style="width: 360px;" required="required"/></td></tr>
         <tr><th>Amount:</th>
-        <td><input type=number name="amount" value="" style="width: 150px;" min=0.01 max={{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} required="required"/></td></tr>
+        <td><input type=number name="amount" value="" style="width: 150px;" min=0.0001 max={{(g.u.balance + g.u.p_l - g.u.omargin - g.u.pmargin)|f }} required="required"/></td></tr>
         <tr><th>Password:</th>
         <td><input type=password name="password" value="" pattern="[\u0020-\u007e]+" size="24" required="required"/></td></tr>
         <tr><th>Capital Password:</th>

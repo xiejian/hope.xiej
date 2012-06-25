@@ -29,6 +29,7 @@ def close_cont():
         ccur.execute("SELECT order_id,user_id FROM orders WHERE status in ('N','O') and contract_id = %s",c[0])
         for o in ccur.fetchall():
             ocur.callproc('p_exchange',(o[0],o[1],'C'))
+            ocur.nextset()
             print >> sys.stderr, 'Cancel Order',ocur.fetchone()
 
     ocur.close()
