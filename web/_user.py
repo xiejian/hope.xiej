@@ -9,7 +9,7 @@ def _createuser(db,email,password,referrer):
         return 'Email is registered.'
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
-    if referrer:
+    if referrer > '0':
         cur.execute("INSERT INTO userattr(type,user_id,coupon,month,comment,create_dt) VALUES \
                     ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(now(),'%Y-%m'),'Invited Sign Up',NOW()), \
                     ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 1 month,'%Y-%m'),'Invited Sign Up',NOW()), \

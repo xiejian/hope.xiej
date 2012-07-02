@@ -51,7 +51,7 @@ def settle_cont():
         ccur.execute("SELECT user_id,buy_sell,lots FROM v_pos WHERE contract_id = %s",c[0])
         for p in ccur.fetchall():
             #_add_order()
-            ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2]))
+            ocur.callproc('p_addorder',(c[0],p[0],NOT[p[1]],c[1],p[2],'F'))
             print >> sys.stderr, 'Add Order',ocur.fetchall()
             ocur.nextset()
 

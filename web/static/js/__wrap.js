@@ -130,7 +130,7 @@ function init_editcont(){   //for contract new & edit popup
         // client-side validation OK.
         if (!e.isDefaultPrevented()) {
             $.post( form.attr('action'), form.serialize(),function( response ) {
-                    if ('goto' in response) {window.location = response.goto;}
+                    if ('goto' in response) {window.location = response['goto'];}
                     $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
                 }
             );
@@ -230,7 +230,7 @@ $(function () {
         // client-side validation OK.
         if (!e.isDefaultPrevented()) {
             $.post( form.attr('action'), form.serialize(),function( response ) {
-                    if ('goto' in response) {window.location = response.goto;}
+                    if ('goto' in response) {window.location = response['goto'];}
                     $('div.modal').find('.form_result').addClass(response.type).html(response.msg );
                 }
             );
