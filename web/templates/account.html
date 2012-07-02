@@ -71,9 +71,9 @@
     <div class="modal" id="invite_friend">
         <h4>Invite your friends to join BTCFE</h4>
         <h5>As reward:</h5>
-        <p>Your friend will get 6 × 10% OFF special coupon and 0.1 BTC after his first trade;</p>
-        <p>You will get all this trade volume in the future.</p>
-        <form action="{{ url_for('account',t='I') }}" method=post class="invite">
+        <p>Your friend will get 6 × 10% OFF special coupon and some BTC in cash after his first trade;</p>
+        <p>Your friends' trade volume will contribute to your discount coupon in the future.</p>
+        <form name="invite" action="{{ url_for('account',t='I') }}" method=post class="invite">
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             Email:<input type=email name="email" value="" style="width: 240px;" required="required"/><br/>
             <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left

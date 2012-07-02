@@ -29,7 +29,7 @@ e.g.
                 <td class="vhr" rowspan="5"></td><td rowspan="5"></td><th>Full Name</th><td title="{{ hint.fullname }}"><input style="width: 200px;" type=text name=fullname value="{{ct[c].fullname}}"></td></tr>
             <tr><th>Contract Size</th><td title="{{ hint.btc_multi }}"><input style="width: 85px;" type=number name=btc_multi min=0.000001 max=10000 required="required" value="{{ct[c].btc_multi}}"> × Point</td>
                 <th>Open Date</th><td title="{{ hint.opendate }}"><input type=date name=opendate min=1 max=366 value="{{ ct[c].opendate|f("cd") }}" ><input style="width: 35px;" type=number value={{ct[c].opendate|f("hr")}} name=opentime min=0 max=23 required="required">h</td></tr>
-            <tr><th>Move Limit</th><td  title="{{ hint.movelimit }}"><input style="width: 60px;" type=number name=movelimit min=5 max=50 required="required" value="{{ct[c].movelimit * 100}}"> % </td>
+            <tr><th>Fluctuate Limit</th><td  title="{{ hint.movelimit }}"><input style="width: 60px;" type=number name=movelimit min=5 max=50 required="required" value="{{ct[c].movelimit * 100}}"> % </td>
                 <th>Settle Date</th><td  title="{{ hint.settledate }}"><input type=date name=settledate min=7 max=400 value="{{ct[c].settledate|f("cd")}}" ><input style="width: 35px;" type=number value={{ct[c].settledate|f("hr")}} name=settletime min=0 max=23 required="required">h</td></tr>
             <tr><th>Margin Rate</th><td  title="{{ hint.leverage }}"><input style="width: 60px;" type=number name=leverage min=10 max=100 required="required" value="{{ct[c].leverage * 100}}"> % </td>
                 <th>Region</th><td  title="{{ hint.region }}"><select name="region" >

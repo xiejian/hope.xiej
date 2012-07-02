@@ -17,7 +17,7 @@
             {% else  %} <span class="up">  +{{ cont[c]["ch"] }}%</span>{% endif %}</h3>
             {{cont[c].fullname}}</td>
             <th>contract size</th><td>{{cont[c].btc_multi|f}} × pt</td><th>open date</th><td>{{cont[c].opendate|f("cd")}}</td></tr>
-        <tr><th>move limit</th><td>{{(cont[c].movelimit*100)|f}}%</td><th>settle date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
+        <tr><th>fluctuate limit</th><td>{{(cont[c].movelimit*100)|f}}%</td><th>settle date</th><td>{{cont[c].settledate|f("cd")}}</td></tr>
         <tr><th>margin rate</th><td>{{(cont[c].leverage*100)|f}}%</td><th>region</th><td>{{cont[c].region|f("R")}}</td></tr>
         <tr><th>fees 2 writer</th><td>{{(cont[c].write_fee*1000)|f}}‰</td><th>sector</th><td>{{cont[c].sector|f("S")}}</td></tr>
 
