@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.61, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: btcfe
 -- ------------------------------------------------------
--- Server version	5.1.61-0ubuntu0.10.04.1
+-- Server version	5.1.63-0ubuntu0.10.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -946,6 +946,7 @@ DELIMITER ;;
 BEGIN
 
 DECLARE done INT DEFAULT FALSE;
+DECLARE minfee DECIMAL(20,8) DEFAULT '0.00005';
 
 DECLARE vbfeerate,vsfeerate,vcfeerate DECIMAL(6,6);
 
@@ -979,9 +980,9 @@ INSERT INTO trans(buy_oid,sell_oid,point,lots,direct) VALUES (pbuy_oid,psell_oid
 
 SELECT LAST_INSERT_ID() INTO vtrans_id;
 
-INSERT INTO btc_action(ACTION,account1,account2,amount,trans_id,input_dt,type) VALUES ('move',vbuser,vfee,ppoint*plots*vcbtcmulti*(vbfeerate+vcfeerate),vtrans_id,NOW(),'F')
+INSERT INTO btc_action(ACTION,account1,account2,amount,trans_id,input_dt,type) VALUES ('move',vbuser,vfee,(1+(vbtype ='F')) * GREATEST(minfee,ppoint*plots*vcbtcmulti*(vbfeerate+vcfeerate)),vtrans_id,NOW(),'F')
 
-		, ('move',vsuser,vfee,ppoint*plots*vcbtcmulti*(vsfeerate+vcfeerate),vtrans_id,NOW(),'G');
+		, ('move',vsuser,vfee,(1+(vstype ='F')) * GREATEST(minfee,ppoint*plots*vcbtcmulti*(vsfeerate+vcfeerate)),vtrans_id,NOW(),'G');
 
 
 
@@ -1227,4 +1228,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-01 16:25:00
+-- Dump completed on 2012-07-02  9:57:15

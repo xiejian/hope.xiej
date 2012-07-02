@@ -306,7 +306,7 @@ def admin():
     cur = g.db.cursor()
     cur.execute("select a.account, a.balance,b.bio from btc_account a left join \
         (select user,sum(amount) as bio from btc_trans where timestamp > NOW() + interval -30 day group by user ) b on a.account = b.user")
-    btc_account = [dict(account=orow[0],balance=orow[1]) for orow in cur.fetchall()]
+    btc_account = [dict(account=orow[0],balance=orow[1],bio=orow[2]) for orow in cur.fetchall()]
     return render_template('admin.html',u = btc_account)
 
 @app.route('/con_db', methods=['GET'])
