@@ -9,7 +9,7 @@ h4 {    font-size: 17px;}
 h5 {    font-size: 15px;}
 a {text-decoration: none;}
 div#infobar {background:#EDC98F; color:#456; height: 25px;position: relative;}
-div#infobar div.container_16 div {background:#CBA;}
+div#infobar div.container_16 div {background:#7E4A19;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.status {font-size: 0.8em;margin-left:20px;font-weight: normal; }
@@ -24,25 +24,28 @@ div#footer table td {width: 200px;padding-left: 20px;}
 div#footer table a {color: #888;font-size: 0.9em;}
 div#footer table a:hover   {color: #F22; }
 
-div#infobar span.topleft   {width: 48px;height: 25px;float: left;margin: 0px -4px;
+div#infobar span.topleft   {width: 48px;height: 25px;float: left;margin: 0px -2px;
     background-color:#EDC98F;background-repeat:repeat-x;
-    background-image:-khtml-gradient(linear, left top, right top, from(#EDC98F), to(#CBA));
-    background-image:-moz-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-ms-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-webkit-gradient(linear, left top, right top, color-stop(0%, #EDC98F), color-stop(100%, #CBA));
-    background-image:-webkit-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-o-linear-gradient(left, #EDC98F, #CBA);
-    background-image:linear-gradient(left, #EDC98F, #CBA);
+    background-image:-khtml-gradient(linear, left top, right top, from(#EDC98F), to(#7E4A19));
+    background-image:-moz-linear-gradient(left, #EDC98F, #7E4A19);
+    background-image:-ms-linear-gradient(left, #EDC98F, #7E4A19);
+    background-image:-webkit-gradient(linear, left top, right top, color-stop(0%, #EDC98F), color-stop(100%, #7E4A19));
+    background-image:-webkit-linear-gradient(left, #EDC98F, #7E4A19);
+    background-image:-o-linear-gradient(left, #EDC98F, #7E4A19);
+    background-image:linear-gradient(left, #EDC98F, #7E4A19);
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDC98F', endColorstr='#CCBBAA', GradientType=1); }
-div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;margin: 0px -4px;
-    background-image:-khtml-gradient(linear, right top, left top, from(#EDC98F), to(#CBA));
-    background-image:-moz-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-ms-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-webkit-gradient(linear, right top, left top, color-stop(0%, #EDC98F), color-stop(100%, #CBA));
-    background-image:-webkit-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-o-linear-gradient(right, #EDC98F, #CBA);
-    background-image:linear-gradient(right, #EDC98F, #CBA);
+div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;margin: 0px -2px;
+    background-image:-khtml-gradient(linear, right top, left top, from(#EDC98F), to(#7E4A19));
+    background-image:-moz-linear-gradient(right, #EDC98F, #7E4A19);
+    background-image:-ms-linear-gradient(right, #EDC98F, #7E4A19);
+    background-image:-webkit-gradient(linear, right top, left top, color-stop(0%, #EDC98F), color-stop(100%, #7E4A19));
+    background-image:-webkit-linear-gradient(right, #EDC98F, #7E4A19);
+    background-image:-o-linear-gradient(right, #EDC98F, #7E4A19);
+    background-image:linear-gradient(right, #EDC98F, #7E4A19);
     filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCBBAA',endColorstr='#EDC98F', GradientType=1); }
+
+div#infobar div.scrollable.ver{color: #ccc;}
+div#infobar div.scrollable.ver span{color: white;}
 
 div#infobar a.contact {float: right;width: 32px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat center;}
 div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat center; }
@@ -121,7 +124,7 @@ div.body table td {border:0px;text-align: left;vertical-align: middle;padding: 2
 
 span.up {color: #093; }
 span.dn {color: #D14836; }
-span.gr   {color: #888;font-style: italic;}
-
+span.gr   {color: #666;font-style: italic;}
+span.gr2   {color: #888;}
 div.subheader   {border-top: 1px solid #DDD;font-size: 1.1em;font-weight: bold;margin:20px 0px 5px 0px;padding: 5px 0px;min-height: 1px; }
 

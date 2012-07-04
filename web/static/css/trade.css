@@ -1,8 +1,8 @@
 
 div.trade   {border:1px solid #ccc; border-radius: 10px; padding: 10px;color:#FCC;text-align: center}
 div.trade table td {text-align: right;}
-div.trade.S {background:#A44;}
-div.trade.B {background:#08A;}
+div.trade.S {background:#BB501D;}
+div.trade.B {background:#779E25;}
 div.trade span {color: #010;}
 /*div.trade div#td_nec    {float: left;color:#ddc781;  }*/
 div.trade form div.hr {border-bottom: 1px solid #ddc781;margin: -15px 5px 5px;text-align: right;}
