@@ -16,7 +16,7 @@ div.topnavr    {text-align: right;margin-top:8px; }
 
 ul.topnav li    {float: left;list-style: none;text-align: center;}
 ul.topnav li.active a {background: #88C;color: #FF8;border-top: 4px solid #CB9;}
-ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 8px 10px 5px 10px;}
+ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.5em;padding: 8px 12px 5px 12px;}
 ul.topnav a:hover   {color: #F22}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
