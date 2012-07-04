@@ -23,9 +23,9 @@
 <body>
 <div id="infobar">
     <div class="container_16">
-
         <span class="topleft"></span>
-        <span class="topright"><a class="modalInput contact" title="Contact Us" rel={% if 'user_id' in session %}"#feedback_overlay"{% else %}"#feedback_nolog"{% endif %} href="#feedback"></a></span>
+        <a class="modalInput contact" title="Contact Us" rel={% if 'user_id' in session %}"#feedback_overlay"{% else %}"#feedback_nolog"{% endif %} href="#feedback"></a>
+        <span class="topright"></span>
         <div class="scrollable ver" style="height:25px;">
             <div class="items" >
                 {% for a in twt['ann'] %}

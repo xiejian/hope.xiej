@@ -3,6 +3,7 @@ div.ptlogin input {font-size: 1.2em;border: 1px solid #db8616;background: #FFF;m
 
 div.ptlogin button {height: 28px; border: none;background: #db8616;color: #fff;margin-left: -1px;filter:chroma(color=#000000);}
 
+h2.logo  {color: #C23F00;margin-top: 2px;}
 div.modal input     {font-size: 1.1em;padding: 8px;}
 
 span.placeholder    {position: absolute;

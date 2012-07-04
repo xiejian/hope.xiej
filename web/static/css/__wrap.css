@@ -9,7 +9,7 @@ h4 {    font-size: 17px;}
 h5 {    font-size: 15px;}
 a {text-decoration: none;}
 div#infobar {background:#EDC98F; color:#456; height: 25px;position: relative;}
-div#infobar div.container_16 {background:#CBA;}
+div#infobar div.container_16 div {background:#CBA;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.status {font-size: 0.8em;margin-left:20px;font-weight: normal; }
@@ -24,7 +24,7 @@ div#footer table td {width: 200px;padding-left: 20px;}
 div#footer table a {color: #888;font-size: 0.9em;}
 div#footer table a:hover   {color: #F22; }
 
-div#infobar span.topleft   {width: 48px;height: 25px;float: left;
+div#infobar span.topleft   {width: 48px;height: 25px;float: left;margin: 0px -4px;
     background-color:#EDC98F;background-repeat:repeat-x;
     background-image:-khtml-gradient(linear, left top, right top, from(#EDC98F), to(#CBA));
     background-image:-moz-linear-gradient(left, #EDC98F, #CBA);
@@ -34,7 +34,7 @@ div#infobar span.topleft   {width: 48px;height: 25px;float: left;
     background-image:-o-linear-gradient(left, #EDC98F, #CBA);
     background-image:linear-gradient(left, #EDC98F, #CBA);
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDC98F', endColorstr='#CCBBAA', GradientType=1); }
-div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;
+div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;margin: 0px -4px;
     background-image:-khtml-gradient(linear, right top, left top, from(#EDC98F), to(#CBA));
     background-image:-moz-linear-gradient(right, #EDC98F, #CBA);
     background-image:-ms-linear-gradient(right, #EDC98F, #CBA);
@@ -44,7 +44,7 @@ div#infobar span.topright  {width: 48px;height: 25px;float: right;background-col
     background-image:linear-gradient(right, #EDC98F, #CBA);
     filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCBBAA',endColorstr='#EDC98F', GradientType=1); }
 
-div#infobar a.contact {float: right;width: 32px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat center; }
+div#infobar a.contact {float: right;width: 32px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat center;}
 div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat center; }
 
 div#titlebar{border-bottom:4px solid  #88C;background-color:#EDC98F;background-repeat:repeat-x;

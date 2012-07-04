@@ -6,7 +6,8 @@
 {% block title %}
 
     <div class="grid_9 ptlogo"><br/>
-        <a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}" title="Bitcoin Futures Exchange"/></a>
+        <div class="grid_4 alpha omega"><a href="/"><img src="{{url_for('static',filename='img/logo.gif')}}" title="Bitcoin Futures Exchange"/></a></div>
+        <div class="grid_5 alpha"><h2 class="logo">The world's leading creative <br/>Bitcoin Futures Exchange</h2></div>
     </div>
     <div class="grid_7 ptlogin">
         <form class="login" action="{{ url_for('home',t='L') }}" method=post>
