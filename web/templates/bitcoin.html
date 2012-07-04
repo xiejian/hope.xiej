@@ -19,7 +19,7 @@
 </div>
 
 <div class="grid_11 push_1 omega subm_tab">
-<h3>Bitcoin Deposit</h3>
+<h4>Bitcoin Deposit</h4>
     <br/><form>
 Please transfer Bitcoin to your unique address as follow:
 <h2 ><em> {{ g.u['address'] }}</em></h2>
@@ -28,7 +28,7 @@ Please transfer Bitcoin to your unique address as follow:
 </div>
 
 <div class="grid_11 push_1 omega subm_tab">
-<h3>Bitcoin Withdraw</h3>
+<h4>Bitcoin Withdraw</h4>
 <form class="btc_out" action="{{ url_for('bitcoin') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
     <table>
@@ -49,7 +49,7 @@ Please transfer Bitcoin to your unique address as follow:
 </div>
 
 <div class="grid_13 omega subm_tab ">
-    <h3>Bitcoin Transfer Records</h3>
+    <h4>Bitcoin Transfer Records</h3>
     <table style="border: 1px solid #DDCCB1">
         {% for t in g.u['btctrans'] %}
         {% if loop.first %}<tr><th>TimeStamp</th><th>Type</th><th>Amount</th><th>Fee</th><th>Address</th><th>Conf</th></tr>

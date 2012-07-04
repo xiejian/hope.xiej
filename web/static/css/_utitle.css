@@ -16,7 +16,7 @@ div.topnavr    {text-align: right;margin-top:8px; }
 
 ul.topnav li    {float: left;list-style: none;text-align: center;}
 ul.topnav li.active a {background: #88C;color: #FF8;border-top: 4px solid #CB9;}
-ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.5em;padding: 8px 12px 5px 12px;}
+ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding: 8px 12px 5px 12px;}
 ul.topnav a:hover   {color: #F22}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
@@ -26,7 +26,7 @@ div.body table {width:100%;   }
 
 div.navi    {width: 170px; float: left; margin-right: 10px;}
 
-div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.3em;margin:20px 10px 10px 0px;padding: 5px 0px; }
+div.navi li    {font-family:"Trebuchet MS",sans-serif;font-size:1.2em;margin:20px 10px 10px 0px;padding: 5px 0px; }
 div.navi li.active  {background-color:#EEF;border-left: 4px solid #77F;}
 div.navi li.active a {color:#22F;}
 div.navi li a   {color:#444;padding: 8px;margin-left: 5px; }

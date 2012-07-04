@@ -31,7 +31,7 @@ function update_gl(){
     var columns = [
         {id: "time", name: "Time", field: "t", width:85,sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         {id: "s", name: "Action", field: "s",width:80,formatter:function(row, cell, value, columnDef, dataContext){
-            if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> 　<img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
+            if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> <img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
             else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 32px;"/> ' +dataContext['ty'];}
             else if(value=='A'){return '<img src="/static/img/logo.s.gif" title="BTCFE new user " style="height:20px;width: 32px;"/> ' +dataContext['ty'];}
             else if(value=='C'){return '<img src="/static/img/logo.s.gif" title="Contract writer" style="height:20px;width: 32px;"/> ' +dataContext['ty'];}

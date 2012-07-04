@@ -3,4 +3,4 @@ div.register,div.activate,div.create     {padding:40px;margin: 20px;font-size: 1
 div.activate,div.create   {text-align: center;}
 div.register input       {font-size: 1.3em;margin-bottom: 25px;padding: 5px;}
 
-span.menu     {font-family:"Trebuchet MS",sans-serif;font-size: 1.6em;padding: 5px 10px 5px 10px;background: #88C;color: #FF8;border-top: 2px solid #AA8;}
+span.menu     {font-family:"Trebuchet MS",sans-serif;font-size: 1.5em;padding: 5px 12px 5px 12px;background: #88C;color: #FF8;border-top: 2px solid #AA8;}
