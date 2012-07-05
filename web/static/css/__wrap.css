@@ -9,13 +9,13 @@ h4 {    font-size: 17px;}
 h5 {    font-size: 15px;}
 a {text-decoration: none;}
 div#infobar {background:#EDC98F; color:#456; height: 25px;position: relative;}
-div#infobar div.container_16 div {background:#CBA;}
+div#infobar div.container_16 div {background:#461C00;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
 div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
 div#cont_overlay span.status {font-size: 0.8em;margin-left:20px;font-weight: normal; }
 div#cont_overlay div.spotprice {text-align:center;float:right;font-size: 0.7em;margin:10px 30px 5px 10px;padding:3px 5px;font-weight: normal;border: 1px solid #94c95a;background: #FBF9EE;color: #363636; }
 div#cont_overlay div.title h3 { font-style: normal;font-family:"Trebuchet MS",sans-serif;}
-div#cont_overlay div.titleright {text-align: right;padding: 10px 5px 0px 0px;`  }
+div#cont_overlay div.titleright {text-align: right;padding: 10px 5px 0px 0px; }
 div#cont_overlay div.scroll_wrap h3 {margin: 15px 0px; font-style: normal;text-align: center;}
 div#cont_overlay div.scroll_wrap h3 span {margin-left: 5px; font-size: 0.8em;}
 
@@ -24,25 +24,28 @@ div#footer table td {width: 200px;padding-left: 20px;}
 div#footer table a {color: #888;font-size: 0.9em;}
 div#footer table a:hover   {color: #F22; }
 
-div#infobar span.topleft   {width: 48px;height: 25px;float: left;margin: 0px -4px;
+div#infobar span.topleft   {width: 48px;height: 25px;float: left;margin: 0px -2px;
     background-color:#EDC98F;background-repeat:repeat-x;
-    background-image:-khtml-gradient(linear, left top, right top, from(#EDC98F), to(#CBA));
-    background-image:-moz-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-ms-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-webkit-gradient(linear, left top, right top, color-stop(0%, #EDC98F), color-stop(100%, #CBA));
-    background-image:-webkit-linear-gradient(left, #EDC98F, #CBA);
-    background-image:-o-linear-gradient(left, #EDC98F, #CBA);
-    background-image:linear-gradient(left, #EDC98F, #CBA);
+    background-image:-khtml-gradient(linear, left top, right top, from(#EDC98F), to(#461C00));
+    background-image:-moz-linear-gradient(left, #EDC98F, #461C00);
+    background-image:-ms-linear-gradient(left, #EDC98F, #461C00);
+    background-image:-webkit-gradient(linear, left top, right top, color-stop(0%, #EDC98F), color-stop(100%, #461C00));
+    background-image:-webkit-linear-gradient(left, #EDC98F, #461C00);
+    background-image:-o-linear-gradient(left, #EDC98F, #461C00);
+    background-image:linear-gradient(left, #EDC98F, #461C00);
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDC98F', endColorstr='#CCBBAA', GradientType=1); }
-div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;margin: 0px -4px;
-    background-image:-khtml-gradient(linear, right top, left top, from(#EDC98F), to(#CBA));
-    background-image:-moz-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-ms-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-webkit-gradient(linear, right top, left top, color-stop(0%, #EDC98F), color-stop(100%, #CBA));
-    background-image:-webkit-linear-gradient(right, #EDC98F, #CBA);
-    background-image:-o-linear-gradient(right, #EDC98F, #CBA);
-    background-image:linear-gradient(right, #EDC98F, #CBA);
+div#infobar span.topright  {width: 48px;height: 25px;float: right;background-color:#EDC98F;background-repeat:repeat-x;margin: 0px -2px;
+    background-image:-khtml-gradient(linear, right top, left top, from(#EDC98F), to(#461C00));
+    background-image:-moz-linear-gradient(right, #EDC98F, #461C00);
+    background-image:-ms-linear-gradient(right, #EDC98F, #461C00);
+    background-image:-webkit-gradient(linear, right top, left top, color-stop(0%, #EDC98F), color-stop(100%, #461C00));
+    background-image:-webkit-linear-gradient(right, #EDC98F, #461C00);
+    background-image:-o-linear-gradient(right, #EDC98F, #461C00);
+    background-image:linear-gradient(right, #EDC98F, #461C00);
     filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCBBAA',endColorstr='#EDC98F', GradientType=1); }
+
+div#infobar div.scrollable.ver{color: #ccc;}
+div#infobar div.scrollable.ver span{color: white;}
 
 div#infobar a.contact {float: right;width: 32px;height: 44px; margin-bottom: -22px; background: url(../img/_i_contact.png) no-repeat center;}
 div#infobar a.contact:hover {background: url(../img/_i_contact2.png) no-repeat center; }
@@ -68,8 +71,7 @@ div.modal .form_result  {display: none;}
 
 a:hover   {color: #F22; }
 a.button    {font-family:"Trebuchet MS",sans-serif;font-size: 1.3em;float: right;margin:10px 0px;padding:5px 8px;color:#FCA;background:#08A;border:2px solid #055;
-    border-radius: 15px;
-    box-shadow: 0px 0px 15px #660;}
+    border-radius: 15px;   box-shadow: 0px 0px 15px #660;opacity:0.9;filter:alpha(opacity=90); /* For IE8 and earlier */}
 a.button:hover{background:#246;color:#FFF;}
 
 div#feedback_overlay form {border: 1px solid #999;background-color: white; padding: 5px;margin: 0px 15px 0px 0px;text-align: center;}
@@ -121,7 +123,7 @@ div.body table td {border:0px;text-align: left;vertical-align: middle;padding: 2
 
 span.up {color: #093; }
 span.dn {color: #D14836; }
-span.gr   {color: #888;font-style: italic;}
-
+span.gr   {color: #666;font-style: italic;}
+span.gr2   {color: #888;}
 div.subheader   {border-top: 1px solid #DDD;font-size: 1.1em;font-weight: bold;margin:20px 0px 5px 0px;padding: 5px 0px;min-height: 1px; }
 

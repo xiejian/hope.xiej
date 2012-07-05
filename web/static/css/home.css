@@ -4,8 +4,8 @@ div#h_mid  {background:#FFF;  margin-top: -42px;
     box-shadow: 0px 0px 15px #88C;
     /*behavior: url(ie-css3.htc);*/ 	}
 
-div.homeimg {height:230px;background:url(../img/home2.gif) no-repeat right top;margin: -60px 0px 30px 0px;}
-div.homeimg div {margin-top: 45px;}
+div.homeimg {height:230px;background:url(../img/home2.gif) no-repeat right top;margin: -65px 0px 30px 0px;}
+div.homeimg div {margin-top: 53px;}
 div.homeimg a   {margin:174px 220px 0px 0px;}
 div.h_feature {background:#FFF; }
 div.h_feature div.grid_1{text-align:center;}
