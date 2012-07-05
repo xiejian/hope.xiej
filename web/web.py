@@ -116,7 +116,7 @@ def register():
                         'url':url_for('register',v=_activecode(g.db,request.form['username']))}))
                     #'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
-                return render_template('register.html',type='C')
+                return render_template('register.html',type='C',email=request.form['username'])
             else:
                 flash(res,'err')
     else:

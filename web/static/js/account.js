@@ -62,7 +62,7 @@ function update_gl(){
     };
 
     var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);
-
+    vgrid.onSort.subscribe(multi_sort);
     function filltitle(){
         $(vgrid.getHeaderRowColumn('time')).html(parseDate(v_gl['openbal']['balance_dt']));
         var link = '';
@@ -87,6 +87,7 @@ function update_gl(){
             filltitle();vgrid.render();
         });
     });
+
 }
 
 $(function(){

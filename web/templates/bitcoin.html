@@ -57,7 +57,7 @@ Please transfer Bitcoin to your unique address as follow:
         <tr>
             <td>{{t.timestamp}}</td><td>{{t.type}}</td><td>{{t.amount|f}}</td><td>{{t.fee|f}}</td><td>{{t.address}}</td>
             <td rowspan="2"><img title="{{ ['Unconfirmed','Confirmed'][t.confirmed] }}" src="{{url_for('static',filename='img/_i_'+['N','Y'][t.confirmed]+'.png')}}" /></td></tr>
-        <tr><td></td><td colspan="4"><span title="Bitcoin transaction ID" class="gr">txid: {{t.txid}}</span></td>
+        <tr><td></td><th colspan="4">TxID:<span title="Bitcoin transaction ID" class="gr"> {{t.txid}}</span></th>
         </tr>
         {% else %}
         <tr><th>None</th></tr>

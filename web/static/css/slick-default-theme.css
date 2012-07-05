@@ -26,7 +26,9 @@ classes should alter those!
     border-bottom-color: #9a6f00;
     padding: 4px 0px;
 }
-
+.slick-row.odd {
+    background-color: #F8F8F8;
+}
 /*
 .slick-headerrow {
   background: #fafafa;
