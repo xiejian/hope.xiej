@@ -23,6 +23,13 @@
 
 </table>
     <div id="contchart" style="height: 500px; min-width: 530px"></div>​<script type="text/javascript" src="{{url_for('static',filename='js/contract.js')}}"></script>
+    <table><tr><td><span class="gr">contract definition</span></td><td colspan="2"></td></tr>
+        <tr><td colspan="3">  <textarea rows="9" readonly="readonly" style="width:525px;">{{cont[c].description}}</textarea>    </td></tr>
+        <tr><td><span class="gr">settle point:</span> {{ cont[c].settlepoint|f }}</td><td><span class="gr">settle guaranty:</span> {{ cont[c].settlemargin|f }}</td>
+            <td><span class="gr">total volume:</span> {{ cont[c].vol|f }}</td></tr>
+        <tr><td><span class="gr">settle proof</span></td><td colspan="2"></td></tr>
+        <tr><td colspan="3"><textarea rows="9" readonly="readonly" style="width:525px;">{{cont[c].settleproof}}</textarea></td></tr>
+    </table>
 </div>
 <div class="grid_6 omega">
     <ul class="twt">
@@ -38,16 +45,8 @@
 </div>
 <div class="clear"></div>
 <div class="grid_15 alpha omega">
-    <div class="footer"></div>
-    <table><tr><th>contract definition</th><td colspan="3">
-        <textarea rows="9" readonly="readonly" style="width:750px;">{{cont[c].description}}</textarea>
-    </td><tr><th>settle point</th><td>{{ cont[c].settlepoint }}</td><th>settle guaranty</th><td>{{ cont[c].settlemargin|f }}</td></tr>
-        <tr><th>settle proof</th>
-            <td colspan="3">
-                <textarea rows="9" readonly="readonly" style="width:750px;">{{cont[c].settleproof}}</textarea></td>
-        </tr>
-    </table>
 
-    <!--todo add more info eg. orderqueue-->
+
+    <!--todo add more info eg. orderqueue    <div class="footer"></div>-->
 </div>
 </div>

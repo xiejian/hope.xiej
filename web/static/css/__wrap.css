@@ -12,7 +12,7 @@ a {text-decoration: none;}
 div#infobar {background:#EDC98F; color:#456; height: 25px;position: relative;}
 div#infobar div.container_16 div {background:#461C00;}
 div#contchart    {margin-top: 7px; border-top: 1px solid gray;}
-div#cont_overlay div.footer {border-top: 1px solid gray; margin: -15px 10px 12px 0px}
+div#cont_overlay div.footer {border-top: 1px solid gray; margin: 0px 10px 5px 0px}
 div#cont_overlay span.status {font-size: 0.8em;margin-left:20px;font-weight: normal; }
 div#cont_overlay div.spotprice {text-align:center;float:right;font-size: 0.7em;margin:10px 30px 5px 10px;padding:3px 5px;font-weight: normal;border: 1px solid #94c95a;background: #FBF9EE;color: #363636; }
 div#cont_overlay div.title h3 { font-style: normal;font-family:"Trebuchet MS",sans-serif;}

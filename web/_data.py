@@ -144,7 +144,7 @@ def _update_user(db,session,content = []):    #get user's info
 
     if 'btctrans' in content:
         cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s \
-            union all select type,amount,0,address,message,process_dt,0 from btc_action where account1=%s and status='F' \
+            union all select type,-1*amount,0,address,message,process_dt,0 from btc_action where account1=%s and status='F' \
             ORDER BY timestamp DESC LIMIT 0,10",[session['email'],session['email']])
         btctrans = [dict(type=row[0],amount=row[1],fee=row[2], address=row[3],txid=row[4],timestamp=row[5],confirmed=row[6]) for row in cur.fetchall()]
         temp.update({'btctrans':btctrans})

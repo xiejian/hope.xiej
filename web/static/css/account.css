@@ -5,8 +5,8 @@ div.bitcoin_tab {border:1px solid #ccc;border-radius: 5px;text-align: center;bac
 /*div.body table td,div.body table th {padding: 4px;vertical-align: middle; text-align:right;border:1px solid #DDCCB1;}
 div.body table th {background-color: #FBF9EE; color:#66E;font-style: italic;text-align:center;font-family: Arial,sans-serif;}*/
 
-div.subm_tab p   {padding-left: 20px;margin-bottom:8px;font-size:1.1em;color: #666; }
-div.subm_tab p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
+div.body p   {padding-left: 20px;margin-bottom:8px;font-size:1.1em;color: #666; }
+div.body p:before {content: "\00BB \0020"; color: #888;margin-left: -10px;}
 /*tr:before {content: " ";position: absolute; margin-left: -15px;padding-left: 10px;}*/
 tr.selected  {border-right: 4px solid #F22;background-color: #FEF1EC;}
 /*tr.selected>td>img  {margin-left: -30px;}*/
@@ -21,7 +21,7 @@ div.subm_tab table th  {color: #640;padding: 4px;text-align: center; }
 div.subm_tab table td  {padding: 5px;}
 div.subm_tab form table th {text-align: right;font-size: 1.1em;}
 
-div.subm_tab form  {border: 1px solid #999;background-color: white; margin: 0px 30px 0px 15px;padding: 10px 30px;text-align: center;}
+div.body form  {border: 1px solid #999;background-color: white; margin: 0px 30px 0px 15px;padding: 10px 30px;text-align: center;}
 div.subm_tab table tr {border-bottom:1px dashed rgb(221, 204, 177); }
 div.subm_tab table td.vhr   {border-right:1px dashed rgb(221, 204, 177); }
 

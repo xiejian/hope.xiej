@@ -208,7 +208,7 @@ and not for this element.
     text-align: center;
     width: 100%;
 }
-.scrollable.ver .items div  {width: 100%;}
+.scrollable.ver .items div  {width: 100%;padding: 2px 0px;}
 /*
 a single item. must be floated in horizontal scrolling.  typically,
 this element is the one that *you* will style the most.

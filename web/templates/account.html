@@ -21,7 +21,17 @@
         {% if g.u['s_coupon'] %}{% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} × <em> {{ (sc['coupon'] * 100)|f }}% OFF{% endfor %}</em> {% endif %}
     <br/><br/><div class="subheader"></div>
     <a class="modalInput button" rel="#invite_friend" href="#invite_friend" style="margin-right: 25px;">Invite Friends</a>
-
+    <div class="modal" id="invite_friend">
+        <h4>Invite your friends to join BTCFE</h4>
+        <h5>As reward:</h5>
+        <p>Your friend will get 6 × 10% OFF special coupon and some BTC in cash after his first trade;</p>
+        <p>Your friends' trade volume will contribute to your discount coupon in the future.</p>
+        <form name="invite" action="{{ url_for('account',t='I') }}" method=post class="invite">
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            Email:<input type=email name="email" value="" style="width: 240px;" required="required"/><br/>
+            <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
+        </form>
+    </div>
 
 </div>
 <div class="grid_13 subm_tab">
@@ -65,17 +75,7 @@
 
         <div class="clear"></div>
     {% endif %}
-    <div class="modal" id="invite_friend">
-        <h4>Invite your friends to join BTCFE</h4>
-        <h5>As reward:</h5>
-        <p>Your friend will get 6 × 10% OFF special coupon and some BTC in cash after his first trade;</p>
-        <p>Your friends' trade volume will contribute to your discount coupon in the future.</p>
-        <form name="invite" action="{{ url_for('account',t='I') }}" method=post class="invite">
-            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            Email:<input type=email name="email" value="" style="width: 240px;" required="required"/><br/>
-            <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
-        </form>
-    </div>
+
 </div>
 
 <div class="grid_3 alpha">
