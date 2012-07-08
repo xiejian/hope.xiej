@@ -5,7 +5,7 @@ div.binfo {float:right;background:transparent url(../img/b.info.gif); border: 0;
     margin: 12px 20px -10px 17px;
     padding: 10px 15px 30px 15px; }
 
-div#titlebar a img {margin-top: 10px;}
+div#titlebar a img {margin-top: 7px;}
 div.binfo table {width: 99%;height: 100%;}
 
 div.binfo table td  {text-align: right;}
