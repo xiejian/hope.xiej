@@ -116,7 +116,7 @@ def register():
                         'url':url_for('register',v=_activecode(g.db,request.form['username']))}))
                     #'activate',{'url':request.url_root+url_for('register',v=_activecode(g.db,request.form['username']))})
                 flash('New Account was successfully created','suc')
-                return render_template('register.html',type='C')
+                return render_template('register.html',type='C',email=request.form['username'])
             else:
                 flash(res,'err')
     else:
@@ -301,8 +301,7 @@ def admin():
             cur.close()
             flash("Approval Contract "+request.form['id']+" Successfully")
         _update_contract(g.db,request.form['id'],'D')
-
-
+        return redirect(url_for('admin'))
     cur = g.db.cursor()
     cur.execute("select a.account, a.balance,b.bio from btc_account a left join \
         (select user,sum(amount) as bio from btc_trans where timestamp > NOW() + interval -30 day group by user ) b on a.account = b.user")
@@ -317,5 +316,4 @@ def con_db():
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000)
 
-#todo:invited new user get special coupoon
 #todo:trade calculate formula

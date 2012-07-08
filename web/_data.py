@@ -113,7 +113,7 @@ def _update_user(db,session,content = []):    #get user's info
     cur.execute("SELECT balance,bal_unconf,bal_unact,onum,omargin,pnum,pmargin,p_l FROM v_userbtc WHERE user_id = %s",session['user_id'])
     row = cur.fetchone()
     if row is None:
-        row = [0,0,0]
+        row = [0,0,0,0,0,0,0,0]
     temp.update(dict(balance=row[0],bal_unconf=row[1],bal_unact=row[2],onum=row[3],omargin=row[4],pnum=row[5],pmargin=row[6],p_l=row[7]))
     # get user's orders info
     if 'orders' in content:
@@ -143,7 +143,9 @@ def _update_user(db,session,content = []):    #get user's info
         temp.update(_update_usergl(db,session['user_id'],datetime.date.today()-datetime.timedelta(30)))
 
     if 'btctrans' in content:
-        cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s ORDER BY timestamp DESC LIMIT 0,10",session['email'])
+        cur.execute("SELECT type,amount,fee,address,txid,timestamp,confirm>=2 FROM btc_trans WHERE user = %s \
+            union all select type,-1*amount,0,address,message,process_dt,0 from btc_action where account1=%s and status='F' \
+            ORDER BY timestamp DESC LIMIT 0,10",[session['email'],session['email']])
         btctrans = [dict(type=row[0],amount=row[1],fee=row[2], address=row[3],txid=row[4],timestamp=row[5],confirmed=row[6]) for row in cur.fetchall()]
         temp.update({'btctrans':btctrans})
     if 'log' in content:

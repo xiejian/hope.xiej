@@ -19,7 +19,7 @@ function get_contlist(){
 
 function update_conttop(){
     var tcolumns = [
-        {id: "name", name: "Name", field: "n",width:65, asyncPostRender: rendercontName},
+        {id: "name", name: "Contract", field: "n",width:65, asyncPostRender: rendercontName},
         {id: "latestpt", name: "Latest PT", field: "lp",width:50},
         {id: "change", name: "Change", field: "ch",width:53, formatter: updn_percent}
     ];
@@ -43,7 +43,7 @@ function update_conttop(){
 function update_contlist(){
     var cl = {
         st:{id: "status", name: "Status", field: "st",width:60, sortable:true, formatter:function(row, cell, value){return _dec['st'][value];}},
-        n:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
+        n:{id: "name", name: "Contract", field: "n", sortable:true,asyncPostRender: rendercontName},
         fn:{id: "fullname", name: "Fullname", field: "fn",width:110, sortable:true},
         od:{id: "opendt", name: "Open DT", field: "od", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         sd:{id: "settledt", name: "Settle DT", field: "sd", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},

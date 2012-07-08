@@ -25,7 +25,7 @@
         <input tabindex="2" type="radio" name="b_s" id="t_s" value="S" {% if 'bs' in session and session['bs']=='S' %}checked="checked" {% endif %}/><label id="l_ts" for="t_s">SELL</label>　</td>
             <td>Point:<input id="t_point" tabindex="4" type=number name="point" value="" size="15" min="0.01" required="required"/><br/></td></tr>
         <tr><th>   <span class="s_toc">　</span></th><td>     　<label for="contract">Cont:</label>
-            <select tabindex="3" id="contract" name="contract_id">
+            <select tabindex="3" id="contract" name="contract_id" required="required">
                 {% for ck in cont.keys() if cont[ck]['status']=='O' %}
                     <option value={{ck}} {% if ck == default_cid %} selected="selected" {% endif %} >{{cont[ck]['name']}}</option>
                 {% endfor %}
@@ -41,6 +41,7 @@
 <div class="clear"></div>
 <div class="subheader">Active Orders</div>
 <div class="grid_11 alpha omega" id='o_user_grid' ></div>
+    <div class="clear"></div>
 <div class="subheader">Current Holding</div>
 <div class="grid_11 alpha omega" id='p_user_grid' ></div>
 

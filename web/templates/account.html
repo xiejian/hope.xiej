@@ -19,9 +19,8 @@
     </div>
      ( <em>{{ (g.u['feerate']*100)|f }}%</em> + Contract Fee ) × <em>{{ (g.u['returnrate']*100)|f }}% OFF</em>
         {% if g.u['s_coupon'] %}{% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} × <em> {{ (sc['coupon'] * 100)|f }}% OFF{% endfor %}</em> {% endif %}
-    <br/><div class="subheader"></div>
-    <a class="modalInput button" rel="#invite_friend" href="#invite_friend">Invite Friends</a>
-    <br/>
+    <br/><br/><div class="subheader"></div>
+    <a class="modalInput button" rel="#invite_friend" href="#invite_friend" style="margin-right: 25px;">Invite Friends</a>
     <div class="modal" id="invite_friend">
         <h4>Invite your friends to join BTCFE</h4>
         <h5>As reward:</h5>
@@ -33,6 +32,7 @@
             <input type=submit value="Send Invite" {% if not g.u['invite'] %}disabled="disabled"{% endif %}> {{ g.u['invite'] }} left
         </form>
     </div>
+
 </div>
 <div class="grid_13 subm_tab">
 

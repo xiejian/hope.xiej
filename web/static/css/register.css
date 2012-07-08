@@ -1,6 +1,6 @@
-div.register,div.activate,div.create     {padding:40px;margin: 20px;font-size: 1.3em;border:1px solid #ccc;
+div.register,div.activate,div.create     {padding:30px;margin: 20px;font-size: 1.3em;border:1px solid #ccc;
     border-radius: 5px;  background: url("../img/logo.s.gif") no-repeat 96% 92%;   }
 div.activate,div.create   {text-align: center;}
-div.register input       {font-size: 1.3em;margin-bottom: 25px;padding: 5px;}
+div.register input       {font-size: 1.2em;margin: 0px 0px 15px 10px;padding: 5px;}
 
-span.menu     {font-family:"Trebuchet MS",sans-serif;font-size: 1.5em;padding: 5px 12px 5px 12px;background: #88C;color: #FF8;border-top: 2px solid #AA8;}
+span.menu     {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding: 5px 12px 5px 12px;background: #88C;color: #FF8;border-top: 2px solid #AA8;}
