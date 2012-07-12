@@ -1,4 +1,4 @@
-div.register,div.activate,div.create     {padding:20px 30px;margin: 20px;font-size: 1.2em;border:1px solid #ccc;
+div.register,div.activate,div.create     {padding:20px 30px;margin: 10px 20px;font-size: 1.2em;border:1px solid #ccc;
     border-radius: 5px;  background: url("../img/logo.s.gif") no-repeat 96% 92%;   }
 div.activate,div.create   {text-align: center;}
 div.register input       {font-size: 1.2em;margin: 3px ;padding: 3px;}

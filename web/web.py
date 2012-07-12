@@ -110,7 +110,6 @@ def register():
             app.config['RECAP']['private_key'],
             request.remote_addr,
         )
-        print response
         if not response.is_valid:
             flash('Incorrect recaptcha','err')
         elif not validateEmail(request.form['username']):
