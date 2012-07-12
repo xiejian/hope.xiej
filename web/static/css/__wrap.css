@@ -106,7 +106,7 @@ div#feedback_overlay form {border: 1px solid #999;background-color: white; paddi
     border-color: transparent transparent #F1E09C;
 }
 ul.twt li  {color: #666;margin-top: 1px;padding:5px;background:#EEE;}
-span.twt_text   {color: #000;font-size:1.1em; }
+span.twt_text   {color: #000; }
 /*ul.twt li::before {
     content: "♯";
     padding-left: 4px;

@@ -96,19 +96,23 @@ def svrexit():
 
 
 if __name__ == "__main__":
-
-    if (len(sys.argv) <= 1):
-        logger.error('PassPhrase miss')
+    f = open('p', 'r+')
+    passphrase=f.read().rstrip()
+    print passphrase
+    if (len(passphrase) <= 1):
+        print 'PassPhrase miss'
         exit()
-    passphrase = sys.argv[1]
     try:
         res = ag.getinfo()
         ag.walletpassphrasechange(passphrase,passphrase)
+        f.seek(0)
+        f.write("pass123456")
     except Exception as inst:
         if len(res) > 0:
             msg = inst.error['message']
         logger.error('Bitcoin Server Connection Failed. ' + msg)
         exit()
+    f.close()
     db=MySQLdb.connect(host=database['host'], user=database['user'], passwd=database['passwd'],db=database['db'])
     cursor = db.cursor()
     atexit.register(svrexit)

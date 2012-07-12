@@ -1,4 +1,5 @@
 import os,base64,time
+from recaptcha.client import captcha
 from _db import _connect_db,_expose_db
 from _data import gv_contract,gv_contlist,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont,_update_usergl
 from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass
@@ -103,7 +104,16 @@ def logout():
 def register():
     g.u = _update_user(g.db,session)
     if request.method == 'POST':
-        if not validateEmail(request.form['username']):
+        response = captcha.submit(
+            request.form['recaptcha_challenge_field'],
+            request.form['recaptcha_response_field'],
+            app.config['RECAP']['private_key'],
+            request.remote_addr,
+        )
+        print response
+        if not response.is_valid:
+            flash('Incorrect recaptcha','err')
+        elif not validateEmail(request.form['username']):
             flash('Not validate Email','err')
         elif request.form['password'] <> request.form['password2']:
             flash('Password not Match','err')
@@ -134,8 +144,7 @@ def register():
         rcode = request.args.get('r', False)
         ref = _dercode(rcode)
         session.update(ref)
-    return render_template('register.html',type='O')
-
+    return render_template('register.html',type='O',capthtml=captcha.displayhtml(app.config['RECAP']['public_key'],True))
 
 @app.route('/trade', methods=['GET','POST'])
 def trade():

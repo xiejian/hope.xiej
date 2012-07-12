@@ -23,7 +23,12 @@
     <tr><td>Confirm Password:</td>
     <td>
     <input type="password" name="password2" size="22" pattern="[\u0020-\u007e]+" required="required" data-equals="password" style="width: 300px;"/></td></tr>
-
+    <tr><td>Captcha:</td><td>
+        <script type="text/javascript">
+            var RecaptchaOptions = {theme : 'white'};
+        </script>
+        {% autoescape false %}{{ capthtml }}{% endautoescape %}
+    </td></tr>
     <tr><td></td><td>
     <input type="submit" value=Register>{% if session['referrer'] %} √ {% endif %}</td></tr>
     </table></form>
@@ -38,5 +43,4 @@
     <h2>Your account had been activated.</h2>
     Next step: <a href="{{ url_for('bitcoin') }}"> Deposit Bitcoin </a>
 </div>
-<p>　</p>
 {% endblock %}
