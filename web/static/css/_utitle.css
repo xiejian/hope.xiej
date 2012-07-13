@@ -12,7 +12,7 @@ div.binfo table td  {text-align: right;}
 div.binfo table th  {text-align: left;color: #666;font-style: italic;}
 div.topnavr    {text-align: right;margin-top:8px; }
 /*table       {width: 90%;border: solid 10px #e5e5e6;text-align: center;}*/
-div.logo  {color: #C23F00;margin-top: 10px;font-size: 1.6em;font-weight: bold;}
+div.logo  {color: #C23F00;margin: 10px 0px 0px -15px;;font-size: 1.6em;font-weight: bold;}
 div.logo div{color: rgba(211, 98, 11, 0.75);margin-bottom: -2px;font-size: 0.7em;font-weight: normal;}
 
 ul.topnav li    {float: left;list-style: none;text-align: center;}

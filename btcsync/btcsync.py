@@ -98,7 +98,6 @@ def svrexit():
 if __name__ == "__main__":
     f = open('p', 'r+')
     passphrase=f.read().rstrip()
-    print passphrase
     if (len(passphrase) <= 1):
         print 'PassPhrase miss'
         exit()

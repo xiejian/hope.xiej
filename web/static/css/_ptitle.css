@@ -3,7 +3,7 @@ div.ptlogin input {font-size: 1.2em;border: 1px solid #db8616;background: #FFF;m
 
 div.ptlogin button {height: 28px; border: none;background: #db8616;color: #fff;margin-left: -1px;filter:chroma(color=#000000);}
 
-div.logo  {color: #C23F00;margin-top: 0px;font-size: 1.6em;font-weight: bold;}
+div.logo  {color: #C23F00;margin: 0px 0px 0px -15px;font-size: 1.6em;font-weight: bold;}
 div.logo div{color: rgba(211, 98, 11, 0.75);margin-bottom: -2px;font-size: 0.7em;font-weight: normal;}
 div.modal input     {font-size: 1.1em;padding: 8px;}
 
