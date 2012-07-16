@@ -12,12 +12,13 @@
 
 {% block content %}
 <h3>Sign Up</h3>
-    <div class="register grid_9" {% if type in ['C','A'] %} style="display:none"{% endif %}>
+    <div class="register grid_10" {% if type in ['C','A'] %} style="display:none"{% endif %}>
 <form action="{{ url_for('register') }}" method=post>
     <input name=_csrf_token type=hidden value="{{ csrf_token() }}"> <input type="hidden" name="referrer" value="{{ session['referrer'] }}">
 <table>
     <tr><td>E-mail:</td>
-    <td><input type="email" name="username" value="{{ session['email'] }}" size="22" required="required" style="width: 300px;"/></td></tr>
+    <td><input type="email" name="username" value="{{ session['email'] }}" size="22" required="required" style="width: 300px;" {% if session['referrer'] %} readonly="readonly"/>
+        <img src="{{url_for('static',filename='img/invited.png')}}" alt="Invited" title="Invited user">{% else %}/> {% endif %}</td></tr>
     <tr><td>Password:</td>
     <td><input type="password" name="password" pattern="[\u0020-\u007e]+" minlength="6" size="22" required="required" style="width: 300px;"/></td></tr>
     <tr><td>Confirm Password:</td>
@@ -30,7 +31,7 @@
         {% autoescape false %}{{ capthtml }}{% endautoescape %}
     </td></tr>
     <tr><td></td><td>
-    <input type="submit" value=Register>{% if session['referrer'] %} √ {% endif %}</td></tr>
+    <input type="submit" value=Register></td></tr>
     </table></form>
 </div>
 

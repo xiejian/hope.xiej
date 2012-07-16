@@ -33,7 +33,7 @@
                 <form action="{{ url_for('account',t='S') }}" method=post>
                     <input name=_csrf_token type=hidden value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ c }}">
                     <table>
-                    <tr><th>Settle Point</th><td><input type=number name=settlepoint min=0 max=99999 style="width: 150px;" required="required" value="{{ cont[c].settlepoint }}"></td></tr>
+                    <tr><th>Settle Point</th><td><input type=number name=settlepoint min=0 max=99999 style="width: 150px;" required="required" value="{{ cont[c].settlepoint|f }}"></td></tr>
                     <tr><th>Settle Proof</th><td><textarea name="settleproof" rows="8" style="width: 235px;">{{cont[c].settleproof}}</textarea></td></tr>
                         <tr><th>Approval Msg</th><td >{{cont[c].apinstruction}}</td></tr>
                         </table>

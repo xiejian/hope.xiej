@@ -9,18 +9,19 @@ def _createuser(db,email,password,referrer):
         return 'Email is registered.'
     c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
-    if referrer > '0':
-        cur.execute("INSERT INTO userattr(type,user_id,coupon,month,comment,create_dt) VALUES \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(now(),'%Y-%m'),'Invited Sign Up',NOW()), \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 1 month,'%Y-%m'),'Invited Sign Up',NOW()), \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 2 month,'%Y-%m'),'Invited Sign Up',NOW()), \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 3 month,'%Y-%m'),'Invited Sign Up',NOW()), \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 4 month,'%Y-%m'),'Invited Sign Up',NOW()), \
-                    ('C',LAST_INSERT_ID(),0.1,DATE_FORMAT(NOW() + interval + 5 month,'%Y-%m'),'Invited Sign Up',NOW());")
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()
     return True
+
+def add_scoupon(db,uid,coupon,comment):
+    cur = db.cursor()
+    cur.execute("SELECT ifnull(MAX(period_diff(month,DATE_FORMAT(now(),'%%y%%m'))),-1) FROM userattr WHERE user_id = %s AND month >= DATE_FORMAT(now(),'%%y%%m')",uid)
+    mondiff = cur.fetchone()[0]
+    cur.execute("INSERT INTO userattr(type,user_id,coupon,month,comment,create_dt) VALUES \
+                    ('C',%s,%s,DATE_FORMAT(NOW() + interval+1 + %s month,'%%y%%m'),%s,NOW())",[uid,coupon,mondiff,comment])
+    db.commit()
+    cur.close()
 
 def _activeuser(db,code):
     cur = db.cursor()
@@ -33,10 +34,15 @@ def _activeuser(db,code):
         result = cur.fetchone()
         if str[1] == base64.urlsafe_b64encode(hashlib.sha512(result[1]).digest()):
             cur.execute("UPDATE users SET email_v = 'Y' WHERE user_id = %s",result[0])
-            _change_invitenum(db,result[0],3)
-            _change_invitenum(db,result[2],1)
             # new user get 0.1 BTC for free
             cur.execute("insert into btc_action(action,account1,account2,address,amount,type,input_dt) values( 'move',%s,'FEE','sign up', %s,'A',NOW())",(d_email,-1*newuserBTC))
+            _change_invitenum(db,result[0],3)
+            # invited user process
+            if result[2] > 0:
+                _change_invitenum(db,result[2],1)
+                add_scoupon(db,result[0],0.2,'Invited Sign Up')
+                add_scoupon(db,result[0],0.2,'Invited Sign Up')
+                add_scoupon(db,result[2],0.5,'Invite '+d_email.split('@')[0] )
             db.commit()
             return result[0],d_email
         else:
@@ -157,3 +163,10 @@ def _enrcode(user_id,email):
     a_user = base64.urlsafe_b64encode(str(user_id))
     a_email = base64.urlsafe_b64encode(email)
     return a_user + '~' + a_email
+
+
+if __name__ == "__main__":
+    from _db import  _connect_db
+    db = _connect_db()
+    add_scoupon(db,1,0.1,'hello')
+    add_scoupon(db,1,0.1,'hello')

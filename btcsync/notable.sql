@@ -68,7 +68,7 @@ select ifnull(sum(b.value),0) into v_tvol from v_trans b where b.user_id = puser
 
 select ifnull(sum(b.value),0) into v_rtvol from v_trans b, users u where b.user_id = u.referrer and u.user_id = puser and b.timestamp >= DATE_FORMAT(basedt+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(basedt, '%Y-%m-01');
 
-select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(basedt, '%Y-%m') and a.`type`='C';
+select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(basedt, '%y%m') and a.`type`='C';
 
 
 
@@ -545,7 +545,7 @@ if DATE_FORMAT(NOW(), '%Y-%m') > DATE_FORMAT(v_lastr, '%Y-%m') then
 
 		where b.user_id = u.user_id and b.timestamp >= DATE_FORMAT(NOW()+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(NOW(), '%Y-%m-01')	group by u.email,b.user_id;
 
-	delete from userattr where month < DATE_FORMAT(NOW()+interval-1 month, '%Y-%m');
+	delete from userattr where month < DATE_FORMAT(NOW()+interval-1 month, '%y%m');
 
 	commit;
 
@@ -1261,4 +1261,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-09-03 15:48:08
+-- Dump completed on 2012-07-16 17:00:02

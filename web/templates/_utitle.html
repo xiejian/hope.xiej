@@ -35,14 +35,13 @@
         {% endif %}
     </div>
     <div class="clear"></div>
-<div class="grid_12 alpha omega">
-    <ul class="grid_7 alpha omega topnav">
+<div class="grid_12 alpha ">
+    <ul class="topnav">
         <li><a href="{{url_for('market')}}">Market</a></li>
         <li><a href="{{url_for('trade')}}">Trade</a></li>
         <li><a href="{{url_for('account')}}">Account</a></li>
         <li><a href="{{url_for('bitcoin')}}">Bitcoin</a></li></ul>
-    <div class="topnavr">
-        Welcome <strong> {{ session['email'] }}  <a class="logout" href = "/logout">Logout</a> </strong>
+    <div class="topnavr">Welcome <strong> {{ session['email'] }}  <a class="logout" href = "/logout">Logout</a> </strong>
     </div>
 </div></div>
 {% endblock title %}

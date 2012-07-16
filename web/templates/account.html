@@ -24,7 +24,8 @@
     <div class="modal" id="invite_friend">
         <h4>Invite your friends to join BTCFE</h4>
         <h5>As reward:</h5>
-        <p>Your friend will get 6 × 10% OFF special coupon and some BTC in cash after his first trade;</p>
+        <p>Your friend get 2 × 20% OFF extra special coupon;</p>
+        <p>You get a 50% OFF special coupon for each effective invitation;</p>
         <p>Your friends' trade volume will contribute to your discount coupon in the future.</p>
         <form name="invite" action="{{ url_for('account',t='I') }}" method=post class="invite">
             <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
@@ -65,7 +66,7 @@
     {% if g.u['s_coupon']%}
         <h4>Special Coupon: {% for sc in g.u['s_coupon'] if sc['ifactive'] == 1%} <em>{{ (sc['coupon'] * 100)|f }}% OFF{% endfor %} </em></h4>
         <p>You could apply both of regular fee coupon and special coupon same time.</p>
-        <div class="ginfo grid_7 push_1"><table>
+        <div class="ginfo grid_6 push_1"><table>
             <tr><th>Coupon</th><th>Month</th><th>Comment</th>
                 {% for sc in g.u['s_coupon']%}
                     <tr{% if sc['ifactive'] == 1 %} class="selected" {% endif %}>

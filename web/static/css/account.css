@@ -16,7 +16,7 @@ input,select {font-size:1.2em;padding: 4px; border: 1px solid #CCC; margin: 2px;
 textarea    {padding: 4px;margin: 2px;  }
 input:hover {border: 1px solid #db8616;}
 
-div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 0px 8px;font-size: 1.1em;margin: 5px 0px ;background-color:#Ffe; }
+div.ginfo    {border: 1px solid rgb(221, 204, 177);padding: 0px 2px;font-size: 1.1em;margin: 3px 0px ;background-color:#Ffe; }
 div.subm_tab table th  {color: #640;padding: 4px;text-align: center; }
 div.subm_tab table td  {padding: 5px;}
 div.subm_tab form table th {text-align: right;font-size: 1.1em;}

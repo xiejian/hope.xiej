@@ -4,16 +4,17 @@
     <title>{% block title %}{% endblock %}</title>
 
 </head>
-<body style="font:'Georgia', Arial;margin: 0px; width: 640px;">
-<div style="color: #484870;background:#DDCCB1; border-bottom:4px solid  #88C; padding: 2px 25px;font-style: italic;">
+<body style="font:13px/1.5 Arial,FreeSans;margin: 0px; width: 640px;background:#F3F3F0;">
+<div style="color: rgba(211, 98, 11, 0.75);background:#EDC98F; border-bottom:4px solid  #88C; padding: 5px 20px;">
+    <div style="width: 110px;float: left;"><a href="{{ request.url_root }}"><img height="" src="{{ request.url_root }}{{url_for('static',filename='img/logo.m.gif')}}" title="Bitcoin Futures Exchange"/></a></div>
+    <div style="width: 500px;">The world's leading creative<br/>
+       <span style="font-size: 1.6em;font-weight: bold;color: #C23F00">Bitcoin Futures Exchange</span></div><br/>
+</div>
+<div style="font-size:1.1em;padding: 5px 30px;color: #4f4f4f;background:#fff;">{% block content %}{% endblock %}
+<p>If you have any questions or advices, Please do not hesitate to <a href="mailto:btcfe.com@gmail.com">contact us</a>.</p></div>
 
-       <span style="font-size: 1.8em;font-weight: bold;"><a href="{{ request.url_root }}"><img height="" src="{{ request.url_root }}{{url_for('static',filename='img/logo.m.gif')}}" title="Bitcoin Futures Exchange"/></a>
-           Bitcoin Futures Exchange   </span></div>
-<div style="font-size:1.1em;margin: 5px 30px;color: #4f4f4f">{% block content %}{% endblock %}
-<p>If you have any questions or advices, Please do not hesitate to contact us.</p></div>
-
-<div style="background:#222; color:#FFF; text-align:center;padding: 5px; margin-top:40px;">
-    CopyRight 2012 BTCFE.com
+<div style=" text-align:center;padding: 5px; margin-top:8px;border-top: 1px solid #F0F0ED">
+    BTCFE.com group
 </div>
 </body>
 </html>

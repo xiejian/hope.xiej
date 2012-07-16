@@ -55,6 +55,8 @@ def myformat(value, type='N',format=''):
         else:
             return value
 
+def Email_user(email):
+    return email.split('@')[0]
 
 def validateEmail(email):
     if len(email) > 6:

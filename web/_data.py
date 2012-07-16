@@ -169,7 +169,7 @@ def _update_user(db,session,content = []):    #get user's info
         vol = cur.fetchone()
         temp.update(dict(tradevol=vol[0],feerate=vol[1],rtradevol=vol[2],returnrate=vol[3],rnum=vol[4]))
 
-        cur.execute("select coupon,month,comment,month=date_format(NOW(),'%%Y-%%m') from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
+        cur.execute("select coupon,month,comment,month=date_format(NOW(),'%%y%%m') from userattr WHERE user_id = %s and type = 'C'",session['user_id'])
 
         s_coupon = [dict(coupon=row[0],month=row[1],comment=row[2],ifactive=row[3]) for row in cur.fetchall()]
         temp.update({'s_coupon':s_coupon})
