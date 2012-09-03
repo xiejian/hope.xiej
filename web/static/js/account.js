@@ -30,19 +30,19 @@ function get_gl(){
 function update_gl(){
     var columns = [
         {id: "time", name: "Time", field: "t", width:85,sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
-        {id: "s", name: "Action", field: "s",width:80,formatter:function(row, cell, value, columnDef, dataContext){
+        {id: "s", name: "Action", field: "s",width:90,formatter:function(row, cell, value, columnDef, dataContext){
             if(value =='T'){return '<img src="/static/img/_i_'+dataContext['ty']+'.png" title="'+_dec['t'][dataContext['ty']]+'"/> <img src="/static/img/_i_'+dataContext['bs']+'.png" title="'+_dec['t'][dataContext['bs']]+'"/>';}
-            else if(value=='H'){return '<img src="/static/img/logo.s.gif" title="BTCFE contract" style="height:20px;width: 32px;"/> ' +dataContext['ty'];}
+            else if(value=='H'){return '<img src="/static/img/_i_Write.png" title="Contract writer" />' +dataContext['ty'];}
             else if(value=='A'){return '<img src="/static/img/logo.s.gif" title="BTCFE new user " style="height:20px;width: 32px;"/> ' +dataContext['ty'];}
-            else if(value=='C'){return '<img src="/static/img/logo.s.gif" title="Contract writer" style="height:20px;width: 32px;"/> ' +dataContext['ty'];}
+            else if(value=='C'){return '<img src="/static/img/_i_Write.png" title="Contract writer" /> ' +dataContext['ty'];}
             else if(value=='B'){return '<img src="/static/img/_i_BTC.png" title="Bitcoin"/> ' + dataContext['ty'];}
-            else if(value=='R'){return '<img src="/static/img/logo.s.gif" style="height:20px;width: 32px;" title="Refund"/> refund :  ' + dataContext['ty'];}
+            else if(value=='R'){return '<img src="/static/img/logo.s.gif" style="height:20px;width: 32px;" title="Refund"/> month fee coupon applied: ' + dataContext['ty'];}
             else {return value;}
         }},
         {id: "name", name: "Contract", field: "n", width:93, sortable:true,asyncPostRender: rendercontName},
-        {id: "point", name: "Point", field: "pt", sortable:true},
+        {id: "point", name: "Point", field: "pt", width:75,sortable:true},
         {id: "lt", name: "Lots", field: "lt", width:40,sortable:true},
-        {id: "v", name: "Value", field: "v", width:93, sortable:true},
+        {id: "v", name: "Value", field: "v", width:90, sortable:true},
         {id: "pl", name: "Profit/Loss", field: "pl", width:93,sortable:true,formatter: function(row, cell, value){return updn(value);}},
         {id: "btc", name: "BTC In/Out", field: "b", width:93, sortable:true,formatter: function(row, cell, value){return updn(value);}},
         {id: "fee", name: "FEE", field: "fee", width:93, sortable:true,formatter: function(row, cell, value){return updn(value);}}
@@ -58,7 +58,7 @@ function update_gl(){
     };
 
     (v_gl['trans']).getItemMetadata = function (row) {
-        if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
+        if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 4 }}}; }
     };
 
     var vgrid = new Slick.Grid("#acc_his_grid", v_gl['trans'], columns, toptions);
@@ -79,7 +79,7 @@ function update_gl(){
         $.getJSON($SCRIPT_ROOT + '/data', {t: 'ua',n:v_gl['openbal']['n']-3600*24*7}, function(data) {
             v_gl = data;
             (v_gl['trans']).getItemMetadata = function (row) {
-                if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 3 }}}; }
+                if ($.inArray(v_gl['trans'][row]['s'],['B','R','A']) >= 0 ){ return {columns: {1: {colspan: 4 }}}; }
             };
             vgrid.setData(v_gl['trans']);
             vgrid.updateRowCount();

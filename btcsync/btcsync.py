@@ -100,10 +100,10 @@ if __name__ == "__main__":
     if (len(sys.argv) <= 1):
         logger.error('PassPhrase miss')
         exit()
-
+    passphrase = sys.argv[1]
     try:
         res = ag.getinfo()
-        ag.walletpassphrasechange(sys.argv[1],sys.argv[1])
+        ag.walletpassphrasechange(passphrase,passphrase)
     except Exception as inst:
         if len(res) > 0:
             msg = inst.error['message']

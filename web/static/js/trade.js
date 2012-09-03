@@ -126,7 +126,7 @@ function get_userd(){
 function update_userop(){
     var cl = {
         at:{id: "addtime", name: "Add @", field: "at",sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
-        cn:{id: "name", name: "Name", field: "n", sortable:true,asyncPostRender: rendercontName},
+        cn:{id: "name", name: "Contract", field: "n", sortable:true,asyncPostRender: rendercontName},
         mg:{id: "margin", name: "Margin", field: "mg",width:80, sortable:true},
         ot:{id: "opentime", name: "Open @", field: "ot", sortable:true,formatter:function(row, cell, value){return parseDate(value);}},
         ty:{id: "ty", name: "O/C", field: "ty", width:40,sortable:true, formatter:function(row, cell, value){

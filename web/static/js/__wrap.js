@@ -111,6 +111,11 @@ $.tools.validator.fn("[data-equals]", "Value not equal with the $1 field", funct
         field = this.getInputs().filter("[name=" + name + "]");
     return input.val() == field.val() ? true : [name];
 });
+$.tools.validator.fn("[data-greater]", "Value should greater than the $1 field", function(input) {
+    var name = input.attr("data-greater"),
+        field = $("input[name=" + name + "]");
+    return $("input[name="+input.attr("name")+"]").val() > field.val() ? true : [name];
+});
 $.tools.validator.fn("[minlength]", function(input, value) {
     var min = input.attr("minlength");
     return value.length >= min ? true : {

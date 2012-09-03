@@ -446,7 +446,7 @@ declare v_cfee decimal(20,8);
 
 DECLARE done INT DEFAULT FALSE;
 
-DECLARE curc CURSOR FOR SELECT contract_id,write_fee,settledate,owner FROM contract where status in('O','C');
+DECLARE curc CURSOR FOR SELECT contract_id,write_fee,settledate,owner FROM contract where status in('O','C','Q','S');
 
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
@@ -469,8 +469,6 @@ cur_loop:LOOP
 	FETCH curc INTO curcontract_id,curwrite_fee,cursettledate,curowner;
 
 	IF done THEN LEAVE cur_loop; end if;
-
-	
 
 	if DATE_FORMAT(v_lasteod+ interval +1 day, '%Y-%m-%d') < DATE_FORMAT(NOW(), '%Y-%m-01') then
 
@@ -496,7 +494,7 @@ cur_loop:LOOP
 
 			insert into btc_action(action,account1,account2,address,amount,trans_id,type,input_dt) 
 
-				select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW() + interval -1 day, '%Y-%m-%d')),-1*v_cfee,curcontract_id,'C',NOW() from users u 
+				select 'move',u.email,'FEE',concat(DATE_FORMAT(NOW() + interval -1 day, '%d%b%Y')),-1*v_cfee,curcontract_id,'C',NOW() from users u 
 
 				where u.user_id = curowner ;
 
@@ -1218,6 +1216,41 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `p__del_table` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p__del_table`()
+BEGIN
+
+delete from btc_account;
+delete from btc_action;
+delete from btc_synclog;
+delete from btc_trans;
+delete from contract;
+delete from marketinfo;
+delete from orders;
+delete from positions;
+delete from sys_status;
+delete from trans;
+delete from userattr;
+delete from userbalance;
+delete from userlog;
+delete from users;
+commit;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1228,4 +1261,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-07-02  9:57:15
+-- Dump completed on 2012-09-03 15:48:08
