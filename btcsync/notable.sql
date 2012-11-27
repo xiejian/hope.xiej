@@ -28,7 +28,7 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `f_CFEE`(`opendate` datetime, `settledate` datetime) RETURNS decimal(6,2)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `f_CFEE`(`opendate` datetime, `settledate` datetime) RETURNS decimal(6,2)
 BEGIN
 
 DECLARE cfee1m decimal(3,2) DEFAULT 1;
@@ -68,7 +68,7 @@ select ifnull(sum(b.value),0) into v_tvol from v_trans b where b.user_id = puser
 
 select ifnull(sum(b.value),0) into v_rtvol from v_trans b, users u where b.user_id = u.referrer and u.user_id = puser and b.timestamp >= DATE_FORMAT(basedt+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(basedt, '%Y-%m-01');
 
-select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(basedt, '%y%m') and a.`type`='C';
+select 1 - (1-ifnull(max(a.coupon),0)) * (1-f_RRate(v_tvol + v_rtvol)) into res  from userattr a where a.user_id = puser and a.month = DATE_FORMAT(basedt, '%Y-%m') and a.`type`='C';
 
 
 
@@ -90,14 +90,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `f_FRATE`(`pvol` DECIMAL(20,8)) RETURNS decimal(6,6)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `f_FRATE`(`pvol` DECIMAL(20,8)) RETURNS decimal(6,6)
 BEGIN
 
-#	IF pvol < 50 THEN
 
-#		RETURN 0.004;
 
-#    else
+
+
+
 
 	IF pvol < 100 THEN
 
@@ -153,7 +153,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `f_N`(`b_s` CHAR(1)) RETURNS char(1) CHARSET latin1
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `f_N`(`b_s` CHAR(1)) RETURNS char(1) CHARSET latin1
 BEGIN
 
     if b_s = 'B' then
@@ -186,7 +186,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 FUNCTION `f_RRATE`(`pvol` DECIMAL(20,8)) RETURNS decimal(6,6)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 FUNCTION `f_RRATE`(`pvol` DECIMAL(20,8)) RETURNS decimal(6,6)
 BEGIN
 
     IF pvol < 100 THEN
@@ -243,7 +243,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_addorder`(IN `pcontract` INTEGER, IN `puser` INTEGER, IN `pbs` CHAR(1), IN `ppoint` DECIMAL(20,8), IN `plots` INTEGER, IN `ptype` cHAR(1))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_addorder`(IN `pcontract` INTEGER, IN `puser` INTEGER, IN `pbs` CHAR(1), IN `ppoint` DECIMAL(20,8), IN `plots` INTEGER, IN `ptype` cHAR(1))
 BEGIN
 
 declare vplots int default 0;
@@ -256,7 +256,7 @@ SELECT GREATEST(vplots-IFNULL(sum(rm_lots),0),0)INTO vplots FROM orders WHERE co
 
 if vplots >= plots then
 
-	#new order is a close order
+	
 
 	if ptype = 'F' then
 
@@ -278,7 +278,7 @@ elseif vplots < plots and 0 <= plots then
 
 	if vplots > 0 then
 
-	#close those part
+	
 
 		if ptype = 'F' then
 
@@ -300,7 +300,7 @@ elseif vplots < plots and 0 <= plots then
 
 	if plots - vplots > 0 then
 
-	#open order
+	
 
 		SELECT ppoint*plots*btc_multi*leverage INTO vmargin_req FROM contract WHERE contract_id = pcontract AND STATUS = 'O';
 
@@ -340,7 +340,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_contractsettle_bak`(IN `pcontract` INTEGER, IN `pprice` DECIMAL(20,10))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_contractsettle_bak`(IN `pcontract` INTEGER, IN `pprice` DECIMAL(20,10))
 BEGIN
 
 DECLARE done INT DEFAULT FALSE;
@@ -545,7 +545,7 @@ if DATE_FORMAT(NOW(), '%Y-%m') > DATE_FORMAT(v_lastr, '%Y-%m') then
 
 		where b.user_id = u.user_id and b.timestamp >= DATE_FORMAT(NOW()+interval-1 month, '%Y-%m-01') and b.timestamp < DATE_FORMAT(NOW(), '%Y-%m-01')	group by u.email,b.user_id;
 
-	delete from userattr where month < DATE_FORMAT(NOW()+interval-1 month, '%y%m');
+	delete from userattr where month < DATE_FORMAT(NOW()+interval-1 month, '%Y-%m');
 
 	commit;
 
@@ -656,9 +656,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_exchange`(IN `poid` integer, IN `puserid` INTEGER, IN `paction` char)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_exchange`(IN `poid` integer, IN `puserid` INTEGER, IN `paction` char)
 main:BEGIN
 
 DECLARE done,dealflag INT DEFAULT FALSE;
@@ -835,11 +835,11 @@ ELSEIF paction = 'A' THEN
 
 	if dealflag then
 
-		select 'suc','Deal had been Maded.';
+		select 'suc',concat(poid, ': Deal had been Maded.');
 
 	else
 
-		SELECT 'suc','Order had been Added.';
+		SELECT 'suc',concat(poid, ': Order had been Added.');
 
 	end if;
 
@@ -865,7 +865,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_forced_close`(IN `puserid` INTEGER, IN `prealseamt` decimal(20,8))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_forced_close`(IN `puserid` INTEGER, IN `prealseamt` decimal(20,8))
 main:BEGIN
 
 DECLARE done INT DEFAULT FALSE;
@@ -894,7 +894,7 @@ cur_loop:LOOP
 
 	select CEIL(prealseamt/(latestpoint*btc_multi*leverage)),latestpoint into vclots,vclosepoint from contract where contract_id = curcid;
 
-	# move 10% latest point as close point
+	
 
 	if curbs = 'S' then
 
@@ -940,7 +940,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_makedeal`(IN `pbuy_oid` INTEGER, IN `psell_oid` INTEGER, IN `ppoint` DECIMAL(20,8), IN `plots` INTEGER, IN `pdirect` CHAR(1))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_makedeal`(IN `pbuy_oid` INTEGER, IN `psell_oid` INTEGER, IN `ppoint` DECIMAL(20,8), IN `plots` INTEGER, IN `pdirect` CHAR(1))
 BEGIN
 
 DECLARE done INT DEFAULT FALSE;
@@ -988,11 +988,11 @@ SET done = FALSE;
 
 SET v_lots = plots; SET vplamount = 0;
 
-if vbtype = 'O' then	#open order
+if vbtype = 'O' then	
 
 	INSERT INTO positions(user_id,contract_id,buy_sell,point,lots,opentime) VALUES (vbuser_id,vcontract,'B',ppoint,v_lots,NOW());
 
-else				#close order
+else				
 
 	OPEN curs;
 
@@ -1044,11 +1044,11 @@ end if;
 
 SET v_lots = plots; SET vplamount = 0;
 
-if vstype = 'O' then	#open order
+if vstype = 'O' then	
 
 	INSERT INTO positions(user_id,contract_id,buy_sell,point,lots,opentime) VALUES (vsuser_id,vcontract,'S',ppoint,v_lots,NOW());
 
-else		#close order
+else		
 
 	SET done = FALSE;	
 
@@ -1100,7 +1100,7 @@ end if;
 
 UPDATE contract SET latestpoint = ppoint WHERE contract_id = vcontract;
 
-#CALL p_update_marketinfo(vcontract,ppoint);
+
 
           
 
@@ -1120,7 +1120,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_update_contract`(IN `cid` integer, IN `pcode` varchar(8), IN `pbtc_multi` decimal(10,8), IN `popendate` datetime, IN `psettledate` datetime, IN `pleverage` decimal(4,3), IN `pfullname` varchar(32), IN `puser` INTEGER, IN `ptwitter_id` varchar(16), IN `pwrite_fee` deCIMAL(6,6), IN `pregion` char(1), IN `psector` char(1), IN `pdescription` varchar(512), IN `pmovelimit` decIMAL(3,2))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_update_contract`(IN `cid` integer, IN `pcode` varchar(8), IN `pbtc_multi` decimal(10,8), IN `popendate` datetime, IN `psettledate` datetime, IN `pleverage` decimal(4,3), IN `pfullname` varchar(32), IN `puser` INTEGER, IN `ptwitter_id` varchar(16), IN `pwrite_fee` deCIMAL(6,6), IN `pregion` char(1), IN `psector` char(1), IN `pdescription` varchar(512), IN `pmovelimit` decIMAL(3,2))
 main:BEGIN
 DECLARE vfee_req,vbtcavail DECIMAL(20,10) DEFAULT 0;
 declare res int default 0;
@@ -1175,7 +1175,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p_update_marketinfo`(IN `pcontract` INTEGER, IN `point` DECIMAL(20,10))
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p_update_marketinfo`(IN `pcontract` INTEGER, IN `point` DECIMAL(20,10))
 main:BEGIN
 
 DECLARE done INT DEFAULT FALSE;
@@ -1226,7 +1226,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`%`*/ /*!50003 PROCEDURE `p__del_table`()
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `p__del_table`()
 BEGIN
 
 delete from btc_account;
@@ -1261,4 +1261,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-07-16 17:00:02
+-- Dump completed on 2012-11-27 17:29:23
