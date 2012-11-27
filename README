@@ -9,3 +9,9 @@ easy_install recaptcha-client
 #----https
 $sudo a2enmod ssl
 sudo a2enmod rewrite
+
+
+------WEB serv------
+ubuntu/xiej2024
+------BTC serv------
+btcfe/xiej2024

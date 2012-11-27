@@ -182,10 +182,12 @@ def _update_user(db,session,content = []):    #get user's info
     return temp
 
 def _add_order(db,uid,contract_id,b_s,point,lots,type=''):
+    if lots <=0 or b_s not in ['B','S']:            #validate data
+        return {'msg':'None','category':'err'}
     cur = db.cursor()
     bp = gv_contract[contract_id]['bp']
-    if bp not in [None,0]: #daily point move limit
-        point = min(max(float(point),bp*float(1-gv_contract[contract_id]['movelimit'])),bp*float(1+gv_contract[contract_id]['movelimit']))
+    if bp not in [None,0] and type <> 'S': #daily point move limit,Sys order has no point move limit
+        point = min(max(float(point),bp*float(1-gv_contract[contract_id]['movelimit'])),bp/float(1-gv_contract[contract_id]['movelimit']))
     dp = 4 if bp < 1 else 3 if bp < 10 else 2 if bp < 100 else 1 if bp < 1000 else 0
     cur.callproc('p_addorder',(contract_id,uid,b_s,round(float(point),dp),lots,type))
     result = cur.fetchone()
@@ -194,9 +196,9 @@ def _add_order(db,uid,contract_id,b_s,point,lots,type=''):
     cur.close()
     return dict(msg=result[1],category=result[0])
 
-def _cancel_order(db,session,orderid):
+def _cancel_order(db,uid,orderid):
     cur = db.cursor()
-    cur.callproc('p_exchange',(orderid,session['user_id'],'C'))
+    cur.callproc('p_exchange',(orderid,uid,'C'))
     result = cur.fetchone()
     if result is None:
         return {'msg':'None','category':'err'}

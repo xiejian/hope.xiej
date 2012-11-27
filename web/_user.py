@@ -7,7 +7,7 @@ def _createuser(db,email,password,referrer):
     resrows = cur.execute('SELECT password from users where email=%s', email)
     if resrows > 0:
         return 'Email is registered.'
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
@@ -66,7 +66,7 @@ def _activecode(db,email):
 
 def _loginuser(db,email, password):
     cur = db.cursor()
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     resrows = cur.execute('SELECT user_id from users where email=%s and password=%s', [email,c_pass])
     if resrows != 1:
         return False
@@ -74,16 +74,24 @@ def _loginuser(db,email, password):
     cur.close()
     return result[0]
 
+def _apikeyvalidate(db,key):
+    cur = db.cursor()
+    resrows = cur.execute('SELECT user_id from users where user_id=%s and password=%s', [key[40:],key[:40]])
+    if resrows != 1:
+        return 0
+    else:
+        return key[40:]
+
 def _update_pass(db,email,password):
     cur = db.cursor()
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("UPDATE users SET password=%s WHERE email = %s;",[c_pass,email])
     db.commit()
     cur.close()
 
 def _vali_cpass(db,email, password):
     cur = db.cursor()
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     resrows = cur.execute('SELECT password2 from users where email=%s ', [email])
     if resrows != 1:
         return False
@@ -96,7 +104,7 @@ def _vali_cpass(db,email, password):
 
 def _update_cpass(db,email,password):
     cur = db.cursor()
-    c_pass = base64.b64encode(hashlib.sha224(mykey + email + password).digest())
+    c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("UPDATE users SET password2 = %s WHERE email =%s",[c_pass,email])
     db.commit()
     cur.close()

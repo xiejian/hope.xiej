@@ -30,11 +30,11 @@ function updatepage_contdata(){
     $("#continfo").html(htm);
     var htm = "";
     $.each(gv_cont["S"], function(index,val) {
-        htm = "<tr><td><span class='gr'>　S"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title='"+val["count"]+" orders'>"+val["rm_lots"]+"</td></tr>" + htm;
+        htm = "<tr><td><span class='gr'>　S"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title=''>"+val["rm_lots"]+"</td></tr>" + htm;
     });
     htm = htm + '<tr><td colspan="3" ><div></div></td></tr>';
     $.each(gv_cont["B"], function(index,val) {
-        htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title='"+val["count"]+" orders'>"+val["rm_lots"]+"</td></tr>";
+        htm = htm + "<tr><td><span class='gr'>　B"+(index+1)+"</span></td><td>"+val["point"]+"</td><td title=''>"+val["rm_lots"]+"</td></tr>";
     });
     var cname = '<a name="'+gv_cont['id']+'" href="/contract?c='+gv_cont['id']+'" class="modalInputF" rel="#cont_overlay">'+gv_cont['name']+'</a>　';
     var cprice;
@@ -71,7 +71,7 @@ function update_tradeform(){
     if (gv_cont["bp"] <10)    {dp=3;}
     if (gv_cont["bp"] <1)    {dp=4;}
     if (gv_cont["bp"] > 0)  {
-        $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]*(1+gv_cont["movelimit"])).toFixed(dp)});
+        $("input#t_point").attr({min:(gv_cont["bp"]*(1-gv_cont["movelimit"])).toFixed(dp),max:(gv_cont["bp"]/(1-gv_cont["movelimit"])).toFixed(dp)});
     }else{$("input#t_point").attr({min:0.1,max:99999});}
 
     $("span#ts_point").html($("input#t_point").val());

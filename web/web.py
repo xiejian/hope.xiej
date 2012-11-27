@@ -2,7 +2,7 @@ import os,base64,time
 from recaptcha.client import captcha
 from _db import _connect_db,_expose_db
 from _data import gv_contract,gv_contlist,_update_contract,_update_user,_add_order,_cancel_order,_modify_cont,_delete_cont,_settle_cont,_update_usergl
-from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass
+from _user import _activeuser,_activecode,_createuser,_loginuser,_loguser,_vali_cpass,_update_cpass,_change_invitenum,_dercode,_enrcode,_btc_withdraw,_update_pass,_apikeyvalidate
 from _mail import _send_mail
 from _basefunc import validateEmail,myformat
 from flask import Flask, request, session, redirect, url_for, abort,render_template, flash, g,jsonify
@@ -164,7 +164,7 @@ def trade():
         co = request.args.get('co', 0,type=int)
         contract_id = request.args.get('c', 0, type=int)
         if co >= 1:   #Cancel order
-            res = _cancel_order(g.db,session,co)
+            res = _cancel_order(g.db,session['user_id'],co)
             flash(res['msg'],res['category'])
             _update_contract(g.db,contract_id,'C')
             return redirect(url_for('trade',c=contract_id))
@@ -315,6 +315,34 @@ def admin():
         (select user,sum(amount) as bio from btc_trans where timestamp > NOW() + interval -30 day group by user ) b on a.account = b.user")
     btc_account = [dict(account=orow[0],balance=orow[1],bio=orow[2]) for orow in cur.fetchall()]
     return render_template('admin.html',u = btc_account)
+
+
+@app.route('/api', methods=['GET'])
+def api():
+    uid = _apikeyvalidate(g.db,request.args.get('key', 0))
+    if uid == 0:
+        abort(404)
+    type = request.args.get('t', 0)
+    if type == 'A':         #add order
+        contract_id = request.args.get('cid', 0,type=int)
+        b_s = request.args.get('bs', 0)
+        point = request.args.get('pt', 0)
+        lots =  request.args.get('lt', 0,type=int)
+        res = _add_order(g.db,uid,contract_id,b_s,point,lots,'S')
+        return jsonify(res)
+    elif type == 'C':       #cancel order
+        orderid = request.args.get('oid', 0)
+        res = _cancel_order(g.db,uid,orderid)
+        return jsonify(res)
+    elif type == 'O':       #get orderlist
+        res = _update_user(g.db,{'user_id':uid},['orders'])
+        return jsonify(res)
+    elif type == 'U':       #Update server
+        contract_id = request.args.get('cid', 0,type=int)
+        _update_contract(g.db,contract_id,'D')
+        return jsonify({'category':'suc'})
+        abort(404)
+
 
 @app.route('/con_db', methods=['GET'])
 def con_db():
