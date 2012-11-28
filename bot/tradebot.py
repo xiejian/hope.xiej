@@ -1,23 +1,31 @@
 __author__ = 'xiejian'
 
-import urllib2,time,random
+import urllib2,time,random,sys,config
 import simplejson as json
 
-class tradebot:
-    def __init__(self, key,cid):
-        self.site = "http://127.0.0.1:5000/api?key="+key+"&"
-        self.cid = cid          #contract id
-        self.movecover = 0.3    #40% move cover
-        self.spread = 0.03      #5% bid offer spread
-        self.depth = 2000 / 2    #half lots
-        self.ordersnum = 40 / 2  #half number of orders
-        self.lots_tolerant = 0.2   #lots adjust tolerant
+class index:
+    def __init__(self,idx):
+        self.name = idx['name']
+        self.url = idx['sp_url']
 
     def update_spot_point(self):
-        urlusd = "https://mtgox.com/api/0/data/ticker.php"
-        data = json.loads(urllib2.urlopen(urlusd).read())
-        if 'ticker' in data:
-            self.spot_point = round(100/data['ticker']['avg'],3)
+        try:
+            data = json.loads(urllib2.urlopen(self.url).read())
+            if 'ticker' in data:
+                self.spot_point = round(100/data['ticker']['avg'],3)
+        except:
+            pass
+
+class tradebot:
+    def __init__(self,index,cid,movecover=0.3,spread=0.03,depth=1000):
+        self.site = config.SITE+config.KEY+"&"
+        self.cid = cid          #contract id
+        self.movecover = movecover    #40% move cover
+        self.spread = spread      #5% bid offer spread
+        self.depth = depth    #half lots
+        self.ordersnum = 40 / 2  #half number of orders
+        self.lots_tolerant = 0.2   #lots adjust tolerant
+        self.index = index
 
     def cancelorder(self,oid):
         urlcord = self.site + "t=C&oid="+str(oid)
@@ -56,13 +64,13 @@ class tradebot:
             self.orderlist.append(order(o['o'],o['c'],o['pt'],o['rlt']))
 
     def targetoders(self):
-        gap_b = (self.spot_point * self.movecover - self.spot_point * self.spread)/self.ordersnum
-        gap_s = (self.spot_point / (1-self.movecover) - self.spot_point / (1-self.spread))/self.ordersnum
+        gap_b = (self.index.spot_point * self.movecover - self.index.spot_point * self.spread)/self.ordersnum
+        gap_s = (self.index.spot_point / (1-self.movecover) - self.index.spot_point / (1-self.spread))/self.ordersnum
         for i in range(1,self.ordersnum + 1):
             lots = i * 2 * self.depth / (self.ordersnum * self.ordersnum)
             if lots > 0:
-                pointb = self.spot_point - gap_b * i
-                points = self.spot_point + gap_s * i
+                pointb = self.index.spot_point - gap_b * i
+                points = self.index.spot_point + gap_s * i
                 self.adjustorders(pointb,gap_b,lots)
                 self.adjustorders(points,gap_s,-lots)
 
@@ -76,12 +84,12 @@ class tradebot:
             for eo in self.orderlist:
                 if abs(eo.point - point)<= gap/2:
                     if self.cancelorder(eo.oid):         #cancel all order
-                        print 'Del Order @ ' + str(point) +'*' + str(lots)
+                        print >> sys.stderr, 'DO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots)
                         self.orderlist.remove(eo)
 
             ao = self.addraworder(point,gap,lots)
             if ao:
-                print 'Add Order @ ' + str(point) +'*' + str(lots)
+                print >> sys.stderr, 'AO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots)
                 self.orderlist.append(ao)   #add order
 
     def addraworder(self,point,gap,lots):
@@ -101,8 +109,16 @@ class order:
         self.lots = lots
 
 if __name__ == '__main__':
-    btc = tradebot('IOV3LkRV1JsVpCsPUv4JE0dL3o-W4ebP6eo9zw==3',1)
-    btc.update_spot_point()
-    btc.getorderlist()
-    btc.targetoders()
-    btc.updatesev()
+    usdidx = index(config.USD_IDX)
+    bot1 = tradebot(usdidx,1,0.3,0.03,1000)
+    bot2 = tradebot(usdidx,2,0.5,0.03,400)
+    bot1.getorderlist()
+    bot2.getorderlist()
+    while True:
+        usdidx.update_spot_point()
+        bot1.targetoders()
+        bot1.updatesev()
+        bot2.targetoders()
+        bot2.updatesev()
+        time.sleep(config.REFRESH_INTERVAL)
+

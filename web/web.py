@@ -341,6 +341,7 @@ def api():
         contract_id = request.args.get('cid', 0,type=int)
         _update_contract(g.db,contract_id,'D')
         return jsonify({'category':'suc'})
+    else:
         abort(404)
 
 
