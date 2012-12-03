@@ -2,6 +2,13 @@ __author__ = 'xiejian'
 
 import urllib2,time,random,sys,config
 import simplejson as json
+import logging
+
+logging.basicConfig(
+    filename=config.BOTLOG,
+    format='%(asctime)-6s: %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger('BOT')
+logger.setLevel(logging.INFO)
 
 class index:
     def __init__(self,idx):
@@ -14,7 +21,7 @@ class index:
             if 'ticker' in data:
                 self.spot_point = round(100/data['ticker']['avg'],3)
         except:
-            pass
+            logger.error("Update Spot PT Failed")
 
 class tradebot:
     def __init__(self,index,cid,movecover=0.3,spread=0.03,depth=1000):
@@ -84,12 +91,12 @@ class tradebot:
             for eo in self.orderlist:
                 if abs(eo.point - point)<= gap/2:
                     if self.cancelorder(eo.oid):         #cancel all order
-                        print >> sys.stderr, 'DO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots)
+                        logger.info('DO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots))
                         self.orderlist.remove(eo)
 
             ao = self.addraworder(point,gap,lots)
             if ao:
-                print >> sys.stderr, 'AO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots)
+                logger.info('AO '+str(self.cid)+' @ ' + str(point) +' * ' + str(lots))
                 self.orderlist.append(ao)   #add order
 
     def addraworder(self,point,gap,lots):

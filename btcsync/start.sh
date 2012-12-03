@@ -1,3 +1,8 @@
+if [ -f "p" ]
+  then
+    echo Process already running
+    exit
+fi
 read -p "Input Pass:" pass
 if [ -z "$pass" ]
   then
@@ -5,5 +10,6 @@ if [ -z "$pass" ]
     exit
 fi
 echo "$pass" > p
+date > nohup.out
 nohup python btcsync.py &
 exit

@@ -10,9 +10,8 @@ logging.basicConfig(
     filename=logfilename,
     format='%(asctime)-6s: %(name)s - %(levelname)s - %(message)s')
 
-fileLogger = logging.handlers.RotatingFileHandler(filename=logfilename,
-    maxBytes = 2*1024*1024, backupCount = 1)
-logging.getLogger('BTC').addHandler(fileLogger)
+#fileLogger = logging.handlers.RotatingFileHandler(filename=logfilename,maxBytes = 2*1024*1024, backupCount = 1)
+#logging.getLogger('BTC').addHandler(fileLogger)
 logger = logging.getLogger('BTC')
 logger.setLevel(logging.INFO)
 
@@ -41,7 +40,7 @@ def transsync():
             logger.info(str(len(res['transactions']))+ ' transactions synced.')
     except Exception as inst:
         cursor.execute("INSERT INTO btc_synclog(type,status,message)VALUES ('trans','F',%s)", "Err:{0}{1}".format(type(inst),inst.args))
-        logger.error('TransSync Error'+ str(type(inst))+ inst.args)
+        logger.error('TransSync Error'+ str(type(inst))+ str(inst.args))
 
 def updateuser(account):
     vadd = ag.getaccountaddress(account)
@@ -93,25 +92,27 @@ def svrexit():
     db.commit()
     db.close()
     logger.info('Bitcoin Sync to Mysql Service Stoped.')
-
+    os.remove('p')
 
 if __name__ == "__main__":
+
     f = open('p', 'r+')
     passphrase=f.read().rstrip()
+    f.seek(0)
+    f.write(str(os.getpid()))
+    f.close()
     if (len(passphrase) <= 1):
         print 'PassPhrase miss'
         exit()
+    res = {}
     try:
-        res = ag.getinfo()
         ag.walletpassphrasechange(passphrase,passphrase)
-        f.seek(0)
-        f.write("pass123456")
     except Exception as inst:
-        if len(res) > 0:
-            msg = inst.error['message']
-        logger.error('Bitcoin Server Connection Failed. ' + msg)
+        msg = str(inst)
+        if len(msg) == 0:
+            msg = "Passwd wrong"
+        logger.error('Bitcoin Server Connect Failed. ' + msg)
         exit()
-    f.close()
     db=MySQLdb.connect(host=database['host'], user=database['user'], passwd=database['passwd'],db=database['db'])
     cursor = db.cursor()
     atexit.register(svrexit)

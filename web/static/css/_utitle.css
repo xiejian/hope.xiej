@@ -15,9 +15,10 @@ div.topnavr    {text-align: right;margin-top:8px; }
 div.logo  {color: #C23F00;margin: 10px 0px 0px -15px;;font-size: 1.6em;font-weight: bold;}
 div.logo div{color: rgba(211, 98, 11, 0.75);margin-bottom: -2px;font-size: 0.7em;font-weight: normal;}
 
+ul.topnav       {margin-left:-12px;}
 ul.topnav li    {float: left;list-style: none;text-align: center;}
 ul.topnav li.active a {background: #88C;color: #FF8;border-top: 4px solid #CB9;}
-ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding: 8px 12px 5px 12px;}
+ul.topnav a     {font-family:"Trebuchet MS",sans-serif;font-size: 1.4em;padding: 8px 14px 5px 14px;}
 ul.topnav a:hover   {color: #F22}
 
 span.twt_time, span.twt_action a { color: #888;  font-size: 0.8em;}
